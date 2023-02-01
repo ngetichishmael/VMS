@@ -1,0 +1,142 @@
+{
+    "menu": [
+        {
+            "navheader": "Dashboard",
+            "slug": ""
+        },
+        {
+            "url": "dashboard",
+            "name": "Dashboard",
+            "icon": "home",
+            "slug": "dashboard"
+        },
+        {
+            "navheader": "Logs",
+            "slug": ""
+        },
+        {
+            "name": "Visits",
+            "icon": "file-text",
+            "slug": "",
+            "submenu": [
+                {
+                    "url": "Visits/DriveIn",
+                    "name": "Driver-in",
+                    "icon": "circle",
+                    "slug": "VisitDriveIn"
+                },
+                {
+                    "url": "Visits/WalkIn",
+                    "name": "Walks Ins",
+                    "icon": "circle",
+                    "slug": "VisitWalkIn"
+                }
+            ]
+        },
+        {
+            "url": "bookings",
+            "name": "Bookings",
+            "icon": "save",
+            "slug": "bookings"
+        },
+        {
+            "navheader": "User Interface",
+            "slug": ""
+        },
+        {
+            "url": "organization/users",
+            "name": "Users",
+            "icon": "type",
+            "slug": "OrganizationUsers"
+        },
+        {
+            "url": "users/sentries",
+            "name": "Sentry",
+            "icon": "type",
+            "slug": "Sentry"
+        },
+        {
+            "navheader": "Hierarchical",
+            "slug": ""
+        },
+        {
+            "url": "organization/information",
+            "name": "Organization",
+            "icon": "server",
+            "slug": "OrganizationInformation"
+        },
+        {
+            "name": "Premises",
+            "icon": "grid",
+            "slug": "",
+            "submenu": [
+                {
+                    "url": "premise/information",
+                    "name": "Premises",
+                    "icon": "circle",
+                    "slug": "PremiseInformation"
+                },
+                {
+                    "url": "block/information",
+                    "name": "Blocks",
+                    "icon": "circle",
+                    "slug": "BlockInformation"
+                },
+                {
+                    "url": "unit/information",
+                    "name": "Units",
+                    "icon": "circle",
+                    "slug": "UnitInformation"
+                },
+                {
+                    "url": "resident/information",
+                    "name": "Residents",
+                    "icon": "circle",
+                    "slug": "ResidentInformation"
+                }
+            ]
+        },
+        {
+            "navheader": "Service Providers",
+            "slug": ""
+        },
+        {
+            "url": "organization/information",
+            "name": "Name",
+            "icon": "type",
+            "slug": "OrganizationInformation"
+        },
+        {
+            "url": "service/category",
+            "name": "Catergory",
+            "icon": "type",
+            "slug": "ServiceCategory"
+        },
+        {
+            "navheader": "Vehicles",
+            "slug": ""
+        },
+        {
+            "url": "vehicle/information",
+            "name": "Vehicles",
+            "icon": "map",
+            "slug": "VehicleInformation"
+        },
+        {
+            "navheader": "Others",
+            "slug": ""
+        },
+        {
+            "url": "identification/type",
+            "name": "Identification Types",
+            "icon": "map",
+            "slug": "IdentificationType"
+        },
+        {
+            "url": "shifts",
+            "name": "Shifts",
+            "icon": "map",
+            "slug": "shifts"
+        }
+    ]
+}
