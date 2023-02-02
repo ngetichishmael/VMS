@@ -54,6 +54,9 @@ Route::middleware('auth')->group(function () {
         'create' => 'OrganizationUsers.create',
         'store' => 'OrganizationUsers.store',
     ]);
+ 
+
+    
     Route::resource('shifts', ShiftController::class)->names([
         'index' => 'shifts',
         'show' => 'shifts.show',

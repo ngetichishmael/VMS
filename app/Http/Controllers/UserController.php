@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -13,7 +15,15 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('livewire.user.dashboard');
+      
+
+        $users = DB::table('users')
+        ->join('organizations', 'users.org', '=', 'organizations.id')
+      
+        ->select('users.*', 'organizations.org_name')
+        ->get();
+
+        return view('livewire.user.dashboard',['users'=>$users]);
     }
 
     /**
@@ -56,7 +66,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+         return response ("hello");
     }
 
     /**
@@ -79,6 +89,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::destroy($id);
+        return redirect()->route('livewire.user.dashboard');
     }
 }
