@@ -134,8 +134,9 @@
          <!-- Modal to add new user starts-->
     <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
-        <form class="add-new-user modal-content pt-0">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+        <form class="add-new-user modal-content pt-0" method="POST" action="{{ route('OrganizationUsers.store') }}">
+        {{ csrf_field() }} 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
             <h5 class="modal-title" id="exampleModalLabel">New User</h5>
           </div>
@@ -144,6 +145,8 @@
               <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
               <input
                 type="text"
+                name="name" 
+                :value="old('name')"
                 class="form-control dt-full-name"
                 id="basic-icon-default-fullname"
                 aria-describedby="basic-icon-default-fullname2"
@@ -153,7 +156,8 @@
               <label class="form-label" for="basic-icon-default-uname">Username</label>
               <input
                 type="text"
-                id="basic-icon-default-uname"
+                name="username" 
+                :value="old('username')"
                 class="form-control dt-uname"
                 aria-describedby="basic-icon-default-uname2"
                 name="user-name"
@@ -164,7 +168,8 @@
               <label class="form-label" for="basic-icon-default-email">Email</label>
               <input
                 type="email"
-                id="basic-icon-default-email"
+                name="email" 
+                :value="old('email')"
                 class="form-control dt-email"
                 aria-describedby="basic-icon-default-email2"
                 name="user-email"
@@ -176,7 +181,8 @@
               <input
                 type="tel"
                 class="form-control dt-full-name"
-                id="basic-icon-default-fullname"
+                name="phone_number" 
+                :value="old('phone_number')"
                 aria-describedby="basic-icon-default-fullname2"
               />
             </div>
@@ -190,8 +196,18 @@
                 <option value="admin">Admin</option>
               </select>
             </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Password</label>
+              <input
+                type="password"
+                class="form-control dt-full-name"
+                name="password" 
+                :value="old('password')"
+                aria-describedby="basic-icon-default-fullname2"
+              />
+            </div>
             
-            <button type="submit" class="btn btn-primary mr-1 data-submit">Submit</button>
+            <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </form>

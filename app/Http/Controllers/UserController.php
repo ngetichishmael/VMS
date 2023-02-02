@@ -2,6 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use App\Models\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+
 use DB;
 
 use Illuminate\Http\Request;
@@ -44,7 +51,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(request(), [
+            'name' => 'required',
+            'username' => 'required',
+            'phone_number' => 'required',
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+        
+       
+        $user = User::create([
+            'name' => $request->name,
+            'username' => $request->username,
+            'phone_number' => $request->phone_number,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+     
+        
+        return redirect()->to('/organization/users');
     }
 
     /**
