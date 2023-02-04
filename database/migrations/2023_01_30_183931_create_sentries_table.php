@@ -15,6 +15,7 @@ class CreateSentriesTable extends Migration
     {
         Schema::create('sentries', function (Blueprint $table) {
             $table->id();
+            
             $table->timestamps();
         });
     }

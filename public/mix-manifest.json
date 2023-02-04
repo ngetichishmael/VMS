@@ -475,6 +475,7 @@
     "/vendors/js/tables/datatable/responsive.bootstrap4.js": "/vendors/js/tables/datatable/responsive.bootstrap4.js",
     "/vendors/js/tables/datatable/responsive.bootstrap4.min.js": "/vendors/js/tables/datatable/responsive.bootstrap4.min.js",
     "/vendors/js/tables/datatable/vfs_fonts.js": "/vendors/js/tables/datatable/vfs_fonts.js",
+    "/vendors/js/tables/simple-datatables.js": "/vendors/js/tables/simple-datatables.js",
     "/vendors/js/ui/affix.js": "/vendors/js/ui/affix.js",
     "/vendors/js/ui/jquery.sticky-kit.min.js": "/vendors/js/ui/jquery.sticky-kit.min.js",
     "/vendors/js/ui/jquery.sticky.js": "/vendors/js/ui/jquery.sticky.js",

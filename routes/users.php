@@ -53,6 +53,8 @@ Route::middleware('auth')->group(function () {
         'destroy' => 'OrganizationUsers.destroy',
         'create' => 'OrganizationUsers.create',
         'store' => 'OrganizationUsers.store',
+       
+        
     ]);
  
 
@@ -84,6 +86,8 @@ Route::middleware('auth')->group(function () {
         'create' => 'VehicleInformation.create',
         'store' => 'VehicleInformation.store',
     ]);
+
+
     Route::resource('organization/information', OrganizationController::class)->names([
         'index' => 'OrganizationInformation',
         'show' => 'OrganizationInformation.show',
@@ -93,6 +97,8 @@ Route::middleware('auth')->group(function () {
         'create' => 'OrganizationInformation.create',
         'store' => 'OrganizationInformation.store',
     ]);
+
+
     Route::resource('premise/information', PremiseController::class)->names([
         'index' => 'PremiseInformation',
         'show' => 'PremiseInformation.show',
@@ -148,3 +154,14 @@ Route::middleware('auth')->group(function () {
         'store' => 'VisitWalkIn.store',
     ]);
 });
+
+
+Route::get('/search',[UserController::class,'search']);
+Route::get('organization/users/delete/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->middleware('auth');
+Route::get('organization/users/{id}}', [App\Http\Controllers\UserController::class, 'edit'])->middleware('auth');
+
+
+Route::get('/search',[OrganizationController::class,'search']);
+Route::get('organization/information/delete/{id}', [App\Http\Controllers\OrganizationController::class, 'destroy'])->middleware('auth');
+
+
