@@ -80,7 +80,7 @@
                             <strong class="text-danger">{{ $errors->first('password') }}</strong>
                         </span>
                     @endif
-                    <form class="auth-login-form mt-2" method="POST" action="{{ route('authorization') }}">
+                    <form class="auth-login-form mt-2" action="{{ route('login') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label class="form-label" for="email">Email</label>
@@ -89,6 +89,12 @@
                                 tabindex="1" />
                         </div>
                         <div class="form-group">
+                            <div class="d-flex justify-content-between">
+                                <label for="login-password">Password</label>
+                                <a href="#">
+                                    <small>Forgot Password?</small>
+                                </a>
+                            </div>
                             <div class="input-group input-group-merge form-password-toggle">
                                 <input class="form-control form-control-merge" id="password" type="password"
                                     name="password" placeholder="············" aria-describedby="password"
@@ -98,6 +104,12 @@
                                         <i data-feather="eye"></i>
                                     </span>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" id="remember-me" type="checkbox" tabindex="3" />
+                                <label class="custom-control-label" for="remember-me"> Remember Me</label>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block" tabindex="4">Sign in</button>
