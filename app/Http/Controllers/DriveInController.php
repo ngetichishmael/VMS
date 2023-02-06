@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DriveIn;
 use App\Http\Requests\StoreDriveInRequest;
 use App\Http\Requests\UpdateDriveInRequest;
+use App\Models\DriveIn;
 
 class DriveInController extends Controller
 {

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\WalkIn;
 use App\Http\Requests\StoreWalkInRequest;
 use App\Http\Requests\UpdateWalkInRequest;
+use App\Models\WalkIn;
 
 class WalkInController extends Controller
 {

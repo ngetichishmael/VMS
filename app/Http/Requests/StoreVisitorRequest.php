@@ -24,7 +24,16 @@ class StoreVisitorRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "firstName" => "required|max:70",
+            "lastName" => "required|max:70",
+            "phoneNumber" => "required|max:15",
+            "gender" => "required|max:70",
+            "visitortype" => "required",
+            "IDNo" => "required|max:70",
+            "nationalityId" => "required",
+            "organizationId" => "required",
+            "premisesIf" => "required",
+            "description" => "required"
         ];
     }
 }

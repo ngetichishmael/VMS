@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePremisesTable extends Migration
+class CreateLookUpTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,10 @@ class CreatePremisesTable extends Migration
      */
     public function up()
     {
-        Schema::create('premises', function (Blueprint $table) {
+        Schema::create('look_up', function (Blueprint $table) {
             $table->id();
-            $table->string('premisesName');
-            $table->string('address');
-            $table->string('location');
-            $table->string('description');
+            $table->string('name');
             $table->string('zone');
-            $table->string('type');
-            $table->foreignId('organizationId');
-            $table->foreignId('lookUpId');
             $table->timestamps();
         });
     }
@@ -34,6 +28,6 @@ class CreatePremisesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('premises');
+        Schema::dropIfExists('look_up');
     }
 }

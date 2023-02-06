@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\Visitors\VisitorsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+//api/v1
+Route::group(['prefix' => 'v1', 'namespace' => 'Ap\Http\Controller\Api\V1'], function(){
+Route::apiResource('visitor', VisitorsController::class);
+Route::apiResource('drivein',DriveInController::class);
 });
