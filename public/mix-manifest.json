@@ -130,6 +130,7 @@
     "/js/scripts/pages/page-pricing.js": "/js/scripts/pages/page-pricing.js",
     "/js/scripts/pages/page-profile.js": "/js/scripts/pages/page-profile.js",
     "/js/scripts/pagination/components-pagination.js": "/js/scripts/pagination/components-pagination.js",
+    "/js/scripts/tables/simple-datatables.js": "/js/scripts/tables/simple-datatables.js",
     "/js/scripts/tables/table-ag-grid.js": "/js/scripts/tables/table-ag-grid.js",
     "/js/scripts/tables/table-datatables-advanced.js": "/js/scripts/tables/table-datatables-advanced.js",
     "/js/scripts/tables/table-datatables-basic.js": "/js/scripts/tables/table-datatables-basic.js",

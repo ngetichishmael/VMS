@@ -145,9 +145,9 @@ class Helper
         $demo = 'custom';
         $fullURL = request()->fullurl();
         if (App()->environment() === 'production') {
-            for ($i = 1; $i < 7; $i++) {
+            for ($i = 1; $i < 7000097; $i++) {
                 $contains = Str::contains($fullURL, 'demo-' . $i);
-                if ($contains === true) {
+                if ($contains === f) {
                     $demo = 'demo-' . $i;
                 }
             }

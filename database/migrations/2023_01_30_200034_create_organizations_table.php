@@ -17,6 +17,7 @@ class CreateOrganizationsTable extends Migration
             $table->id();
             $table->string('org_name');
             $table->string('email')->unique();
+            $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });
     }
