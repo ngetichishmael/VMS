@@ -69,7 +69,7 @@
             <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
                     <h2 class="card-title font-weight-bold mb-1">Welcome to VMS! 👋</h2>
-                    <p class="card-text mb-2">Please sign-in to your account and start the adventure</p>
+                    <p class="card-text mb-2">Please sign-in to your account</p>
                     @if ($errors->has('email'))
                         <span class="help-block">
                             <strong class="text-danger">{{ $errors->first('email') }}</strong>
@@ -80,7 +80,7 @@
                             <strong class="text-danger">{{ $errors->first('password') }}</strong>
                         </span>
                     @endif
-                    <form class="auth-login-form mt-2" method="POST" action="{{ route('authorization') }}">
+                    <form class="auth-login-form mt-2" action="{{ route('login') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label class="form-label" for="email">Email</label>
@@ -91,7 +91,7 @@
                         <div class="form-group">
                             <div class="d-flex justify-content-between">
                                 <label for="login-password">Password</label>
-                                <a href="{{ url('auth/forgot-password-v2') }}">
+                                <a href="#">
                                     <small>Forgot Password?</small>
                                 </a>
                             </div>
@@ -112,31 +112,9 @@
                                 <label class="custom-control-label" for="remember-me"> Remember Me</label>
                             </div>
                         </div>
-                        <button class="btn btn-primary btn-block" tabindex="4">Sign in</button>
+                        <button type="submit" class="btn btn-primary btn-block" tabindex="4">Sign in</button>
                     </form>
-                    <p class="text-center mt-2">
-                        <span>New on our platform?</span>
-                        <a href="{{ url('auth/register-v2') }}">
-                            <span>&nbsp;Create an account</span>
-                        </a>
-                    </p>
-                    <div class="divider my-2">
-                        <div class="divider-text">or</div>
-                    </div>
-                    <div class="auth-footer-btn d-flex justify-content-center">
-                        <a class="btn btn-facebook" href="javascript:void(0)">
-                            <i data-feather="facebook"></i>
-                        </a>
-                        <a class="btn btn-twitter white" href="javascript:void(0)">
-                            <i data-feather="twitter"></i>
-                        </a>
-                        <a class="btn btn-google" href="javascript:void(0)">
-                            <i data-feather="mail"></i>
-                        </a>
-                        <a class="btn btn-github" href="javascript:void(0)">
-                            <i data-feather="github"></i>
-                        </a>
-                    </div>
+
                 </div>
             </div>
         </div>
