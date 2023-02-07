@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Organization extends Model
 {
     use HasFactory;
@@ -16,6 +17,8 @@ class Organization extends Model
      */
     protected $fillable = [
         'org_name',
+        'code',
         'email',
+        'status',
     ];
 }

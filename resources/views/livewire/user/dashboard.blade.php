@@ -76,9 +76,9 @@
                         <table class="table" >
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <!-- <th>#</th> -->
                                     <th>Name</th>
-                                    <th>Username</th>
+
                                     <th>Email</th>
                                     <th>PhoneNumber</th>
                                     <th>Organization</th>
@@ -91,9 +91,9 @@
                             <tbody class="alldata">
                             @foreach ($users as $user)
                                 <tr>
-                                    <td> {{ $user ->id }} </td>
+                                    <!-- <td> {{ $user ->id }} </td> -->
                                     <td> {{ $user ->name }} </td>
-                                    <td> {{ $user ->username }} </td>
+
                                     <td>{{ $user ->email }}</td>
                                     <td> {{ $user ->phone_number }} </td>
                                     <td>{{ $user ->org_name }} </td>
@@ -104,7 +104,7 @@
 
                                         <?php }else{ ?> 
 
-                                        <a href="#" class="inactive" style="color:#FF0000;">Inactive</a>
+                                        <a href="#" class="inactive" style="color:#FF0000;">Disabled</a>
 
                                         <?php } ?>
                                     
@@ -112,15 +112,21 @@
                                     <td>{{ now() }}</td>
                                     <td>{{ now() }}</td>
                                     <td>
+                                  
                                             <!--update link-->
-                                        <a href="{{ url('organization/users/'.$user->id) }}" class=""style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" title="Edit">
+                                            <a href="{{ url('organization/users/'.$user->id) }}" class="" style="padding-right:6px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" title="Edit">
                                         <i class="fas fa-pencil-alt"></i>
                                         </a>
                                         <!-- delete link -->
+                                        <?php if($user->status == '0'){ ?> 
+                                        <a href="{{ url('organization/users/suspend/'.$user->id) }}" onclick="return confirm('Are you sure to want to Activate the User?')"  title="Unsuspend" style="padding-right:6px" > <i class="fas fa-ban" style="color:red;"></i> </a>
+                                        <?php }else{ ?> 
+                                            <a href="{{ url('organization/users/suspend/'.$user->id) }}" onclick="return confirm('Are you sure to want to suspend the User?')"  title="Suspend" style="padding-right:6px"> <i class="fas fa-ban" ></i> </a>
+                                        <?php } ?>
+
+                                        <a href="{{ url('organization/users/delete/'.$user->id) }}" onclick="return confirm('Are you sure to want to delete the user?')" title="Delete"> <i class="fas fa-trash"></i> </a>
                                     
-                                        <a href="{{ url('organization/users/delete/'.$user->id) }}" onclick="return confirm('Are you sure to want to delete the user?')" title="Delete"> <i class="fas fa-trash"></i></a>
-                                    
-                                 
+
                                     </td>
                                 </tr>
                               
@@ -160,17 +166,7 @@
                 aria-describedby="basic-icon-default-fullname2"
               />
             </div>
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-uname">Username</label>
-              <input
-                type="text"
-                name="username" 
-                :value="old('username')"
-                class="form-control dt-uname"
-                aria-describedby="basic-icon-default-uname2"
-                name="user-name"
-              />
-            </div>
+
             
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-email">Email</label>

@@ -53,7 +53,6 @@ class UserController extends Controller
     {
         $this->validate(request(), [
             'name' => 'required',
-            'username' => 'required',
             'phone_number' => 'required',
             'email' => 'required|email',
             'org' => 'required',
@@ -63,7 +62,6 @@ class UserController extends Controller
        
         $user = User::create([
             'name' => $request->name,
-            'username' => $request->username,
             'phone_number' => $request->phone_number,
             'org' => $request->org,
             'email' => $request->email,
@@ -128,6 +126,29 @@ class UserController extends Controller
         $delete = user::find($id);
         $delete->delete();
         Toastr::success('Data deleted successfully :)','Success');
+        return redirect()->route('OrganizationUsers');
+    }
+
+    public function status_update($id){
+
+        //get user status with the help of  ID
+        $users = DB::table('users')
+                    ->select('status')
+                    ->where('id','=',$id)
+                    ->first();
+
+        //Check user status
+        if($users->status == '1'){
+            $status = '0';
+        }else{
+            $status = '1';
+        }
+
+        //update user status
+        $values = array('status' => $status );
+        DB::table('users')->where('id',$id)->update($values);
+
+        session()->flash('msg','User status has been updated successfully.');
         return redirect()->route('OrganizationUsers');
     }
 

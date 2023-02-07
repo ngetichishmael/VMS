@@ -75,6 +75,7 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Status</th>
                                     <th>Created At</th>
                                     <th>Action</th>
                                     
@@ -83,20 +84,37 @@
                             <tbody class="alldata">
                             @foreach ($organizations as $org)
                                 <tr>
-                                    <td>{{ $org ->id }}</td>
+                                    <td>{{ $org ->code }}</td>
                                     <td>{{ $org ->org_name }}</td>
-                                    <td>{{ $org ->email }}</td>                                 
+                                    <td>{{ $org ->email }}</td>     
+                                    <td>
+                                    <?php if($org->status == '1'){ ?> 
+
+                                    <a href="#" class="Active" style="color:#00FF00;">Active</a>
+
+                                    <?php }else{ ?> 
+
+                                    <a href="#" class="inactive" style="color:#FF0000;">Suspended</a>
+
+                                    <?php } ?>
+
+                                    </td>                            
                                     <td>{{ $org ->created_at }}</td>
                                     <td>
                                             <!--update link-->
-                                        <a href="{{ url('organization/users/'.$org->id) }}" class=""style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" title="Edit">
+                                        <a href="{{ url('organization/users/'.$org->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" title="Edit">
                                         <i class="fas fa-pencil-alt"></i>
                                         </a>
                                         <!-- delete link -->
+                                        <?php if($org->status == '0'){ ?> 
+                                        <a href="{{ url('organization/information/suspend/'.$org->id) }}" onclick="return confirm('Are you sure to want to Activate the organization?')" style="padding-right:20px; " title="Unsuspend"> <i class="fas fa-ban" style="color:red;"></i> </a>
+                                        <?php }else{ ?> 
+                                            <a href="{{ url('organization/information/suspend/'.$org->id) }}" onclick="return confirm('Are you sure to want to suspend the organization?')" style="padding-right:20px; " title="Suspend"> <i class="fas fa-ban" ></i> </a>
+                                        <?php } ?>
+
+                                        <a href="{{ url('organization/information/delete/'.$org->id) }}" onclick="return confirm('Are you sure to want to delete the organization?')" title="Delete"> <i class="fas fa-trash"></i> </a>
                                     
-                                        <a href="{{ url('organization/information/delete/'.$org->id) }}" onclick="return confirm('Are you sure to want to delete the user?')" title="Delete"> <i class="fas fa-trash"></i></a>
-                                    
-                                 
+                         
                                     </td>
                                 </tr>
 

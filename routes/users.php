@@ -159,9 +159,9 @@ Route::middleware('auth')->group(function () {
 Route::get('/search',[UserController::class,'search']);
 Route::get('organization/users/delete/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->middleware('auth');
 Route::get('organization/users/{id}}', [App\Http\Controllers\UserController::class, 'edit'])->middleware('auth');
+Route::get('organization/users/suspend/{id}',[App\Http\Controllers\UserController::class, 'status_update'])->middleware('auth');
 
 
 Route::get('/search',[OrganizationController::class,'search']);
 Route::get('organization/information/delete/{id}', [App\Http\Controllers\OrganizationController::class, 'destroy'])->middleware('auth');
-
-
+Route::get('organization/information/suspend/{id}',[App\Http\Controllers\OrganizationController::class, 'status_update'])->middleware('auth');

@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateOrganizationRequest;
 use DB;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 
 class OrganizationController extends Controller
@@ -43,20 +44,58 @@ class OrganizationController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate(request(), [
+     
+        $request->validate([
             'org_name' => 'required',
             'email' => 'required|email',
+         
+        ]);
+        
+        // $this->validate(request(), [
+        //     'org_name' => 'required',
+        //     'email' => 'required|email',
+        //     'code' => 'required',
+        // ]);
 
-        ]);
-        
-       
-        $organization = Organization::create([
-            'org_name' => $request->org_name,
-            'email' => $request->email,
-        ]);
+
+        $id = IdGenerator::generate(['table' => 'organizations', 'length' => 6, 'prefix' =>'1']);
+        do {
+
+            $code = random_int(100000, 999999);
+
+        } while (organization::where("code", "=", $code)->first());
+
+        $organization = new organization;
+        $organization->org_name = $request->org_name;
+        $organization->code      = $code;
+        $organization->email    = $request->email;
+        $organization->save();
+
+        // $organization = Organization::create([
+        //     'org_name' => $request->org_name,
+        //     'code' => $request->code,
+        //     'email' => $request->email,
+            
+        // ]);
      
-        
+  
         return redirect()->to('/organization/information');
+    }
+
+    public function generateUniqueCode()
+
+    {
+
+        do {
+
+            $code = random_int(100000, 999999);
+
+        } while (organization::where("code", "=", $code)->first());
+
+  
+
+        return $code;
+
     }
 
     /**
@@ -105,6 +144,29 @@ class OrganizationController extends Controller
         $delete = Organization::find($id);
         $delete->delete();
         Toastr::success('Data deleted successfully :)','Success');
+        return redirect()->route('OrganizationInformation');
+    }
+
+    function status_update($id){
+
+        //get organization status with the help of  ID
+        $organizations = DB::table('organizations')
+                    ->select('status')
+                    ->where('id','=',$id)
+                    ->first();
+
+        //Check user status
+        if($organizations->status == '1'){
+            $status = '0';
+        }else{
+            $status = '1';
+        }
+
+        //update organization status
+        $values = array('status' => $status );
+        DB::table('organizations')->where('id',$id)->update($values);
+
+        session()->flash('msg','Organization status has been updated successfully.');
         return redirect()->route('OrganizationInformation');
     }
 
