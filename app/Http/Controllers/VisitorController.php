@@ -8,6 +8,10 @@ use App\Http\Requests\UpdateVisitorRequest;
 
 class VisitorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,9 +19,12 @@ class VisitorController extends Controller
      */
     public function index()
     {
-        //
+        return view('app.visitor.index');
     }
-
+    public function show()
+    {
+        return view('app.visitor.index');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -45,10 +52,6 @@ class VisitorController extends Controller
      * @param  \App\Models\Visitor  $visitor
      * @return \Illuminate\Http\Response
      */
-    public function show(Visitor $visitor)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.

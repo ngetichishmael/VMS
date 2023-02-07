@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     {
         User::create([
             'name' => "Ish",
-            'email' => "ishmael@deveint.com",
+            'email' => "info@deveint.com",
             'phone_number' => "0724840014",
             'email_verified_at' => now(),
             'password' => '$2y$10$y5KwRinBAUzQsBuK6EvRXuu0i2RrjTHGs00SOD44S1L9VCMgvx3I6',

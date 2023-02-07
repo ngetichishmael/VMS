@@ -111,8 +111,6 @@
                         <ul>
                             <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Create</li>
                             <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Read</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Updated</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Delete</li>
                         </ul>
                     </li>
                     <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>

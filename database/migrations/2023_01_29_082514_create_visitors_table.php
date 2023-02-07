@@ -29,7 +29,8 @@ class CreateVisitorsTable extends Migration
              $table->foreignId('premisesId');
              $table->foreignId('tagId');
              $table->string('hostName');
-
+             $table->timestamp('timeIn')->useCurrent();;
+             $table->timestamp('timeOut')->nullable();
             $table->timestamps();
         });
     }

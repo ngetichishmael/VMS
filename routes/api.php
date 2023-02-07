@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\Visitors\VisitorsController;
+use Illuminate\Http\Controllers\Api\Visitors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 //api/v1
-Route::group(['prefix' => 'v1', 'namespace' => 'Ap\Http\Controller\Api\V1'], function(){
+Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\Visitors'], function(){
 Route::apiResource('visitor', VisitorsController::class);
+Route::apiResource('visitor/index', VisitorsController::class);
 Route::apiResource('drivein',DriveInController::class);
 });

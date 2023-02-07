@@ -20,85 +20,172 @@
 
 @section('content')
     <!-- Dashboard Ecommerce Starts -->
-    <section id="dashboard-ecommerce">
+    <section id="dashboard-ecommerce" >
+        <div style="right: 0px; padding-right: 2px;">{{ now() }}</div>
         <div class="row match-height">
+
             <!-- Medal Card -->
-            <div class="col-xl-4 col-md-6 col-12">
-                <div class="card card-congratulation-medal">
+            <div class="col-xl-4 col-md-6 col-12" >
+                <div class="card card-congratulation-medal" style="background: #abcdfa">
                     <div class="card-body">
-                        {{ now() }}
+                        <div class="media">
+                            <div class="avatar bg-light-primary mr-2">
+                                <div class="avatar-content">
+                                    <i data-feather="sunset" class="avatar-icon"></i>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="media-body my-auto">
+                                <h4 class="font-weight-bolder mb-0" style="color: #070707" >230</h4>
+                                <hr style="color: #bebbbb"/>
+                                <p class="card-text font-small-3 mb-0"style="color: #0247a2">Today</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 col-12">
+                <div class="card card-congratulation-medal" style="background: #fcc1c3">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="avatar bg-light-primary mr-2">
+                                <div class="avatar-content">
+                                    <i data-feather="sunset" class="avatar-icon"></i>
+                                </div>
+                            </div>
+                            <div class="media-body my-auto">
+                                <h4 class="font-weight-bolder mb-0" style="color: #070707">230</h4>
+                                <hr style="color: #bebbbb"/>
+                                <p class="card-text font-small-3 mb-0" style="color: #fd6369">Today</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-md-6 col-12">
+                <div class="card card-congratulation-medal" style="background: #c9e9f8">
+                    <div class="card-body">
+                        <div class="media" >
+                            <div class="avatar bg-light-info mr-2">
+                                <div class="avatar-content">
+                                    <i data-feather="navigation-2" class="avatar-icon"></i>
+                                </div>
+                            </div>
+                            <div class="media-body my-auto">
+                                <h4 class="font-weight-bolder mb-0" style="color: #070707">590</h4>
+                                <hr style="color: #ffffff"/>
+                                <p class="card-text font-small-3 mb-0" style="color: #05a0e1">This Week</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 col-12">
+                <div class="card card-congratulation-medal" style="background: #faccce">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="avatar bg-light-danger mr-2">
+                                <div class="avatar-content">
+                                    <i data-feather="calendar" class="avatar-icon"></i>
+                                </div>
+                            </div>
+                            <div class="media-body my-auto">
+                                <h4 class="font-weight-bolder mb-0" style="color: #070707">2000</h4>
+                                <hr style="color: #bebbbb"/>
+                                <p class="card-text font-small-3 mb-0" style="color: #ff555b">This Month</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 col-12">
+                <div class="card card-congratulation-medal" style="background: #d0facc">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="avatar bg-light-success mr-2">
+                                <div class="avatar-content">
+                                    <i data-feather="layers" class="avatar-icon"></i>
+                                </div>
+                            </div>
+                            <div class="media-body my-auto">
+                                <h4 class="font-weight-bolder mb-0" style="color: #070707">23000</h4>
+                                <hr style="color: #ffffff"/>
+                                <p class="card-text font-small-3 mb-0" style="color: #12a801">Total Visits</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <!--/ Medal Card -->
 
             <!-- Statistics Card -->
-            <div class="col-xl-8 col-md-6 col-12">
-                <div class="card card-statistics">
-                    <div class="card-header">
-                        <h4 class="card-title">Statistics</h4>
-                        <div class="d-flex align-items-center">
-                            <p class="card-text font-small-2 mr-25 mb-0">This month</p>
-                        </div>
-                    </div>
-                    <div class="card-body statistics-body">
-                        <div class="row">
-                            <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
-                                <div class="media">
-                                    <div class="avatar bg-light-primary mr-2">
-                                        <div class="avatar-content">
-                                            <i data-feather="sunset" class="avatar-icon"></i>
-                                        </div>
-                                    </div>
-                                    <div class="media-body my-auto">
-                                        <h4 class="font-weight-bolder mb-0">230</h4>
-                                        <p class="card-text font-small-3 mb-0">Today</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
-                                <div class="media">
-                                    <div class="avatar bg-light-info mr-2">
-                                        <div class="avatar-content">
-                                            <i data-feather="navigation-2" class="avatar-icon"></i>
-                                        </div>
-                                    </div>
-                                    <div class="media-body my-auto">
-                                        <h4 class="font-weight-bolder mb-0">590</h4>
-                                        <p class="card-text font-small-3 mb-0">This Week</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-sm-0">
-                                <div class="media">
-                                    <div class="avatar bg-light-danger mr-2">
-                                        <div class="avatar-content">
-                                            <i data-feather="calendar" class="avatar-icon"></i>
-                                        </div>
-                                    </div>
-                                    <div class="media-body my-auto">
-                                        <h4 class="font-weight-bolder mb-0">2000</h4>
-                                        <p class="card-text font-small-3 mb-0">This Month</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-sm-6 col-12">
-                                <div class="media">
-                                    <div class="avatar bg-light-success mr-2">
-                                        <div class="avatar-content">
-                                            <i data-feather="layers" class="avatar-icon"></i>
-                                        </div>
-                                    </div>
-                                    <div class="media-body my-auto">
-                                        <h4 class="font-weight-bolder mb-0">23000</h4>
-                                        <p class="card-text font-small-3 mb-0">Total</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+{{--            <div class="col-xl-8 col-md-6 col-12">--}}
+{{--                <div class="card card-statistics">--}}
+{{--                    <div class="card-header">--}}
+{{--                        <h4 class="card-title">Statistics</h4>--}}
+{{--                        <div class="d-flex align-items-center">--}}
+{{--                            <p class="card-text font-small-2 mr-25 mb-0">This month</p>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body statistics-body">--}}
+{{--                        <div class="row">--}}
+{{--                            <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">--}}
+{{--                                <div class="media">--}}
+{{--                                    <div class="avatar bg-light-primary mr-2">--}}
+{{--                                        <div class="avatar-content">--}}
+{{--                                            <i data-feather="sunset" class="avatar-icon"></i>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="media-body my-auto">--}}
+{{--                                        <h4 class="font-weight-bolder mb-0">230</h4>--}}
+{{--                                        <p class="card-text font-small-3 mb-0">Today</p>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">--}}
+{{--                                <div class="media">--}}
+{{--                                    <div class="avatar bg-light-info mr-2">--}}
+{{--                                        <div class="avatar-content">--}}
+{{--                                            <i data-feather="navigation-2" class="avatar-icon"></i>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="media-body my-auto">--}}
+{{--                                        <h4 class="font-weight-bolder mb-0">590</h4>--}}
+{{--                                        <p class="card-text font-small-3 mb-0">This Week</p>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-sm-0">--}}
+{{--                                <div class="media">--}}
+{{--                                    <div class="avatar bg-light-danger mr-2">--}}
+{{--                                        <div class="avatar-content">--}}
+{{--                                            <i data-feather="calendar" class="avatar-icon"></i>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="media-body my-auto">--}}
+{{--                                        <h4 class="font-weight-bolder mb-0">2000</h4>--}}
+{{--                                        <p class="card-text font-small-3 mb-0">This Month</p>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-xl-3 col-sm-6 col-12">--}}
+{{--                                <div class="media">--}}
+{{--                                    <div class="avatar bg-light-success mr-2">--}}
+{{--                                        <div class="avatar-content">--}}
+{{--                                            <i data-feather="layers" class="avatar-icon"></i>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="media-body my-auto">--}}
+{{--                                        <h4 class="font-weight-bolder mb-0">23000</h4>--}}
+{{--                                        <p class="card-text font-small-3 mb-0">Total</p>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <!--/ Statistics Card -->
         </div>
 

@@ -41,21 +41,21 @@ class VisitorsController extends Controller
     }
     public function update(StoreVisitorRequest $request, Visitor $visitor)
     {
-        $visitor->update($request->all());
-
-        return response()->json([
-            'status' => true,
-            'message' => "Visitor's Details Updated Successfully!",
-            'visitor' => $visitor
-        ], 200);
+//        $visitor->update($request->all());
+//
+//        return response()->json([
+//            'status' => true,
+//            'message' => "Visitor's Details Updated Successfully!",
+//            'visitor' => $visitor
+//        ], 200);
     }
     public function destroy(Visitor $visitor)
     {
-        $visitor->delete();
-
-        return response()->json([
-            'status' => true,
-            'message' => "Visitor's Details successfully!",
-        ], 200);
+//        $visitor->delete();
+//
+//        return response()->json([
+//            'status' => true,
+//            'message' => "Visitor's Details successfully!",
+//        ], 200);
     }
 }
