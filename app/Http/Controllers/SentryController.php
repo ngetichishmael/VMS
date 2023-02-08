@@ -15,7 +15,16 @@ class SentryController extends Controller
      */
     public function index()
     {
-        return view('livewire.sentry.dashboard');
+       
+        $sentries = DB::table('sentries')
+        ->join('organizations', 'users.org', '=', 'organizations.id')
+      
+        ->select('users.*', 'organizations.org_name')
+        ->get();
+      
+
+        return view('livewire.sentry.dashboard',compact('sentries'));
+
     }
 
     /**

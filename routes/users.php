@@ -165,3 +165,11 @@ Route::get('organization/users/suspend/{id}',[App\Http\Controllers\UserControlle
 Route::get('/search',[OrganizationController::class,'search']);
 Route::get('organization/information/delete/{id}', [App\Http\Controllers\OrganizationController::class, 'destroy'])->middleware('auth');
 Route::get('organization/information/suspend/{id}',[App\Http\Controllers\OrganizationController::class, 'status_update'])->middleware('auth');
+
+
+
+
+Route::get('/search',[PremiseController::class,'search']);
+Route::get('premise/information/delete/{id}', [App\Http\Controllers\PremiseController::class, 'destroy'])->middleware('auth');
+Route::get('premise/information/{id}}', [App\Http\Controllers\PremiseController::class, 'edit'])->middleware('auth');
+Route::get('premise/information/suspend/{id}',[App\Http\Controllers\PremiseController::class, 'status_update'])->middleware('auth');

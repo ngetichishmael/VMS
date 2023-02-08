@@ -6,6 +6,11 @@ use App\Models\Resident;
 use App\Http\Requests\StoreResidentRequest;
 use App\Http\Requests\UpdateResidentRequest;
 
+use DB;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Http\Request;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+
 class ResidentController extends Controller
 {
     /**
@@ -15,7 +20,17 @@ class ResidentController extends Controller
      */
     public function index()
     {
-        return view('livewire.premises.resident.dashboard');
+        $residents = DB::table('residents')
+
+        ->join('blocks', 'residents.block', '=', 'blocks.id')
+      
+        ->join('premises', 'blocks.premise', '=', 'premises.id')
+
+        ->select('residents.*', 'blocks.blockname', 'premises.name')
+
+        ->get();
+
+        return view('livewire.premises.resident.dashboard',compact('residents'));
     }
 
     /**

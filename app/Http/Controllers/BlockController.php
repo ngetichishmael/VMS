@@ -6,6 +6,11 @@ use App\Models\Block;
 use App\Http\Requests\StoreBlockRequest;
 use App\Http\Requests\UpdateBlockRequest;
 
+use DB;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Http\Request;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+
 class BlockController extends Controller
 {
     /**
@@ -15,7 +20,13 @@ class BlockController extends Controller
      */
     public function index()
     {
-        return view('livewire.premises.block.dashboard');
+        $blocks = DB::table('blocks')
+        ->join('premises', 'blocks.premise', '=', 'premises.id')
+      
+        ->select('blocks.*', 'premises.name')
+        ->get();
+
+        return view('livewire.premises.block.dashboard',compact('blocks'));
     }
 
     /**

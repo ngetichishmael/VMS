@@ -15,6 +15,10 @@ class CreateResidentsTable extends Migration
     {
         Schema::create('residents', function (Blueprint $table) {
             $table->id();
+            $table->integer('premise');
+            $table->integer('block');
+            $table->string('rname');
+            $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });
     }

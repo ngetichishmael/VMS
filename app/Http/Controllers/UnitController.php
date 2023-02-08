@@ -6,6 +6,11 @@ use App\Models\Unit;
 use App\Http\Requests\StoreUnitRequest;
 use App\Http\Requests\UpdateUnitRequest;
 
+use DB;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Http\Request;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+
 class UnitController extends Controller
 {
     /**
@@ -15,7 +20,11 @@ class UnitController extends Controller
      */
     public function index()
     {
-        return view('livewire.premises.unit.dashboard');
+        $units = DB::table('units')
+
+        ->get();
+
+        return view('livewire.premises.unit.dashboard',compact('units'));
     }
 
     /**

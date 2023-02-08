@@ -15,6 +15,9 @@ class CreateBlocksTable extends Migration
     {
         Schema::create('blocks', function (Blueprint $table) {
             $table->id();
+            $table->integer('premise');
+            $table->string('blockname');
+            $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });
     }

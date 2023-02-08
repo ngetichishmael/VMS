@@ -73,21 +73,52 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Action</th>
+                                    <th>Unit Name</th>
+                                    <th>Premise</th>
+                                    <th>Block</th>
+                                    <th>Status</th>
                                     <th>Created At</th>
+                                    <th>Action</th>
+                                  
                                 </tr>
                             </thead>
                             <tbody>
+                            @foreach ($units as $unit)
                                 <tr>
-                                    <td>1</td>
-                                    <td>Deveint</td>
-                                    <td>info@deveint.com</td>
-                                    <td>view/delete</td>
-                                    <td>{{ now() }}</td>
+                                   
+                                    <td> {{ $unit ->unitname }} </td>
+                                    <td> {{ $unit ->premise }} </td>
+                                    <td> {{ $unit ->block }} </td>
+                                    <td>
+                                    <?php if($unit->status == '1'){ ?> 
+
+                                        <a href="#" class="Active" style="color:#00FF00;">Active</a>
+
+                                        <?php }else{ ?> 
+
+                                        <a href="#" class="inactive" style="color:#FF0000;">Disabled</a>
+
+                                    <?php } ?>
+
+                                    </td>
+                                    <td>{{ $unit ->created_at }}</td>
+                                    <td>     
+                                             <!--update link-->
+                                        <a href="{{ url('block/information/'.$unit->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" title="Edit">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        </a>
+                                        <!-- delete link -->
+                                        <?php if($unit->status == '0'){ ?> 
+                                        <a href="{{ url('block/information/suspend/'.$unit->id) }}" onclick="return confirm('Are you sure to want to Enable the Premise?')" style="padding-right:20px; " title="Enable"> <i class="fas fa-ban" style="color:red;"></i> </a>
+                                        <?php }else{ ?> 
+                                            <a href="{{ url('block/information/suspend/'.$unit->id) }}" onclick="return confirm('Are you sure to want to Disable the Premise?')" style="padding-right:20px; " title="Disable"> <i class="fas fa-ban" ></i> </a>
+                                        <?php } ?>
+
+                                        <a href="{{ url('block/information/delete/'.$unit->id) }}" onclick="return confirm('Are you sure to want to delete the premise?')" title="Delete"> <i class="fas fa-trash"></i> </a>
+                                    </td>
                                 </tr>
+
+                                @endforeach
 
                             </tbody>
                         </table>

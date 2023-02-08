@@ -69,7 +69,7 @@
             <div class="card">
                 <div class="pt-0 card-datatable table-responsive">
                     <div class="card-datatable table-responsive">
-                        <table class="table">
+                        <table class="invoice-list-table table" >
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -259,3 +259,4 @@
     <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script>
     <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
 @endsection
+
