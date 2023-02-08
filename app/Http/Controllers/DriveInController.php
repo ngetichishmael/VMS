@@ -15,7 +15,7 @@ class DriveInController extends Controller
      */
     public function index()
     {
-        return view('livewire.visit.drivers.dashboard');
+        return view('app.visitor.drivers.index');
     }
 
     /**

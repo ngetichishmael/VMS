@@ -19,11 +19,11 @@ class VisitorController extends Controller
      */
     public function index()
     {
-        return view('app.visitor.index');
+//        return view('app.visitor.walks.index');
     }
     public function show()
     {
-        return view('app.visitor.index');
+//        return view('app.visitor.walks.index');
     }
     /**
      * Show the form for creating a new resource.

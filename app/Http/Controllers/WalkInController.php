@@ -15,7 +15,7 @@ class WalkInController extends Controller
      */
     public function index()
     {
-        return view('livewire.visit.walks.dashboard');
+        return view('app.visitor.walks.index');
     }
 
     /**

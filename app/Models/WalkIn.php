@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class WalkIn extends Model
 {
     use HasFactory;
-    protected $table = 'visitor_information';
+    protected $table = 'visitors';
     protected $guarded = [];
 }

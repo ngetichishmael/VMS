@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class DriveIn extends Model
 {
     use HasFactory;
+    protected $table = 'visitors';
+    protected $guarded = [];
 }
