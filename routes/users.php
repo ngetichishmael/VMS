@@ -184,3 +184,9 @@ Route::get('/search',[UnitController::class,'search']);
 Route::get('unit/information/delete/{id}', [App\Http\Controllers\UnitController::class, 'destroy'])->middleware('auth');
 Route::get('unit/information/{id}}', [App\Http\Controllers\UnitController::class, 'edit'])->middleware('auth');
 Route::get('unit/information/suspend/{id}',[App\Http\Controllers\UnitController::class, 'status_update'])->middleware('auth');
+
+// Residents
+Route::get('/search',[ResidentController::class,'search']);
+Route::get('resident/information/delete/{id}', [App\Http\Controllers\ResidentController::class, 'destroy'])->middleware('auth');
+Route::get('resident/information/{id}}', [App\Http\Controllers\ResidentController::class, 'edit'])->middleware('auth');
+Route::get('resident/information/suspend/{id}',[App\Http\Controllers\ResidentController::class, 'status_update'])->middleware('auth');
