@@ -1,13 +1,34 @@
 
     <!-- Dashboard Ecommerce Starts -->
     <section id="dashboard-ecommerce">
-        <section>
-            <div class="row mb-2">
-                <div class="col-md-9">
+        <div class="row mb-2">
+            <label style="color: #070707" for="">Filter By:</label>
+            <div class="col-md-6" style="width: 50%;" >
+                <label style="color: #070707" for="">Visitor Type</label>
+                <select wire:model="selectedVisitorType" style="width: 50%;">
+                    <option value="">All</option>
+
+                    @foreach ($visitorTypes as $visitorType)
+                        <option value="{{ $visitorType->id }}">{{ $visitorType->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-5">
+                <label style="color: #070707" for="">Verification Type</label>
+                <select wire:model="selectedVisitorType" style="width: 50%;">
+                    <option value="">All</option>
+                    @foreach ($visitorTypes as $visitorType)
+                        <option value="{{ $visitorType->id }}">{{ $visitorType->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="row mb-2" style="margin-left: 35%; padding-left: 35%">
+            <div class="col-md-9">
                     <label for="" style="color: #070707">Search</label>
-                    <input wire:model.debounce.300ms="search" type="text" class="form-control" placeholder="Enter Product name">
+                    <input wire:model.debounce.300ms="search" type="text" class="form-control" placeholder="Enter visitor name">
                 </div>
-                <div class="col-md-3">
+                <div class="col-ms-2">
                     <label style="color: #070707" for="">Items Per</label>
                     <select wire:model="perPage" class="form-control">`
                         <option value="10" selected>10</option>
@@ -24,7 +45,6 @@
                         <table class="table">
                             <thead style="color: #070707">
                                 <tr>
-                                    <th>#</th>
                                     <th>Name</th>
                                     <th>Site</th>
                                     <th>Section</th>
@@ -76,11 +96,11 @@
                             <tbody>
                             @foreach ($visitors as $key => $visitor)
                                 <tr>
-                                    <td>{!! $key + 1 !!}</td>
-                                    <td>{!! $visitor->firstName . " ". $visitor->lastName!!} </td>
+{{--                                    <td>{!! $key + 1 !!}</td>--}}
+                                    <td>{!! $visitor->name!!} </td>
                                     <td>{!! $visitor->site!!}</td>
                                     <td>{!! $visitor->section!!}</td>
-                                    <td>{!! $visitor->organization!!}</td>
+                                    <td>{!! $visitor->organization()->pluck("name")->implode('')!!}</td>
                                     <td>{!! $visitor->timeIn!!}</td>
                                     @if($visitor->timeOut=='0000-00-00 00:00:00')<td> </td>
                                     @else
@@ -88,7 +108,10 @@
                                     @endif
                                     @if($visitor->timeOut=='0000-00-00 00:00:00')<td style="color: orange;"> Visitor Still in</td>
                                     @else
-                                        <td>{!! $visitor->timeOut !!}</td>
+                                        <td>
+                                            {{ Carbon\Carbon::createFromTimeStamp(strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeOut))) - strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeIn))))->format('H :i :s') }}
+                                        </td>
+
                                     @endif
                                     <td >
                                         <div class="dropdown">
@@ -105,12 +128,11 @@
                             @endforeach
                             </tbody>
                         </table>
-                        <div class="mt-1">
+                        <div class="mt-1">{!! $visitors->links() !!}</div>
                         </div>
                     </div>
                 </div>
         </section>
-        </div>
 
 
 {{--        <h2 class="brand-text">TODO ON WALKS IN</h2>--}}
