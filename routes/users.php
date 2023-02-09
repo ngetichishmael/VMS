@@ -156,20 +156,31 @@ Route::middleware('auth')->group(function () {
 });
 
 
+// users
 Route::get('/search',[UserController::class,'search']);
 Route::get('organization/users/delete/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->middleware('auth');
 Route::get('organization/users/{id}}', [App\Http\Controllers\UserController::class, 'edit'])->middleware('auth');
 Route::get('organization/users/suspend/{id}',[App\Http\Controllers\UserController::class, 'status_update'])->middleware('auth');
 
-
+// organizations
 Route::get('/search',[OrganizationController::class,'search']);
 Route::get('organization/information/delete/{id}', [App\Http\Controllers\OrganizationController::class, 'destroy'])->middleware('auth');
 Route::get('organization/information/suspend/{id}',[App\Http\Controllers\OrganizationController::class, 'status_update'])->middleware('auth');
 
-
-
-
+// Premises
 Route::get('/search',[PremiseController::class,'search']);
 Route::get('premise/information/delete/{id}', [App\Http\Controllers\PremiseController::class, 'destroy'])->middleware('auth');
 Route::get('premise/information/{id}}', [App\Http\Controllers\PremiseController::class, 'edit'])->middleware('auth');
 Route::get('premise/information/suspend/{id}',[App\Http\Controllers\PremiseController::class, 'status_update'])->middleware('auth');
+
+// Blocks
+Route::get('/search',[BlockController::class,'search']);
+Route::get('block/information/delete/{id}', [App\Http\Controllers\BlockController::class, 'destroy'])->middleware('auth');
+Route::get('block/information/{id}}', [App\Http\Controllers\BlockController::class, 'edit'])->middleware('auth');
+Route::get('block/information/suspend/{id}',[App\Http\Controllers\BlockController::class, 'status_update'])->middleware('auth');
+
+// Units
+Route::get('/search',[UnitController::class,'search']);
+Route::get('unit/information/delete/{id}', [App\Http\Controllers\UnitController::class, 'destroy'])->middleware('auth');
+Route::get('unit/information/{id}}', [App\Http\Controllers\UnitController::class, 'edit'])->middleware('auth');
+Route::get('unit/information/suspend/{id}',[App\Http\Controllers\UnitController::class, 'status_update'])->middleware('auth');

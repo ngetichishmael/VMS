@@ -21,12 +21,18 @@ class BlockController extends Controller
     public function index()
     {
         $blocks = DB::table('blocks')
+
         ->join('premises', 'blocks.premise', '=', 'premises.id')
       
         ->select('blocks.*', 'premises.name')
+
         ->get();
 
-        return view('livewire.premises.block.dashboard',compact('blocks'));
+        $premises = DB::table('premises')
+        
+        ->get();
+
+        return view('livewire.premises.block.dashboard',compact('blocks','premises'));
     }
 
     /**
@@ -45,9 +51,19 @@ class BlockController extends Controller
      * @param  \App\Http\Requests\StoreBlockRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBlockRequest $request)
+    public function store(Request $request)
     {
-        //
+        $this->validate(request(), [
+            'blockname' => 'required',
+            'premise' => 'required',  
+        ]);
+        
+        $block = new Block;
+        $block->blockname = $request->blockname;
+        $block->premise = $request->premise;
+        $block->save();
+          
+        return redirect()->to('/block/information');
     }
 
     /**
@@ -90,8 +106,37 @@ class BlockController extends Controller
      * @param  \App\Models\Block  $block
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Block $block)
+    public function destroy($id)
     {
-        //
+        $delete = block::find($id);
+
+        $delete->delete();
+
+        Toastr::success('Data deleted successfully :)','Success');
+
+        return redirect()->route('BlockInformation');
+    }
+
+    public function status_update($id){
+
+        //get block status with the help of  ID
+        $blocks = DB::table('blocks')
+                    ->select('status')
+                    ->where('id','=',$id)
+                    ->first();
+
+        //Check block status
+        if($blocks->status == '1'){
+            $status = '0';
+        }else{
+            $status = '1';
+        }
+
+        //update block status
+        $values = array('status' => $status );
+        DB::table('blocks')->where('id',$id)->update($values);
+
+        session()->flash('msg','User status has been updated successfully.');
+        return redirect()->route('BlockInformation');
     }
 }

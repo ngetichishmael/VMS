@@ -111,9 +111,9 @@
                                         <a href="{{ url('premise/information/'.$prem->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
                                         <!-- delete link -->
                                         <?php if($prem->status == '0'){ ?> 
-                                        <a href="{{ url('premise/information/suspend/'.$prem->id) }}" onclick="return confirm('Are you sure to want to Enable the Premise?')" style="padding-right:20px; " > Unblock </a>
+                                        <a href="{{ url('premise/information/suspend/'.$prem->id) }}" onclick="return confirm('Are you sure to want to Unblock the Premise?')" style="padding-right:20px; " > Unblock </a>
                                         <?php }else{ ?> 
-                                            <a href="{{ url('premise/information/suspend/'.$prem->id) }}" onclick="return confirm('Are you sure to want to Disable the Premise?')" style="padding-right:20px; "> Block</a>
+                                            <a href="{{ url('premise/information/suspend/'.$prem->id) }}" onclick="return confirm('Are you sure to want to block the Premise?')" style="padding-right:20px; "> Block</a>
                                         <?php } ?>
 
                                         <a href="{{ url('premise/information/delete/'.$prem->id) }}" onclick="return confirm('Are you sure to want to delete the premise?')" > Delete </a>
