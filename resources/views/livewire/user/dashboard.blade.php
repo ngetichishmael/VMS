@@ -88,6 +88,9 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
+
+                         
+
                             <tbody class="alldata">
                             @foreach ($users as $user)
                                 <tr>
@@ -112,21 +115,28 @@
                                     <td>{{ now() }}</td>
                                     <td>{{ now() }}</td>
                                     <td>
-                                  
-                                            <!--update link-->
-                                            <a href="{{ url('organization/users/'.$user->id) }}" class="" style="padding-right:6px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" title="Edit">
-                                        <i class="fas fa-pencil-alt"></i>
-                                        </a>
-                                        <!-- delete link -->
+
+                                    <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                              
+                                                <a href="{{ url('organization/users/'.$user->id) }}" class="" style="padding-right:6px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+                                               
+                                                                        <!-- delete link -->
                                         <?php if($user->status == '0'){ ?> 
-                                        <a href="{{ url('organization/users/suspend/'.$user->id) }}" onclick="return confirm('Are you sure to want to Activate the User?')"  title="Unsuspend" style="padding-right:6px" > <i class="fas fa-ban" style="color:red;"></i> </a>
+                                        <a href="{{ url('organization/users/suspend/'.$user->id) }}" onclick="return confirm('Are you sure to want to Activate the User?')"  title="Unsuspend" style="padding-right:6px" > Unsuspend</i> </a>
                                         <?php }else{ ?> 
-                                            <a href="{{ url('organization/users/suspend/'.$user->id) }}" onclick="return confirm('Are you sure to want to suspend the User?')"  title="Suspend" style="padding-right:6px"> <i class="fas fa-ban" ></i> </a>
+                                            <a href="{{ url('organization/users/suspend/'.$user->id) }}" onclick="return confirm('Are you sure to want to suspend the User?')"  title="Suspend" style="padding-right:6px"> Suspend </a>
                                         <?php } ?>
 
-                                        <a href="{{ url('organization/users/delete/'.$user->id) }}" onclick="return confirm('Are you sure to want to delete the user?')" title="Delete"> <i class="fas fa-trash"></i> </a>
-                                    
-
+                                        <a href="{{ url('organization/users/delete/'.$user->id) }}" onclick="return confirm('Are you sure to want to delete the user?')" title="Delete"> Delete </a>
+                                   
+                                            </div>
+                                        </div>
+                                        
+  
                                     </td>
                                 </tr>
                               
@@ -198,7 +208,7 @@
               <select id="org" name="org" class="form-control">
                 
                 @foreach ($organizations as $organizations)
-                    <option id="org" name="org" value="{{ $organizations ->id }}"> {{ $organizations ->org_name }}</option>
+                    <option  value="{{ $organizations ->id }}"> {{ $organizations ->org_name }}</option>
                 @endforeach  
               </select>
             </fieldset>

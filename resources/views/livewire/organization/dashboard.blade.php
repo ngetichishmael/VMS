@@ -81,6 +81,7 @@
                                     
                                 </tr>
                             </thead>
+                            
                             <tbody class="alldata">
                             @foreach ($organizations as $org)
                                 <tr>
@@ -101,20 +102,28 @@
                                     </td>                            
                                     <td>{{ $org ->created_at }}</td>
                                     <td>
-                                            <!--update link-->
-                                        <a href="{{ url('organization/users/'.$org->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" title="Edit">
-                                        <i class="fas fa-pencil-alt"></i>
-                                        </a>
+                                         
+                         
+
+                                          <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                              
+                                                   <!--update link-->
+                                        <a href="{{ url('organization/users/'.$org->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit   </a>
                                         <!-- delete link -->
                                         <?php if($org->status == '0'){ ?> 
-                                        <a href="{{ url('organization/information/suspend/'.$org->id) }}" onclick="return confirm('Are you sure to want to Activate the organization?')" style="padding-right:20px; " title="Unsuspend"> <i class="fas fa-ban" style="color:red;"></i> </a>
+                                        <a href="{{ url('organization/information/suspend/'.$org->id) }}" onclick="return confirm('Are you sure to want to Activate the organization?')" style="padding-right:20px; " > Activate </a>
                                         <?php }else{ ?> 
-                                            <a href="{{ url('organization/information/suspend/'.$org->id) }}" onclick="return confirm('Are you sure to want to suspend the organization?')" style="padding-right:20px; " title="Suspend"> <i class="fas fa-ban" ></i> </a>
+                                            <a href="{{ url('organization/information/suspend/'.$org->id) }}" onclick="return confirm('Are you sure to want to suspend the organization?')" style="padding-right:20px; " > Suspend</i> </a>
                                         <?php } ?>
 
-                                        <a href="{{ url('organization/information/delete/'.$org->id) }}" onclick="return confirm('Are you sure to want to delete the organization?')" title="Delete"> <i class="fas fa-trash"></i> </a>
-                                    
-                         
+                                        <a href="{{ url('organization/information/delete/'.$org->id) }}" onclick="return confirm('Are you sure to want to delete the organization?')" > Delete </a>
+                                                    
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
 

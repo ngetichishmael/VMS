@@ -98,18 +98,30 @@
                                     </td>
                                     <td>{{ $prem ->created_at }}</td>
                                     <td>     
-                                             <!--update link-->
-                                        <a href="{{ url('premise/information/'.$prem->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" title="Edit">
-                                        <i class="fas fa-pencil-alt"></i>
-                                        </a>
+                                      
+                                    
+                                    
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                              
+                                        <!--update link-->
+                                        <a href="{{ url('premise/information/'.$prem->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
                                         <!-- delete link -->
                                         <?php if($prem->status == '0'){ ?> 
-                                        <a href="{{ url('premise/information/suspend/'.$prem->id) }}" onclick="return confirm('Are you sure to want to Enable the Premise?')" style="padding-right:20px; " title="Enable"> <i class="fas fa-ban" style="color:red;"></i> </a>
+                                        <a href="{{ url('premise/information/suspend/'.$prem->id) }}" onclick="return confirm('Are you sure to want to Enable the Premise?')" style="padding-right:20px; " > Unblock </a>
                                         <?php }else{ ?> 
-                                            <a href="{{ url('premise/information/suspend/'.$prem->id) }}" onclick="return confirm('Are you sure to want to Disable the Premise?')" style="padding-right:20px; " title="Disable"> <i class="fas fa-ban" ></i> </a>
+                                            <a href="{{ url('premise/information/suspend/'.$prem->id) }}" onclick="return confirm('Are you sure to want to Disable the Premise?')" style="padding-right:20px; "> Block</a>
                                         <?php } ?>
 
-                                        <a href="{{ url('premise/information/delete/'.$prem->id) }}" onclick="return confirm('Are you sure to want to delete the premise?')" title="Delete"> <i class="fas fa-trash"></i> </a>
+                                        <a href="{{ url('premise/information/delete/'.$prem->id) }}" onclick="return confirm('Are you sure to want to delete the premise?')" > Delete </a>
+                                             
+                                            </div>
+                                        </div>
+                                    
+                                    
                                     </td>
                                 </tr>
 

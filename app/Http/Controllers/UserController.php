@@ -57,16 +57,27 @@ class UserController extends Controller
             'email' => 'required|email',
             'org' => 'required',
             'password' => 'required'
+            
         ]);
         
        
-        $user = User::create([
-            'name' => $request->name,
-            'phone_number' => $request->phone_number,
-            'org' => $request->org,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $user = new User;
+        $user->name = $request->name;
+        $user->phone_number = $request->phone_number;
+        $user->org = $request->org;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
+        
+        
+        // $user = User::create([
+        //     'name' => $request->name,
+        //     'phone_number' => $request->phone_number,
+        //     'org' => $request->org,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password),
+        // ]);
+        
      
         
         return redirect()->to('/organization/users');
