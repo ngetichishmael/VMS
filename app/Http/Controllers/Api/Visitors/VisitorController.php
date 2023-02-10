@@ -41,53 +41,43 @@ class VisitorController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Visitor[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-
-        return Visitor::all();
+        return response()->json(Visitor::with(['organization', 'premises', 'vehicle', 'nationality', 'tag', 'visitorType'])->get());
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'phoneNumber' => 'required',
-            'gender' => 'required',
-            'type' => 'required',
-            'organizationId' => 'required',
-            'premisesId' => 'required',
-            'vehicleId' => 'required',
-            'nationalityId' => 'required',
-            'tagId' => 'required',
-            'hostName' => 'required',
-            'site' => 'required',
-            'section' => 'required'
-        ]);
-
-        $visitor = Visitor::create($validatedData);
-
-        return response()->json($visitor, 201);
-    }
-
-    public function show($id)
-    {
-        $visitor = Visitor::findOrFail($id);
-
-        return response()->json($visitor);
+        //
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-//    public function show(Visitor $visitor)
-//    {
-//        return Visitor::with(['organization', 'premise', 'vehicle', 'nationality', 'tag'])->find($visitor->id);
-//    }
+    public function show($id)
+    {
+
+        $visitor = Visitor::with(['organization', 'premises', 'nationality', 'vehicle', 'tag', 'visitorType'])->get()->where('id', $id)->first();
+        if (!$visitor) {
+            return response()->json(['message' => 'Visitor not found'], 404);
+        }
+
+        return response()->json($visitor);
+
+    }
+
+
     /**
      * Update the specified resource in storage.
      *

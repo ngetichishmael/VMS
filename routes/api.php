@@ -1,43 +1,36 @@
 <?php
 
-use Illuminate\Http\Controllers\Api\Visitors;
+
+use App\Http\Controllers\Api\Visitors\DriveInController;
+use App\Http\Controllers\Api\Visitors\WalkInController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Api\Visitors\VisitorController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\VisitorController;
 
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//visitor walkin,drivein apis
+Route::group(['namespace' => 'App\Http\Controllers\Api\Visitors'], function () {
+
+    Route::middleware('auth:api')->get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::prefix('visitors')->group(function () {
+        Route::get('/all', [VisitorController::class,'index']);
+        Route::get('visitor/{id}', [DriveInController::class,'show']);
+        Route::get('organization-options', [VisitorController::class, 'organizationOptions']);
+        Route::get('premises-options', [VisitorController::class,'premisesOptions']);
+        Route::get('vehicle-options', [VisitorController::class,'vehicleOptions']);
+        Route::get('nationality-options', [VisitorController::class,'nationalityOptions']);
+        Route::get('tag-options', [VisitorController::class,'tagOptions']);
+
+        Route::get('/drivein/all', [DriveInController::class,'index']);
+        Route::post('/drivein/create', [DriveInController::class,'store'])->middleware('auth:sanctum');;
+
+        Route::get('/walkin/all', [WalkInController::class,'index']);
+        Route::post('/walkin/create', [WalkInController::class,'store'])->middleware('auth:sanctum');;
+    });
 });
-//api/v1
-//Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\Visitors'], function(){
-//Route::apiResource('visitor', VisitorsController::class);
-//Route::apiResource('visitor/index', VisitorsController::class);
-//Route::apiResource('drivein',DriveInController::class);
-//});
-//Route::apiResource('visitors', 'Api\Visitors\VisitorController');
-Route::namespace('Api\Visitors')->group(function () {
-    Route::resource('visitors', 'VisitorController');
-});
-Route::get('visitors/organization-options', 'Api\Visitors\VisitorController@organizationOptions');
-Route::get('visitors/premises-options', 'Api\Visitors\VisitorController@premisesOptions');
-Route::get('visitors/vehicle-options', 'Api\Visitors\VisitorController@vehicleOptions');
-Route::get('visitors/nationality-options', 'Api\Visitors\VisitorController@nationalityOptions');
-Route::get('visitors/tag-options', 'Api\Visitors\VisitorController@tagOptions');
 
 
-
-//Route::get('visitors', 'VisitorController@index');
-//Route::post('visitors', 'VisitorController@store');
-//Route::get('visitors/{visitor}', 'VisitorController@show');

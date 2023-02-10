@@ -24,7 +24,7 @@ class CreateVisitorsTable extends Migration
             $table->date('DOB')->nullable();
             $table->unsignedBigInteger('organizationId');
             $table->unsignedBigInteger('premisesId');
-            $table->unsignedBigInteger('vehicleId');
+            $table->unsignedBigInteger('vehicleId')->nullable();
             $table->unsignedBigInteger('nationalityId');
             $table->unsignedBigInteger('tagId');
             $table->unsignedBigInteger('visitorTypeId');

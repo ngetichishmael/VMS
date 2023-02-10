@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Tag
+class Tag extends Model
 {
     use HasFactory;
-    protected $table = 'tags';
-    protected $guarded = [];
+    protected $guarded =[];
 }
