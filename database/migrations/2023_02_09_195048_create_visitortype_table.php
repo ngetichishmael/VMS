@@ -14,7 +14,7 @@ class CreateVisitortypeTable extends Migration
     public function up()
     {
         Schema::create('visitortype', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('description');
             $table->timestamps();
         });

@@ -2,23 +2,23 @@
     <!-- Dashboard Ecommerce Starts -->
     <section id="dashboard-ecommerce">
         <div class="row mb-2">
-            <label style="color: #070707" for="">Filter By:</label>
-            <div class="col-md-6" style="width: 50%;" >
-                <label style="color: #070707" for="">Visitor Type</label>
+           <label style="color: #070707" for=""><h4>Filter By:</h4></label>
+            <div class="col-md-5" style="width: 50%;" >
+                <label style="color: #070707" for=""><h5>Visitor Type</h5></label>
                 <select wire:model="selectedVisitorType" style="width: 50%;">
                     <option value="">All</option>
 
                     @foreach ($visitorTypes as $visitorType)
-                        <option value="{{ $visitorType->id }}">{{ $visitorType->name }}</option>
+                        <option value="{{ $visitorType->id }}">{{ $visitorType->description }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="col-md-5">
-                <label style="color: #070707" for="">Verification Type</label>
+                <label style="color: #070707" for=""><h5>Verification Type</h5></label>
                 <select wire:model="selectedVisitorType" style="width: 50%;">
                     <option value="">All</option>
                     @foreach ($visitorTypes as $visitorType)
-                        <option value="{{ $visitorType->id }}">{{ $visitorType->name }}</option>
+                        <option value="{{ $visitorType->id }}">{{ $visitorType->description }}</option>
                     @endforeach
                 </select>
             </div>

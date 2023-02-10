@@ -1,27 +1,68 @@
 
     <!-- Dashboard Ecommerce Starts -->
+    <style>
+        .option{
+            color: #0c0c0c;
+        }
+
+        .dropdown {
+            display: inline-block;
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+            color: darkgray;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            display: none;
+            background-color: #fff;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-menu a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+    </style>
     <section id="dashboard-ecommerce">
         <div class="row mb-2">
-            <label style="color: #070707" for="">Filter By:</label>
-            <div class="col-md-6" style="width: 50%;" >
-            <label style="color: #070707" for="">Visitor Type</label>
-            <select wire:model="selectedVisitorType" style="width: 50%;">
-                <option value="">All</option>
+            <label style="color: #070707" for=""><h4>Filter By:</h4></label>
+            <div class="col-md-5" style="width: 50%;" >
+                <label style="color: #070707" for=""><h5>Visitor Type</h5></label>
+                <select wire:model="selectedVisitorType" style="width: 50%;">
+                    <option value="">All</option>
 
-                @foreach ($visitorTypes as $visitorType)
-                    <option value="{{ $visitorType->id }}">{{ $visitorType->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-md-5">
-            <label style="color: #070707" for="">Verification Type</label>
-            <select wire:model="selectedVisitorType" style="width: 50%;">
-                <option value="">All</option>
-                @foreach ($visitorTypes as $visitorType)
-                    <option value="{{ $visitorType->id }}">{{ $visitorType->name }}</option>
-                @endforeach
-            </select>
-        </div>
+                    @foreach ($visitorTypes as $visitorType)
+                        <option value="{{ $visitorType->id }}">{{ $visitorType->description }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-5">
+                <label style="color: #070707" for=""><h5>Verification Type</h5></label>
+                <select wire:model="selectedVisitorType" style="width: 50%;">
+                    <option value="">All</option>
+                    @foreach ($visitorTypes as $visitorType)
+                        <option value="{{ $visitorType->id }}">{{ $visitorType->description }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
             <div class="row mb-2" style="margin-left: 35%; padding-left: 35%">
                 <div class="col-md-9">
@@ -57,44 +98,6 @@
                                 <th>Action</th>
                             </tr>
                             </thead>
-                            <style>
-
-                                .dropdown {
-                                    display: inline-block;
-                                    position: relative;
-                                }
-
-                                .dropdown-toggle {
-                                    cursor: pointer;
-                                    color: darkgray;
-                                }
-
-                                .dropdown-menu {
-                                    position: absolute;
-                                    top: 100%;
-                                    right: 0;
-                                    display: none;
-                                    background-color: #fff;
-                                    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                                    z-index: 1;
-                                }
-
-                                .dropdown-menu a {
-                                    color: #333;
-                                    padding: 12px 16px;
-                                    text-decoration: none;
-                                    display: block;
-                                }
-
-                                .dropdown-menu a:hover {
-                                    background-color: #f1f1f1;
-                                }
-
-                                .dropdown:hover .dropdown-menu {
-                                    display: block;
-                                }
-
-                            </style>
                             <tbody>
                             @foreach ($dvisitors as $key => $visitor)
                                 <tr>

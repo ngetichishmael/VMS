@@ -14,7 +14,7 @@ class CreatePremisesTable extends Migration
     public function up()
     {
         Schema::create('premises', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('premisesName');
             $table->string('address');
             $table->string('location');

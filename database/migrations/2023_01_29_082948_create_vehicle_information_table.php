@@ -14,7 +14,7 @@ class CreateVehicleInformationTable extends Migration
     public function up()
     {
         Schema::create('vehicle_information', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->char('registration');
             $table->char('type')->nullable();
             $table->char('color')->nullable();
