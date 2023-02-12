@@ -102,16 +102,15 @@
                                     <td>{!! $visitor->section!!}</td>
                                     <td>{!! $visitor->organization()->pluck("name")->implode('')!!}</td>
                                     <td>{!! $visitor->timeIn!!}</td>
-                                    @if($visitor->timeOut=='0000-00-00 00:00:00')<td> </td>
+                                    @if($visitor->timeOut=='0000-00-00 00:00:00' || $visitor->timeOut=='' || $visitor->timeOut==null)<td> </td>
                                     @else
-                                      <td> {!! $visitor->timeOut!!}</td>
+                                        <td> {!! $visitor->timeOut!!}</td>
                                     @endif
-                                    @if($visitor->timeOut=='0000-00-00 00:00:00')<td style="color: orange;"> Visitor Still in</td>
+                                    @if($visitor->timeOut=='0000-00-00 00:00:00'|| $visitor->timeOut=='' || $visitor->timeOut==null)<td style="color: orange;"> Visitor Still in</td>
                                     @else
                                         <td>
                                             {{ Carbon\Carbon::createFromTimeStamp(strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeOut))) - strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeIn))))->format('H :i :s') }}
                                         </td>
-
                                     @endif
                                     <td >
                                         <div class="dropdown">

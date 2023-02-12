@@ -19,7 +19,10 @@ class CreateVehicleInformationTable extends Migration
             $table->char('type')->nullable();
             $table->char('color')->nullable();
             $table->string('model')->nullable();
+            $table->unsignedBigInteger('visitorId');
             $table->timestamps();
+
+            $table->foreign('visitorId')->references('id')->on('visitors');
         });
     }
 

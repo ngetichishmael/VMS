@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Nationality;
 use App\Models\Organization;
 use App\Models\Premise;
 use App\Models\Tag;
@@ -25,7 +24,7 @@ class DriveIn extends Model
     }
     public function vehicle(): BelongsTo
     {
-        return $this->BelongsTo(VehicleInformation::class, 'vehicleId', 'id');
+        return $this->BelongsTo(VehicleInformation::class, 'id', 'visitorId');
     }
 //    public function visitorType() {
 //        return $this->belongsTo(VisitorType::class);
@@ -45,10 +44,7 @@ class DriveIn extends Model
 //        return $this->belongsTo(VehicleInformation::class, 'vehicleId');
 //    }
 
-    public function nationality(): BelongsTo
-    {
-        return $this->belongsTo(Nationality::class, 'nationalityId');
-    }
+
 
     public function tag(): BelongsTo
     {

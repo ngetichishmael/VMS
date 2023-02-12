@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Visitor;
 use App\Http\Requests\StoreVisitorRequest;
 use App\Http\Requests\UpdateVisitorRequest;
+use Database\Seeders\VisitorSeeder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VisitorController extends Controller
 {
@@ -25,6 +27,7 @@ class VisitorController extends Controller
 
     public function store(Request $request)
     {
+
         $visitor = Visitor::create($request->all());
         return response()->json($visitor, 201);
     }

@@ -16,7 +16,7 @@ class DriveInController extends Controller
      */
     public function index()
     {
-        return response()->json(Visitor::with(['organization', 'premises', 'vehicle', 'nationality', 'tag', 'visitorType'])->where('type','drivein')->get());
+        return response()->json(Visitor::with(['organization', 'premises', 'purpose', 'vehicle', 'tag', 'visitorType'])->where('type','drivein')->get());
     }
 
 
@@ -27,11 +27,10 @@ class DriveInController extends Controller
             'phoneNumber' => 'required|string',
             'gender' => 'required|string',
             'type' => 'required|string',
-            'purpose' => 'required|string',
+            'purposeId' => 'required|exists:purposes,id',
             'organizationId' => 'required|exists:organizations,id',
             'premisesId' => 'required|exists:premises,id',
-            'nationalityId' => 'required|exists:nationality,id',
-            'vehicleId' => 'required|exists:vehicle_information,id',
+            'nationality' => 'required',
             'tagId' => 'required|exists:tags,id',
             'visitorTypeId' => 'required|exists:visitortype,id',
             'hostName' => 'required|string',

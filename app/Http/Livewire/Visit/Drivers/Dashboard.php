@@ -25,8 +25,6 @@ class Dashboard extends Component
     {
 
         $searchTerm = '%' . $this->search . '%';
-//        ->where('organizationid', Auth::user()->organizationId)
-//        $organization_id = '%' . Auth::user()->organizationId . '%';
         $dvisitors = DriveIn::with('dorganization')
             ->with('vehicle')
         ->where('type', 'drivein')
@@ -34,7 +32,6 @@ class Dashboard extends Component
                 $query->where('name', 'like', $searchTerm)
                     ->orWhere('site', 'like', $searchTerm)
                     ->orWhere('section', 'like', $searchTerm)
-                    ->orWhere('organizationId', 'like', $searchTerm)
                     ->orWhere('timeIn', 'like', $searchTerm)
                     ->orWhere('timeOut', 'like', $searchTerm);
             })

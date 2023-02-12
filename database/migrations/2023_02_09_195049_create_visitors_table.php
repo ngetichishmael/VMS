@@ -10,7 +10,9 @@ class CreateVisitorsTable extends Migration
      * Run the migrations.
      *
      * @return void
+     *
      */
+
     public function up()
     {
         Schema::create('visitors', function (Blueprint $table) {
@@ -20,26 +22,26 @@ class CreateVisitorsTable extends Migration
             $table->enum('gender', ['male','female']);
             $table->enum('type', ['drivein', 'walkin']);
             $table->string('IDNO');
-            $table->string('purpose');
+            $table->string('nationality');
+            $table->string('purpose')->nullable();
             $table->date('DOB')->nullable();
             $table->unsignedBigInteger('organizationId');
             $table->unsignedBigInteger('premisesId');
-            $table->unsignedBigInteger('vehicleId')->nullable();
-            $table->unsignedBigInteger('nationalityId');
             $table->unsignedBigInteger('tagId');
             $table->unsignedBigInteger('visitorTypeId');
+            $table->unsignedBigInteger('purposeId');
             $table->string('hostName')->nullable();
             $table->string('site');
             $table->string('section');
+            $table->string('createdBy');
             $table->timestamp('timeIn')->useCurrent();
             $table->timestamp('timeOut')->nullable();
             $table->timestamps();
 
             $table->foreign('organizationId')->references('id')->on('organizations');
             $table->foreign('premisesId')->references('id')->on('premises');
-            $table->foreign('vehicleId')->references('id')->on('vehicle_information');
-            $table->foreign('nationalityId')->references('id')->on('nationality');
             $table->foreign('tagId')->references('id')->on('tags')->onUpdate('cascade');
+            $table->foreign('purposeId')->references('id')->on('purposes');
         });
     }
 

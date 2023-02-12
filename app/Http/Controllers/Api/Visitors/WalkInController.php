@@ -16,7 +16,7 @@ class WalkInController extends Controller
      */
     public function index()
     {
-        return response()->json(Visitor::with(['organization', 'premises', 'nationality', 'tag', 'visitorType'])->where('type','walkin')->get());
+        return response()->json(Visitor::with(['organization', 'premises','purpose', 'tag', 'visitorType'])->where('type','walkin')->get());
     }
 
     /**
@@ -32,10 +32,10 @@ class WalkInController extends Controller
             'phoneNumber' => 'required|string',
             'gender' => 'required|string',
             'type' => 'required|string',
-            'purpose' => 'required|string',
+            'purposeId' => 'required|exists:purposes,id',
             'organizationId' => 'required|exists:organizations,id',
             'premisesId' => 'required|exists:premises,id',
-            'nationalityId' => 'required|exists:nationality,id',
+            'nationality' => 'required',
             'tagId' => 'required|exists:tags,id',
             'visitorTypeId' => 'required|exists:visitortype,id',
             'hostName' => 'required|string',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Visitors;
 
 use App\Http\Controllers\Controller;
+use App\Models\Purpose;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use App\Models\Organization;
@@ -23,19 +24,13 @@ class VisitorController extends Controller
         return Premise::all();
     }
 
-    public function vehicleOptions()
-    {
-        return VehicleInformation::all();
-    }
-
-    public function nationalityOptions()
-    {
-        return Nationality::all();
-    }
-
     public function tagOptions()
     {
         return Tag::all();
+    }
+    public function purposeOptions()
+    {
+        return Purpose::all();
     }
 
     /**
@@ -45,7 +40,7 @@ class VisitorController extends Controller
      */
     public function index()
     {
-        return response()->json(Visitor::with(['organization', 'premises', 'vehicle', 'nationality', 'tag', 'visitorType'])->get());
+        return response()->json(Visitor::with(['organization', 'premises','purpose', 'vehicle', 'tag', 'visitorType'])->get());
     }
 
     /**
@@ -68,7 +63,7 @@ class VisitorController extends Controller
     public function show($id)
     {
 
-        $visitor = Visitor::with(['organization', 'premises', 'nationality', 'vehicle', 'tag', 'visitorType'])->get()->where('id', $id)->first();
+        $visitor = Visitor::with(['organization', 'premises', 'vehicle', 'purpose','tag', 'visitorType'])->get()->where('id', $id)->first();
         if (!$visitor) {
             return response()->json(['message' => 'Visitor not found'], 404);
         }

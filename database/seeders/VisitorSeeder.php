@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use App\Models\Visitor;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Auth;
 
 class VisitorSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -14,20 +17,20 @@ class VisitorSeeder extends Seeder
      */
     public function run()
     {
-        Visitor::create([
+      Visitor::create([
             'name' => 'John Doe',
             'phoneNumber' => '0123456789',
             'gender' => 'Male',
             'type' => 'walkin',
             'IDNO' => '123456789',
-            'purpose' => 'Meeting',
+            'purposeId' => '2',
             'visitorTypeId' =>'1',
             'DOB' => '2000-01-01',
             'organizationId' => '1',
             'premisesId' => '1',
-            'vehicleId' => '1',
-            'nationalityId' => '1',
+            'nationality' => 'Ethiopia',
             'tagId' => '1',
+            'createdBy' => '1',
             'hostName' => 'Jane Doe',
             'site' => 'Site 1',
             'section' => 'Section 1',
@@ -41,14 +44,14 @@ class VisitorSeeder extends Seeder
             'gender' => 'Female',
             'type' => 'drivein',
             'IDNO' => '987654321',
-            'purpose' => 'Tour',
+            'purposeId' => '1',
             'visitorTypeId' =>'2',
             'DOB' => '1999-01-01',
             'organizationId' => '2',
             'premisesId' => '2',
-            'vehicleId' => '2',
-            'nationalityId' => '2',
+            'nationality' => 'Tanzania',
             'tagId' => '2',
+            'createdBy' => '1',
             'hostName' => 'John Doe',
             'site' => 'Site 2',
             'section' => 'Section 2',
@@ -62,19 +65,19 @@ class VisitorSeeder extends Seeder
             'gender' => 'Male',
             'type' => 'walkin',
             'IDNO' => '111111111',
-            'purpose' => 'Installation',
+            'purposeId' => '4',
             'DOB' => '1998-01-01',
             'visitorTypeId' =>'1',
             'organizationId' => '3',
             'premisesId' => '3',
-            'vehicleId' => '3',
-            'nationalityId' => '3',
+            'nationality' => 'Kenya',
             'tagId' => '3',
+            'createdBy' => '1',
             'hostName' => 'Jane Doe',
             'site' => 'Site 3',
             'section' => 'Section 3',
-            'timeIn' => '2023-01-03 10:07:00',
-            'timeOut' => '2023-01-03 18:19:00',
+            'timeIn' => '2023-12-02 10:07:00',
+//            'timeOut' => '2023-01-03 18:19:00',
         ]);
 
         Visitor::create([
@@ -83,14 +86,14 @@ class VisitorSeeder extends Seeder
             'gender' => 'Female',
             'type' => 'drivein',
             'IDNO' => '222222222',
-            'purpose' => 'Delivery',
+            'purposeId' => '3',
             'DOB' => '1997-01-01',
             'organizationId' => '4',
             'visitorTypeId' =>'3',
             'premisesId' => '4',
-            'vehicleId' => '4',
-            'nationalityId' => '4',
+            'nationality' => 'Uganda',
             'tagId' => '4',
+            'createdBy' => '1',
             'hostName' => 'John Doe',
             'site' => 'Site 4',
             'section' => 'Section 4',
@@ -104,18 +107,19 @@ class VisitorSeeder extends Seeder
             'type' => 'walkin',
             'visitorTypeId' =>'3',
             'IDNO' => '333333333',
-            'purpose' => 'Training',
+            'purposeId' => '5',
             'DOB' => '1996-01-01',
             'organizationId' => '5',
             'premisesId' => '5',
-            'vehicleId' => '5',
-            'nationalityId' => '5',
+            'nationality' => 'Kenya',
             'tagId' => '3',
+            'createdBy' => '1',
             'hostName' => 'Jane Doe',
             'site' => 'Site 5',
             'section' => 'Section 5',
-            'timeIn' => '2023-02-10 11:00:00',
-            'timeOut' =>  (!empty($timeOut) ? $timeOut : null)
+            'timeIn' => '2023-02-12 11:00:00',
+//            'timeOut' => ''
+        //'timeOut' =>  (!empty($timeOut) ? $timeOut : '')
         ]);
     }
 }

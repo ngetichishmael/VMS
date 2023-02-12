@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Seeders\VisitorSeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,6 +12,7 @@ use App\Models\Premise;
 use App\Models\VehicleInformation;
 use App\Models\Nationality;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Auth;
 
 class Visitor extends Model
 {
@@ -25,16 +27,16 @@ class Visitor extends Model
     {
         return $this->belongsTo(Premise::class, 'premisesId');
     }
+    public function purpose(): BelongsTo
+    {
+        return $this->belongsTo(Premise::class, 'purposeId');
+    }
 
     public function vehicle(): BelongsTo
     {
-        return $this->belongsTo(VehicleInformation::class, 'vehicleId');
+        return $this->belongsTo(VehicleInformation::class, 'visitorId');
     }
 
-    public function nationality(): BelongsTo
-    {
-        return $this->belongsTo(Nationality::class, 'nationalityId');
-    }
 
     public function tag(): BelongsTo
     {
@@ -44,4 +46,5 @@ class Visitor extends Model
     {
         return $this->belongsTo(VisitorType::class, 'visitorTypeId');
     }
+
 }

@@ -67,7 +67,7 @@
             <div class="row mb-2" style="margin-left: 35%; padding-left: 35%">
                 <div class="col-md-9">
                     <label for="" style="color: #070707">Search</label>
-                    <input wire:model.debounce.300ms="search" type="text" class="form-control" placeholder="Enter visitor name">
+                    <input wire:model="search" type="text" class="form-control" placeholder="Enter visitor name">
                 </div>
                 <div class="col-ms-3">
                     <label style="color: #070707" for="">Items Per</label>
@@ -108,11 +108,11 @@
                                     <td>{!! $visitor->section!!}</td>
                                     <td>{!! $visitor->dorganization()->pluck("name")->implode('')!!}</td>
                                     <td>{!! $visitor->timeIn!!}</td>
-                                    @if($visitor->timeOut=='0000-00-00 00:00:00')<td> </td>
+                                    @if($visitor->timeOut=='0000-00-00 00:00:00' || $visitor->timeOut=='' || $visitor->timeOut==null)<td> </td>
                                     @else
                                         <td> {!! $visitor->timeOut!!}</td>
                                     @endif
-                                    @if($visitor->timeOut=='0000-00-00 00:00:00')<td style="color: orange;"> Visitor Still in</td>
+                                    @if($visitor->timeOut=='0000-00-00 00:00:00'|| $visitor->timeOut=='' || $visitor->timeOut==null)<td style="color: orange;"> Visitor Still in</td>
                                     @else
                                         <td>
                                             {{ Carbon\Carbon::createFromTimeStamp(strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeOut))) - strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeIn))))->format('H :i :s') }}
