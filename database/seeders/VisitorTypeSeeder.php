@@ -15,15 +15,15 @@ class VisitorTypeSeeder extends Seeder
     public function run()
     {
         $type = [
-            ['id' => 1, 'description' => 'Visitor'],
-            ['id' => 2, 'description' => 'Staff'],
-            ['id' => 3, 'description' => 'Contractor'],
-            ['id' => 4, 'description' => 'Vendor'],
-            ['id' => 5, 'description' => 'Business'],
-            ['id' => 6, 'description' => 'Intern'],
+            ['id' => 1, 'name' => 'Visitor'],
+            ['id' => 2, 'name' => 'Staff'],
+            ['id' => 3, 'name' => 'Contractor'],
+            ['id' => 4, 'name' => 'Vendor'],
+            ['id' => 5, 'name' => 'Business'],
+            ['id' => 6, 'name' => 'Intern'],
             // ...
         ];
 
-        DB::table('visitortype')->insert($type);
+        DB::table('visitor_types')->insert($type);
     }
 }

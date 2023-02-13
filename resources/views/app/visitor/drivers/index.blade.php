@@ -20,6 +20,8 @@
 
 @section('content')
 
+    @livewire('visit.drivers.visitors-filter')
+
     @livewire('visit.drivers.dashboard')
 
 @endsection

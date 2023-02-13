@@ -18,7 +18,7 @@ class WalkIn extends Model
 
     public function organization(): HasMany
     {
-        return $this->hasMany(Organization::class, 'id', 'organizationId');
+        return $this->hasMany(Organization::class, 'id', 'organization_id');
     }
     public function visitorType() {
         return $this->belongsTo(VisitorType::class);

@@ -37,12 +37,7 @@ class Dashboard extends Component
         $visitors = WalkIn::with('organization')
           ->where('type', 'walkin')
             ->where(function ($query) use ($searchTerm) {
-                $query->where('name', 'like', $searchTerm)
-                    ->orWhere('site', 'like', $searchTerm)
-                    ->orWhere('section', 'like', $searchTerm)
-                    ->orWhere('organizationId', 'like', $searchTerm)
-                    ->orWhere('timeIn', 'like', $searchTerm)
-                    ->orWhere('timeOut', 'like', $searchTerm);
+                $query->where('name', 'like', $searchTerm);
             })
             ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
             ->paginate($this->perPage);

@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Api\Visitors\DriveInController;
 use App\Http\Controllers\Api\Visitors\WalkInController;
+use App\Http\Controllers\AuthenticationController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\Visitors\VisitorController;
 use Illuminate\Support\Facades\Route;
@@ -33,5 +34,5 @@ Route::group(['namespace' => 'App\Http\Controllers\Api\Visitors'], function () {
         Route::post('/walkin/create', [WalkInController::class,'store']);
     });
 });
-
+Route::post('/login',  [AuthenticationController::class, 'login']);
 

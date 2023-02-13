@@ -20,35 +20,35 @@ class VehicleInformationSeeder extends Seeder
                 'type' => 'Car',
                 'color' => 'Red',
                 'model' => 'Honda Civic',
-                'visitorId' => '1'
+                'visitor_id' => '1'
             ],
             [
                 'registration' => 'KDE 456F',
                 'type' => 'Truck',
                 'color' => 'Blue',
                 'model' => 'Ford F-150',
-                'visitorId' => '2'
+                'visitor_id' => '2'
             ],
             [
                 'registration' => 'KGH 789L',
                 'type' => 'SUV',
                 'color' => 'Black',
                 'model' => 'Chevrolet Tahoe',
-                'visitorId' => '3'
+                'visitor_id' => '3'
             ],
             [
                 'registration' => 'KAL 123P',
                 'type' => 'Van',
                 'color' => 'White',
                 'model' => 'Dodge Grand Caravan',
-                'visitorId' => '4'
+                'visitor_id' => '4'
             ],
             [
                 'registration' => 'KCN 456J',
                 'type' => 'Car',
                 'color' => 'Silver',
                 'model' => 'Toyota Camry',
-                'visitorId' => '5'
+                'visitor_id' => '5'
             ]
         ]);
     }

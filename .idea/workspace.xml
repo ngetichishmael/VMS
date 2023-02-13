@@ -4,7 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="705df46e-e836-460f-950e-0fbab3949275" name="Changes" comment="" />
+    <list default="true" id="705df46e-e836-460f-950e-0fbab3949275" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Visitors/DriveInController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Visitors/DriveInController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Visitors/VisitorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Visitors/VisitorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Visitors/WalkInController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Visitors/WalkInController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AuthenticationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AuthenticationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Visit/Drivers/Dashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Visit/Drivers/Dashboard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Visit/Walks/Dashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Visit/Walks/Dashboard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Block.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Block.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/DriveIn.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/DriveIn.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/IdentificationType.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/IdentificationType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Organization.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Organization.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Premise.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Premise.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Resident.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Resident.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Sentry.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Sentry.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/TimeLog.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TimeLog.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Unit.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Unit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Visitor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Visitor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/VisitorType.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/VisitorType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/WalkIn.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/WalkIn.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/OrganizationSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/OrganizationSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/PremiseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/PremiseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/VehicleInformationSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/VehicleInformationSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/VisitorSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/VisitorSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/VisitorTypeSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/VisitorTypeSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/visitor/drivers/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/visitor/drivers/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/visit/drivers/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/visit/drivers/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/visit/walks/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/visit/walks/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -142,26 +172,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "com.jetbrains.php.phpunit.codeGeneration.PhpNewTestDialog.defaultLibrary": "PHPUnit",
-    "last_opened_file_path": "C:/Users/Admin/Documents/Deveint Projects/VMS/resources/views/app/visitor",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.jetbrains.php.phpunit.codeGeneration.PhpNewTestDialog.defaultLibrary&quot;: &quot;PHPUnit&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Admin/Documents/Deveint Projects/VMS/resources/views/app/visitor&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Admin\Documents\Deveint Projects\VMS\resources\views\app\visitor" />
@@ -199,7 +229,9 @@
       <option name="presentableId" value="Default" />
       <updated>1675371408745</updated>
       <workItem from="1675371411524" duration="60315000" />
-      <workItem from="1675894829227" duration="88358000" />
+      <workItem from="1675894829227" duration="94358000" />
+      <workItem from="1676287788823" duration="16432000" />
+      <workItem from="1676308714435" duration="10867000" />
     </task>
     <servers />
   </component>
@@ -227,12 +259,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/resources/views/dashboard.blade.php</url>
-          <line>101</line>
+          <line>188</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/resources/views/livewire/visit/walks/dashboard.blade.php</url>
-          <line>105</line>
+          <line>136</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Visitors;
 use App\Http\Controllers\Controller;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class WalkInController extends Controller
@@ -16,7 +17,7 @@ class WalkInController extends Controller
      */
     public function index()
     {
-        return response()->json(Visitor::with(['organization', 'premises','purpose', 'tag', 'visitorType'])->where('type','walkin')->get());
+        return response()->json(Visitor::with(['resident2','createdBy', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('type','walkin')->get());
     }
 
     /**
@@ -29,27 +30,33 @@ class WalkInController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
-            'phoneNumber' => 'required|string',
-            'gender' => 'required|string',
             'type' => 'required|string',
-            'purposeId' => 'required|exists:purposes,id',
-            'organizationId' => 'required|exists:organizations,id',
-            'premisesId' => 'required|exists:premises,id',
-            'nationality' => 'required',
-            'tagId' => 'required|exists:tags,id',
-            'visitorTypeId' => 'required|exists:visitortype,id',
-            'hostName' => 'required|string',
-            'site' => 'required|string',
-            'section' => 'required|string',
-            'timeIn' => 'required|date_format:Y-m-d H:i:s',
+            'identification_type_id' => 'required|integer',
+            'visitor_type_id' => 'required|integer',
+            'purpose_id' => 'required|integer',
+            'nationality_id' => 'required|integer',
+            'resident_id' => 'required|integer',
+            'time_log_id' => 'required|integer'
         ]);
+
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            return response()->json(['error' => $validator->errors()], 400);
         }
 
-        $visitor = Visitor::create($request->all());
+        // Create a new visitor record
+        $visitor = new Visitor();
+        $visitor->name = $request->input('name');
+        $visitor->type = $request->input('type');
+        $visitor->identification_type_id = $request->input('identification_type_id');
+        $visitor->visitor_type_id = $request->input('visitor_type_id');
+        $visitor->purpose_id = $request->input('purpose_id');
+        $visitor->sentry_id = Auth::id();
+        $visitor->nationality_id = $request->input('nationality_id');
+        $visitor->resident_id = $request->input('resident_id');
+        $visitor->time_log_id = $request->input('time_log_id');
+        $visitor->save();
 
-        return response()->json($visitor, 201);
+        return response()->json(['success' => 'Visitor added successfully.'], 201);
     }
 
     /**

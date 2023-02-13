@@ -9,7 +9,7 @@
                     <option value="">All</option>
 
                     @foreach ($visitorTypes as $visitorType)
-                        <option value="{{ $visitorType->id }}">{{ $visitorType->description }}</option>
+                        <option value="{{ $visitorType->id }}">{{ $visitorType->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -18,7 +18,7 @@
                 <select wire:model="selectedVisitorType" style="width: 50%;">
                     <option value="">All</option>
                     @foreach ($visitorTypes as $visitorType)
-                        <option value="{{ $visitorType->id }}">{{ $visitorType->description }}</option>
+                        <option value="{{ $visitorType->id }}">{{ $visitorType->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -101,15 +101,15 @@
                                     <td>{!! $visitor->site!!}</td>
                                     <td>{!! $visitor->section!!}</td>
                                     <td>{!! $visitor->organization()->pluck("name")->implode('')!!}</td>
-                                    <td>{!! $visitor->timeIn!!}</td>
-                                    @if($visitor->timeOut=='0000-00-00 00:00:00' || $visitor->timeOut=='' || $visitor->timeOut==null)<td> </td>
+                                    <td>{!! $visitor->timeLogs->entry_time !!}</td>
+                                    @if($visitor->timeLogs->exit_time=='0000-00-00 00:00:00' || $visitor->timeLogs->exit_time=='' || $visitor->timeLogs->exit_time==null)<td> </td>
                                     @else
-                                        <td> {!! $visitor->timeOut!!}</td>
+                                        <td> {!! $visitor->timeLogs->exit_time!!}</td>
                                     @endif
-                                    @if($visitor->timeOut=='0000-00-00 00:00:00'|| $visitor->timeOut=='' || $visitor->timeOut==null)<td style="color: orange;"> Visitor Still in</td>
+                                    @if($visitor->timeLogs->exit_time=='0000-00-00 00:00:00'|| $visitor->timeLogs->exit_time=='' || $visitor->timeLogs->exit_time==null)<td style="color: orange;"> Visitor Still in</td>
                                     @else
                                         <td>
-                                            {{ Carbon\Carbon::createFromTimeStamp(strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeOut))) - strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeIn))))->format('H :i :s') }}
+                                            {{ Carbon\Carbon::createFromTimeStamp(strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeLogs->exit_time))) - strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeLogs->exit_time))))->format('H :i :s') }}
                                         </td>
                                     @endif
                                     <td >

@@ -40,7 +40,7 @@ class VisitorController extends Controller
      */
     public function index()
     {
-        return response()->json(Visitor::with(['organization', 'premises','purpose', 'vehicle', 'tag', 'visitorType'])->get());
+        return response()->json(Visitor::with(['resident2','createdBy', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->get());
     }
 
     /**
@@ -63,7 +63,7 @@ class VisitorController extends Controller
     public function show($id)
     {
 
-        $visitor = Visitor::with(['organization', 'premises', 'vehicle', 'purpose','tag', 'visitorType'])->get()->where('id', $id)->first();
+        $visitor = Visitor::with(['organization', 'vehicle', 'purpose', 'visitorType'])->get()->where('id', $id)->first();
         if (!$visitor) {
             return response()->json(['message' => 'Visitor not found'], 404);
         }
