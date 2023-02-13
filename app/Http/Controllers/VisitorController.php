@@ -5,9 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Visitor;
 use App\Http\Requests\StoreVisitorRequest;
 use App\Http\Requests\UpdateVisitorRequest;
+use Database\Seeders\VisitorSeeder;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VisitorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,28 +22,25 @@ class VisitorController extends Controller
      */
     public function index()
     {
-        //
+        return Visitor::all();
+    }
+
+    public function store(Request $request)
+    {
+
+        $visitor = Visitor::create($request->all());
+        return response()->json($visitor, 201);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display the specified resource.
      *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function show(Visitor $visitor)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreVisitorRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreVisitorRequest $request)
-    {
-        //
+        return Visitor::with(['organization', 'premise', 'vehicle', 'nationality', 'tag'])->find($visitor->id);
     }
 
     /**
@@ -45,10 +49,6 @@ class VisitorController extends Controller
      * @param  \App\Models\Visitor  $visitor
      * @return \Illuminate\Http\Response
      */
-    public function show(Visitor $visitor)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
