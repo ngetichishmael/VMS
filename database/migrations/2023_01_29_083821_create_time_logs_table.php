@@ -15,7 +15,6 @@ class CreateTimeLogsTable extends Migration
     {
         Schema::create('time_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id');
             $table->timestamp('entry_time');
             $table->timestamp('exit_time')->nullable();
             $table->timestamps();

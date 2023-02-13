@@ -16,14 +16,15 @@ class CreateUserDetailsTable extends Migration
     {
         Schema::create('user_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->string('phone_number');
+            $table->string('seconadry_phone_number')->nullable();
             $table->string('date_of_birth')->nullable();
             $table->string('company')->nullable();
             $table->string('ID_number')->nullable();
             $table->string('image')->nullable();
             $table->string('KRA_pin')->nullable();
-            $table->enum('gender', ['male', 'female']);
-            $table->string('physical_address');
+            $table->enum('gender', ['male', 'female', 'Others']);
+            $table->string('physical_address')->nullable();
             $table->timestamps();
         });
     }

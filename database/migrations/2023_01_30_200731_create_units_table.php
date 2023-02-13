@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Block;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +16,8 @@ class CreateUnitsTable extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Block::class);
+            $table->string('name');
             $table->timestamps();
         });
     }

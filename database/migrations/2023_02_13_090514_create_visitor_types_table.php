@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVisitortypeTable extends Migration
+class CreateVisitorTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateVisitortypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('visitortype', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('description');
+        Schema::create('visitor_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateVisitortypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('visitortype');
+        Schema::dropIfExists('visitor_types');
     }
 }
