@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePurposesTable extends Migration
+class CreateNationalitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreatePurposesTable extends Migration
      */
     public function up()
     {
-        Schema::create('purposes', function (Blueprint $table) {
+        Schema::create('nationalities', function (Blueprint $table) {
             $table->id();
-            $table->text('purpose_description');
-            $table->timestamps();
+            $table->string('iso');
+            $table->string('name');
+            $table->string('iso3');
+            $table->string('num_code');
+            $table->string('phone_code');
         });
     }
 
@@ -27,6 +30,6 @@ class CreatePurposesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purposes');
+        Schema::dropIfExists('nationalities');
     }
 }

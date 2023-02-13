@@ -14,16 +14,14 @@ class CreateOrganizationsTable extends Migration
     public function up()
     {
         Schema::create('organizations', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->string('location');
             $table->string('email');
-            $table->string('phoneNumber1');
-            $table->string('phoneNumber2')->nullable(true);
-            $table->string('landLine')->nullable(true);
-            $table->string('description');
-            $table->string('websiteUrl');
-
+            $table->string('primary_phone');
+            $table->string('secondary_phone')->nullable();
+            $table->string('description')->nullable();
+            $table->string('websiteUrl')->nullable();
             $table->timestamps();
         });
     }

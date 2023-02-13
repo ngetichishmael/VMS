@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Organization;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,15 +15,12 @@ class CreatePremisesTable extends Migration
     public function up()
     {
         Schema::create('premises', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('premisesName');
+            $table->id();
+            $table->foreignIdFor(Organization::class);
+            $table->string('name');
             $table->string('address');
             $table->string('location');
             $table->string('description');
-            $table->string('zone');
-            $table->string('type');
-            $table->foreignId('organizationId');
-            $table->foreignId('lookUpId');
             $table->timestamps();
         });
     }
