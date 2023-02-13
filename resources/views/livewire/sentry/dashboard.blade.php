@@ -56,10 +56,10 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-icon btn-outline-success" data-toggle="tooltip"
-                            data-placement="top" title="New Booking">
-                            <img src="{{ asset('images/icons/excel.png') }}"alt="Add" width="20" height="20"
-                                data-toggle="tooltip" data-placement="top" title="Export Excel">
+                    <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
+                            data-placement="top" title="New User">
+                            <img src="{{ asset('images/icons/exceal.png') }}"alt="Add" width="20" height="20">
+                               
                         </button>
                     </div>
                 </div>
@@ -73,26 +73,61 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                  
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>ID Number</th>
                                     <th>Zone</th>
                                     <th>Last Login</th>
-                                    <th>Check Out</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                            @foreach ($sentries as $sentry)
                                 <tr>
-                                    <td>1</td>
-                                    <td>Deveint</td>
-                                    <td>info@deveint.com</td>
-                                    <td>ish@deveint.com</td>
-                                    <td>DI</td>
-                                    <td>{{ now() }}</td>
-                                    <td>{{ now() }}</td>
+                                   
+                                    <td> {{ $sentry ->sname }} </td>
+                                    <td> {{ $sentry ->email }} </td>
+                                    <td> {{ $sentry ->id_number }} </td>
+                                    <td> {{ $sentry ->zone }} </td>
+                                    <td>{{ $sentry ->created_at }}</td>
+                                    <td>
+                                    <?php if($sentry->status == '1'){ ?> 
+
+                                        <a href="#" class="Active" style="color:#00FF00;">Active</a>
+
+                                        <?php }else{ ?> 
+
+                                        <a href="#" class="inactive" style="color:#FF0000;">Disabled</a>
+
+                                    <?php } ?>
+
+                                    </td>
+                               
+                                    <td>     
+                                    <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                 <!--update link-->
+                                                 <a href="{{ url('users/sentries/'.$sentry->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+                                        <!-- delete link -->
+                                        <?php if($sentry->status == '0'){ ?> 
+                                        <a href="{{ url('users/sentries/suspend/'.$sentry->id) }}" onclick="return confirm('Are you sure to want to unblock the sentry?')" style="padding-right:20px; " > Unblock </a>
+                                        <?php }else{ ?> 
+                                            <a href="{{ url('users/sentries/suspend/'.$sentry->id) }}" onclick="return confirm('Are you sure to want to block the sentry?')" style="padding-right:20px; " title="Disable"> Block </a>
+                                        <?php } ?>
+
+                                        <a href="{{ url('users/sentries/delete/'.$sentry->id) }}" onclick="return confirm('Are you sure to want to delete the sentry?')" > Delete </a>
+                                  
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
 
+                                @endforeach
                             </tbody>
                         </table>
                         <div class="mt-1">
@@ -102,6 +137,72 @@
         </section>
         </div>
 
+          <!-- Modal to add new sentry starts-->
+    <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+      <div class="modal-dialog">
+        <form class="add-new-user modal-content pt-0" method="POST" action="{{ route('Sentry.store') }}">
+        {{ csrf_field() }} 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+          <div class="modal-header mb-1">
+            <h5 class="modal-title" id="exampleModalLabel">New Sentry</h5>
+          </div>
+          <div class="modal-body flex-grow-1">
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Name</label>
+              <input
+                type="text"
+                name="sname" 
+               
+                class="form-control dt-full-name"
+                id="basic-icon-default-fullname"
+                aria-describedby="basic-icon-default-fullname2"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Email</label>
+              <input
+                type="text"
+                name="email" 
+               
+                class="form-control dt-full-name"
+                id="basic-icon-default-fullname"
+                aria-describedby="basic-icon-default-fullname2"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">ID Number</label>
+              <input
+                type="text"
+                name="id_number" 
+               
+                class="form-control dt-full-name"
+                id="basic-icon-default-fullname"
+                aria-describedby="basic-icon-default-fullname2"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Zone</label>
+              <input
+                type="text"
+                name="zone" 
+               
+                class="form-control dt-full-name"
+                id="basic-icon-default-fullname"
+                aria-describedby="basic-icon-default-fullname2"
+              />
+            </div>
+
+       
+            
+            <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal to add new unit Ends-->
         <h2 class="brand-text">TODO ON SENTRIES</h2>
         <div class="card-body">
             <div id="jstree-basic">

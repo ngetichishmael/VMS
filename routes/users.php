@@ -190,3 +190,19 @@ Route::get('/search',[ResidentController::class,'search']);
 Route::get('resident/information/delete/{id}', [App\Http\Controllers\ResidentController::class, 'destroy'])->middleware('auth');
 Route::get('resident/information/{id}}', [App\Http\Controllers\ResidentController::class, 'edit'])->middleware('auth');
 Route::get('resident/information/suspend/{id}',[App\Http\Controllers\ResidentController::class, 'status_update'])->middleware('auth');
+
+
+
+// Sentries
+Route::get('/search',[SentryController::class,'search']);
+Route::get('users/sentries/delete/{id}', [App\Http\Controllers\SentryController::class, 'destroy'])->middleware('auth');
+Route::get('users/sentries/{id}}', [App\Http\Controllers\SentryController::class, 'edit'])->middleware('auth');
+Route::get('users/sentries/suspend/{id}',[App\Http\Controllers\SentryController::class, 'status_update'])->middleware('auth');
+
+
+
+// Sservice category
+Route::get('/search',[ServiceCategoryController::class,'search']);
+Route::get('service/category/delete/{id}', [App\Http\Controllers\ServiceCategoryController::class, 'destroy'])->middleware('auth');
+Route::get('service/category/{id}}', [App\Http\Controllers\ServiceCategoryController::class, 'edit'])->middleware('auth');
+Route::get('service/category/suspend/{id}',[App\Http\Controllers\ServiceCategoryController::class, 'status_update'])->middleware('auth');

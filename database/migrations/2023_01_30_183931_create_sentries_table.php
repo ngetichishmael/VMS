@@ -15,8 +15,10 @@ class CreateSentriesTable extends Migration
     {
         Schema::create('sentries', function (Blueprint $table) {
             $table->id();
-            $table->name();
-            $table->string('id_')->unique();
+            $table->string('sname');
+            $table->integer('id_number');
+            $table->string('zone');
+            $table->string('email')->unique();
             $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });
