@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Organization;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,8 +16,11 @@ class CreatePremisesTable extends Migration
     {
         Schema::create('premises', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Organization::class);
             $table->string('name');
-            $table->tinyInteger('status')->default('1');
+            $table->string('address');
+            $table->string('location');
+            $table->string('description');
             $table->timestamps();
         });
     }

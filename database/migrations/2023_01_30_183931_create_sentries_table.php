@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Device;
+use App\Models\Shift;
+use App\Models\UserDetail;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,11 +18,11 @@ class CreateSentriesTable extends Migration
     {
         Schema::create('sentries', function (Blueprint $table) {
             $table->id();
-            $table->string('sname');
-            $table->integer('id_number');
-            $table->string('zone');
-            $table->string('email')->unique();
-            $table->tinyInteger('status')->default('1');
+            $table->string('name');
+            $table->string('status')->default(1);
+            $table->foreignIdFor(Device::class);
+            $table->foreignIdFor(UserDetail::class);
+            $table->foreignIdFor(Shift::class);
             $table->timestamps();
         });
     }

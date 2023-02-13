@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVehicleInformationTable extends Migration
+class CreatePurposesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateVehicleInformationTable extends Migration
      */
     public function up()
     {
-        Schema::create('vehicle_information', function (Blueprint $table) {
+        Schema::create('purposes', function (Blueprint $table) {
             $table->id();
+            $table->text('purpose_description');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreateVehicleInformationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vehicle_information');
+        Schema::dropIfExists('purposes');
     }
 }

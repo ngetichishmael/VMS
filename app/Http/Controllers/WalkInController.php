@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\WalkIn;
 use App\Http\Requests\StoreWalkInRequest;
 use App\Http\Requests\UpdateWalkInRequest;
+use App\Models\WalkIn;
 
 class WalkInController extends Controller
 {
@@ -15,7 +15,7 @@ class WalkInController extends Controller
      */
     public function index()
     {
-        return view('livewire.visit.walks.dashboard');
+        return view('app.visitor.walks.index');
     }
 
     /**

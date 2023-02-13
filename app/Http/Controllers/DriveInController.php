@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DriveIn;
 use App\Http\Requests\StoreDriveInRequest;
 use App\Http\Requests\UpdateDriveInRequest;
+use App\Models\DriveIn;
 
 class DriveInController extends Controller
 {
@@ -15,7 +15,7 @@ class DriveInController extends Controller
      */
     public function index()
     {
-        return view('livewire.visit.drivers.dashboard');
+        return view('app.visitor.drivers.index');
     }
 
     /**

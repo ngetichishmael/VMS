@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Role;
+use App\Models\UserDetail;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +17,9 @@ class CreateStaffTable extends Migration
     {
         Schema::create('staff', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->foreignIdFor(Role::class);
+            $table->foreignIdFor(UserDetail::class);
             $table->timestamps();
         });
     }

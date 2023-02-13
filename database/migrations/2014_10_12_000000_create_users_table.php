@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,7 +24,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->tinyInteger('status')->default('1');
             $table->string('password');
-            $table->timestamp('last_sign_in_at')->nullable();
+            $table->integer('status')->default(1);
+            $table->foreignIdFor(Role::class);
             $table->rememberToken();
             $table->timestamps();
         });

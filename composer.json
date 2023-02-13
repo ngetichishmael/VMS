@@ -16,9 +16,11 @@
     "haruncpi/laravel-id-generator": "^1.1",
     "kyslik/column-sortable": "^6.4",
     "laravel/framework": "^8.40",
+    "laravel/sanctum": "*",
     "laravel/tinker": "^2.5",
     "laravel/ui": "^3.3",
-    "livewire/livewire": "^2.11"
+    "livewire/livewire": "^2.11",
+    "nesbot/carbon": "^2.66"
   },
   "require-dev": {
     "facade/ignition": "^2.5",
