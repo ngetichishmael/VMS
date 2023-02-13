@@ -1373,6 +1373,7 @@
     "/data/kanban.json": "/data/kanban.json",
     "/data/menu-data/horizontalMenu.json": "/data/menu-data/horizontalMenu.json",
     "/data/menu-data/verticalMenu.json": "/data/menu-data/verticalMenu.json",
+    "/data/menu-data/verticalMenu12.json": "/data/menu-data/verticalMenu12.json",
     "/data/search.json": "/data/search.json",
     "/data/table-datatable.json": "/data/table-datatable.json",
     "/data/user-list.json": "/data/user-list.json"

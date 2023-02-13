@@ -26,7 +26,7 @@
             <div class="col-xl-4 col-md-6 col-12">
                 <div class="card card-congratulation-medal">
                     <div class="card-body">
-
+                        {{ now() }}
                     </div>
                 </div>
             </div>
