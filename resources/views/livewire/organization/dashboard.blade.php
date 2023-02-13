@@ -31,7 +31,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i data-feather="search"></i></span>
                             </div>
-                            <input type="text" id="fname-icon" class="form-control" name="fname-icon"
+                            <input type="text" id="search" class="form-control" name="search"
                                 placeholder="Search" />
                         </div>
                     </div>
@@ -56,10 +56,9 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-icon btn-outline-success" data-toggle="tooltip"
-                            data-placement="top" title="New Booking">
-                            <img src="{{ asset('images/icons/excel.png') }}"alt="Add" width="20" height="20"
-                                data-toggle="tooltip" data-placement="top" title="Export Excel">
+                        <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
+                            data-placement="top" title="New Organazition">
+                            <img src="{{ asset('images/icons/excel.png') }}"alt="Add" width="20" height="20">
                         </button>
                     </div>
                 </div>
@@ -76,20 +75,34 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Action</th>
                                     <th>Created At</th>
+                                    <th>Action</th>
+                                    
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="alldata">
+                            @foreach ($organizations as $org)
                                 <tr>
-                                    <td>1</td>
-                                    <td>Deveint</td>
-                                    <td>info@deveint.com</td>
-                                    <td>view/delete</td>
-                                    <td>{{ now() }}</td>
+                                    <td>{{ $org ->id }}</td>
+                                    <td>{{ $org ->org_name }}</td>
+                                    <td>{{ $org ->email }}</td>                                 
+                                    <td>{{ $org ->created_at }}</td>
+                                    <td>
+                                            <!--update link-->
+                                        <a href="{{ url('organization/users/'.$org->id) }}" class=""style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" title="Edit">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        </a>
+                                        <!-- delete link -->
+                                    
+                                        <a href="{{ url('organization/information/delete/'.$org->id) }}" onclick="return confirm('Are you sure to want to delete the user?')" title="Delete"> <i class="fas fa-trash"></i></a>
+                                    
+                                 
+                                    </td>
                                 </tr>
 
+                            @endforeach
                             </tbody>
+                            <tbody id="Content" class="searchdata"></tbody>
                         </table>
                         <div class="mt-1">
                         </div>
@@ -97,6 +110,50 @@
                 </div>
         </section>
         </div>
+   <!-- Modal to add new organization starts-->
+   <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+      <div class="modal-dialog">
+        <form class="add-new-user modal-content pt-0" method="POST" action="{{ route('OrganizationInformation.store') }}">
+        {{ csrf_field() }} 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+          <div class="modal-header mb-1">
+            <h5 class="modal-title" id="exampleModalLabel">New Organization</h5>
+          </div>
+          <div class="modal-body flex-grow-1">
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Name</label>
+              <input
+                type="text"
+                name="org_name" 
+                :value="old('name')"
+                class="form-control dt-full-name"
+                id="basic-icon-default-fullname"
+                aria-describedby="basic-icon-default-fullname2"
+              />
+            </div>
+
+            
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-email">Email</label>
+              <input
+                type="email"
+                name="email" 
+                :value="old('email')"
+                class="form-control dt-email"
+                aria-describedby="basic-icon-default-email2"
+                name="user-email"
+              />
+              <small class="form-text text-muted"> You can use letters, numbers & periods </small>
+            </div>
+            
+            <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal to add new organization Ends-->
+
 
         <h2 class="brand-text">TODO ON ORGANIZATIONS</h2>
         <div class="card-body">
@@ -145,6 +202,35 @@
 @endsection
 
 @section('vendor-script')
+<script type="text/javascript">
+      
+      $('#search').on('keyup',function()
+      {
+       $value=$(this).val();
+       
+       if($value)
+       {
+        $('.alldata').hide();
+        $('.searchdata').show();
+       }
+       else{
+        $('.alldata').show();
+        $('.searchdata').hide();
+       }
+       $.ajax({
+
+            type : 'get',
+            url : '{{URL::to('search')}}',
+            data:{'search':$value},
+           
+     success:function(data)
+     {
+            $('#Content').html(data);
+    }
+    });
+    })
+    </script>
+
     {{-- vendor files --}}
     <script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
