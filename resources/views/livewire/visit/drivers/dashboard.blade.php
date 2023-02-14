@@ -106,7 +106,7 @@
                                     <td>{!! $visitor->vehicle()->pluck("registration")->implode('')!!} </td>
                                     <td>{!! $visitor->name!!} </td>
                                     <td>{{ $visitor->resident()->unit()->block() ? $visitor->resident->unit->block->premise->name : '' }}</td>
-                                    <td>{!! $visitor->resident->unit->block->name !!}</td>
+                                    <td>{!! $visitor->resident->unit->name !!}</td>
                                     <td>{!! $visitor->resident->unit->block->premise->organization->name !!}</td>
                                     <td>{!! $visitor->timeLogs->entry_time!!}</td>
                                     @if($visitor->timeOut=='0000-00-00 00:00:00' || $visitor->timeOut=='' || $visitor->timeOut==null)<td> </td>

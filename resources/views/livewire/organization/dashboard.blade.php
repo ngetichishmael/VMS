@@ -1,24 +1,5 @@
-@extends('layouts.contentLayoutMaster')
 
-@section('title', 'Organizations')
 
-@section('vendor-style')
-    {{-- vendor css files --}}
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/charts/apexcharts.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('fonts/font-awesome/css/font-awesome.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/jstree.min.css')) }}">
-@endsection
-@section('page-style')
-    {{-- Page css files --}}
-
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-tree.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/pages/dashboard-ecommerce.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/charts/chart-apex.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
-@endsection
-
-@section('content')
     <!-- Dashboard Ecommerce Starts -->
     <section id="dashboard-ecommerce">
         <section>
@@ -35,16 +16,15 @@
                                 placeholder="Search" />
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="selectSmall">Select Per Page</label>
-                            <select class="form-control form-control-sm" id="selectSmall">
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select>
-                        </div>
+
+                    <div class="col-ms-3">
+                        <label style="color: #070707" for="">Items Per</label>
+                        <select wire:model="perPage" class="form-control">`
+                            <option value="10" selected>10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
@@ -76,82 +56,129 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Location</th>
                                     <th>Action</th>
-                                    <th>Created At</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Deveint</td>
-                                    <td>info@deveint.com</td>
-                                    <td>view/delete</td>
-                                    <td>{{ now() }}</td>
-                                </tr>
+                            <style>
+                                .option{
+                                    color: #0c0c0c;
+                                }
 
+                                .dropdown {
+                                    display: inline-block;
+                                    position: relative;
+                                }
+
+                                .dropdown-toggle {
+                                    cursor: pointer;
+                                    color: darkgray;
+                                }
+
+                                .dropdown-menu {
+                                    position: absolute;
+                                    top: 100%;
+                                    right: 0;
+                                    display: none;
+                                    background-color: #fff;
+                                    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                                    z-index: 1;
+                                }
+
+                                .dropdown-menu a {
+                                    color: #333;
+                                    padding: 12px 16px;
+                                    text-decoration: none;
+                                    display: block;
+                                }
+
+                                .dropdown-menu a:hover {
+                                    background-color: #f1f1f1;
+                                }
+
+                                .dropdown:hover .dropdown-menu {
+                                    display: block;
+                                }
+
+                            </style>
+                            <tbody>
+                            @foreach ($organizations as $key => $organization)
+                                <tr>
+                                    <td>{!! $key + 1 !!}</td>
+                                    <td>{!! $organization->name !!}</td>
+                                    <td>{!! $organization->email !!}</td>
+                                    <td>{!! $organization->location !!}</td>
+                                    <td>
+                                    <div class="dropdown-menu">
+                                        <a href="#">View Details</a>
+                                        <a href="#">View History</a>
+                                    </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
+                        <div class="mt-1">{!! $organizations->links() !!}</div>
                         <div class="mt-1">
                         </div>
                     </div>
                 </div>
+            </div>
         </section>
         </div>
 
-        <h2 class="brand-text">TODO ON ORGANIZATIONS</h2>
-        <div class="card-body">
-            <div id="jstree-basic">
-                <ul>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        CRUD
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Create</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Read</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Updated</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Delete</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Action
-                        <ul data-jstree='{"icon" : "far fa-folder"}'>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Suspend</li>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Others</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Relationship
-                        <ul data-jstree='{"icon" : "far fa-folder"}'>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Users</li>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Organization</li>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Hierarchy under Organization</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Table
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Filter</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Pagination</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Search by *</li>
-                        </ul>
-                    </li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Any Other</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Martin to Advise</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Isaac to Provide images, and secondary colors</li>
-                </ul>
-            </div>
-        </div>
+{{--        <h2 class="brand-text">TODO ON ORGANIZATIONS</h2>--}}
+{{--        <div class="card-body">--}}
+{{--            <div id="jstree-basic">--}}
+{{--                <ul>--}}
+{{--                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>--}}
+{{--                        CRUD--}}
+{{--                        <ul>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Create</li>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Read</li>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Updated</li>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Delete</li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>--}}
+{{--                        Action--}}
+{{--                        <ul data-jstree='{"icon" : "far fa-folder"}'>--}}
+{{--                            <li data-jstree='{"icon" : "far fa-file-image"}'>Suspend</li>--}}
+{{--                            <li data-jstree='{"icon" : "far fa-file-image"}'>Others</li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>--}}
+{{--                        Relationship--}}
+{{--                        <ul data-jstree='{"icon" : "far fa-folder"}'>--}}
+{{--                            <li data-jstree='{"icon" : "far fa-file-image"}'>Users</li>--}}
+{{--                            <li data-jstree='{"icon" : "far fa-file-image"}'>Organization</li>--}}
+{{--                            <li data-jstree='{"icon" : "far fa-file-image"}'>Hierarchy under Organization</li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>--}}
+{{--                        Table--}}
+{{--                        <ul>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Filter</li>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Pagination</li>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Search by *</li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                    <li data-jstree='{"icon" : "fab fa-html5"}'>Any Other</li>--}}
+{{--                    <li data-jstree='{"icon" : "fab fa-html5"}'>Martin to Advise</li>--}}
+{{--                    <li data-jstree='{"icon" : "fab fa-html5"}'>Isaac to Provide images, and secondary colors</li>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+        <script type="application/javascript">
+            $(document).on('click', '.dropdown-toggle', function(e) {
+                e.preventDefault();
+                $(this).next('.dropdown-menu').toggle();
+            });
+            $(document).on('mouse-enter', '.dropdown-toggle', function(e) {
+                e.preventDefault();
+                $(this).next('.dropdown-menu').toggle();
+            });
+        </script>
     </section>
     <!-- Dashboard Ecommerce ends -->
-@endsection
 
-@section('vendor-script')
-    {{-- vendor files --}}
-    <script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/jstree.min.js')) }}"></script>
-@endsection
-@section('page-script')
-    {{-- Page js files --}}
-    <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script>
-    <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
-@endsection
