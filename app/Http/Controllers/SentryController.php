@@ -22,10 +22,17 @@ class SentryController extends Controller
     {
        
         $sentries = DB::table('sentries')
-     
+
+        ->join('user_details', 'sentries.user_detail_id', '=', 'user_details.id')
+      
+        ->join('shifts', 'sentries.shift_id', '=', 'shifts.id')
+
+        ->join('devices', 'sentries.device_id', '=', 'devices.id')
+
+        ->select('sentries.*', 'user_details.ID_number', 'user_details.phone_number', 'shifts.name as shiftname', 'devices.identifier as devicename')
+
         ->get();
       
-
         return view('livewire.sentry.dashboard',compact('sentries'));
 
     }

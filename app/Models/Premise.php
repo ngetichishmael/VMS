@@ -9,14 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Premise extends Model
 {
     use HasFactory;
-<<<<<<< HEAD
 
     protected $fillable = [
         'name',
  
     ];
-=======
-    protected $guarded;
-
->>>>>>> ish
 }
