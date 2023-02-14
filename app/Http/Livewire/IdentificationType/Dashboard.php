@@ -17,7 +17,7 @@ class Dashboard extends Component
     public function render()
     {
         $searchTerm = '%' . $this->search . '%';
-        $types = IdentificationType::whereLike(['name'], $searchTerm)
+        $types = IdentificationType::whereLike(['name', 'user.email'], $searchTerm)
             ->get();
         return view('livewire.identification-type.dashboard', [
             'types' => $types,
