@@ -1,26 +1,4 @@
-@extends('layouts.contentLayoutMaster')
-
-@section('title', 'Sentries')
-
-@section('vendor-style')
-    {{-- vendor css files --}}
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/charts/apexcharts.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('fonts/font-awesome/css/font-awesome.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/jstree.min.css')) }}">
-@endsection
-@section('page-style')
-    {{-- Page css files --}}
-
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-tree.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/pages/dashboard-ecommerce.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/charts/chart-apex.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
-@endsection
-
-@section('content')
-    <!-- Dashboard Ecommerce Starts -->
-    <section id="dashboard-ecommerce">
+<section id="dashboard-ecommerce">
         <section>
             <!-- users filter start -->
             <div class="card">
@@ -31,7 +9,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i data-feather="search"></i></span>
                             </div>
-                            <input type="text" id="fname-icon" class="form-control" name="fname-icon"
+                            <input  wire:model="search" type="text" id="fname-icon" class="form-control" name="fname-icon"
                                 placeholder="Search" />
                         </div>
                     </div>
@@ -58,7 +36,7 @@
                     <div class="col-md-3">
                     <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
                             data-placement="top" title="New User">
-                            <img src="{{ asset('images/icons/exceal.png') }}"alt="Add" width="20" height="20">
+                              + Add New Sentry
                                
                         </button>
                     </div>
@@ -76,22 +54,26 @@
                                   
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Phone Number</th>
                                     <th>ID Number</th>
-                                    <th>Zone</th>
+                                    <th>Organization</th>
+                                    <th>Shift</th>
                                     <th>Last Login</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach ($sentries as $sentry)
+                            @forelse ($sentries as $sentry)
                                 <tr>
                                    
-                                    <td> {{ $sentry ->sname }} </td>
+                                    <td> {{ $sentry ->name }} </td>
                                     <td> {{ $sentry ->email }} </td>
-                                    <td> {{ $sentry ->id_number }} </td>
-                                    <td> {{ $sentry ->zone }} </td>
-                                    <td>{{ $sentry ->created_at }}</td>
+                                    <td> {{ $sentry ->phone_number }} </td>
+                                    <td> {{ $sentry ->ID_number }} </td>
+                                    <td> {{ $sentry ->company }} </td>
+                                    <td> {{ $sentry ->shiftname }} </td>
+                                    <td>{{ $sentry ->updated_at }}</td>
                                     <td>
                                     <?php if($sentry->status == '1'){ ?> 
 
@@ -127,7 +109,11 @@
                                     </td>
                                 </tr>
 
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="6" style="text-align: center; color:red;">No Sentry Found</td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
                         <div class="mt-1">
@@ -245,17 +231,3 @@
             </div>
         </div>
     </section>
-    <!-- Dashboard Ecommerce ends -->
-@endsection
-
-@section('vendor-script')
-    {{-- vendor files --}}
-    <script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/jstree.min.js')) }}"></script>
-@endsection
-@section('page-script')
-    {{-- Page js files --}}
-    <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script>
-    <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
-@endsection

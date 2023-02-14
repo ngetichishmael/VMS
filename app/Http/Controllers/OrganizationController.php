@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Organization;
 use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
-use Brian2694\Toastr\Facades\Toastr;
-use Illuminate\Http\Request;
-use Haruncpi\LaravelIdGenerator\IdGenerator;
-use Illuminate\Support\Facades\DB;
+
 
 class OrganizationController extends Controller
 {
@@ -19,10 +16,7 @@ class OrganizationController extends Controller
      */
     public function index()
     {
-        $organizations = DB::table('organizations')
-            ->get();
-
-        return view('livewire.organization.dashboard', compact('organizations'));
+        return view('livewire.organization.layout');
     }
 
     /**

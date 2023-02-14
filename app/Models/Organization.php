@@ -16,5 +16,5 @@ class Organization extends Model
      *
      * @var array
      */
-    protected $guarded = [""];
+    protected $guarded = [ ];
 }

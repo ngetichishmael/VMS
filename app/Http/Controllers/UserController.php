@@ -6,11 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use DB;
-use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+
+use App\Models\IdentificationType;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+
 
 class UserController extends Controller
 {
@@ -21,16 +22,7 @@ class UserController extends Controller
      */
     public function index()
     {
-      
-        $data = User::paginate(3);
-        $users = DB::table('users')
-        ->join('organizations', 'users.org', '=', 'organizations.id')
-      
-        ->select('users.*', 'organizations.org_name')
-        ->get();
-        $organizations = DB::table('organizations')->get();
-
-        return view('livewire.user.dashboard',compact('users','organizations','data'));
+        return view('livewire.user.layout');
     }
 
     /**

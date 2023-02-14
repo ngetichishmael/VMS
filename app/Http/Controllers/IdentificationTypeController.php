@@ -25,7 +25,7 @@ class IdentificationTypeController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**

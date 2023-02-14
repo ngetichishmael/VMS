@@ -19,7 +19,8 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $guarded = [""];
+  
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -42,7 +43,4 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    protected $dates = [
-        'last_sign_in_at'
-    ];
 }
