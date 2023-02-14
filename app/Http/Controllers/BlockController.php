@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Block;
 use App\Http\Requests\StoreBlockRequest;
 use App\Http\Requests\UpdateBlockRequest;
-
-use DB;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\DB;
 
 class BlockController extends Controller
 {
@@ -22,17 +21,17 @@ class BlockController extends Controller
     {
         $blocks = DB::table('blocks')
 
-        ->join('premises', 'blocks.premise', '=', 'premises.id')
-      
-        ->select('blocks.*', 'premises.name')
+            ->join('premises', 'blocks.premise', '=', 'premises.id')
 
-        ->get();
+            ->select('blocks.*', 'premises.name')
+
+            ->get();
 
         $premises = DB::table('premises')
-        
-        ->get();
 
-        return view('livewire.premises.block.dashboard',compact('blocks','premises'));
+            ->get();
+
+        return view('livewire.premises.block.dashboard', compact('blocks', 'premises'));
     }
 
     /**
@@ -55,14 +54,14 @@ class BlockController extends Controller
     {
         $this->validate(request(), [
             'blockname' => 'required',
-            'premise' => 'required',  
+            'premise' => 'required',
         ]);
-        
+
         $block = new Block;
         $block->blockname = $request->blockname;
         $block->premise = $request->premise;
         $block->save();
-          
+
         return redirect()->to('/block/information');
     }
 
@@ -112,31 +111,32 @@ class BlockController extends Controller
 
         $delete->delete();
 
-        Toastr::success('Data deleted successfully :)','Success');
+        // Toastr::success('Data deleted successfully :)', 'Success');
 
         return redirect()->route('BlockInformation');
     }
 
-    public function status_update($id){
+    public function status_update($id)
+    {
 
         //get block status with the help of  ID
         $blocks = DB::table('blocks')
-                    ->select('status')
-                    ->where('id','=',$id)
-                    ->first();
+            ->select('status')
+            ->where('id', '=', $id)
+            ->first();
 
         //Check block status
-        if($blocks->status == '1'){
+        if ($blocks->status == '1') {
             $status = '0';
-        }else{
+        } else {
             $status = '1';
         }
 
         //update block status
-        $values = array('status' => $status );
-        DB::table('blocks')->where('id',$id)->update($values);
+        $values = array('status' => $status);
+        DB::table('blocks')->where('id', $id)->update($values);
 
-        session()->flash('msg','User status has been updated successfully.');
+        session()->flash('msg', 'User status has been updated successfully.');
         return redirect()->route('BlockInformation');
     }
 }

@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Organization;
 use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
-use DB;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
-
+use Illuminate\Support\Facades\DB;
 
 class OrganizationController extends Controller
 {
@@ -21,9 +20,9 @@ class OrganizationController extends Controller
     public function index()
     {
         $organizations = DB::table('organizations')
-        ->get();
+            ->get();
 
-         return view('livewire.organization.dashboard',compact('organizations'));
+        return view('livewire.organization.dashboard', compact('organizations'));
     }
 
     /**
@@ -44,13 +43,13 @@ class OrganizationController extends Controller
      */
     public function store(Request $request)
     {
-     
+
         $request->validate([
             'org_name' => 'required',
             'email' => 'required|email',
-         
+
         ]);
-        
+
         // $this->validate(request(), [
         //     'org_name' => 'required',
         //     'email' => 'required|email',
@@ -58,11 +57,10 @@ class OrganizationController extends Controller
         // ]);
 
 
-        $id = IdGenerator::generate(['table' => 'organizations', 'length' => 6, 'prefix' =>'1']);
+        $id = IdGenerator::generate(['table' => 'organizations', 'length' => 6, 'prefix' => '1']);
         do {
 
             $code = random_int(100000, 999999);
-
         } while (organization::where("code", "=", $code)->first());
 
         $organization = new organization;
@@ -75,10 +73,10 @@ class OrganizationController extends Controller
         //     'org_name' => $request->org_name,
         //     'code' => $request->code,
         //     'email' => $request->email,
-            
+
         // ]);
-     
-  
+
+
         return redirect()->to('/organization/information');
     }
 
@@ -89,13 +87,11 @@ class OrganizationController extends Controller
         do {
 
             $code = random_int(100000, 999999);
-
         } while (organization::where("code", "=", $code)->first());
 
-  
+
 
         return $code;
-
     }
 
     /**
@@ -140,65 +136,65 @@ class OrganizationController extends Controller
      */
     public function destroy($id)
     {
-    
+
         $delete = Organization::find($id);
         $delete->delete();
-        Toastr::success('Data deleted successfully :)','Success');
+        Toastr::success('Data deleted successfully :)', 'Success');
         return redirect()->route('OrganizationInformation');
     }
 
-    function status_update($id){
+    function status_update($id)
+    {
 
         //get organization status with the help of  ID
         $organizations = DB::table('organizations')
-                    ->select('status')
-                    ->where('id','=',$id)
-                    ->first();
+            ->select('status')
+            ->where('id', '=', $id)
+            ->first();
 
         //Check user status
-        if($organizations->status == '1'){
+        if ($organizations->status == '1') {
             $status = '0';
-        }else{
+        } else {
             $status = '1';
         }
 
         //update organization status
-        $values = array('status' => $status );
-        DB::table('organizations')->where('id',$id)->update($values);
+        $values = array('status' => $status);
+        DB::table('organizations')->where('id', $id)->update($values);
 
-        session()->flash('msg','Organization status has been updated successfully.');
+        session()->flash('msg', 'Organization status has been updated successfully.');
         return redirect()->route('OrganizationInformation');
     }
 
-    public function search(Request $request){
-        
+    public function search(Request $request)
+    {
+
         $output = "";
 
-        $organizations=DB::table('organizations')->where('org_name','LIKE','%'.$request->search."%")
+        $organizations = DB::table('organizations')->where('org_name', 'LIKE', '%' . $request->search . "%")
 
-        ->orWhere('email','LIKE','%'.$request->search."%")
-       
-        ->get();
-        
-        foreach($organizations as $organizations)
-        {
-            $output.= 
-            '
+            ->orWhere('email', 'LIKE', '%' . $request->search . "%")
+
+            ->get();
+
+        foreach ($organizations as $organizations) {
+            $output .=
+                '
             <tr>
-            <td>'.$organizations ->id.'</td>
-            <td>'.$organizations ->org_name.'</td>
-            <td>'.$organizations ->email.'</td>
-            <td>'.$organizations ->created_at.'</td>
-          
-            td> '.'
-                <a href="" class=""style="padding-right:20px">'.' <i class="fas fa-pen-nib"></i> </a>
+            <td>' . $organizations->id . '</td>
+            <td>' . $organizations->org_name . '</td>
+            <td>' . $organizations->email . '</td>
+            <td>' . $organizations->created_at . '</td>
 
-            '.' </td>
+            td> ' . '
+                <a href="" class=""style="padding-right:20px">' . ' <i class="fas fa-pen-nib"></i> </a>
+
+            ' . ' </td> 
             </tr>
             ';
         }
 
         return response($output);
-     
     }
 }

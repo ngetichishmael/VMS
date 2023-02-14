@@ -27,41 +27,47 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
     <style>
-                                .dropdown {
-                                    display: inline-block;
-                                    position: relative;
-                                }
-                                .dropdown-toggle {
-                                    cursor: pointer;
-                                    color: darkgray;
-                                }
-                                .dropdown-menu {
-                                    position: absolute;
-                                    top: 100%;
-                                    right: 0;
-                                    display: none;
-                                    background-color: #fff;
-                                    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                                    z-index: 1;
-                                }
-                                .dropdown-menu a {
-                                    color: #333;
-                                    padding: 12px 16px;
-                                    text-decoration: none;
-                                    display: block;
-                                }
-                                .dropdown-menu a:hover {
-                                    background-color: #f1f1f1;
-                                }
-                                .dropdown:hover .dropdown-menu {
-                                    display: block;
-                                }
-                            </style>
-                            
+        .dropdown {
+            display: inline-block;
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+            color: darkgray;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            display: none;
+            background-color: #fff;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-menu a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
+
     {{-- Include core + vendor Styles --}}
     @include('panels.styles')
-
+    @livewireStyles
 </head>
+@livewireStyles
 
 
 

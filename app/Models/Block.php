@@ -9,9 +9,5 @@ class Block extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'blockname',
-      
-    ];
-
+    protected $guarded = [""];
 }
