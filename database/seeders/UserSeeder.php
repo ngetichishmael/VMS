@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     {
         User::create([
             'name' => "Ish",
-            'email' => "info@deveint.com",
+            'email' => "ishmael@deveint.com",
             'phone_number' => "0724840014",
             "role_id" => 1,
             'email_verified_at' => now(),

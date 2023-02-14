@@ -12,10 +12,5 @@ class Premise extends Model
 
     protected $fillable = [
         'name',
-<<<<<<< HEAD
-
-=======
- 
->>>>>>> origin/vms-merge
     ];
 }
