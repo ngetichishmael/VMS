@@ -105,13 +105,16 @@
 {{--                                    <td>{!! $key + 1 !!}</td>--}}
                                     <td>{!! $visitor->vehicle()->pluck("registration")->implode('')!!} </td>
                                     <td>{!! $visitor->name!!} </td>
-                                    <td>{{ $visitor->resident()->unit()->block() ? $visitor->resident->unit->block->premise->name : '' }}</td>
+                                    {!! dd($visitor->resident->unit->block->name)  !!}
+                                    <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}</td>
                                     <td>{!! $visitor->resident->unit->name !!}</td>
                                     <td>{!! $visitor->resident->unit->block->premise->organization->name !!}</td>
                                     <td>{!! $visitor->timeLogs->entry_time!!}</td>
-                                    @if($visitor->timeOut=='0000-00-00 00:00:00' || $visitor->timeOut=='' || $visitor->timeOut==null)<td> </td>
+                                    {{ dd(visitor->timeLogs->entry_time) }}
+                                    @if($visitor->exit_time=='0000-00-00 00:00:00' || $visitor->exit_time=='' || $visitor->exit_time==null)<td> </td>
                                     @else
-                                        <td> {!! $visitor->timeLogs->exit_time!!}</td>
+
+                                        <td> {!! $visitor->timeLogs->exit_time  !!}</td>
                                     @endif
                                     @if($visitor->timeLogs->exit_time=='0000-00-00 00:00:00'|| $visitor->timeLogs->exit_time=='' || $visitor->timeLogs->exit_time==null)<td style="color: orange;"> Visitor Still in</td>
                                     @else

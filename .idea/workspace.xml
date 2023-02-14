@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="705df46e-e836-460f-950e-0fbab3949275" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/app/Organization/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrganizationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrganizationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Organization/Dashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Organization/Dashboard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Organization.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Organization.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/organization/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/organization/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VisitorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VisitorController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/visit/drivers/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/visit/drivers/dashboard.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -143,6 +139,8 @@
       <path value="$PROJECT_DIR$/vendor/laravel/framework" />
       <path value="$PROJECT_DIR$/vendor/symfony/yaml" />
       <path value="$PROJECT_DIR$/vendor/laravel/sanctum" />
+      <path value="$PROJECT_DIR$/vendor/kyslik/column-sortable" />
+      <path value="$PROJECT_DIR$/vendor/brian2694/laravel-toastr" />
     </include_path>
   </component>
   <component name="ProjectId" id="2LCO4npdOURjdu6bFAqF2M7izoT" />
