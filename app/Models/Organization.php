@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 class Organization extends Model
+
 {
     use HasFactory;
+<<<<<<< HEAD
 
     /**
      * The attributes that are mass assignable.
@@ -17,4 +19,18 @@ class Organization extends Model
      * @var array
      */
     protected $guarded = [""];
+=======
+    protected $guarded;
+    public function organization(): HasMany
+    {
+        return $this->hasMany(Organization::class, 'organization_id', 'organization_id');
+    }
+
+
+>>>>>>> origin/vms-merge
 }
+
+
+// {
+//     use HasFactory;
+// }
