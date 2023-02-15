@@ -5,18 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\Organization;
 use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
-
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Http\Request;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class OrganizationController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
-        return view('livewire.organization.layout');
+
+       return view('livewire.organization.layout');
+
     }
 
     /**
@@ -28,56 +35,42 @@ class OrganizationController extends Controller
     {
         //
     }
-    public function store(StoreOrganizationRequest $request)
-    {
-        //
-    }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreOrganizationRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    // public function store(Request $request)
-    // {
-
-    //     $request->validate([
-    //         'org_name' => 'required',
-    //         'email' => 'required|email',
-
-    //     ]);
-
-    //     // $this->validate(request(), [
-    //     //     'org_name' => 'required',
-    //     //     'email' => 'required|email',
-    //     //     'code' => 'required',
-    //     // ]);
+    public function store(StoreOrganizationRequest $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|max:255|unique:organizations,email',
+            'phone'=> 'required|numeric',
+            'location' => 'required',
 
 
-    //     $id = IdGenerator::generate(['table' => 'organizations', 'length' => 6, 'prefix' => '1']);
-    //     do {
-
-    //         $code = random_int(100000, 999999);
-    //     } while (organization::where("code", "=", $code)->first());
-
-    //     $organization = new organization;
-    //     $organization->org_name = $request->org_name;
-    //     $organization->code      = $code;
-    //     $organization->email    = $request->email;
-    //     $organization->save();
-
-    //     // $organization = Organization::create([
-    //     //     'org_name' => $request->org_name,
-    //     //     'code' => $request->code,
-    //     //     'email' => $request->email,
-
-    //     // ]);
-
-
-    //     return redirect()->to('/organization/information');
-    // }
-
-
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+        $code = Str::random(20);
+        $organization = new organization;
+        $organization->code = $code;
+        $organization->name = $request->input('name');
+        $organization->location = $request->input('location');
+        $organization->email = $request->input('email');
+        $organization->primary_phone  = $request->input('phone');
+        $organization->secondary_phone  = $request->input('phone2');
+        $organization->websiteUrl  = $request->input('url');
+        $organization->description = $request->input('description');
+        $organization->save();
+        
+        session()->flash('message', 'Post successfully updated.');
+       // return response()->json(['success' => 'organization information added successfully.'], 201);
+       return redirect()->to('/organization/information')->with('success','Organization created successfully.');
+ }
 
     public function generateUniqueCode()
 
@@ -189,11 +182,12 @@ class OrganizationController extends Controller
             td> ' . '
                 <a href="" class=""style="padding-right:20px">' . ' <i class="fas fa-pen-nib"></i> </a>
 
-            ' . ' </td> 
+            ' . ' </td>
             </tr>
             ';
         }
 
         return response($output);
     }
+
 }

@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
+                    <button type="button" class="btn btn-icon btn-outline-success" style="width:60%;background-color: #1877F2;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
                             data-placement="top" title="New User">
                           + Add New User
                                
@@ -60,6 +60,7 @@
                                     <th>Email</th>
                                     <th>PhoneNumber</th>
                                     <th>Organization</th>
+                                    <th>Role</th>
                                     <th>Status</th>
                                     <th>Last Login</th>
                                     <th>Check Out</th>
@@ -78,6 +79,8 @@
                                     <td>{{ $user ->email }}</td>
                                     <td> {{ $user ->phone_number }} </td>
                                     <td>{{ $user ->org_name }} </td>
+                                    
+                                    <td>{{ $user ->role_name }} </td>
                                      <td>
                                      <?php if($user->status == '1'){ ?> 
 
@@ -100,7 +103,7 @@
                                             </a>
                                             <div class="dropdown-menu">
                                               
-                                                <a href="{{ url('organization/users/'.$user->id) }}" class="" style="padding-right:6px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+                                                <a href="{{ url('organization/users/edit/'.$user->id) }}" class="" style="padding-right:6px"   data-placement="top" > Edit </a>
                                                
                                                                         <!-- delete link -->
                                         <?php if($user->status == '0'){ ?> 

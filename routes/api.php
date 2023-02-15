@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Api\Visitors\DriveInController;
 use App\Http\Controllers\Api\Visitors\WalkInController;
+use App\Http\Controllers\AuthenticationController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\Visitors\VisitorController;
 use Illuminate\Support\Facades\Route;
@@ -27,11 +28,11 @@ Route::group(['namespace' => 'App\Http\Controllers\Api\Visitors'], function () {
         Route::get('tag-options', [VisitorController::class,'tagOptions']);
 
         Route::get('/drivein/all', [DriveInController::class,'index']);
-        Route::post('/drivein/create', [DriveInController::class,'store'])->middleware('auth:sanctum');;
+        Route::post('/drivein/create', [DriveInController::class,'store']);
 
         Route::get('/walkin/all', [WalkInController::class,'index']);
-        Route::post('/walkin/create', [WalkInController::class,'store'])->middleware('auth:sanctum');;
+        Route::post('/walkin/create', [WalkInController::class,'store']);
     });
 });
-
+Route::post('/login',  [AuthenticationController::class, 'login']);
 

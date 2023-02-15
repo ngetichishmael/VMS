@@ -42,28 +42,29 @@
 
     </style>
     <section id="dashboard-ecommerce">
-        <div class="row mb-2">
-            <label style="color: #070707" for=""><h4>Filter By:</h4></label>
-            <div class="col-md-5" style="width: 50%;" >
-                <label style="color: #070707" for=""><h5>Visitor Type</h5></label>
-                <select wire:model="selectedVisitorType" style="width: 50%;">
-                    <option value="">All</option>
+{{--        <div class="row mb-2">--}}
+{{--            <label style="color: #070707" for=""><h4>Filter By:</h4></label>--}}
+{{--            <div class="col-md-5" style="width: 50%;" >--}}
+{{--                <label style="color: #070707" for=""><h5>Visitor Type</h5></label>--}}
+{{--                <select wire:model="selectedVisitorType" style="width: 50%;">--}}
+{{--                    <option value="">All</option>--}}
 
-                    @foreach ($visitorTypes as $visitorType)
-                        <option value="{{ $visitorType->id }}">{{ $visitorType->description }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-5">
-                <label style="color: #070707" for=""><h5>Verification Type</h5></label>
-                <select wire:model="selectedVisitorType" style="width: 50%;">
-                    <option value="">All</option>
-                    @foreach ($visitorTypes as $visitorType)
-                        <option value="{{ $visitorType->id }}">{{ $visitorType->description }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
+{{--                    @foreach ($visitorTypes as $visitorType)--}}
+{{--                        <option value="{{ $visitorType->id }}">{{ $visitorType->name }}</option>--}}
+{{--                    @endforeach--}}
+{{--                </select>--}}
+{{--            </div>--}}
+{{--            <div class="col-md-5">--}}
+{{--                <label style="color: #070707" for=""><h5>Verification Type</h5></label>--}}
+{{--                <select wire:model="selectedIdentificationType" style="width: 50%;">--}}
+{{--                    <option value="">All</option>--}}
+{{--                    @foreach ($identificationTypes as $identificationType)--}}
+{{--                        <option value="{{ $identificationType->id }}">{{ $identificationType->name }}</option>--}}
+{{--                    @endforeach--}}
+{{--                </select>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+
             <div class="row mb-2" style="margin-left: 35%; padding-left: 35%">
                 <div class="col-md-9">
                     <label for="" style="color: #070707">Search</label>
@@ -104,18 +105,20 @@
 {{--                                    <td>{!! $key + 1 !!}</td>--}}
                                     <td>{!! $visitor->vehicle()->pluck("registration")->implode('')!!} </td>
                                     <td>{!! $visitor->name!!} </td>
-                                    <td>{!! $visitor->site!!}</td>
-                                    <td>{!! $visitor->section!!}</td>
-                                    <td>{!! $visitor->dorganization()->pluck("name")->implode('')!!}</td>
-                                    <td>{!! $visitor->timeIn!!}</td>
-                                    @if($visitor->timeOut=='0000-00-00 00:00:00' || $visitor->timeOut=='' || $visitor->timeOut==null)<td> </td>
+{{--                                    <td>{!! $visitor->premise->name !!}</td>--}}
+                                    <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}</td>
+                                    <td>{!! $visitor->resident->unit->name !!}</td>
+                                    <td>{!! $visitor->resident->unit->block->premise->organization->name !!}</td>
+                                    <td>{!! $visitor->timeLogs->entry_time!!}</td>
+                                    @if($visitor->exit_time=='0000-00-00 00:00:00' || $visitor->exit_time=='' || $visitor->exit_time==null)<td> </td>
                                     @else
-                                        <td> {!! $visitor->timeOut!!}</td>
+
+                                        <td> {!! $visitor->timeLogs->exit_time  !!}</td>
                                     @endif
-                                    @if($visitor->timeOut=='0000-00-00 00:00:00'|| $visitor->timeOut=='' || $visitor->timeOut==null)<td style="color: orange;"> Visitor Still in</td>
+                                    @if($visitor->timeLogs->exit_time=='0000-00-00 00:00:00'|| $visitor->timeLogs->exit_time=='' || $visitor->timeLogs->exit_time==null)<td style="color: orange;"> Visitor Still in</td>
                                     @else
                                         <td>
-                                            {{ Carbon\Carbon::createFromTimeStamp(strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeOut))) - strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeIn))))->format('H :i :s') }}
+                                            {{ Carbon\Carbon::createFromTimeStamp(strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeLogs->exit_time))) - strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeLogs->exit_time))))->format('H :i :s') }}
                                         </td>
                                     @endif
                                     <td >
@@ -132,6 +135,7 @@
                                 </tr>
                             @endforeach
                             </tbody>
+
                         </table>
                         <div class="mt-1">{!! $dvisitors->links() !!}</div>
                         </div>

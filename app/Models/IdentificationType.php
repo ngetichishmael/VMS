@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class IdentificationType extends Model
 {
     use HasFactory;
+    protected $guarded=[];
+
     /**
      * Get the user that owns the IdentificationType
      *

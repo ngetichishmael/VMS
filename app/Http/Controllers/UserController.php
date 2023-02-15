@@ -47,7 +47,8 @@ class UserController extends Controller
             'name' => 'required',
             'phone_number' => 'required',
             'email' => 'required|email',
-            'org' => 'required',
+            'organization_id' => 'required',
+            'role_id' => 'required',
             'password' => 'required'
             
         ]);
@@ -56,7 +57,8 @@ class UserController extends Controller
         $user = new User;
         $user->name = $request->name;
         $user->phone_number = $request->phone_number;
-        $user->org = $request->org;
+        $user->organization_id = $request->organization_id;
+        $user->role_id = $request->role_id;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();
@@ -92,10 +94,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function edit($id)
     {
         $data = DB::table('users')->where('id',$id)->get();
-        return view('livewire.user.dashboard',compact('data'));
+        return view('livewire.user.edit',compact('data'));
 
     }
 
@@ -165,14 +168,10 @@ class UserController extends Controller
 
         ->orWhere('email','LIKE','%'.$request->search."%")
 
-        ->orWhere('username','LIKE','%'.$request->search."%")
 
         ->orWhere('phone_number','LIKE','%'.$request->search."%")
 
-        ->join('organizations', 'users.org', '=', 'organizations.id')
-      
-        ->select('users.*', 'organizations.org_name')
-       
+
         ->get();
         
         foreach($users as $users)
@@ -182,19 +181,15 @@ class UserController extends Controller
             <tr>
             <td>'.$users ->id.'</td>
             <td>'.$users->name.'</td>
-            <td>'.$users ->username.'</td>
+
             <td>'.$users ->email.'</td>
             <td>'.$users ->phone_number.'</td>
-            <td>'.$users ->org_name.'</td>
-
+         
             <td>'.$users ->phone_number.'</td>
     
             <td>'.$users ->phone_number.'</td>
-            <td>'.$users ->org.'</td>
-            td> '.'
-                <a href="" class=""style="padding-right:20px">'.' <i class="fas fa-pen-nib"></i> </a>
-
-            '.' </td>
+        
+       
             </tr>
             ';
         }

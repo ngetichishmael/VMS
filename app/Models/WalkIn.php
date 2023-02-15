@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Organization;
 use App\Models\Premise;
@@ -18,9 +19,13 @@ class WalkIn extends Model
 
     public function organization(): HasMany
     {
-        return $this->hasMany(Organization::class, 'id', 'organizationId');
+        return $this->hasMany(Organization::class, 'id', 'organization_id');
     }
     public function visitorType() {
         return $this->belongsTo(VisitorType::class);
+    }
+    public function timeLogs():BelongsTo
+    {
+        return $this->belongsTo(TimeLog::class, 'time_log_id', 'id');
     }
 }

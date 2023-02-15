@@ -66,10 +66,14 @@
     {{-- Include core + vendor Styles --}}
     @include('panels.styles')
     @livewireStyles
+    @notifyCss
 </head>
 @livewireStyles
 
-
+@include('notify::messages')
+ 
+        <x:notify-messages />
+        @notifyJs
 
 @isset($configData['mainLayoutType'])
     @extends($configData['mainLayoutType'] === 'horizontal' ? 'layouts.horizontalLayoutMaster' : 'layouts.verticalLayoutMaster')
