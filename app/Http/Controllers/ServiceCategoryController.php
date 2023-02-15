@@ -6,6 +6,11 @@ use App\Models\ServiceCategory;
 use App\Http\Requests\StoreServiceCategoryRequest;
 use App\Http\Requests\UpdateServiceCategoryRequest;
 
+use DB;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Http\Request;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+
 class ServiceCategoryController extends Controller
 {
     /**
@@ -15,7 +20,12 @@ class ServiceCategoryController extends Controller
      */
     public function index()
     {
-        return view('livewire.service.catergory.dashboard');
+      
+        $categories = DB::table('service_categories')
+
+        ->get();
+
+        return view('livewire.service.catergory.dashboard', compact('categories'));
     }
 
     /**
@@ -34,9 +44,19 @@ class ServiceCategoryController extends Controller
      * @param  \App\Http\Requests\StoreServiceCategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreServiceCategoryRequest $request)
+    public function store(Request $request)
     {
-        //
+        $this->validate(request(), [
+            'cname' => 'required',
+           
+        ]);
+        
+        $serviceCategory = new ServiceCategory;
+        $serviceCategory->cname = $request->cname;
+     
+        $serviceCategory->save();
+          
+        return redirect()->to('/service/category');
     }
 
     /**
@@ -79,8 +99,37 @@ class ServiceCategoryController extends Controller
      * @param  \App\Models\ServiceCategory  $serviceCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ServiceCategory $serviceCategory)
+    public function destroy($id)
     {
-        //
+        $delete = ServiceCategory::find($id);
+
+        $delete->delete();
+
+        Toastr::success('Data deleted successfully :)','Success');
+
+        return redirect()->route('ServiceCategory');
+    }
+
+    public function status_update($id){
+
+        //get unit status with the help of  ID
+        $categories = DB::table('service_categories')
+                    ->select('status')
+                    ->where('id','=',$id)
+                    ->first();
+
+        //Check unit status
+        if($categories->status == '1'){
+            $status = '0';
+        }else{
+            $status = '1';
+        }
+
+        //update unit status
+        $values = array('status' => $status );
+        DB::table('service_categories')->where('id',$id)->update($values);
+
+        session()->flash('msg','User status has been updated successfully.');
+        return redirect()->route('ServiceCategory');
     }
 }

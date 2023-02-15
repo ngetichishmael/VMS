@@ -2,12 +2,25 @@
 
 namespace App\Http\Livewire\IdentificationType;
 
+use App\Models\IdentificationType;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Dashboard extends Component
 {
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+    public $perPage = 40;
+    public $sortField = 'id';
+    public $sortAsc = true;
+    public ?string $search = null;
     public function render()
     {
-        return view('livewire.identification-type.dashboard');
+        $searchTerm = '%' . $this->search . '%';
+        $types = IdentificationType::whereLike(['name', 'user.email'], $searchTerm)
+            ->get();
+        return view('livewire.identification-type.dashboard', [
+            'types' => $types,
+        ]);
     }
 }

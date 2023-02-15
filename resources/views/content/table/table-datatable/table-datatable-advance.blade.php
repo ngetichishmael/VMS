@@ -37,6 +37,18 @@
                 <th>Salary</th>
               </tr>
             </thead>
+            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Deveint</td>
+                                    <td>info@deveint.com</td>
+                                    <td>ish@deveint.com</td>
+                                    <td>DI</td>
+                                    <td>{{ now() }}</td>
+                                 
+                                </tr>
+
+                            </tbody>
           </table>
         </div>
       </div>

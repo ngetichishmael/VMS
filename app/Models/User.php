@@ -9,6 +9,10 @@ use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
 use Laravel\Sanctum\HasApiTokens;
 
+use Kyslik\ColumnSortable\Sortable;
+
+
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
@@ -20,11 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [""];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -35,6 +35,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
+
+
 
     /**
      * The attributes that should be cast to native types.

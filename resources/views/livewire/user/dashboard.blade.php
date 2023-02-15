@@ -1,28 +1,8 @@
-@extends('layouts.contentLayoutMaster')
-
-@section('title', 'Users')
-
-@section('vendor-style')
-    {{-- vendor css files --}}
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/charts/apexcharts.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('fonts/font-awesome/css/font-awesome.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/jstree.min.css')) }}">
-@endsection
-@section('page-style')
-    {{-- Page css files --}}
-
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-tree.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/pages/dashboard-ecommerce.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/charts/chart-apex.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
-@endsection
-
-@section('content')
-    <!-- Dashboard Ecommerce Starts -->
-    <section id="dashboard-ecommerce">
-        <section>
+<section>
             <!-- users filter start -->
+            {{-- message --}}
+        {!! Toastr::message() !!}
+
             <div class="card">
                 <h5 class="card-header">Search Filter</h5>
                 <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
@@ -31,14 +11,14 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i data-feather="search"></i></span>
                             </div>
-                            <input type="text" id="fname-icon" class="form-control" name="fname-icon"
-                                placeholder="Search" />
+                            <input type="search" id="search" class="form-control" name="search"
+                              placeholder="Search" />
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="selectSmall">Select Per Page</label>
-                            <select class="form-control form-control-sm" id="selectSmall">
+                            <select class="form-control form-control-sm" id="selectSmall" id="table1">
                                 <option value="10">10</option>
                                 <option value="20">20</option>
                                 <option value="50">50</option>
@@ -56,10 +36,10 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-icon btn-outline-success" data-toggle="tooltip"
-                            data-placement="top" title="New Booking">
-                            <img src="{{ asset('images/icons/excel.png') }}"alt="Add" width="20" height="20"
-                                data-toggle="tooltip" data-placement="top" title="Export Excel">
+                    <button type="button" class="btn btn-icon btn-outline-success" style="width:60%;background-color: #1877F2;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
+                            data-placement="top" title="New User">
+                            <img src="{{ asset('images/icons/exceal.png') }}"alt="+ Add New User" width="60" height="20" style="color: #fff;">
+                               
                         </button>
                     </div>
                 </div>
@@ -70,84 +50,86 @@
             <div class="card">
                 <div class="pt-0 card-datatable table-responsive">
                     <div class="card-datatable table-responsive">
-                        <table class="table">
+                        <table class="table" >
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <!-- <th>#</th> -->
                                     <th>Name</th>
+
                                     <th>Email</th>
+                                    <th>PhoneNumber</th>
                                     <th>Organization</th>
+                                    <th>Role</th>
                                     <th>Status</th>
                                     <th>Last Login</th>
                                     <th>Check Out</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+
+                         
+
+                            <tbody class="alldata">
+                            @foreach ($users as $user)
                                 <tr>
-                                    <td>1</td>
-                                    <td>Deveint</td>
-                                    <td>info@deveint.com</td>
-                                    <td>ish@deveint.com</td>
-                                    <td>DI</td>
+                                    <!-- <td> {{ $user ->id }} </td> -->
+                                    <td> {{ $user ->name }} </td>
+
+                                    <td>{{ $user ->email }}</td>
+                                    <td> {{ $user ->phone_number }} </td>
+                                    <td>{{ $user ->org_name }} </td>
+                                    
+                                    <td>{{ $user ->role_name }} </td>
+                                     <td>
+                                     <?php if($user->status == '1'){ ?> 
+
+                                        <a href="#" class="Active" style="color:#00FF00;">Active</a>
+
+                                        <?php }else{ ?> 
+
+                                        <a href="#" class="inactive" style="color:#FF0000;">Disabled</a>
+
+                                        <?php } ?>
+                                    
+                                    </td>
                                     <td>{{ now() }}</td>
                                     <td>{{ now() }}</td>
+                                    <td>
+
+                                    <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                              
+                                                <a href="{{ url('organization/users/edit/'.$user->id) }}" class="" style="padding-right:6px"   data-placement="top" > Edit </a>
+                                               
+                                                                        <!-- delete link -->
+                                        <?php if($user->status == '0'){ ?> 
+                                        <a href="{{ url('organization/users/suspend/'.$user->id) }}" onclick="return confirm('Are you sure to want to Activate the User?')"  title="Unsuspend" style="padding-right:6px" > Unsuspend</i> </a>
+                                        <?php }else{ ?> 
+                                            <a href="{{ url('organization/users/suspend/'.$user->id) }}" onclick="return confirm('Are you sure to want to suspend the User?')"  title="Suspend" style="padding-right:6px"> Suspend </a>
+                                        <?php } ?>
+
+                                        <a href="{{ url('organization/users/delete/'.$user->id) }}" onclick="return confirm('Are you sure to want to delete the user?')" title="Delete"> Delete </a>
+                                   
+                                            </div>
+                                        </div>
+                                        
+  
+                                    </td>
                                 </tr>
+                              
+                            @endforeach
 
                             </tbody>
+                            <tbody id="Content" class="searchdata"></tbody>
                         </table>
+             
+
                         <div class="mt-1">
+                  
                         </div>
                     </div>
                 </div>
         </section>
-        </div>
-
-        <h2 class="brand-text">TODO ON USERS</h2>
-        <div class="card-body">
-            <div id="jstree-basic">
-                <ul>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        CRUD
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Create</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Read</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Updated</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Delete</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Relationship
-                        <ul data-jstree='{"icon" : "far fa-folder"}'>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Organization</li>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Hierarchy under Organization</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Table
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Filter</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Pagination</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Search by *</li>
-                        </ul>
-                    </li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Any Other</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Martin from Advise</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Isaac to Provide images, and secondary colors</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!-- Dashboard Ecommerce ends -->
-@endsection
-
-@section('vendor-script')
-    {{-- vendor files --}}
-    <script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/jstree.min.js')) }}"></script>
-@endsection
-@section('page-script')
-    {{-- Page js files --}}
-    <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script>
-    <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
-@endsection

@@ -15,7 +15,7 @@ class IdentificationTypeController extends Controller
      */
     public function index()
     {
-        return view('livewire.identification-type.dashboard');
+        return view('livewire.identification-type.layout');
     }
 
     /**

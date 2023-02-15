@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Organization;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
+
 
 class OrganizationSeeder extends Seeder
 {
@@ -15,6 +17,7 @@ class OrganizationSeeder extends Seeder
     public function run()
     {
         Organization::create([
+            'code' => Str::random(20),
             'name' => 'Velocies',
             'location' => 'Location 1',
             'email' => 'organization1@email.com',
@@ -26,6 +29,7 @@ class OrganizationSeeder extends Seeder
         ]);
 
         Organization::create([
+            'code' => Str::random(20),
             'name' => 'Deveint',
             'location' => 'Location 2',
             'email' => 'organization2@email.com',
@@ -37,6 +41,7 @@ class OrganizationSeeder extends Seeder
         ]);
 
         Organization::create([
+            'code' => Str::random(20),
             'name' => 'prime bank',
             'location' => 'Location 3',
             'email' => 'organization3@email.com',
@@ -48,6 +53,7 @@ class OrganizationSeeder extends Seeder
         ]);
 
         Organization::create([
+            'code' => Str::random(20),
             'name' => 'Equity',
             'location' => 'Location 4',
             'email' => 'organization4@email.com',
@@ -59,6 +65,7 @@ class OrganizationSeeder extends Seeder
         ]);
 
         Organization::create([
+            'code' => Str::random(20),
             'name' => 'JAMBOPAY',
             'location' => 'Location 5',
             'email' => 'organization5@email.com',

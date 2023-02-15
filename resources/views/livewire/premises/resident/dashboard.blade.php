@@ -56,10 +56,10 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-icon btn-outline-success" data-toggle="tooltip"
-                            data-placement="top" title="New Booking">
-                            <img src="{{ asset('images/icons/excel.png') }}"alt="Add" width="20" height="20"
-                                data-toggle="tooltip" data-placement="top" title="Export Excel">
+                    <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
+                            data-placement="top" title="New User">
+                            <img src="{{ asset('images/icons/exceal.png') }}"alt="Add" width="20" height="20">
+                               
                         </button>
                     </div>
                 </div>
@@ -73,25 +73,59 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Organization</th>
+                                  
+                                    <th>Full Names</th>
+                                    <th>Premise</th>
+                                    <th>Block</th>
                                     <th>Status</th>
                                     <th>Last Login</th>
                                     <th>Check Out</th>
                                 </tr>
                             </thead>
                             <tbody>
+                            @foreach ($residents as $resident)
                                 <tr>
-                                    <td>1</td>
-                                    <td>Deveint</td>
-                                    <td>info@deveint.com</td>
-                                    <td>ish@deveint.com</td>
-                                    <td>DI</td>
-                                    <td>{{ now() }}</td>
-                                    <td>{{ now() }}</td>
+                                   
+                                    <td> {{ $resident ->rname }} </td>
+                                    <td> {{ $resident ->name }} </td>
+                                    <td> {{ $resident ->blockname }} </td>
+                                    <td>
+                                    <?php if($resident->status == '1'){ ?> 
+
+                                        <a href="#" class="Active" style="color:#00FF00;">Active</a>
+
+                                        <?php }else{ ?> 
+
+                                        <a href="#" class="inactive" style="color:#FF0000;">Disabled</a>
+
+                                    <?php } ?>
+
+                                    </td>
+                                    <td>{{ $resident ->created_at }}</td>
+                                    <td>     
+                                    <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu">
+                                            <!--update link-->
+                                            <a href="{{ url('resident/information/'.$resident->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+                                        <!-- delete link -->
+                                        <?php if($resident->status == '0'){ ?> 
+                                        <a href="{{ url('resident/information/suspend/'.$resident->id) }}" onclick="return confirm('Are you sure to want to unblock the resident?')" style="padding-right:20px; " > Unblock </a>
+                                        <?php }else{ ?> 
+                                        <a href="{{ url('resident/information/suspend/'.$resident->id) }}" onclick="return confirm('Are you sure to want to block the resident?')" style="padding-right:20px; " title="Disable"> Block </a>
+                                        <?php } ?>
+
+                                        <a href="{{ url('resident/information/delete/'.$resident->id) }}" onclick="return confirm('Are you sure to want to delete the resident?')" > Delete </a>
+
+                                        </div>
+                                        </div>
+
+                                    </td>
                                 </tr>
+
+                                @endforeach
 
                             </tbody>
                         </table>
@@ -101,6 +135,60 @@
                 </div>
         </section>
         </div>
+
+    
+              <!-- Modal to add new resident starts-->
+    <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+      <div class="modal-dialog">
+        <form class="add-new-user modal-content pt-0" method="POST" action="{{ route('ResidentInformation.store') }}">
+        {{ csrf_field() }} 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+          <div class="modal-header mb-1">
+            <h5 class="modal-title" id="exampleModalLabel">New Resident</h5>
+          </div>
+          <div class="modal-body flex-grow-1">
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Full Names</label>
+              <input
+                type="text"
+                name="rname" 
+               
+                class="form-control dt-full-name"
+                id="basic-icon-default-fullname"
+                aria-describedby="basic-icon-default-fullname2"
+              />
+            </div>
+
+
+
+            <fieldset class="form-group">
+              <label class="form-label" for="user-role">Premise Name</label>
+              <select id="premise" name="premise" class="form-control">
+                
+                @foreach ($premises as $prem)
+                    <option  value="{{ $prem ->id }}"> {{ $prem ->name }}</option>
+                @endforeach  
+              </select>
+            </fieldset>
+
+
+            <fieldset class="form-group">
+              <label class="form-label" for="user-role">Block Name</label>
+              <select id="block" name="block" class="form-control">
+                
+                @foreach ($blocks as $block)
+                    <option  value="{{ $block ->id }}"> {{ $block ->blockname }}</option>
+                @endforeach  
+              </select>
+            </fieldset>
+            
+            <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal to add new resident Ends-->
 
         <h2 class="brand-text">TODO ON RESIDENTS</h2>
         <div class="card-body">

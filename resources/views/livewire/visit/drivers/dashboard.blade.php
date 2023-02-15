@@ -105,12 +105,11 @@
 {{--                                    <td>{!! $key + 1 !!}</td>--}}
                                     <td>{!! $visitor->vehicle()->pluck("registration")->implode('')!!} </td>
                                     <td>{!! $visitor->name!!} </td>
-                                    {!! dd($visitor->resident->unit->block->name)  !!}
+{{--                                    <td>{!! $visitor->premise->name !!}</td>--}}
                                     <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}</td>
                                     <td>{!! $visitor->resident->unit->name !!}</td>
                                     <td>{!! $visitor->resident->unit->block->premise->organization->name !!}</td>
                                     <td>{!! $visitor->timeLogs->entry_time!!}</td>
-                                    {{ dd(visitor->timeLogs->entry_time) }}
                                     @if($visitor->exit_time=='0000-00-00 00:00:00' || $visitor->exit_time=='' || $visitor->exit_time==null)<td> </td>
                                     @else
 

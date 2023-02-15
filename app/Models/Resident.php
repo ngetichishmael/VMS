@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Resident extends Model
 {
     use HasFactory;
-    protected $table='units';
+    protected $table='residents';
     protected $guarded=[];
     /**
      * Get the Unit that owns the Resident
@@ -19,5 +19,10 @@ class Resident extends Model
     public function unit(): BelongsTo
     {
         return $this->belongsTo(Unit::class);
+    }
+
+    public function premise()
+    {
+        return $this->unit->block->premise;
     }
 }

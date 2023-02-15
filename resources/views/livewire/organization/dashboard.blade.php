@@ -1,4 +1,8 @@
-
+{{--@if (session('success'))--}}
+{{--    <div class="alert alert-success">--}}
+{{--        {{ session('success') }}--}}
+{{--    </div>--}}
+{{--@endif--}}
 
     <!-- Dashboard Ecommerce Starts -->
     <section id="dashboard-ecommerce">
@@ -12,7 +16,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i data-feather="search"></i></span>
                             </div>
-                            <input type="text" id="fname-icon" class="form-control" name="fname-icon"
+                            <input type="text" id="search" class="form-control" name="search"
                                 placeholder="Search" />
                         </div>
                     </div>
@@ -36,11 +40,8 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-icon btn-outline-success" data-toggle="tooltip"
-                            data-placement="top" title="New Booking">
-                            <img src="{{ asset('images/icons/excel.png') }}"alt="Add" width="20" height="20"
-                                data-toggle="tooltip" data-placement="top" title="Export Excel">
-                        </button>
+                        <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal" id="smallButton" data-target="#modals-slide-in"
+                            data-placement="top" title="New Organazition">Add new Organization               </button>
                     </div>
                 </div>
             </div>
@@ -50,73 +51,67 @@
             <div class="card">
                 <div class="pt-0 card-datatable table-responsive">
                     <div class="card-datatable table-responsive">
-                        <table class="table">
+                        <table class="invoice-list-table table" >
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Status</th>
                                     <th>Location</th>
                                     <th>Action</th>
+
                                 </tr>
                             </thead>
-                            <style>
-                                .option{
-                                    color: #0c0c0c;
-                                }
 
-                                .dropdown {
-                                    display: inline-block;
-                                    position: relative;
-                                }
-
-                                .dropdown-toggle {
-                                    cursor: pointer;
-                                    color: darkgray;
-                                }
-
-                                .dropdown-menu {
-                                    position: absolute;
-                                    top: 100%;
-                                    right: 0;
-                                    display: none;
-                                    background-color: #fff;
-                                    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                                    z-index: 1;
-                                }
-
-                                .dropdown-menu a {
-                                    color: #333;
-                                    padding: 12px 16px;
-                                    text-decoration: none;
-                                    display: block;
-                                }
-
-                                .dropdown-menu a:hover {
-                                    background-color: #f1f1f1;
-                                }
-
-                                .dropdown:hover .dropdown-menu {
-                                    display: block;
-                                }
-
-                            </style>
-                            <tbody>
-                            @foreach ($organizations as $key => $organization)
+                            <tbody class="alldata">
+                            @foreach ($organizations as $org)
                                 <tr>
-                                    <td>{!! $key + 1 !!}</td>
-                                    <td>{!! $organization->name !!}</td>
-                                    <td>{!! $organization->email !!}</td>
-                                    <td>{!! $organization->location !!}</td>
+                                    <td>{{ $org ->code }}</td>
+                                    <td>{{ $org ->name }}</td>
+                                    <td>{{ $org ->email }}</td>
                                     <td>
-                                    <div class="dropdown-menu">
-                                        <a href="#">View Details</a>
-                                        <a href="#">View History</a>
-                                    </div>
+                                    <?php if($org->status == '1'){ ?>
+
+                                    <a href="#" class="Active" style="color:#00FF00;">Active</a>
+
+                                    <?php }else{ ?>
+
+                                    <a href="#" class="inactive" style="color:#FF0000;">Suspended</a>
+
+                                    <?php } ?>
+
+                                    </td>
+                                    <td>{{ $org ->location }}</td>
+                                    <td>
+
+
+
+                                          <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu">
+
+                                                   <!--update link-->
+                                        <a href="{{ url('organization/users/'.$org->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit   </a>
+                                        <!-- delete link -->
+                                        <?php if($org->status == '0'){ ?>
+                                        <a href="{{ url('organization/information/suspend/'.$org->id) }}" onclick="return confirm('Are you sure to want to Activate the organization?')" style="padding-right:20px; " > Activate </a>
+                                        <?php }else{ ?>
+                                            <a href="{{ url('organization/information/suspend/'.$org->id) }}" onclick="return confirm('Are you sure to want to suspend the organization?')" style="padding-right:20px; " > Suspend</i> </a>
+                                        <?php } ?>
+
+                                        <a href="{{ url('organization/information/delete/'.$org->id) }}" onclick="return confirm('Are you sure to want to delete the organization?')" > Delete </a>
+
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
+
                             @endforeach
                             </tbody>
+                            <tbody id="Content" class="searchdata"></tbody>
                         </table>
                         <div class="mt-1">{!! $organizations->links() !!}</div>
                         <div class="mt-1">
@@ -126,6 +121,107 @@
             </div>
         </section>
         </div>
+   <!-- Modal to add new organization starts-->
+        <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+            <div class="modal-dialog">
+                <form class="add-new-user modal-content pt-0" method="POST" action="{!! route('OrganizationInformation.store') !!}">
+                    @csrf
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                    <div class="modal-header mb-1">
+                        <h5 class="modal-title" id="exampleModalLabel">New Organization</h5>
+                    </div>
+                    <div class="modal-body flex-grow-1">
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Name</label>
+                            <input
+                                type="text"
+                                name="name"
+                                :value="old('name')"
+                                class="form-control dt-full-name"
+                                id="basic-icon-default-fullname"
+                                aria-describedby="basic-icon-default-fullname2" required
+                            />
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-email">Email</label>
+                            <input
+                                type="email"
+                                name="email"
+                                :value="old('email')"
+                                class="form-control dt-email"
+                                aria-describedby="basic-icon-default-email2"
+                                id="user-email" required
+                            />
+                            <small class="form-text text-muted"> You can use letters, numbers & periods </small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-email">Phone Number</label>
+                            <input
+                                type="tel"
+                                name="phone"
+                                :value="old('email')"
+                                class="form-control dt-phone"
+                                aria-describedby="basic-icon-default-phone"
+                                id="phone" required
+                            />
+                            <small class="form-text text-muted"> You can numbers</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-email">Other Phone Number</label>
+                            <input
+                                type="tel"
+                                name="phone2"
+                                :value="old('email')"
+                                class="form-control dt-phone"
+                                aria-describedby="basic-icon-default-phone"
+                                id="phone2"
+                            />
+                            <small class="form-text text-muted"> You can numbers</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Location</label>
+                            <input
+                                type="text"
+                                name="location"
+                                :value="old('location')"
+                                class="form-control dt-full-name"
+                                id="basic-icon-default-location"
+                                aria-describedby="basic-icon-default-location2" required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Website URL</label>
+                            <input
+                                type="text"
+                                name="url"
+                                :value="old('url')"
+                                class="form-control dt-full-url"
+                                id="basic-icon-default-url"
+                                aria-describedby="basic-icon-default-url"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Organization Description</label>
+                            <input
+                                type="text"
+                                name="description"
+                                :value="old('description')"
+                                class="form-control dt-full-description"
+                                id="basic-icon-default-description2"
+                                aria-describedby="basic-icon-default-description2" required
+                            />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+                        <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    <!-- Modal to add new organization Ends-->
+
 
 {{--        <h2 class="brand-text">TODO ON ORGANIZATIONS</h2>--}}
 {{--        <div class="card-body">--}}
@@ -181,4 +277,45 @@
         </script>
     </section>
     <!-- Dashboard Ecommerce ends -->
+
+@section('vendor-script')
+<script type="text/javascript">
+
+      $('#search').on('keyup',function()
+      {
+       $value=$(this).val();
+
+       if($value)
+       {
+        $('.alldata').hide();
+        $('.searchdata').show();
+       }
+       else{
+        $('.alldata').show();
+        $('.searchdata').hide();
+       }
+       $.ajax({
+
+            type : 'get',
+            url : '{{URL::to('search')}}',
+            data:{'search':$value},
+
+     success:function(data)
+     {
+            $('#Content').html(data);
+    }
+    });
+    })
+    </script>
+
+    {{-- vendor files --}}
+    <script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/extensions/jstree.min.js')) }}"></script>
+@endsection
+@section('page-script')
+    {{-- Page js files --}}
+    <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script>
+    <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
+@endsection
 

@@ -57,19 +57,22 @@ $configData = Helper::applClasses();
       <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
           <h2 class="card-title font-weight-bold mb-1">Adventure starts here 🚀</h2>
           <p class="card-text mb-2">Make your app management easy and fun!</p>
-          <form class="auth-register-form mt-2" action="/" method="GET">
-              <div class="form-group">
+
+
+          <form class="auth-register-form mt-2" method="POST" action="{{ route('register') }}">
+           @csrf   
+          <div class="form-group">
                 <label class="form-label" for="register-username">Username</label>
-                <input class="form-control" id="register-username" type="text" name="register-username" placeholder="johndoe" aria-describedby="register-username" autofocus="" tabindex="1" />
+                <input class="form-control" id="register-username" type="text" name="username" placeholder="johndoe" aria-describedby="register-username" autofocus="" tabindex="1" />
               </div>
               <div class="form-group">
                 <label class="form-label" for="register-email">Email</label>
-                <input class="form-control" id="register-email" type="text" name="register-email" placeholder="john@example.com" aria-describedby="register-email" tabindex="2" />
+                <input class="form-control" id="register-email" type="text" name="email" placeholder="john@example.com" aria-describedby="register-email" tabindex="2" />
               </div>
               <div class="form-group">
                 <label class="form-label" for="register-password">Password</label>
                   <div class="input-group input-group-merge form-password-toggle">
-                    <input class="form-control form-control-merge" id="register-password" type="password" name="register-password" placeholder="············" aria-describedby="register-password" tabindex="3" />
+                    <input class="form-control form-control-merge" id="register-password" type="password" name="password" placeholder="············" aria-describedby="register-password" tabindex="3" />
                       <div class="input-group-append">
                         <span class="input-group-text cursor-pointer">
                           <i data-feather="eye"></i>
@@ -85,6 +88,7 @@ $configData = Helper::applClasses();
               </div>
               <button class="btn btn-primary btn-block" tabindex="5">Sign up</button>
           </form>
+
           <p class="text-center mt-2">
             <span>Already have an account?</span>
             <a href="{{url('auth/login-v2')}}">

@@ -35,7 +35,7 @@ class Visitor extends Model
     }
     public function timeLogs():BelongsTo
     {
-        return $this->belongsTo(TimeLog::class, 'time_log_id');
+        return $this->belongsTo(TimeLog::class, 'time_log_id', 'id');
     }
     public function createdBy():HasMany
     {

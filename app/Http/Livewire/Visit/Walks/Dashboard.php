@@ -35,6 +35,7 @@ class Dashboard extends Component
 
         $searchTerm = '%' . $this->search . '%';
         $visitors = WalkIn::with('organization')
+            ->with('timeLogs')
           ->where('type', 'walkin')
             ->where(function ($query) use ($searchTerm) {
                 $query->where('name', 'like', $searchTerm);

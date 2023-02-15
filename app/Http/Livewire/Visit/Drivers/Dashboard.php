@@ -38,7 +38,7 @@ class Dashboard extends Component
 
         $searchTerm = '%' . $this->search . '%';
         $dvisitors = DriveIn::with('dorganization')
-            ->with('vehicle')
+            ->with('vehicle')->with('timeLogs')
             ->where('type', 'drivein')
             ->where(function ($query) use ($searchTerm) {
                 $query->where('name', 'like', $searchTerm);
