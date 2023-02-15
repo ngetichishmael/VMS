@@ -28,51 +28,56 @@ class OrganizationController extends Controller
     {
         //
     }
-
+    public function store(StoreOrganizationRequest $request)
+    {
+        //
+    }
     /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreOrganizationRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    // public function store(Request $request)
+    // {
 
-        $request->validate([
-            'org_name' => 'required',
-            'email' => 'required|email',
+    //     $request->validate([
+    //         'org_name' => 'required',
+    //         'email' => 'required|email',
 
-        ]);
+    //     ]);
 
-        // $this->validate(request(), [
-        //     'org_name' => 'required',
-        //     'email' => 'required|email',
-        //     'code' => 'required',
-        // ]);
-
-
-        $id = IdGenerator::generate(['table' => 'organizations', 'length' => 6, 'prefix' => '1']);
-        do {
-
-            $code = random_int(100000, 999999);
-        } while (organization::where("code", "=", $code)->first());
-
-        $organization = new organization;
-        $organization->org_name = $request->org_name;
-        $organization->code      = $code;
-        $organization->email    = $request->email;
-        $organization->save();
-
-        // $organization = Organization::create([
-        //     'org_name' => $request->org_name,
-        //     'code' => $request->code,
-        //     'email' => $request->email,
-
-        // ]);
+    //     // $this->validate(request(), [
+    //     //     'org_name' => 'required',
+    //     //     'email' => 'required|email',
+    //     //     'code' => 'required',
+    //     // ]);
 
 
-        return redirect()->to('/organization/information');
-    }
+    //     $id = IdGenerator::generate(['table' => 'organizations', 'length' => 6, 'prefix' => '1']);
+    //     do {
+
+    //         $code = random_int(100000, 999999);
+    //     } while (organization::where("code", "=", $code)->first());
+
+    //     $organization = new organization;
+    //     $organization->org_name = $request->org_name;
+    //     $organization->code      = $code;
+    //     $organization->email    = $request->email;
+    //     $organization->save();
+
+    //     // $organization = Organization::create([
+    //     //     'org_name' => $request->org_name,
+    //     //     'code' => $request->code,
+    //     //     'email' => $request->email,
+
+    //     // ]);
+
+
+    //     return redirect()->to('/organization/information');
+    // }
+
+
 
     public function generateUniqueCode()
 

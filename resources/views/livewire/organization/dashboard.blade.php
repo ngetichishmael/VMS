@@ -36,7 +36,7 @@
                     <div class="col-md-3">
                         <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
                             data-placement="top" title="New Organazition">
-                            <img src="{{ asset('images/icons/excel.png') }}"alt="Add" width="20" height="20">
+                             + Add New Organization
                         </button>
                     </div>
                 </div>
@@ -53,6 +53,7 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Location</th>
                                     <th>Status</th>
                                     <th>Created At</th>
                                     <th>Action</th>
@@ -63,9 +64,10 @@
                             <tbody>
                             @forelse ($organizations as $org)
                                 <tr>
-                               
+                                    <td>{{ $org ->id }}</td>
                                     <td>{{ $org ->name }}</td>
                                     <td>{{ $org ->email }}</td>     
+                                    <td>{{ $org ->location }}</td>  
                                     <td>
                                     <?php if($org->status == '1'){ ?> 
 
@@ -110,6 +112,7 @@
                                     <td colspan="4">No Record Found For Organization </td>
                                 </tr>
                             @endforelse
+                          
                             </tbody>
                            
                         </table>
@@ -120,6 +123,48 @@
         </section>
         </div>
   
+         <!-- Modal to add new organization starts-->
+   <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+      <div class="modal-dialog">
+        <form wire:submit.prevent="StoreOrganization" class="add-new-user modal-content pt-0"  >
+        {{ csrf_field() }} 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+          <div class="modal-header mb-1">
+            <h5 class="modal-title" id="exampleModalLabel">New Organization</h5>
+          </div>
+          <div class="modal-body flex-grow-1">
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Name</label>
+              <input type="text" wire:model="name" 
+             
+                class="form-control dt-full-name"
+          
+                aria-describedby="basic-icon-default-fullname2"
+              />
+            </div>
+
+            
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-email">Email</label>
+              <input
+                type="email"
+         
+                wire:model="email" 
+             
+                class="form-control dt-email"
+           
+              />
+              <small class="form-text text-muted"> You can use letters, numbers & periods </small>
+            </div>
+            
+            <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal to add new organization Ends-->
+
 
         <h2 class="brand-text">TODO ON ORGANIZATIONS</h2>
         <div class="card-body">

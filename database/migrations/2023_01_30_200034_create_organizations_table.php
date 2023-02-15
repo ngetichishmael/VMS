@@ -21,7 +21,8 @@ class CreateOrganizationsTable extends Migration
             $table->string('primary_phone');
             $table->string('secondary_phone')->nullable();
             $table->string('description')->nullable();
-            $table->string('websiteUrl')->nullable();
+            $table->string('websiteUrl')->nullmambmmlmem();
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }
