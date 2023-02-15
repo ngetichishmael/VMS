@@ -13,9 +13,27 @@
                                 placeholder="Search" />
                         </div>
                     </div>
+                    <div class="col-ms-3">
+                        <label style="color: #070707" for="">Items Per</label>
+                        <select wire:model="perPage" class="form-control">`
+                            <option value="10" selected>10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="selectSmall">Sort</label>
+                            <select class="form-control form-control-sm" id="selectSmall">
+                                <option value="1">Ascending</option>
+                                <option value="0">Descending</option>
+                            </select>
+                        </div>
+                    </div>
               
                     <div class="col-md-3">
-                    <button type="button" class="btn btn-icon btn-outline-success" style="width:200px;background-color: #1877F2;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
+                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2;color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
                             data-placement="top" title="New User">
                               + Add New Sentry
                                

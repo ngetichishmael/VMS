@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                    <button type="button" class="btn btn-icon btn-outline-success" style="width:60%;background-color: #1877F2;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
+                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2; color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
                             data-placement="top" title="New User">
                           + Add New User
                                
@@ -70,7 +70,7 @@
 
                          
 
-                            <tbody class="alldata">
+                            <tbody>
                             @forelse ($users as $user)
                                 <tr>
                                     <!-- <td> {{ $user ->id }} </td> -->
@@ -124,12 +124,12 @@
                          
                                 @empty
                                 <tr>
-                                    <td colspan="6" style="text-align: center; color:red;">No Sentry Found</td>
+                                    <td colspan="6" style="text-align: center; color:red;">No User Found</td>
                                 </tr>
                             @endforelse
 
                             </tbody>
-                            <tbody id="Content" class="searchdata"></tbody>
+                          
                         </table>
              
 
