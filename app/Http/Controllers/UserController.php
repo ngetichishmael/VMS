@@ -8,9 +8,17 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 
-use App\Models\IdentificationType;
+
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+
+use Brian2694\Toastr\Facades\Toastr;
+
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 
 class UserController extends Controller
@@ -43,36 +51,28 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate(request(), [
+       
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'phone_number' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|max:255|unique:users,email',
+            'phone_number'=> 'required|numeric',
             'organization_id' => 'required',
             'role_id' => 'required',
-            'password' => 'required'
-            
+
+
         ]);
-        
-       
-        $user = new User;
-        $user->name = $request->name;
-        $user->phone_number = $request->phone_number;
-        $user->organization_id = $request->organization_id;
-        $user->role_id = $request->role_id;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->save();
-        
-        
-        // $user = User::create([
-        //     'name' => $request->name,
-        //     'phone_number' => $request->phone_number,
-        //     'org' => $request->org,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-        // ]);
-        
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
      
+        $user = new User;
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->phone_number  = $request->input('phone_number');
+        $user->organization_id  = $request->input('organization_id');
+        $user->role_id  = $request->input('role_id'); 
+        $user->password  = Hash::make($request->password);
+        $user->save();
         
         return redirect()->to('/organization/users');
     }

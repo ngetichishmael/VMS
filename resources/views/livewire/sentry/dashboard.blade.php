@@ -1,6 +1,4 @@
-<section id="dashboard-ecommerce">
-        <section>
-            <!-- users filter start -->
+<div>
             <div class="card">
                 <h5 class="card-header">Search Filter</h5>
                 <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
@@ -110,7 +108,7 @@
 
                                 @empty
                                 <tr>
-                                    <td colspan="6" style="text-align: center; color:red;">No Sentry Found</td>
+                                    <td colspan="6" style="text-align: center; color:red;"> No Sentry Found</td>
                                 </tr>
                             @endforelse
                             </tbody>
@@ -119,7 +117,7 @@
                         </div>
                     </div>
                 </div>
-        </section>
+    
         </div>
 
           <!-- Modal to add new sentry starts-->

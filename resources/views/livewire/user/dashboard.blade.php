@@ -1,9 +1,4 @@
-<section id="dashboard-ecommerce">
-        <section>
-            <!-- users filter start -->
-            {{-- message --}}
-        {!! Toastr::message() !!}
-
+<div>
             <div class="card">
                 <h5 class="card-header">Search Filter</h5>
                 <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
@@ -54,9 +49,8 @@
                         <table class="table" >
                             <thead>
                                 <tr>
-                                    <!-- <th>#</th> -->
+                             
                                     <th>Name</th>
-
                                     <th>Email</th>
                                     <th>PhoneNumber</th>
                                     <th>Organization</th>
@@ -127,7 +121,7 @@
                                     <td colspan="6" style="text-align: center; color:red;">No User Found</td>
                                 </tr>
                             @endforelse
-
+                       
                             </tbody>
                           
                         </table>
@@ -138,109 +132,99 @@
                         </div>
                     </div>
                 </div>
-        </section>
+   
         </div>
 
-         <!-- Modal to add new organization starts-->
+    
+         <!-- Modal to add new user starts-->
          <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
-            <div class="modal-dialog">
-                <form class="add-new-user modal-content pt-0" method="POST" action="{!! route('OrganizationInformation.store') !!}">
-                    @csrf
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-                    <div class="modal-header mb-1">
-                        <h5 class="modal-title" id="exampleModalLabel">New Organization</h5>
-                    </div>
-                    <div class="modal-body flex-grow-1">
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Name</label>
-                            <input
-                                type="text"
-                                name="name"
-                                :value="old('name')"
-                                class="form-control dt-full-name"
-                                id="basic-icon-default-fullname"
-                                aria-describedby="basic-icon-default-fullname2" required
-                            />
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-email">Email</label>
-                            <input
-                                type="email"
-                                name="email"
-                                :value="old('email')"
-                                class="form-control dt-email"
-                                aria-describedby="basic-icon-default-email2"
-                                id="user-email" required
-                            />
-                            <small class="form-text text-muted"> You can use letters, numbers & periods </small>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-email">Phone Number</label>
-                            <input
-                                type="tel"
-                                name="phone"
-                                :value="old('email')"
-                                class="form-control dt-phone"
-                                aria-describedby="basic-icon-default-phone"
-                                id="phone" required
-                            />
-                            <small class="form-text text-muted"> You can numbers</small>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-email">Other Phone Number</label>
-                            <input
-                                type="tel"
-                                name="phone2"
-                                :value="old('email')"
-                                class="form-control dt-phone"
-                                aria-describedby="basic-icon-default-phone"
-                                id="phone2"
-                            />
-                            <small class="form-text text-muted"> You can numbers</small>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Location</label>
-                            <input
-                                type="text"
-                                name="location"
-                                :value="old('location')"
-                                class="form-control dt-full-name"
-                                id="basic-icon-default-location"
-                                aria-describedby="basic-icon-default-location2" required
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Website URL</label>
-                            <input
-                                type="text"
-                                name="url"
-                                :value="old('url')"
-                                class="form-control dt-full-url"
-                                id="basic-icon-default-url"
-                                aria-describedby="basic-icon-default-url"
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Organization Description</label>
-                            <input
-                                type="text"
-                                name="description"
-                                :value="old('description')"
-                                class="form-control dt-full-description"
-                                id="basic-icon-default-description2"
-                                aria-describedby="basic-icon-default-description2" required
-                            />
-                        </div>
-
-                        <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
-                        <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-                    </div>
-                </form>
+      <div class="modal-dialog">
+        <form class="add-new-user modal-content pt-0" method="POST" action="{{ route('OrganizationUsers.store') }}">
+        {{ csrf_field() }} 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+          <div class="modal-header mb-1">
+            <h5 class="modal-title" id="exampleModalLabel">New User</h5>
+          </div>
+          <div class="modal-body flex-grow-1">
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
+              <input
+                type="text"
+                name="name" 
+                :value="old('name')"
+                class="form-control dt-full-name"
+                id="basic-icon-default-fullname"
+                aria-describedby="basic-icon-default-fullname2"
+              />
             </div>
-        </div>
-    <!-- Modal to add new organization Ends-->
+
+            
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-email">Email</label>
+              <input
+                type="email"
+                name="email" 
+                :value="old('email')"
+                class="form-control dt-email"
+                aria-describedby="basic-icon-default-email2"
+                name="user-email"
+              />
+              <small class="form-text text-muted"> You can use letters, numbers & periods </small>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
+              <input
+                type="tel"
+                class="form-control dt-full-name"
+                name="phone_number" 
+                :value="old('phone_number')"
+                aria-describedby="basic-icon-default-fullname2"
+              />
+            </div>
+
+
+
+            <fieldset class="form-group">
+              <label class="form-label" for="user-role">Organization</label>
+              <select id="organization_id" name="organization_id" class="form-control">
+                
+                @foreach ($organizations as $organizations)
+                    <option  value="{{ $organizations ->id }}"> {{ $organizations ->name }}</option>
+                @endforeach  
+              </select>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label class="form-label" for="user-role">Organization</label>
+              <select id="role_id" name="role_id" class="form-control">
+                
+                @foreach ($roles as $role)
+                    <option  value="{{ $role ->id }}"> {{ $role ->name }}</option>
+                @endforeach  
+              </select>
+            </fieldset>
+
+
+
+
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Password</label>
+              <input
+                type="password"
+                class="form-control dt-full-name"
+                name="password" 
+                :value="old('password')"
+                aria-describedby="basic-icon-default-fullname2"
+              />
+            </div>
+            
+            <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal to add new user Ends-->
 
   
 
