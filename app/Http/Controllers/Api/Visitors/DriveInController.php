@@ -27,6 +27,7 @@ class DriveInController extends Controller
     public function store(Request $request)
     {
         // Validate the request data
+
                 $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'type' => 'required|string',
@@ -50,7 +51,7 @@ class DriveInController extends Controller
             $nationality->name = $request['nationality'];
             $nationality->save();
         }
-        // Create a new visitor record
+
         $visitor = new Visitor();
         $visitor->name = $request->input('name');
         $visitor->type = $request->input('type');
@@ -60,22 +61,23 @@ class DriveInController extends Controller
         $visitor->sentry_id = $request->user()->id;
         $visitor->nationality_id = $nationality->id;
         $visitor->resident_id = $request->input('resident_id');
-        // create a new time log record
+
         $timeLog = new TimeLog;
+        $timeLog->entry_time=now();
         $timeLog->save();
-        // set the time log ID on the visitor record
+
         $visitor->time_log_id = $timeLog->id;
         $visitor->save();
 
-        $user_details= UserDetail::where('ID_number', $request['IDNO'])->first();;
-
+        $user_details= UserDetail::where('ID_number', $request['IDNO'])->first();
         if (!$user_details) {
             $user_details= new UserDetail();
             $user_details->phone_number = $request->input('phone1');
             $user_details->secondary_phone_number = $request->input('phone2');
             $user_details->date_of_birth = $request->input('DOB');
-            $user_details->ID_number= $request->input('gender');
-            $user_details->gender = $request->input('IDNO');
+            $user_details->ID_number= $request->input('IDNO');
+            $user_details->gender = $request->input('gender');
+            $user_details->save();
         }
         $vehicle = new VehicleInformation();
         $vehicle->registration = $request->input('registration');

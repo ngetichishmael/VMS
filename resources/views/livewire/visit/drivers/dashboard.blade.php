@@ -108,7 +108,7 @@
 
                             </style>
                             <tbody style="font-size: small">
-                            @foreach ($dvisitors as $key => $visitor)
+                            @forelse($dvisitors as $key => $visitor)
                                 <tr>
 {{--                                    <td>{!! $key + 1 !!}</td>--}}
                                     <td>{!! $visitor->vehicle()->pluck("registration")->implode('')!!} </td>
@@ -122,11 +122,13 @@
                                     @else
 
                                         <td> {!! $visitor->timeLogs->exit_time  !!}</td>
+
                                     @endif
                                     @if($visitor->timeLogs->exit_time=='0000-00-00 00:00:00'|| $visitor->timeLogs->exit_time=='' || $visitor->timeLogs->exit_time==null)<td style="color: orange;"> Visitor Still in</td>
                                     @else
                                         <td>
-                                            {{ Carbon\Carbon::createFromTimeStamp(strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeLogs->exit_time))) - strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeLogs->exit_time))))->format('H :i :s') }}
+{{--                                            {!! $visitor->timeLog()->entry_time->diffInMinutes($timeLog()->exit_time) !!}--}}
+                                            {{ Carbon\Carbon::createFromTimeStamp(strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeLogs->exit_time))) - strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeLogs->exit_time)))) }}
                                         </td>
                                     @endif
                                     <td >
@@ -141,17 +143,21 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="4">Empty </td>
+                                </tr>
+                            @endforelse
                             </tbody>
-
+{{--                            <div class="mt-1">{!! $dvisitors->links() !!}</div>--}}
                         </table>
-                        <div class="mt-1">{!! $dvisitors->links() !!}</div>
+
                         </div>
                     </div>
                 </div>
 
     </section>
-        </div>
+
 
 {{--        <h2 class="brand-text">TODO ON DRIVE IN</h2>--}}
 {{--        <div class="card-body">--}}

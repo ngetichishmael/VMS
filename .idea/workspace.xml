@@ -5,24 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="705df46e-e836-460f-950e-0fbab3949275" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/app/Vehicle/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Visitors/DriveInController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Visitors/DriveInController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Visitors/VisitorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Visitors/VisitorController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AuthenticationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AuthenticationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Nationality.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Nationality.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Sentry.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Sentry.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/UserDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/UserDetail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Visitors/WalkInController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Visitors/WalkInController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VehicleInformationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VehicleInformationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/IdentificationType/Dashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/IdentificationType/Dashboard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/Dashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Vehicle/Dashboard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Visit/Drivers/Dashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Visit/Drivers/Dashboard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Visit/Walks/Dashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Visit/Walks/Dashboard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/TimeLog.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TimeLog.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/VehicleInformation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/VehicleInformation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Visitor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Visitor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2023_01_29_055537_create_user_details_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2023_01_29_055537_create_user_details_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2023_02_13_071427_create_nationalities_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2023_02_13_071427_create_nationalities_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/Organization/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/Organization/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/visitor/drivers/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/visitor/drivers/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/UnitSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/UnitSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/vehicle/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/vehicle/dashboard.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/visit/drivers/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/visit/drivers/dashboard.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/livewire/visit/walks/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/visit/walks/dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/vuexy.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/vuexy.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,12 +254,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/resources/views/dashboard.blade.php</url>
-          <line>188</line>
+          <line>172</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/resources/views/livewire/visit/walks/dashboard.blade.php</url>
-          <line>143</line>
+          <line>147</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">

@@ -38,6 +38,7 @@ Auth::routes(['verify' => true]);
 Route::group(['prefix' => 'dashboard'], function () {
     Route::get('analytics', [DashboardController::class, 'dashboardAnalytics'])->name('dashboard-analytics');
     Route::get('ecommerce', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard-ecommerce');
+//    Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
 });
 /* Route Dashboards */
 
@@ -200,7 +201,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('login-v2', [AuthenticationController::class, 'login_v2'])->name('auth-login-v2');
     Route::get('register-v1', [AuthenticationController::class, 'register_v1'])->name('auth-register-v1');
     Route::get('register-v2', [AuthenticationController::class, 'register_v2']);
- 
+
     Route::get('forgot-password-v1', [AuthenticationController::class, 'forgot_password_v1'])->name('auth-forgot-password-v1');
     Route::get('forgot-password-v2', [AuthenticationController::class, 'forgot_password_v2'])->name('auth-forgot-password-v2');
     Route::get('reset-password-v1', [AuthenticationController::class, 'reset_password_v1'])->name('auth-reset-password-v1');

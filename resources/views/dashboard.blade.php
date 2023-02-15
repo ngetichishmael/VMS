@@ -23,100 +23,84 @@
     <section id="dashboard-ecommerce" >
         <div style="right: 0px; padding-right: 2px;">{{ now() }}</div>
         <div class="row match-height">
-
             <!-- Medal Card -->
             <div class="col-xl-4 col-md-6 col-12" >
-                <div class="card card-congratulation-medal" style="background: #abcdfa">
+                <div class="card card-congratulation-medal" style=" background: linear-gradient(to right, #15807A, rgb(111,178,190))">
                     <div class="card-body">
                         <div class="media">
                             <div class="avatar bg-light-primary mr-2">
-                                <div class="avatar-content">
+                                <div class="avatar-content" style="background: whitesmoke">
                                     <i data-feather="sunset" class="avatar-icon"></i>
                                 </div>
                             </div>
                             <hr/>
                             <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #070707" >230</h4>
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff" >{{ $totalVisitorsToday }}</h4>
                                 <hr style="color: #bebbbb"/>
-                                <p class="card-text font-small-3 mb-0"style="color: #0247a2">Today</p>
+                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Total Visitors Today</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 col-md-6 col-12">
-                <div class="card card-congratulation-medal" style="background: #fcc1c3">
+            <div class="col-xl-4 col-md-6 col-12" >
+                <div class="card card-congratulation-medal" style=" background: linear-gradient(to right, #e75f04, #fdc39b)">
                     <div class="card-body">
                         <div class="media">
                             <div class="avatar bg-light-primary mr-2">
-                                <div class="avatar-content">
+                                <div class="avatar-content" style="background: whitesmoke">
                                     <i data-feather="sunset" class="avatar-icon"></i>
                                 </div>
                             </div>
+                            <hr/>
                             <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #070707">230</h4>
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff" >{{ $totalVisitorsWeekly }}</h4>
                                 <hr style="color: #bebbbb"/>
-                                <p class="card-text font-small-3 mb-0" style="color: #fd6369">Today</p>
+                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Total Weekly Visits</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 col-12" >
+                <div class="card card-congratulation-medal" style=" background: linear-gradient(to right, #043331, #08dad1)">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="avatar bg-light-primary mr-2">
+                                <div class="avatar-content" style="background: whitesmoke">
+                                    <i data-feather="building" class="avatar-icon"></i>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="media-body my-auto">
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff" >230</h4>
+                                <hr style="color: #bebbbb"/>
+                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Most Visited Site</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 col-12" >
+                <div class="card card-congratulation-medal" style=" background: linear-gradient(to right, #792e07, #ff8b4e)">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="avatar bg-light-primary mr-2">
+                                <div class="avatar-content" style="background: whitesmoke">
+                                    <i data-feather="sunset" class="avatar-icon"></i>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="media-body my-auto">
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff" >230</h4>
+                                <hr style="color: #bebbbb"/>
+                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Visitor per Building</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-xl-4 col-md-6 col-12">
-                <div class="card card-congratulation-medal" style="background: #c9e9f8">
-                    <div class="card-body">
-                        <div class="media" >
-                            <div class="avatar bg-light-info mr-2">
-                                <div class="avatar-content">
-                                    <i data-feather="navigation-2" class="avatar-icon"></i>
-                                </div>
-                            </div>
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #070707">590</h4>
-                                <hr style="color: #ffffff"/>
-                                <p class="card-text font-small-3 mb-0" style="color: #05a0e1">This Week</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-12">
-                <div class="card card-congratulation-medal" style="background: #faccce">
-                    <div class="card-body">
-                        <div class="media">
-                            <div class="avatar bg-light-danger mr-2">
-                                <div class="avatar-content">
-                                    <i data-feather="calendar" class="avatar-icon"></i>
-                                </div>
-                            </div>
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #070707">2000</h4>
-                                <hr style="color: #bebbbb"/>
-                                <p class="card-text font-small-3 mb-0" style="color: #ff555b">This Month</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-12">
-                <div class="card card-congratulation-medal" style="background: #d0facc">
-                    <div class="card-body">
-                        <div class="media">
-                            <div class="avatar bg-light-success mr-2">
-                                <div class="avatar-content">
-                                    <i data-feather="layers" class="avatar-icon"></i>
-                                </div>
-                            </div>
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #070707">23000</h4>
-                                <hr style="color: #ffffff"/>
-                                <p class="card-text font-small-3 mb-0" style="color: #12a801">Total Visits</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!--/ Medal Card -->
 
             <!-- Statistics Card -->
@@ -189,38 +173,38 @@
             <!--/ Statistics Card -->
         </div>
 
-        <h2 class="brand-text">TODO ON DASHBOARD</h2>
-        <div class="card-body">
-            <div id="jstree-basic">
-                <ul>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Summary
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Weekly Summary</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Most Visited Sites</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Visitors Per Building</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Analysis
-                        <ul data-jstree='{"icon" : "far fa-folder"}'>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Monthly</li>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Weekly</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Table
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Drive In</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Walk in</li>
-                        </ul>
-                    </li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Any Other</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Martin to Advise</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Isaac to Provide images, and secondary colors</li>
-                </ul>
-            </div>
-        </div>
+{{--        <h2 class="brand-text">TODO ON DASHBOARD</h2>--}}
+{{--        <div class="card-body">--}}
+{{--            <div id="jstree-basic">--}}
+{{--                <ul>--}}
+{{--                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>--}}
+{{--                        Summary--}}
+{{--                        <ul>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Weekly Summary</li>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Most Visited Sites</li>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Visitors Per Building</li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>--}}
+{{--                        Analysis--}}
+{{--                        <ul data-jstree='{"icon" : "far fa-folder"}'>--}}
+{{--                            <li data-jstree='{"icon" : "far fa-file-image"}'>Monthly</li>--}}
+{{--                            <li data-jstree='{"icon" : "far fa-file-image"}'>Weekly</li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>--}}
+{{--                        Table--}}
+{{--                        <ul>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Drive In</li>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Walk in</li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                    <li data-jstree='{"icon" : "fab fa-html5"}'>Any Other</li>--}}
+{{--                    <li data-jstree='{"icon" : "fab fa-html5"}'>Martin to Advise</li>--}}
+{{--                    <li data-jstree='{"icon" : "fab fa-html5"}'>Isaac to Provide images, and secondary colors</li>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+{{--        </div>--}}
     </section>
     <!-- Dashboard Ecommerce ends -->
 @endsection

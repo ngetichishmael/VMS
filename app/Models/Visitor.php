@@ -37,6 +37,11 @@ class Visitor extends Model
     {
         return $this->belongsTo(TimeLog::class, 'time_log_id', 'id');
     }
+
+    public function visitorsVisits()
+    {
+        return $this->belongsTo(TimeLog::class, 'id');
+    }
     public function createdBy():HasMany
     {
         return $this->hasMany(Sentry::class, 'id', 'sentry_id' );

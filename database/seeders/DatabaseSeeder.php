@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             VehicleInformationSeeder::class,
             TagSeeder::class,
             UnitSeeder::class,
+            BlockSeeder::class,
             OrganizationSeeder::class,
             IdentificationTypeSeeder::class,
             PremiseSeeder::class,

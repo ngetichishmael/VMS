@@ -1,24 +1,4 @@
-@extends('layouts.contentLayoutMaster')
 
-@section('title', 'Vehicle')
-
-@section('vendor-style')
-    {{-- vendor css files --}}
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/charts/apexcharts.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('fonts/font-awesome/css/font-awesome.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/jstree.min.css')) }}">
-@endsection
-@section('page-style')
-    {{-- Page css files --}}
-
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-tree.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/pages/dashboard-ecommerce.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/charts/chart-apex.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
-@endsection
-
-@section('content')
     <!-- Dashboard Ecommerce Starts -->
     <section id="dashboard-ecommerce">
         <section>
@@ -55,13 +35,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <button type="button" class="btn btn-icon btn-outline-success" data-toggle="tooltip"
-                            data-placement="top" title="New Booking">
-                            <img src="{{ asset('images/icons/excel.png') }}"alt="Add" width="20" height="20"
-                                data-toggle="tooltip" data-placement="top" title="Export Excel">
-                        </button>
-                    </div>
+
                 </div>
             </div>
             <!-- users filter end -->
@@ -73,7 +47,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+{{--                                    <th>#</th>--}}
                                     <th>Registration Number</th>
                                     <th>User Name</th>
                                     <th>Vehicle Type</th>
@@ -83,73 +57,112 @@
                                     <th>Check Out</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>1234</td>
-                                    <td>Martin</td>
-                                    <td>Vitz</td>
-                                    <td>Black</td>
-                                    <td>2nd Gen</td>
-                                    <td>{{ now() }}</td>
-                                    <td>Within</td>
-                                </tr>
+                            <style>
 
+                                .dropdown {
+                                    display: inline-block;
+                                    position: relative;
+                                }
+
+                                .dropdown-toggle {
+                                    cursor: pointer;
+                                    color: darkgray;
+                                }
+
+                                .dropdown-menu {
+                                    position: absolute;
+                                    top: 100%;
+                                    right: 0;
+                                    display: none;
+                                    background-color: #fff;
+                                    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                                    z-index: 1;
+                                }
+
+                                .dropdown-menu a {
+                                    color: #333;
+                                    padding: 12px 16px;
+                                    text-decoration: none;
+                                    display: block;
+                                }
+
+                                .dropdown-menu a:hover {
+                                    background-color: #f1f1f1;
+                                }
+
+                                .dropdown:hover .dropdown-menu {
+                                    display: block;
+                                }
+                                th, td {
+                                    text-align: left;
+                                }
+
+                                tr:nth-child(even) {
+                                    background-color: #f2f2f2;
+                                }
+
+                            </style>
+                            <tbody>
+                            @forelse ( $vehicles as $vehicle)
+                                <tr>
+{{--                                    <td>1</td>--}}
+                                    <td>{!! $vehicle-> registration!!}</td>
+                                    <td>{!! $vehicle->user->name !!}</td>
+                                    <td>{!! $vehicle->type !!}</td>
+                                    <td>{!! $vehicle->color !!}</td>
+                                    <td>{!! $vehicle->model !!}</td>
+                                    <td>{!! $vehicle->updated_at!!}</td>
+                                    <td>{!! $vehicle->updated_at!!}</td>
+
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="12" style="align-content: center">No Records Found!... </td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
-                        <div class="mt-1">
+{{--                        <div class="mt-1">{!! $vehicles->links() !!}</div>--}}
                         </div>
                     </div>
                 </div>
         </section>
         </div>
 
-        <h2 class="brand-text">TODO ON USERS</h2>
-        <div class="card-body">
-            <div id="jstree-basic">
-                <ul>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        CRUD
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Create</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Read</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Updated</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Delete</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Relationship
-                        <ul data-jstree='{"icon" : "far fa-folder"}'>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Drive In</li>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Zone</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Table
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Filter</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Pagination</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Search by *</li>
-                        </ul>
-                    </li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Any Other</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Martin from Advise</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Isaac to Provide images, and secondary colors</li>
-                </ul>
-            </div>
-        </div>
+{{--        <h2 class="brand-text">TODO ON USERS</h2>--}}
+{{--        <div class="card-body">--}}
+{{--            <div id="jstree-basic">--}}
+{{--                <ul>--}}
+{{--                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>--}}
+{{--                        CRUD--}}
+{{--                        <ul>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Create</li>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Read</li>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Updated</li>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Delete</li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>--}}
+{{--                        Relationship--}}
+{{--                        <ul data-jstree='{"icon" : "far fa-folder"}'>--}}
+{{--                            <li data-jstree='{"icon" : "far fa-file-image"}'>Drive In</li>--}}
+{{--                            <li data-jstree='{"icon" : "far fa-file-image"}'>Zone</li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>--}}
+{{--                        Table--}}
+{{--                        <ul>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Filter</li>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Pagination</li>--}}
+{{--                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Search by *</li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+{{--                    <li data-jstree='{"icon" : "fab fa-html5"}'>Any Other</li>--}}
+{{--                    <li data-jstree='{"icon" : "fab fa-html5"}'>Martin from Advise</li>--}}
+{{--                    <li data-jstree='{"icon" : "fab fa-html5"}'>Isaac to Provide images, and secondary colors</li>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+{{--        </div>--}}
     </section>
     <!-- Dashboard Ecommerce ends -->
-@endsection
 
-@section('vendor-script')
-    {{-- vendor files --}}
-    <script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/jstree.min.js')) }}"></script>
-@endsection
-@section('page-script')
-    {{-- Page js files --}}
-    <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script>
-    <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
-@endsection
