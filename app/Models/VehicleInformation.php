@@ -10,8 +10,4 @@ class VehicleInformation extends Model
 {
     use HasFactory;
     protected $guarded;
-    public function vehicle(): HasOne
-    {
-        return $this->hasOne(DriveIn::class, 'vehicleId', 'vehicleId');
-    }
 }

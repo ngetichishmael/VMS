@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Visitors;
 
 use App\Http\Controllers\Controller;
+use App\Models\IdentificationType;
 use App\Models\Purpose;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
@@ -17,6 +18,10 @@ class VisitorController extends Controller
     public function organizationOptions()
     {
         return Organization::all();
+    }
+    public function identificationOptions()
+    {
+        return IdentificationType::all();
     }
 
     public function premisesOptions()

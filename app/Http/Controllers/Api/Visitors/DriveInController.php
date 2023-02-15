@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Api\Visitors;
 
 use App\Http\Controllers\Controller;
+use App\Models\Nationality;
+use App\Models\TimeLog;
+use App\Models\UserDetail;
+use App\Models\VehicleInformation;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,31 +21,35 @@ class DriveInController extends Controller
      */
     public function index()
     {
-        return response()->json(Visitor::with(['resident2','createdBy', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('type','drivein')->get());
+        return response()->json(Visitor::with(['resident2', 'createdBy', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('type','drivein')->get());
     }
 
     public function store(Request $request)
     {
         // Validate the request data
-        $validator = Validator::make($request->all(), [
+                $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'type' => 'required|string',
             'identification_type_id' => 'required|integer',
             'visitor_type_id' => 'required|integer',
             'purpose_id' => 'required|integer',
-            'nationality_id' => 'required|integer',
+            'nationality' => 'required|string',
             'resident_id' => 'required|integer',
-            'time_log_id' => 'required|integer',
+            'IDNO'=>'required|numeric',
             'registration' => 'required|string',
             'vehicle_type' => 'required|string',
-//            'color' => 'required|string',
-//            'model' => 'required|string',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-
+// check if nationality already exists
+        $nationality = Nationality::where('name', $request['nationality'])->first();
+        if (!$nationality) {
+            $nationality = new Nationality;
+            $nationality->name = $request['nationality'];
+            $nationality->save();
+        }
         // Create a new visitor record
         $visitor = new Visitor();
         $visitor->name = $request->input('name');
@@ -49,13 +57,26 @@ class DriveInController extends Controller
         $visitor->identification_type_id = $request->input('identification_type_id');
         $visitor->visitor_type_id = $request->input('visitor_type_id');
         $visitor->purpose_id = $request->input('purpose_id');
-        dd($visitor->sentry_id = Auth::id());
-        $visitor->nationality_id = $request->input('nationality_id');
+        $visitor->sentry_id = $request->user()->id;
+        $visitor->nationality_id = $nationality->id;
         $visitor->resident_id = $request->input('resident_id');
-        $visitor->time_log_id = $request->input('time_log_id');
+        // create a new time log record
+        $timeLog = new TimeLog;
+        $timeLog->save();
+        // set the time log ID on the visitor record
+        $visitor->time_log_id = $timeLog->id;
         $visitor->save();
 
-        // Create a new vehicle_information record
+        $user_details= UserDetail::where('ID_number', $request['IDNO'])->first();;
+
+        if (!$user_details) {
+            $user_details= new UserDetail();
+            $user_details->phone_number = $request->input('phone1');
+            $user_details->secondary_phone_number = $request->input('phone2');
+            $user_details->date_of_birth = $request->input('DOB');
+            $user_details->ID_number= $request->input('gender');
+            $user_details->gender = $request->input('IDNO');
+        }
         $vehicle = new VehicleInformation();
         $vehicle->registration = $request->input('registration');
         $vehicle->type = $request->input('vehicle_type');
