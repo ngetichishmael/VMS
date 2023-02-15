@@ -102,7 +102,7 @@
                                 }
 
                             </style>
-                            <tbody>
+                            <tbody style="font-size: small">
                             @forelse ( $vehicles as $vehicle)
                                 <tr>
 {{--                                    <td>1</td>--}}
