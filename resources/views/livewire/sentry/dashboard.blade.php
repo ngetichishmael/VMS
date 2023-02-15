@@ -93,7 +93,7 @@
                                             </a>
                                             <div class="dropdown-menu">
                                                  <!--update link-->
-                                                 <a href="{{ url('users/sentries/'.$sentry->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+                                                 <a href="{{ url('OrganizationInformation.suspend'.$sentry->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
                                         <!-- delete link -->
                                         <?php if($sentry->status == '0'){ ?> 
                                         <a href="{{ url('users/sentries/suspend/'.$sentry->id) }}" onclick="return confirm('Are you sure to want to unblock the sentry?')" style="padding-right:20px; " > Unblock </a>

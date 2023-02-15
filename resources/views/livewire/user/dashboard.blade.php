@@ -109,7 +109,7 @@
                                         <?php if($user->status == '0'){ ?> 
                                         <a href="{{ url('organization/users/suspend/'.$user->id) }}" onclick="return confirm('Are you sure to want to Activate the User?')"  title="Unsuspend" style="padding-right:6px" > Unsuspend</i> </a>
                                         <?php }else{ ?> 
-                                            <a href="{{ url('organization/users/suspend/'.$user->id) }}" onclick="return confirm('Are you sure to want to suspend the User?')"  title="Suspend" style="padding-right:6px"> Suspend </a>
+                                            <a href="{{ url('OrganizationUsers.suspend'.$user->id) }}" onclick="return confirm('Are you sure to want to suspend the User?')"  title="Suspend" style="padding-right:6px"> Suspend </a>
                                         <?php } ?>
 
                                         <a href="{{ url('organization/users/delete/'.$user->id) }}" onclick="return confirm('Are you sure to want to delete the user?')" title="Delete"> Delete </a>
@@ -140,6 +140,107 @@
                 </div>
         </section>
         </div>
+
+         <!-- Modal to add new organization starts-->
+         <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+            <div class="modal-dialog">
+                <form class="add-new-user modal-content pt-0" method="POST" action="{!! route('OrganizationInformation.store') !!}">
+                    @csrf
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                    <div class="modal-header mb-1">
+                        <h5 class="modal-title" id="exampleModalLabel">New Organization</h5>
+                    </div>
+                    <div class="modal-body flex-grow-1">
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Name</label>
+                            <input
+                                type="text"
+                                name="name"
+                                :value="old('name')"
+                                class="form-control dt-full-name"
+                                id="basic-icon-default-fullname"
+                                aria-describedby="basic-icon-default-fullname2" required
+                            />
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-email">Email</label>
+                            <input
+                                type="email"
+                                name="email"
+                                :value="old('email')"
+                                class="form-control dt-email"
+                                aria-describedby="basic-icon-default-email2"
+                                id="user-email" required
+                            />
+                            <small class="form-text text-muted"> You can use letters, numbers & periods </small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-email">Phone Number</label>
+                            <input
+                                type="tel"
+                                name="phone"
+                                :value="old('email')"
+                                class="form-control dt-phone"
+                                aria-describedby="basic-icon-default-phone"
+                                id="phone" required
+                            />
+                            <small class="form-text text-muted"> You can numbers</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-email">Other Phone Number</label>
+                            <input
+                                type="tel"
+                                name="phone2"
+                                :value="old('email')"
+                                class="form-control dt-phone"
+                                aria-describedby="basic-icon-default-phone"
+                                id="phone2"
+                            />
+                            <small class="form-text text-muted"> You can numbers</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Location</label>
+                            <input
+                                type="text"
+                                name="location"
+                                :value="old('location')"
+                                class="form-control dt-full-name"
+                                id="basic-icon-default-location"
+                                aria-describedby="basic-icon-default-location2" required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Website URL</label>
+                            <input
+                                type="text"
+                                name="url"
+                                :value="old('url')"
+                                class="form-control dt-full-url"
+                                id="basic-icon-default-url"
+                                aria-describedby="basic-icon-default-url"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Organization Description</label>
+                            <input
+                                type="text"
+                                name="description"
+                                :value="old('description')"
+                                class="form-control dt-full-description"
+                                id="basic-icon-default-description2"
+                                aria-describedby="basic-icon-default-description2" required
+                            />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+                        <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    <!-- Modal to add new organization Ends-->
 
   
 

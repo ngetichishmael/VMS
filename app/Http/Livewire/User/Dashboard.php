@@ -20,7 +20,9 @@ class Dashboard extends Component
     {
         $this->users = User::join('organizations', 'users.organization_id', '=', 'organizations.id')
        
-        ->select('users.*', 'organizations.name AS org_name')
+        ->join('roles', 'users.role_id', '=', 'roles.id')
+       
+        ->select('users.*', 'organizations.name AS org_name', 'roles.name AS role_name')
         
         ->get();
 
