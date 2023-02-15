@@ -14,7 +14,30 @@ use Illuminate\Validation\Rules;
 
 class AuthenticationController extends Controller
 {
-    public function login(Request $request)
+    public function Login(Request $request)
+    {
+        $user = null;
+        if (!FacadesAuth::attempt([
+            'phone_number' => $request->phone_number, 'status' => '1'
+        ], true)) {
+            return response()
+                ->json(['message' => 'Unauthorized'], 401);
+        }
+        if ($user === null) {
+            return response()
+                ->json(['message' => 'Unauthorized'], 401);
+        }
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            "success" => true,
+            "token_type" => 'Bearer',
+            "message" => "User Logged in",
+            "access_token" => $token,
+            "user" => $user
+        ]);
+    }
+    public function login2(Request $request)
     {
 
         //(!Auth::attempt(['email' => $request->email, 'password' => $request->password], true))

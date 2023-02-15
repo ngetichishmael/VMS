@@ -31,7 +31,7 @@ class Visitor extends Model
 //    }
     public function purpose(): BelongsTo
     {
-        return $this->belongsTo(Premise::class, 'purpose_id');
+        return $this->belongsTo(Purpose::class, 'purpose_id');
     }
     public function timeLogs():BelongsTo
     {
@@ -39,11 +39,11 @@ class Visitor extends Model
     }
     public function createdBy():HasMany
     {
-        return $this->hasMany(Sentry::class, 'id');
+        return $this->hasMany(Sentry::class, 'id', 'sentry_id' );
     }
-    public function vehicle(): BelongsTo
+    public function vehicle(): HasOne
     {
-        return $this->belongsTo(VehicleInformation::class, 'visitor_id');
+        return $this->hasOne(VehicleInformation::class );
     }
 
 

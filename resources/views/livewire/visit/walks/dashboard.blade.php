@@ -91,27 +91,34 @@
                                 .dropdown:hover .dropdown-menu {
                                     display: block;
                                 }
+                                th, td {
+                                    text-align: left;
+                                }
+
+                                tr:nth-child(even) {
+                                    background-color: #f2f2f2;
+                                }
 
                             </style>
                             <tbody>
                             @foreach ($visitors as $key => $visitor)
-                                <tr> <td>{!! $visitor->name!!} </td>
-                                    {{--                                    <td>{!! $visitor->premise->name !!}</td>--}}
-                                    <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}</td>
-                                    <td>{!! $visitor->resident->unit->name !!}</td>
-                                    <td>{!! $visitor->resident->unit->block->premise->organization->name !!}</td>
-                                    <td>{!! $visitor->timeLogs->entry_time!!}</td>
-                                    @if($visitor->exit_time=='0000-00-00 00:00:00' || $visitor->exit_time=='' || $visitor->exit_time==null)<td> </td>
-                                    @else
+                                <td>{!! $visitor->name!!} </td>
+                                {{--                                    <td>{!! $visitor->premise->name !!}</td>--}}
+                                <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}</td>
+                                <td>{!! $visitor->resident->unit->name !!}</td>
+                                <td>{!! $visitor->resident->unit->block->premise->organization->name !!}</td>
+                                <td>{!! $visitor->timeLogs->entry_time!!}</td>
+                                @if($visitor->exit_time=='0000-00-00 00:00:00' || $visitor->exit_time=='' || $visitor->exit_time==null)<td> </td>
+                                @else
 
-                                        <td> {!! $visitor->timeLogs->exit_time  !!}</td>
-                                    @endif
-                                    @if($visitor->timeLogs->exit_time=='0000-00-00 00:00:00'|| $visitor->timeLogs->exit_time=='' || $visitor->timeLogs->exit_time==null)<td style="color: orange;"> Visitor Still in</td>
-                                    @else
-                                        <td>
-                                            {{ Carbon\Carbon::createFromTimeStamp(strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeLogs->exit_time))) - strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeLogs->exit_time))))->format('H :i :s') }}
-                                        </td>
-                                    @endif
+                                    <td> {!! $visitor->timeLogs->exit_time  !!}</td>
+                                @endif
+                                @if($visitor->timeLogs->exit_time=='0000-00-00 00:00:00'|| $visitor->timeLogs->exit_time=='' || $visitor->timeLogs->exit_time==null)<td style="color: orange;"> Visitor Still in</td>
+                                @else
+                                    <td>
+                                        {{ Carbon\Carbon::createFromTimeStamp(strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeLogs->exit_time))) - strtotime(date("Y-m-d H:i:s", strtotime($visitor->timeLogs->exit_time))))->format('H :i :s') }}
+                                    </td>
+                                @endif
                                     <td >
                                         <div class="dropdown">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

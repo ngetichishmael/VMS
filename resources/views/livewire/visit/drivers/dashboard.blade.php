@@ -1,46 +1,6 @@
 
     <!-- Dashboard Ecommerce Starts -->
-    <style>
-        .option{
-            color: #0c0c0c;
-        }
 
-        .dropdown {
-            display: inline-block;
-            position: relative;
-        }
-
-        .dropdown-toggle {
-            cursor: pointer;
-            color: darkgray;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            display: none;
-            background-color: #fff;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-
-        .dropdown-menu a {
-            color: #333;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-menu a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-
-    </style>
     <section id="dashboard-ecommerce">
 {{--        <div class="row mb-2">--}}
 {{--            <label style="color: #070707" for=""><h4>Filter By:</h4></label>--}}
@@ -99,7 +59,55 @@
                                 <th>Action</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <style>
+                                .option{
+                                    color: #0c0c0c;
+                                }
+
+                                .dropdown {
+                                    display: inline-block;
+                                    position: relative;
+                                }
+
+                                .dropdown-toggle {
+                                    cursor: pointer;
+                                    color: darkgray;
+                                }
+
+                                .dropdown-menu {
+                                    position: absolute;
+                                    top: 100%;
+                                    right: 0;
+                                    display: none;
+                                    background-color: #fff;
+                                    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                                    z-index: 1;
+                                }
+
+                                .dropdown-menu a {
+                                    color: #333;
+                                    padding: 12px 16px;
+                                    text-decoration: none;
+                                    display: block;
+                                }
+
+                                .dropdown-menu a:hover {
+                                    background-color: #f1f1f1;
+                                }
+
+                                .dropdown:hover .dropdown-menu {
+                                    display: block;
+                                }
+                                th, td {
+                                    text-align: left;
+                                }
+
+                                tr:nth-child(even) {
+                                    background-color: #f2f2f2;
+                                }
+
+                            </style>
+                            <tbody style="font-size: small">
                             @foreach ($dvisitors as $key => $visitor)
                                 <tr>
 {{--                                    <td>{!! $key + 1 !!}</td>--}}
