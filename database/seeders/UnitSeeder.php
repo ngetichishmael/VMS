@@ -14,7 +14,7 @@ class UnitSeeder extends Seeder
      */
     public function run()
     {
-        $unitNames = ['Unit 1', 'Unit 2', 'Unit 3', 'Unit 4', 'Unit 5'];
+        $unitNames = ['Unit 1', 'Unit 2', 'Unit 3', 'Unit 4', 'Unit 5', 'Unit 6', 'Unit 7' ];
         $id=0;
 
         foreach ($unitNames as $name) {

@@ -10,14 +10,6 @@ use App\Models\VisitorType;
 
 class Dashboard extends Component
 {
-//    public $duration = 0;
-//
-//    public function calculateDuration($timeIn, $timeOut)
-//    {
-//        $timeIn = Carbon::createFromFormat('Y-m-d H:i:s', $timeIn);
-//        $timeOut = Carbon::createFromFormat('Y-m-d H:i:s', $timeOut);
-//        $this->duration = $timeOut->diffInSeconds($timeIn);
-//    }
     public $selectedVisitorType;
     public $visitorTypes;
 
@@ -42,11 +34,11 @@ class Dashboard extends Component
             })
             ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
             ->paginate($this->perPage);
-        if ($this->selectedVisitorType) {
-            $visitors->whereHas('visitorType', function ($visitors) {
-                $visitors->where('id', $this->selectedVisitorType);
-            });
-        }
+//        if ($this->selectedVisitorType) {
+//            $visitors->whereHas('visitorType', function ($visitors) {
+//                $visitors->where('id', $this->selectedVisitorType);
+//            });
+//        }
         return view('livewire.visit.walks.dashboard')->with(['visitors' => $visitors]);
     }
 }

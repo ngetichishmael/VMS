@@ -101,7 +101,7 @@
 
                             </style>
                             <tbody>
-                            @foreach ($visitors as $key => $visitor)
+                            @forelse($visitors as $key => $visitor)
                                 <td>{!! $visitor->name!!} </td>
                                 {{--                                    <td>{!! $visitor->premise->name !!}</td>--}}
                                 <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}</td>
@@ -131,7 +131,11 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="12" style="align-content: center">No Records Found!... </td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
                         <div class="mt-1">{!! $visitors->links() !!}</div>

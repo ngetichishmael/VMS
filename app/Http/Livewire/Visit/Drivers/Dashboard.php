@@ -29,22 +29,20 @@ class Dashboard extends Component
 
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    public $perPage = 10;
+    public $perPage = 40;
+    public $sortField = 'id';
+    public $sortAsc = true;
     public ?string $search = null;
-    public $orderBy = 'id';
-    public $orderAsc = true;
     public function render()
     {
 
         $searchTerm = '%' . $this->search . '%';
-        $dvisitors = DriveIn::with('dorganization')
-            ->with('vehicle')->with('timeLogs')
+        $dvisitors = DriveIn::with('organization')
+            ->with('vehicle')
             ->where('type', 'drivein')
-            ->where(function ($query) use ($searchTerm) {
-                $query->where('name', 'like', $searchTerm);
-            })
-            ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
-            ->paginate($this->perPage);
+            ->whereLike('name',  $searchTerm)->get();
+        //$types = IdentificationType::whereLike(['name', 'user.email'], $searchTerm)
+
 //
 //        if ($this->selectedVisitorType) {
 //            $dvisitors->whereHas('visitorType', function ($dvisitors) {
