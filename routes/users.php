@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function () {
         'destroy' => 'OrganizationUsers.destroy',
         'create' => 'OrganizationUsers.create',
         'store' => 'OrganizationUsers.store',
-
+        'status_update' => 'OrganizationUsers.suspend/{id}',
 
     ]);
 
@@ -96,6 +96,7 @@ Route::middleware('auth')->group(function () {
         'destroy' => 'OrganizationInformation.destroy',
         'create' => 'OrganizationInformation.create',
         'store' => 'OrganizationInformation.store',
+     
     ]);
 
 
@@ -156,11 +157,11 @@ Route::middleware('auth')->group(function () {
 });
 
 
-// users
-Route::get('/search',[UserController::class,'search']);
-Route::get('organization/users/delete/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->middleware('auth');
-Route::get('organization/users/edit/{id}}', [App\Http\Controllers\UserController::class, 'editt'])->middleware('auth');
-Route::get('organization/users/suspend/{id}',[App\Http\Controllers\UserController::class, 'status_update'])->middleware('auth');
+// // users
+// Route::get('/search',[UserController::class,'search']);
+// Route::get('organization/users/delete/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->middleware('auth');
+// Route::get('organization/users/edit/{id}}', [App\Http\Controllers\UserController::class, 'editt'])->middleware('auth');
+// Route::get('organization/users/suspend/{id}',[App\Http\Controllers\UserController::class, 'status_update'])->middleware('auth');
 
 
 // // organizations

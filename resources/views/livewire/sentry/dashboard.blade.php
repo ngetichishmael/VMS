@@ -1,6 +1,4 @@
-<section id="dashboard-ecommerce">
-        <section>
-            <!-- users filter start -->
+<div>
             <div class="card">
                 <h5 class="card-header">Search Filter</h5>
                 <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
@@ -13,9 +11,27 @@
                                 placeholder="Search" />
                         </div>
                     </div>
+                    <div class="col-ms-3">
+                        <label style="color: #070707" for="">Items Per</label>
+                        <select wire:model="perPage" class="form-control">`
+                            <option value="10" selected>10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="selectSmall">Sort</label>
+                            <select class="form-control form-control-sm" id="selectSmall">
+                                <option value="1">Ascending</option>
+                                <option value="0">Descending</option>
+                            </select>
+                        </div>
+                    </div>
               
                     <div class="col-md-3">
-                    <button type="button" class="btn btn-icon btn-outline-success" style="width:200px;background-color: #1877F2;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
+                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2;color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
                             data-placement="top" title="New User">
                               + Add New Sentry
                                
@@ -75,7 +91,7 @@
                                             </a>
                                             <div class="dropdown-menu">
                                                  <!--update link-->
-                                                 <a href="{{ url('users/sentries/'.$sentry->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+                                                 <a href="{{ url('OrganizationInformation.suspend'.$sentry->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
                                         <!-- delete link -->
                                         <?php if($sentry->status == '0'){ ?> 
                                         <a href="{{ url('users/sentries/suspend/'.$sentry->id) }}" onclick="return confirm('Are you sure to want to unblock the sentry?')" style="padding-right:20px; " > Unblock </a>
@@ -92,7 +108,7 @@
 
                                 @empty
                                 <tr>
-                                    <td colspan="6" style="text-align: center; color:red;">No Sentry Found</td>
+                                    <td colspan="6" style="text-align: center; color:red;"> No Sentry Found</td>
                                 </tr>
                             @endforelse
                             </tbody>
@@ -101,7 +117,7 @@
                         </div>
                     </div>
                 </div>
-        </section>
+    
         </div>
 
           <!-- Modal to add new sentry starts-->

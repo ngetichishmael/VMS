@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Sentries')
+@section('title', 'Shifts')
 
 @section('vendor-style')
     {{-- vendor css files --}}
@@ -19,14 +19,14 @@
 @endsection
 
 @section('content')
-    <!-- Dashboard Ecommerce Starts -->
-    @livewire('sentry.dashboard')
-    <!-- Dashboard Ecommerce ends -->
+@livewire('shift.dashboard')
 @endsection
 
 @section('vendor-script')
     {{-- vendor files --}}
-
+    <script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/extensions/jstree.min.js')) }}"></script>
 @endsection
 @section('page-script')
     {{-- Page js files --}}

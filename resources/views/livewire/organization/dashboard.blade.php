@@ -1,13 +1,4 @@
-{{--@if (session('success'))--}}
-{{--    <div class="alert alert-success">--}}
-{{--        {{ session('success') }}--}}
-{{--    </div>--}}
-{{--@endif--}}
-
-    <!-- Dashboard Ecommerce Starts -->
-    <section id="dashboard-ecommerce">
-        <section>
-            <!-- users filter start -->
+<div>
             <div class="card">
                 <h5 class="card-header">Search Filter</h5>
                 <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
@@ -16,7 +7,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i data-feather="search"></i></span>
                             </div>
-                            <input type="text" id="search" class="form-control" name="search"
+                            <input wire:model="search" type="text" class="form-control" 
                                 placeholder="Search" />
                         </div>
                     </div>
@@ -40,10 +31,11 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
-                            data-placement="top" title="New Organazition">
-                             + Add New Organization
+                        <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal" style="background-color: #1877F2; color:#fff;" id="smallButton" data-target="#modals-slide-in" 
+                            data-placement="top" title="New Organazition">+ Add New Organization
+                           
                         </button>
+                   
                     </div>
                 </div>
             </div>
@@ -51,15 +43,7 @@
             {{-- @include('partials.loaderstyle') --}}
             <!-- list section start -->
 
-            @if (session()->has('message'))
 
-<div class="alert alert-success">
-
-    {{ session('message') }}
-
-</div>
-
-@endif
 
             <div class="card">
                 <div class="pt-0 card-datatable table-responsive">
@@ -73,7 +57,7 @@
                                     <th>Phone Number</th>
                                     <th>Location</th>
                                     <th>Status</th>
-                                    <th>Location</th>
+                              
                                     <th>Action</th>
 
                                 </tr>
@@ -99,7 +83,7 @@
                                     <?php } ?>
 
                                     </td>
-                                    <td>{{ $org ->location }}</td>
+                              
                                     <td>
 
 
@@ -128,21 +112,20 @@
 
                                 @empty
                                 <tr>
-                                    <td colspan="4">No Record Found For Organization </td>
+                                <td colspan="6" style="text-align: center; color:red;"> No Record Found For Organization </td>
                                 </tr>
                             @endforelse
                           
                             </tbody>
                            
                         </table>
-                        <div class="mt-1">{!! $organizations->links() !!}</div>
+                      
                         <div class="mt-1">
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        </div>
+       
    <!-- Modal to add new organization starts-->
         <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
             <div class="modal-dialog">
@@ -245,48 +228,7 @@
     <!-- Modal to add new organization Ends-->
 
 
-{{--        <h2 class="brand-text">TODO ON ORGANIZATIONS</h2>--}}
-{{--        <div class="card-body">--}}
-{{--            <div id="jstree-basic">--}}
-{{--                <ul>--}}
-{{--                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>--}}
-{{--                        CRUD--}}
-{{--                        <ul>--}}
-{{--                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Create</li>--}}
-{{--                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Read</li>--}}
-{{--                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Updated</li>--}}
-{{--                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Delete</li>--}}
-{{--                        </ul>--}}
-{{--                    </li>--}}
-{{--                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>--}}
-{{--                        Action--}}
-{{--                        <ul data-jstree='{"icon" : "far fa-folder"}'>--}}
-{{--                            <li data-jstree='{"icon" : "far fa-file-image"}'>Suspend</li>--}}
-{{--                            <li data-jstree='{"icon" : "far fa-file-image"}'>Others</li>--}}
-{{--                        </ul>--}}
-{{--                    </li>--}}
-{{--                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>--}}
-{{--                        Relationship--}}
-{{--                        <ul data-jstree='{"icon" : "far fa-folder"}'>--}}
-{{--                            <li data-jstree='{"icon" : "far fa-file-image"}'>Users</li>--}}
-{{--                            <li data-jstree='{"icon" : "far fa-file-image"}'>Organization</li>--}}
-{{--                            <li data-jstree='{"icon" : "far fa-file-image"}'>Hierarchy under Organization</li>--}}
-{{--                        </ul>--}}
-{{--                    </li>--}}
-{{--                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>--}}
-{{--                        Table--}}
-{{--                        <ul>--}}
-{{--                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Filter</li>--}}
-{{--                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Pagination</li>--}}
-{{--                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Search by *</li>--}}
-{{--                        </ul>--}}
-{{--                    </li>--}}
-{{--                    <li data-jstree='{"icon" : "fab fa-html5"}'>Any Other</li>--}}
-{{--                    <li data-jstree='{"icon" : "fab fa-html5"}'>Martin to Advise</li>--}}
-{{--                    <li data-jstree='{"icon" : "fab fa-html5"}'>Isaac to Provide images, and secondary colors</li>--}}
-{{--                </ul>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+
         <script type="application/javascript">
             $(document).on('click', '.dropdown-toggle', function(e) {
                 e.preventDefault();
@@ -299,45 +241,3 @@
         </script>
     </section>
     <!-- Dashboard Ecommerce ends -->
-
-@section('vendor-script')
-<script type="text/javascript">
-
-      $('#search').on('keyup',function()
-      {
-       $value=$(this).val();
-
-       if($value)
-       {
-        $('.alldata').hide();
-        $('.searchdata').show();
-       }
-       else{
-        $('.alldata').show();
-        $('.searchdata').hide();
-       }
-       $.ajax({
-
-            type : 'get',
-            url : '{{URL::to('search')}}',
-            data:{'search':$value},
-
-     success:function(data)
-     {
-            $('#Content').html(data);
-    }
-    });
-    })
-    </script>
-
-    {{-- vendor files --}}
-    <script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/jstree.min.js')) }}"></script>
-@endsection
-@section('page-script')
-    {{-- Page js files --}}
-    <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script>
-    <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
-@endsection
-
