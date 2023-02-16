@@ -66,25 +66,12 @@ class OrganizationController extends Controller
         $organization->websiteUrl  = $request->input('url');
         $organization->description = $request->input('description');
         $organization->save();
-        
+
         session()->flash('message', 'Post successfully updated.');
        // return response()->json(['success' => 'organization information added successfully.'], 201);
        return redirect()->to('/organization/information')->with('success','Organization created successfully.');
  }
 
-    public function generateUniqueCode()
-
-    {
-
-        do {
-
-            $code = random_int(100000, 999999);
-        } while (organization::where("code", "=", $code)->first());
-
-
-
-        return $code;
-    }
 
     /**
      * Display the specified resource.
