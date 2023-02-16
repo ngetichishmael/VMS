@@ -6,10 +6,6 @@ use App\Models\Sentry;
 use App\Http\Requests\StoreSentryRequest;
 use App\Http\Requests\UpdateSentryRequest;
 
-use DB;
-use Brian2694\Toastr\Facades\Toastr;
-use Illuminate\Http\Request;
-use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class SentryController extends Controller
 {
@@ -20,21 +16,7 @@ class SentryController extends Controller
      */
     public function index()
     {
-       
-        $sentries = DB::table('sentries')
-
-        ->join('user_details', 'sentries.user_detail_id', '=', 'user_details.id')
-      
-        ->join('shifts', 'sentries.shift_id', '=', 'shifts.id')
-
-        ->join('devices', 'sentries.device_id', '=', 'devices.id')
-
-        ->select('sentries.*', 'user_details.ID_number', 'user_details.phone_number', 'shifts.name as shiftname', 'devices.identifier as devicename')
-
-        ->get();
-      
-        return view('livewire.sentry.dashboard',compact('sentries'));
-
+        return view('livewire.sentry.layout');
     }
 
     /**

@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Users')
+@section('title', 'Organizations')
 
 @section('vendor-style')
     {{-- vendor css files --}}
@@ -20,32 +20,17 @@
 
 @section('content')
     <!-- Dashboard Ecommerce Starts -->
-    @livewire('user.dashboard')
+    @livewire('organization.dashboard')
     <!-- Dashboard Ecommerce ends -->
-
-    
 @endsection
 
-@livewireScripts
-
 @section('vendor-script')
-
-
     {{-- vendor files --}}
-    <script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/jstree.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/tables/simple-datatables.js')) }}"></script>
-
-    <script>
-        // Simple Datatable
-        let table1 = document.querySelector('#table1');
-        let dataTable = new simpleDatatables.DataTable(table1);
-    </script>
-
+   
 @endsection
 @section('page-script')
     {{-- Page js files --}}
     <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script>
     <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
 @endsection
+

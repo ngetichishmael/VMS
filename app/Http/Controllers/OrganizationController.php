@@ -22,7 +22,7 @@ class OrganizationController extends Controller
     public function index()
     {
 
-       return view('app.organization.index');
+       return view('livewire.organization.layout');
 
     }
 
@@ -66,7 +66,8 @@ class OrganizationController extends Controller
         $organization->websiteUrl  = $request->input('url');
         $organization->description = $request->input('description');
         $organization->save();
-//        session()->flash('message',
+        
+        session()->flash('message', 'Post successfully updated.');
        // return response()->json(['success' => 'organization information added successfully.'], 201);
        return redirect()->to('/organization/information')->with('success','Organization created successfully.');
  }

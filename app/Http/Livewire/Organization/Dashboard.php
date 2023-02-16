@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Organization;
 
-use App\Models\DriveIn;
+
 use App\Models\Organization;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -20,11 +20,13 @@ class Dashboard extends Component
     {
 
         $searchTerm = '%' . $this->search . '%';
-        $organization = Organization::where(function ($query) use ($searchTerm) {
-                $query->where('name', 'like', $searchTerm);
-            })
+
+        $organization = Organization::whereLike(['name'], $searchTerm)
             ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
             ->paginate($this->perPage);
-        return view('livewire.organization.dashboard')->with(['organizations' => $organization]);
+        return view('livewire.organization.dashboard', ['organizations' => $organization]);
     }
+
+
+
 }

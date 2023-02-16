@@ -6,6 +6,19 @@ use App\Models\Shift;
 use App\Http\Requests\StoreShiftRequest;
 use App\Http\Requests\UpdateShiftRequest;
 
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+
+
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+
 class ShiftController extends Controller
 {
     /**
@@ -15,7 +28,7 @@ class ShiftController extends Controller
      */
     public function index()
     {
-        return view('livewire.shift.dashboard');
+        return view('livewire.shift.layout');
     }
 
     /**
@@ -34,9 +47,22 @@ class ShiftController extends Controller
      * @param  \App\Http\Requests\StoreShiftRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreShiftRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+    
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+     
+        $shift = new Shift;
+        $shift->name = $request->input('name');
+        $shift->save();
+        
+        return redirect()->to('/shifts');
     }
 
     /**

@@ -1,28 +1,4 @@
-@extends('layouts.contentLayoutMaster')
-
-@section('title', 'Sentries')
-
-@section('vendor-style')
-    {{-- vendor css files --}}
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/charts/apexcharts.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('fonts/font-awesome/css/font-awesome.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/jstree.min.css')) }}">
-@endsection
-@section('page-style')
-    {{-- Page css files --}}
-
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-tree.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/pages/dashboard-ecommerce.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/charts/chart-apex.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
-@endsection
-
-@section('content')
-    <!-- Dashboard Ecommerce Starts -->
-    <section id="dashboard-ecommerce">
-        <section>
-            <!-- users filter start -->
+<div>
             <div class="card">
                 <h5 class="card-header">Search Filter</h5>
                 <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
@@ -31,15 +7,33 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i data-feather="search"></i></span>
                             </div>
-                            <input type="text" id="fname-icon" class="form-control" name="fname-icon"
+                            <input  wire:model="search" type="text" id="fname-icon" class="form-control" name="fname-icon"
                                 placeholder="Search" />
+                        </div>
+                    </div>
+                    <div class="col-ms-3">
+                        <label style="color: #070707" for="">Items Per</label>
+                        <select wire:model="perPage" class="form-control">`
+                            <option value="10" selected>10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="selectSmall">Sort</label>
+                            <select class="form-control form-control-sm" id="selectSmall">
+                                <option value="1">Ascending</option>
+                                <option value="0">Descending</option>
+                            </select>
                         </div>
                     </div>
               
                     <div class="col-md-3">
-                    <button type="button" class="btn btn-icon btn-outline-success" style="width:200px;background-color: #1877F2;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
+                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2;color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
                             data-placement="top" title="New User">
-                            <img src="{{ asset('images/icons/exceal.png') }}"alt="+ Add New Sentry" width="60" height="20" style="color: #fff;">
+                              + Add New Sentry
                                
                         </button>
                     </div>
@@ -59,6 +53,7 @@
                                     <th>Email</th>
                                     <th>Phone Number</th>
                                     <th>ID Number</th>
+                                    <th>Organization</th>
                                     <th>Shift</th>
                                     <th>Last Login</th>
                                     <th>Status</th>
@@ -66,15 +61,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach ($sentries as $sentry)
+                            @forelse ($sentries as $sentry)
                                 <tr>
                                    
                                     <td> {{ $sentry ->name }} </td>
                                     <td> {{ $sentry ->email }} </td>
                                     <td> {{ $sentry ->phone_number }} </td>
                                     <td> {{ $sentry ->ID_number }} </td>
+                                    <td> {{ $sentry ->company }} </td>
                                     <td> {{ $sentry ->shiftname }} </td>
-                                    <td>{{ $sentry ->created_at }}</td>
+                                    <td>{{ $sentry ->updated_at }}</td>
                                     <td>
                                     <?php if($sentry->status == '1'){ ?> 
 
@@ -95,7 +91,7 @@
                                             </a>
                                             <div class="dropdown-menu">
                                                  <!--update link-->
-                                                 <a href="{{ url('users/sentries/'.$sentry->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+                                                 <a href="{{ url('OrganizationInformation.suspend'.$sentry->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
                                         <!-- delete link -->
                                         <?php if($sentry->status == '0'){ ?> 
                                         <a href="{{ url('users/sentries/suspend/'.$sentry->id) }}" onclick="return confirm('Are you sure to want to unblock the sentry?')" style="padding-right:20px; " > Unblock </a>
@@ -110,14 +106,18 @@
                                     </td>
                                 </tr>
 
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="6" style="text-align: center; color:red;"> No Sentry Found</td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
                         <div class="mt-1">
                         </div>
                     </div>
                 </div>
-        </section>
+    
         </div>
 
           <!-- Modal to add new sentry starts-->
@@ -228,17 +228,3 @@
             </div>
         </div>
     </section>
-    <!-- Dashboard Ecommerce ends -->
-@endsection
-
-@section('vendor-script')
-    {{-- vendor files --}}
-    <script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/jstree.min.js')) }}"></script>
-@endsection
-@section('page-script')
-    {{-- Page js files --}}
-    <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script>
-    <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
-@endsection
