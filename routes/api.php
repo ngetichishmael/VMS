@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['namespace' => 'Api'], function () {
     Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('visitors')->group(function () {
-        Route::get('/all', [VisitorController::class,'index']);
+        Route::get('/my_all', [VisitorController::class,'index']);
         Route::get('visitor/{id}', [DriveInController::class,'show']);
         Route::get('organization-options', [VisitorController::class, 'organizationOptions']);
         Route::get('identification-options', [VisitorController::class, 'identificationOptions']);
@@ -33,6 +33,9 @@ Route::group(['namespace' => 'Api'], function () {
 
         Route::get('/walkin/all', [WalkInController::class,'index']);
         Route::post('/walkin/create', [WalkInController::class,'store']);
+
+        Route::put('/{visitor}/checkout', [VisitorController::class, 'checkout'])->name('api.visitors.checkout');
+
     });
 });
 });

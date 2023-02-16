@@ -16,6 +16,9 @@ use App\Models\Tag;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @property mixed $timeLogs
+ */
 class Visitor extends Model
 {
     protected $table = 'visitors';
@@ -42,7 +45,7 @@ class Visitor extends Model
     {
         return $this->belongsTo(TimeLog::class, 'id');
     }
-    public function createdBy():HasMany
+    public function createdBy():HasOneOrMany
     {
         return $this->hasMany(Sentry::class, 'id', 'sentry_id' );
     }
