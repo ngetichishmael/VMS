@@ -12,7 +12,7 @@ class AuthenticationController extends Controller
 {
     public function Login(Request $request)
     {
-        $user = User::where('phone_number', $request->phone_number)->where('status', 1)->first();;
+        $user = User::where('phone_number', $request->phone_number)->where('status', 1)->first();
         if (!$user) {
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
@@ -21,7 +21,7 @@ class AuthenticationController extends Controller
         $code = rand(100000, 999999);
         $tokenUser = $user->createToken('auth_token')->plainTextToken;
         UserCode::updateOrCreate([
-            'user_id' => $user[0]->id,
+            'user_id' => $user->id,
             'code' => $code
         ]);
         $curl = curl_init();
