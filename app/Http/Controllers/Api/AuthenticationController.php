@@ -111,8 +111,8 @@ class AuthenticationController extends Controller
             ->latest('updated_at')
             ->exists();
         if ($exists) {
-            return response()->json(['message' => 'Valid OTP entered']);
+            return response()->json(['message' => 'Valid OTP entered'], 200);
         }
-        return response()->json(['message' => 'Invalid OTP entered']);
+        return response()->json(['message' => 'Invalid OTP entered'], 406);
     }
 }
