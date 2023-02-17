@@ -39,6 +39,10 @@
                     </div>
                 </div>
             </div>
+
+
+
+            
             <!-- users filter end -->
             {{-- @include('partials.loaderstyle') --}}
             <!-- list section start -->
@@ -70,7 +74,7 @@
 
                                     <?php }else{ ?>
 
-                                    <a href="#" class="inactive" style="color:#FF0000;">Suspended</a>
+                                    <a href="#" class="inactive" style="color:#FF0000;">Disabled</a>
 
                                     <?php } ?>
 
@@ -87,15 +91,15 @@
                                             <div class="dropdown-menu">
 
                                                    <!--update link-->
-                                        <a href="{{ url('organization/users/'.$shift->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit   </a>
+                                        <a  wire:ignore.self href="#" class="" wire:click="editShift({{ $shift->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit   </a>
                                         <!-- delete link -->
                                         <?php if($shift->status == '0'){ ?>
-                                        <a href="{{ url('organization/information/suspend/'.$shift->id) }}" onclick="return confirm('Are you sure to want to Activate the organization?')" style="padding-right:20px; " > Activate </a>
+                                        <a wire:ignore.self href="#" wire:click="activate({{ $shift->id }})"  onclick="return confirm('Are you sure to want to Activate the Shift?')" style="padding-right:20px; " > Activate </a>
                                         <?php }else{ ?>
-                                            <a href="{{ url('organization/information/suspend/'.$shift->id) }}" onclick="return confirm('Are you sure to want to suspend the organization?')" style="padding-right:20px; " > Suspend</i> </a>
+                                            <a wire:ignore.self href="#" wire:click="deactivate({{ $shift->id }})"  onclick="return confirm('Are you sure to want to Disable the Shift?')" style="padding-right:20px; " > Disable</i> </a>
                                         <?php } ?>
 
-                                        <a href="{{ url('organization/information/delete/'.$shift->id) }}" onclick="return confirm('Are you sure to want to delete the organization?')" > Delete </a>
+                                        <a wire:ignore.self href="#" wire:click="destroy({{ $shift->id }})" onclick="return confirm('Are you sure to want to delete the Shift?')" > Delete </a>
 
                                             </div>
                                         </div>
@@ -116,11 +120,12 @@
                 </div>
         </div>
 
+        
          <!-- Modal to add new shift starts-->
-         <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+         <div wire:ignore.self  class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
             <div class="modal-dialog">
-                <form class="add-new-user modal-content pt-0" method="POST" action="{!! route('shifts.store') !!}">
-                    @csrf
+                <form  class="add-new-user modal-content pt-0"  >
+              
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
                     <div class="modal-header mb-1">
                         <h5 class="modal-title" id="exampleModalLabel">New Shift</h5>
@@ -128,24 +133,41 @@
                     <div class="modal-body flex-grow-1">
                         <div class="form-group">
                             <label class="form-label" for="basic-icon-default-fullname">Name</label>
-                            <input
-                                type="text"
-                                name="name"
-                                :value="old('name')"
-                                class="form-control dt-full-name"
-                                id="basic-icon-default-fullname"
-                                aria-describedby="basic-icon-default-fullname2" required
-                            />
+                            <input  type="text" wire:model="name"  class="form-control" required />
                         </div>
 
 
-                        <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+                        <button wire:click="store"  type="submit"  class="btn btn-primary mr-1 data-submit"> Register </button>
                         <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>
             </div>
         </div>
     <!-- Modal to add new shift Ends-->
+
+        <!-- Modal to edit shift starts-->
+        <div wire:ignore.self  class="modal modal-slide-in new-user-modal fade" id="modals-edit-slide-in">
+            <div class="modal-dialog">
+                <form  class="add-new-user modal-content pt-0"  >
+              
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                    <div class="modal-header mb-1">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Shift</h5>
+                    </div>
+                    <div class="modal-body flex-grow-1">
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Name</label>
+                            <input  type="text" wire:model="name"  class="form-control" required />
+                        </div>
+
+
+                        <button wire:click="editShiftData"  type="submit"  class="btn btn-primary mr-1 data-submit"> Update </button>
+                        <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    <!-- Modal to edit shift Ends-->
 
         <h2 class="brand-text">TODO ON SENTRIES</h2>
         <div class="card-body">
@@ -176,3 +198,20 @@
         </div>
     </section>
     <!-- Dashboard Ecommerce ends -->
+    
+
+    @push('scripts')
+    <script>
+        window.addEventListener('close-modal', event =>{
+            $('#addStudentModal').modal('hide');
+            $('#editStudentModal').modal('hide');
+            $('#deleteStudentModal').modal('hide');
+        });
+
+        window.addEventListener('show-edit-shift-modal', event =>{
+            $('#modals-edit-slide-in').modal('show');
+        });
+
+    
+    </script>
+@endpush

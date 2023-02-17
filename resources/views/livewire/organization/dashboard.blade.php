@@ -85,29 +85,26 @@
                                     </td>
                               
                                     <td>
+                                        <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu">
 
-
-
-                                          <div class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu">
-
-                                                   <!--update link-->
-                                        <a href="{{ url('organization/users/'.$org->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit   </a>
+                                                <!--update link-->
+                                        <a  wire:ignore.self href="#" class="" wire:click="editOrganization({{ $org->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
                                         <!-- delete link -->
                                         <?php if($org->status == '0'){ ?>
-                                        <a href="{{ url('organization/information/suspend/'.$org->id) }}" onclick="return confirm('Are you sure to want to Activate the organization?')" style="padding-right:20px; " > Activate </a>
+                                        <a wire:ignore.self href="#" wire:click="activate({{ $org->id }})"  onclick="return confirm('Are you sure to want to Activate the organization?')" style="padding-right:20px; " > Activate </a>
                                         <?php }else{ ?>
-                                            <a href="{{ url('organization/information/suspend/'.$org->id) }}" onclick="return confirm('Are you sure to want to suspend the organization?')" style="padding-right:20px; " > Suspend</i> </a>
+                                        <a wire:ignore.self href="#" wire:click="deactivate({{ $org->id }})"  onclick="return confirm('Are you sure to want to suspend the organization?')" style="padding-right:20px; " > Suspend</i> </a>
                                         <?php } ?>
 
-                                        <a href="{{ url('organization/information/delete/'.$org->id) }}" onclick="return confirm('Are you sure to want to delete the organization?')" > Delete </a>
+                                        <a wire:ignore.self href="#" wire:click="destroy({{ $org->id }})" onclick="return confirm('Are you sure to want to delete the organization?')" > Delete </a>
 
-                                            </div>
                                         </div>
-                                    </td>
+                                        </div>
+                                        </td>
                                 </tr>
 
                                 @empty
@@ -127,9 +124,9 @@
             </div>
        
    <!-- Modal to add new organization starts-->
-        <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+        <div wire:ignore.self  class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
             <div class="modal-dialog">
-                <form class="add-new-user modal-content pt-0" method="POST" action="{!! route('OrganizationInformation.store') !!}">
+                <form class="add-new-user modal-content pt-0">
                     @csrf
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
                     <div class="modal-header mb-1">
@@ -138,88 +135,43 @@
                     <div class="modal-body flex-grow-1">
                         <div class="form-group">
                             <label class="form-label" for="basic-icon-default-fullname">Name</label>
-                            <input
-                                type="text"
-                                name="name"
-                                :value="old('name')"
-                                class="form-control dt-full-name"
-                                id="basic-icon-default-fullname"
-                                aria-describedby="basic-icon-default-fullname2" required
-                            />
+                            <input  type="text" wire:model="name"  class="form-control" required />
+
                         </div>
 
 
                         <div class="form-group">
                             <label class="form-label" for="basic-icon-default-email">Email</label>
-                            <input
-                                type="email"
-                                name="email"
-                                :value="old('email')"
-                                class="form-control dt-email"
-                                aria-describedby="basic-icon-default-email2"
-                                id="user-email" required
-                            />
+                            <input  type="text" wire:model="email"  class="form-control" required />
+
                             <small class="form-text text-muted"> You can use letters, numbers & periods </small>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="basic-icon-default-email">Phone Number</label>
-                            <input
-                                type="tel"
-                                name="phone"
-                                :value="old('email')"
-                                class="form-control dt-phone"
-                                aria-describedby="basic-icon-default-phone"
-                                id="phone" required
-                            />
-                            <small class="form-text text-muted"> You can numbers</small>
-                        </div>
+                            <input  type="text" wire:model="primary_phone"  class="form-control" required />
+
                         <div class="form-group">
                             <label class="form-label" for="basic-icon-default-email">Other Phone Number</label>
-                            <input
-                                type="tel"
-                                name="phone2"
-                                :value="old('email')"
-                                class="form-control dt-phone"
-                                aria-describedby="basic-icon-default-phone"
-                                id="phone2"
-                            />
-                            <small class="form-text text-muted"> You can numbers</small>
+                            <input  type="text" wire:model="secondary_phone"  class="form-control"  />
+
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="basic-icon-default-fullname">Location</label>
-                            <input
-                                type="text"
-                                name="location"
-                                :value="old('location')"
-                                class="form-control dt-full-name"
-                                id="basic-icon-default-location"
-                                aria-describedby="basic-icon-default-location2" required
-                            />
+                            <input  type="text" wire:model="location"  class="form-control" required />
+
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="basic-icon-default-fullname">Website URL</label>
-                            <input
-                                type="text"
-                                name="url"
-                                :value="old('url')"
-                                class="form-control dt-full-url"
-                                id="basic-icon-default-url"
-                                aria-describedby="basic-icon-default-url"
-                            />
+                            <input  type="text" wire:model="url"  class="form-control" required />
+
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="basic-icon-default-fullname">Organization Description</label>
-                            <input
-                                type="text"
-                                name="description"
-                                :value="old('description')"
-                                class="form-control dt-full-description"
-                                id="basic-icon-default-description2"
-                                aria-describedby="basic-icon-default-description2" required
-                            />
+                            <input  type="text" wire:model="description"  class="form-control" required />
+
                         </div>
 
-                        <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+                        <button  wire:click="store" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
                         <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>
@@ -228,16 +180,75 @@
     <!-- Modal to add new organization Ends-->
 
 
+   <!-- Modal to edit  organization starts-->
+   <div wire:ignore.self  class="modal modal-slide-in new-user-modal fade" id="modals-edit-slide-in">
+            <div class="modal-dialog">
+                <form class="add-new-user modal-content pt-0" >
+                
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                    <div class="modal-header mb-1">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Organization</h5>
+                    </div>
+                    <div class="modal-body flex-grow-1">
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Name</label>
+                            <input  type="text" wire:model="name"  class="form-control" required />
 
-        <script type="application/javascript">
-            $(document).on('click', '.dropdown-toggle', function(e) {
-                e.preventDefault();
-                $(this).next('.dropdown-menu').toggle();
-            });
-            $(document).on('mouse-enter', '.dropdown-toggle', function(e) {
-                e.preventDefault();
-                $(this).next('.dropdown-menu').toggle();
-            });
-        </script>
-    </section>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-email">Email</label>
+                            <input  type="text" wire:model="email"  class="form-control" required />
+
+                            <small class="form-text text-muted"> You can use letters, numbers & periods </small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-email">Phone Number</label>
+                            <input  type="text" wire:model="primary_phone"  class="form-control" required />
+
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-email">Other Phone Number</label>
+                            <input  type="text" wire:model="secondary_phone"  class="form-control" required />
+
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Location</label>
+                            <input  type="text" wire:model="location"  class="form-control" required />
+
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Website URL</label>
+                            <input  type="text" wire:model="url"  class="form-control" required />
+
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Organization Description</label>
+                            <input  type="text" wire:model="description"  class="form-control" required />
+
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Update') }} </button>
+                        <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    <!-- Modal to edit organization Ends-->
+
+
     <!-- Dashboard Ecommerce ends -->
+    @push('scripts')
+    <script>
+        window.addEventListener('close-modal', event =>{
+            $('#addStudentModal').modal('hide');
+       
+        });
+
+        window.addEventListener('show-edit-org-modal', event =>{
+            $('#modals-edit-slide-in').modal('show');
+        });
+
+    
+    </script>
+@endpush

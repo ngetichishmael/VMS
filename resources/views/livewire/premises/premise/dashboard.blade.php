@@ -1,28 +1,4 @@
-@extends('layouts.contentLayoutMaster')
-
-@section('title', 'Premises')
-
-@section('vendor-style')
-    {{-- vendor css files --}}
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/charts/apexcharts.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('fonts/font-awesome/css/font-awesome.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/jstree.min.css')) }}">
-@endsection
-@section('page-style')
-    {{-- Page css files --}}
-
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-tree.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/pages/dashboard-ecommerce.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/charts/chart-apex.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
-@endsection
-
-@section('content')
-    <!-- Dashboard Ecommerce Starts -->
-    <section id="dashboard-ecommerce">
-        <section>
-            <!-- users filter start -->
+<div>
             <div class="card">
                 <h5 class="card-header">Search Filter</h5>
                 <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
@@ -74,8 +50,10 @@
                                 <tr>
                                   
                                     <th>Name</th>
-                                    <th>Status</th>
+                                    <th>Location</th>
+                                    <th>Address</th>
                                     <th>Created At</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -84,6 +62,9 @@
                                 <tr>
                                    
                                     <td> {{ $prem ->name }} </td>
+                                    <td> {{ $prem ->location }} </td>
+                                    <td> {{ $prem ->address }} </td>
+                                    <td>{{ $prem ->created_at }}</td>
                                     <td>
                                     <?php if($prem->status == '1'){ ?> 
 
@@ -96,7 +77,7 @@
                                     <?php } ?>
 
                                     </td>
-                                    <td>{{ $prem ->created_at }}</td>
+                                
                                     <td>     
                                       
                                     
@@ -132,7 +113,7 @@
                         </div>
                     </div>
                 </div>
-        </section>
+      
         </div>
 
 
@@ -168,61 +149,3 @@
     </div>
     <!-- Modal to add new premise Ends-->
 
-
-        <h2 class="brand-text">TODO ON PREMISES</h2>
-        <div class="card-body">
-            <div id="jstree-basic">
-                <ul>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        CRUD
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Create</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Read</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Updated</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Delete</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Action
-                        <ul data-jstree='{"icon" : "far fa-folder"}'>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Suspend</li>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Others</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Relationship
-                        <ul data-jstree='{"icon" : "far fa-folder"}'>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Users</li>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Organization</li>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Hierarchy under Premise</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Table
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Filter</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Pagination</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Search by *</li>
-                        </ul>
-                    </li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Any Other</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Martin to Advise</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Isaac to Provide images, and secondary colors</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!-- Dashboard Ecommerce ends -->
-@endsection
-
-@section('vendor-script')
-    {{-- vendor files --}}
-    <script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/jstree.min.js')) }}"></script>
-@endsection
-@section('page-script')
-    {{-- Page js files --}}
-    <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script>
-    <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
-@endsection

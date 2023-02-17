@@ -20,12 +20,7 @@ class ServiceCategoryController extends Controller
      */
     public function index()
     {
-      
-        $categories = DB::table('service_categories')
-
-        ->get();
-
-        return view('livewire.service.catergory.dashboard', compact('categories'));
+        return view('livewire.service.catergory.layout');
     }
 
     /**

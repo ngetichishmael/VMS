@@ -21,6 +21,7 @@ class CreatePremisesTable extends Migration
             $table->string('address');
             $table->string('location');
             $table->string('description');
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

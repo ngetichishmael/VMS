@@ -44,47 +44,35 @@ class OrganizationController extends Controller
      */
     public function store(StoreOrganizationRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|max:255|unique:organizations,email',
-            'phone'=> 'required|numeric',
-            'location' => 'required',
+    //     $validator = Validator::make($request->all(), [
+    //         'name' => 'required',
+    //         'email' => 'required|email|max:255|unique:organizations,email',
+    //         'phone'=> 'required|numeric',
+    //         'location' => 'required',
 
 
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
-        }
-        $code = Str::random(20);
-        $organization = new organization;
-        $organization->code = $code;
-        $organization->name = $request->input('name');
-        $organization->location = $request->input('location');
-        $organization->email = $request->input('email');
-        $organization->primary_phone  = $request->input('phone');
-        $organization->secondary_phone  = $request->input('phone2');
-        $organization->websiteUrl  = $request->input('url');
-        $organization->description = $request->input('description');
-        $organization->save();
+    //     ]);
+    //     if ($validator->fails()) {
+    //         return response()->json(['error' => $validator->errors()], 400);
+    //     }
+    //     $code = Str::random(20);
+    //     $organization = new organization;
+    //     $organization->code = $code;
+    //     $organization->name = $request->input('name');
+    //     $organization->location = $request->input('location');
+    //     $organization->email = $request->input('email');
+    //     $organization->primary_phone  = $request->input('phone');
+    //     $organization->secondary_phone  = $request->input('phone2');
+    //     $organization->websiteUrl  = $request->input('url');
+    //     $organization->description = $request->input('description');
+    //     $organization->save();
         
-        session()->flash('message', 'Post successfully updated.');
-       // return response()->json(['success' => 'organization information added successfully.'], 201);
-       return redirect()->to('/organization/information')->with('success','Organization created successfully.');
- }
+    //     session()->flash('message', 'Post successfully updated.');
+    //    // return response()->json(['success' => 'organization information added successfully.'], 201);
+    return redirect()->route('OrganizationInformation');
+ 
+}
 
-    public function generateUniqueCode()
-
-    {
-
-        do {
-
-            $code = random_int(100000, 999999);
-        } while (organization::where("code", "=", $code)->first());
-
-
-
-        return $code;
-    }
 
     /**
      * Display the specified resource.

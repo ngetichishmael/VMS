@@ -84,26 +84,27 @@
 
                                     </td>
                                
-                                    <td>     
-                                    <div class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu">
-                                                 <!--update link-->
-                                                 <a href="{{ url('OrganizationInformation.suspend'.$sentry->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+                                    <td>
+                                        <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu">
+
+                                                <!--update link-->
+                                        <a  wire:ignore.self href="#" class="" wire:click="editsentryanization({{ $sentry->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
                                         <!-- delete link -->
-                                        <?php if($sentry->status == '0'){ ?> 
-                                        <a href="{{ url('users/sentries/suspend/'.$sentry->id) }}" onclick="return confirm('Are you sure to want to unblock the sentry?')" style="padding-right:20px; " > Unblock </a>
-                                        <?php }else{ ?> 
-                                            <a href="{{ url('users/sentries/suspend/'.$sentry->id) }}" onclick="return confirm('Are you sure to want to block the sentry?')" style="padding-right:20px; " title="Disable"> Block </a>
+                                        <?php if($sentry->status == '0'){ ?>
+                                        <a wire:ignore.self href="#" wire:click="activate({{ $sentry->id }})"  onclick="return confirm('Are you sure to want to Activate the sentry?')" style="padding-right:20px; " > Activate </a>
+                                        <?php }else{ ?>
+                                        <a wire:ignore.self href="#" wire:click="deactivate({{ $sentry->id }})"  onclick="return confirm('Are you sure to want to suspend the sentry?')" style="padding-right:20px; " > Suspend</i> </a>
                                         <?php } ?>
 
-                                        <a href="{{ url('users/sentries/delete/'.$sentry->id) }}" onclick="return confirm('Are you sure to want to delete the sentry?')" > Delete </a>
-                                  
-                                            </div>
+                                        <a wire:ignore.self href="#" wire:click="destroy({{ $sentry->id }})" onclick="return confirm('Are you sure to want to delete the sentry?')" > Delete </a>
+
                                         </div>
-                                    </td>
+                                        </div>
+                                        </td>
                                 </tr>
 
                                 @empty
@@ -120,64 +121,73 @@
     
         </div>
 
-          <!-- Modal to add new sentry starts-->
-    <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+           <!-- Modal to add new user starts-->
+    <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
         <form class="add-new-user modal-content pt-0" method="POST" action="{{ route('Sentry.store') }}">
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">New Sentry</h5>
+            <h5 class="modal-title" id="exampleModalLabel">New User</h5>
           </div>
           <div class="modal-body flex-grow-1">
             <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Name</label>
-              <input
-                type="text"
-                name="sname" 
-               
-                class="form-control dt-full-name"
-                id="basic-icon-default-fullname"
-                aria-describedby="basic-icon-default-fullname2"
-              />
+              <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
+              <input  type="text" wire:model="name"  class="form-control" required />
+
             </div>
 
+            
             <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Email</label>
+              <label class="form-label" for="basic-icon-default-email">Email</label>
+              <input  type="text" wire:model="email"  class="form-control" required />
+
+              <small class="form-text text-muted"> You can use letters, numbers & periods </small>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
               <input
-                type="text"
-                name="email" 
-               
+                type="tel"
                 class="form-control dt-full-name"
-                id="basic-icon-default-fullname"
+                name="phone_number" 
+            
                 aria-describedby="basic-icon-default-fullname2"
               />
             </div>
-
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-fullname">ID Number</label>
               <input
-                type="text"
-                name="id_number" 
-               
+                type="tel"
                 class="form-control dt-full-name"
-                id="basic-icon-default-fullname"
-                aria-describedby="basic-icon-default-fullname2"
-              />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Zone</label>
-              <input
-                type="text"
-                name="zone" 
-               
-                class="form-control dt-full-name"
-                id="basic-icon-default-fullname"
+                name="phone_number" 
+            
                 aria-describedby="basic-icon-default-fullname2"
               />
             </div>
 
-       
+            <fieldset class="form-group">
+              <label class="form-label" for="user-role">Organization</label>
+              <select id="organization_id" name="organization_id" class="form-control">
+                
+                @foreach ($organizations as $organizations)
+                    <option  value="{{ $organizations ->id }}"> {{ $organizations ->name }}</option>
+                @endforeach  
+              </select>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label class="form-label" for="user-role">Shift</label>
+              <select id="role_id" name="role_id" class="form-control">
+                
+                @foreach ($shifts as $shift)
+                    <option  value="{{ $shift ->id }}"> {{ $shift ->name }}</option>
+                @endforeach  
+              </select>
+            </fieldset>
+
+
+
+        
             
             <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
@@ -185,7 +195,7 @@
         </form>
       </div>
     </div>
-    <!-- Modal to add new unit Ends-->
+    <!-- Modal to add new user Ends-->
         <h2 class="brand-text">TODO ON SENTRIES</h2>
         <div class="card-body">
             <div id="jstree-basic">

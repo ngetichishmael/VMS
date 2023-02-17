@@ -90,29 +90,26 @@
                                     <td>{{ now() }}</td>
                                     <td>{{ now() }}</td>
                                     <td>
+                                        <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu">
 
-                                    <div class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu">
-                                              
-                                                <a href="{{ url('organization/users/edit/'.$user->id) }}" class="" style="padding-right:6px"   data-placement="top" > Edit </a>
-                                               
-                                                                        <!-- delete link -->
-                                        <?php if($user->status == '0'){ ?> 
-                                        <a href="{{ url('organization/users/suspend/'.$user->id) }}" onclick="return confirm('Are you sure to want to Activate the User?')"  title="Unsuspend" style="padding-right:6px" > Unsuspend</i> </a>
-                                        <?php }else{ ?> 
-                                            <a href="{{ url('OrganizationUsers.suspend'.$user->id) }}" onclick="return confirm('Are you sure to want to suspend the User?')"  title="Suspend" style="padding-right:6px"> Suspend </a>
+                                                <!--update link-->
+                                        <a  wire:ignore.self href="#" class="" wire:click="edituseranization({{ $user->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+                                        <!-- delete link -->
+                                        <?php if($user->status == '0'){ ?>
+                                        <a wire:ignore.self href="#" wire:click="activate({{ $user->id }})"  onclick="return confirm('Are you sure to want to Activate the User?')" style="padding-right:20px; " > Activate </a>
+                                        <?php }else{ ?>
+                                        <a wire:ignore.self href="#" wire:click="deactivate({{ $user->id }})"  onclick="return confirm('Are you sure to want to suspend the User?')" style="padding-right:20px; " > Suspend</i> </a>
                                         <?php } ?>
 
-                                        <a href="{{ url('organization/users/delete/'.$user->id) }}" onclick="return confirm('Are you sure to want to delete the user?')" title="Delete"> Delete </a>
-                                   
-                                            </div>
+                                        <a wire:ignore.self href="#" wire:click="destroy({{ $user->id }})" onclick="return confirm('Are you sure to want to delete the User?')" > Delete </a>
+
                                         </div>
-                                        
-  
-                                    </td>
+                                        </div>
+                                        </td>
                                 </tr>
                               
                          
@@ -127,17 +124,14 @@
                         </table>
              
 
-                        <div class="mt-1">
-                  
-                        </div>
                     </div>
                 </div>
    
         </div>
 
     
-         <!-- Modal to add new user starts-->
-         <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+              <!-- Modal to add new user starts-->
+    <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
         <form class="add-new-user modal-content pt-0" method="POST" action="{{ route('OrganizationUsers.store') }}">
         {{ csrf_field() }} 
@@ -151,7 +145,7 @@
               <input
                 type="text"
                 name="name" 
-                :value="old('name')"
+              
                 class="form-control dt-full-name"
                 id="basic-icon-default-fullname"
                 aria-describedby="basic-icon-default-fullname2"
@@ -164,7 +158,7 @@
               <input
                 type="email"
                 name="email" 
-                :value="old('email')"
+           
                 class="form-control dt-email"
                 aria-describedby="basic-icon-default-email2"
                 name="user-email"
@@ -177,11 +171,10 @@
                 type="tel"
                 class="form-control dt-full-name"
                 name="phone_number" 
-                :value="old('phone_number')"
+            
                 aria-describedby="basic-icon-default-fullname2"
               />
             </div>
-
 
 
             <fieldset class="form-group">
@@ -195,7 +188,7 @@
             </fieldset>
 
             <fieldset class="form-group">
-              <label class="form-label" for="user-role">Organization</label>
+              <label class="form-label" for="user-role">Role</label>
               <select id="role_id" name="role_id" class="form-control">
                 
                 @foreach ($roles as $role)
@@ -206,14 +199,13 @@
 
 
 
-
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-fullname">Password</label>
               <input
                 type="password"
                 class="form-control dt-full-name"
                 name="password" 
-                :value="old('password')"
+             
                 aria-describedby="basic-icon-default-fullname2"
               />
             </div>
@@ -228,38 +220,3 @@
 
   
 
-        <h2 class="brand-text">TODO ON USERS</h2>
-        <div class="card-body">
-            <div id="jstree-basic">
-                <ul>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        CRUD
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Create</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Read</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Updated</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Delete</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Relationship
-                        <ul data-jstree='{"icon" : "far fa-folder"}'>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Organization</li>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Hierarchy under Organization</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Table
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Filter</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Pagination</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Search by *</li>
-                        </ul>
-                    </li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Any Other</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Martin from Advise</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Isaac to Provide images, and secondary colors</li>
-                </ul>
-            </div>
-        </div>
-    </section>

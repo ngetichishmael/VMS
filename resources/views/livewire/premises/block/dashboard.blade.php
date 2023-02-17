@@ -1,28 +1,4 @@
-@extends('layouts.contentLayoutMaster')
-
-@section('title', 'Blocks')
-
-@section('vendor-style')
-    {{-- vendor css files --}}
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/charts/apexcharts.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('fonts/font-awesome/css/font-awesome.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/jstree.min.css')) }}">
-@endsection
-@section('page-style')
-    {{-- Page css files --}}
-
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-tree.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/pages/dashboard-ecommerce.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/charts/chart-apex.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
-@endsection
-
-@section('content')
-    <!-- Dashboard Ecommerce Starts -->
-    <section id="dashboard-ecommerce">
-        <section>
-            <!-- users filter start -->
+<div>
             <div class="card">
                 <h5 class="card-header">Search Filter</h5>
                 <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
@@ -84,7 +60,7 @@
                             @foreach ($blocks as $block)
                                 <tr>
                                    
-                                    <td> {{ $block ->blockname }} </td>
+                                    <td> {{ $block ->name }} </td>
                                     <td> {{ $block ->name }} </td>
                                     <td>
                                     <?php if($block->status == '1'){ ?> 
@@ -99,30 +75,27 @@
 
                                     </td>
                                     <td>{{ $block ->created_at }}</td>
-                                    <td>     
-                              
+                                    <td>
+<div class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    <i class="fas fa-ellipsis-v"></i>
+</a>
+<div class="dropdown-menu">
 
-                                    <div class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu">
-                                                 <!--update link-->
-                                                 <a href="{{ url('block/information/'.$block->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
-                                        <!-- delete link -->
-                                        <?php if($block->status == '0'){ ?> 
-                                        <a href="{{ url('block/information/suspend/'.$block->id) }}" onclick="return confirm('Are you sure to want to unblock the Block?')" style="padding-right:20px; " > Unblock </a>
-                                        <?php }else{ ?> 
-                                            <a href="{{ url('block/information/suspend/'.$block->id) }}" onclick="return confirm('Are you sure to want to block the Block?')" style="padding-right:20px; " title="Disable"> Block </a>
-                                        <?php } ?>
+        <!--update link-->
+<a  wire:ignore.self href="#" class="" wire:click="editblock({{ $block->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+<!-- delete link -->
+<?php if($block->status == '0'){ ?>
+<a wire:ignore.self href="#" wire:click="activate({{ $block->id }})"  onclick="return confirm('Are you sure to want to Activate the block?')" style="padding-right:20px; " > Activate </a>
+<?php }else{ ?>
+<a wire:ignore.self href="#" wire:click="deactivate({{ $block->id }})"  onclick="return confirm('Are you sure to want to suspend the block?')" style="padding-right:20px; " > Suspend</i> </a>
+<?php } ?>
 
-                                        <a href="{{ url('block/information/delete/'.$block->id) }}" onclick="return confirm('Are you sure to want to delete the Block?')" > Delete </a>
-                                  
-                                            </div>
-                                        </div>
-                                  
-                                  
-                                    </td>
+<a wire:ignore.self href="#" wire:click="destroy({{ $block->id }})" onclick="return confirm('Are you sure to want to delete the block?')" > Delete </a>
+
+</div>
+</div>
+</td>
                                 </tr>
 
                                 @endforeach
@@ -132,7 +105,7 @@
                         </div>
                     </div>
                 </div>
-        </section>
+ 
         </div>
 
 
@@ -161,13 +134,13 @@
 
 
 
-
+m
             <fieldset class="form-group">
               <label class="form-label" for="user-role">Premise Name</label>
               <select id="premise" name="premise" class="form-control">
                 
-                @foreach ($premises as $prem)
-                    <option  value="{{ $prem ->id }}"> {{ $prem ->name }}</option>
+                @foreach ($blocks as $block)
+                    <option  value="{{ $block ->id }}"> {{ $block ->name }}</option>
                 @endforeach  
               </select>
             </fieldset>
@@ -226,18 +199,4 @@
                 </ul>
             </div>
         </div>
-    </section>
-    <!-- Dashboard Ecommerce ends -->
-@endsection
-
-@section('vendor-script')
-    {{-- vendor files --}}
-    <script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/jstree.min.js')) }}"></script>
-@endsection
-@section('page-script')
-    {{-- Page js files --}}
-    <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script>
-    <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
-@endsection
+  m
