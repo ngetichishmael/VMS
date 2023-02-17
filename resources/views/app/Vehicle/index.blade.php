@@ -1,7 +1,7 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Organizations')
-@livewireStyles
+@section('title', 'Vehicle')
+
 @section('vendor-style')
     {{-- vendor css files --}}
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/charts/apexcharts.css')) }}">
@@ -17,9 +17,10 @@
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/charts/chart-apex.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
 @endsection
+
 @section('content')
 
-@livewire('organization.dashboard')
+    @livewire('vehicle.dashboard')
 
 @endsection
 @livewireScripts

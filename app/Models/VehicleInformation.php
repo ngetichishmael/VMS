@@ -6,12 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @method static whereLike(string[] $array, string $searchTerm)
+ */
 class VehicleInformation extends Model
 {
     use HasFactory;
     protected $guarded;
-    public function vehicle(): HasOne
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasOne(DriveIn::class, 'vehicleId', 'vehicleId');
+          return $this->belongsTo(Visitor::class, 'visitor_id', 'id');
     }
 }

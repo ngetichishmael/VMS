@@ -20,6 +20,7 @@ class CreateNationalitiesTable extends Migration
             $table->string('iso3');
             $table->string('num_code');
             $table->string('phone_code');
+            $table->timestamps();
         });
     }
 

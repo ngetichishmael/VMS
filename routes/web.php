@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +19,11 @@ Route::get('/', function () {
     return view('welcome', ['pageConfigs' => $pageConfigs]);
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+//Route::get('/dashboard', function () {
+////    return view('dashboard');
+//    Route::get('dashboard', [DashboardController::class, 'dashboard']);
+//})->middleware(['auth'])->name('dashboard');
+Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware(['auth']);
 
 // require __DIR__ . '/vuexy.php';
 require __DIR__ . '/auth.php';

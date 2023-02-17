@@ -16,6 +16,9 @@ use App\Models\Tag;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @property mixed $timeLogs
+ */
 class Visitor extends Model
 {
     protected $table = 'visitors';
@@ -31,19 +34,24 @@ class Visitor extends Model
 //    }
     public function purpose(): BelongsTo
     {
-        return $this->belongsTo(Premise::class, 'purpose_id');
+        return $this->belongsTo(Purpose::class, 'purpose_id');
     }
     public function timeLogs():BelongsTo
     {
         return $this->belongsTo(TimeLog::class, 'time_log_id', 'id');
     }
-    public function createdBy():HasMany
+
+    public function visitorsVisits()
     {
-        return $this->hasMany(Sentry::class, 'id');
+        return $this->belongsTo(TimeLog::class, 'id');
     }
-    public function vehicle(): BelongsTo
+    public function createdBy():HasOneOrMany
     {
-        return $this->belongsTo(VehicleInformation::class, 'visitor_id');
+        return $this->hasMany(Sentry::class, 'id', 'sentry_id' );
+    }
+    public function vehicle(): HasOne
+    {
+        return $this->hasOne(VehicleInformation::class );
     }
 
 

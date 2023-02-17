@@ -17,7 +17,7 @@ class CreateUserDetailsTable extends Migration
         Schema::create('user_details', function (Blueprint $table) {
             $table->id();
             $table->string('phone_number');
-            $table->string('seconadry_phone_number')->nullable();
+            $table->string('secondary_phone_number')->nullable();
             $table->string('date_of_birth')->nullable();
             $table->string('company')->nullable();
             $table->string('ID_number')->nullable();

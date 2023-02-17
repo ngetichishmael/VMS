@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Visit\Drivers;
 
 use App\Models\Visitor;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\DriveIn;
@@ -11,69 +12,53 @@ use App\Models\IdentificationType;
 
 class Dashboard extends Component
 {
-//    public $visitorTypes;
-//    public $selectedVisitorType;
-//    public $selectedIdentificationType;
-//
-//    public function mount() {
-//        $this->visitorTypes = VisitorType::all();
-//        $this->identificationTypes = IdentificationType::all();
-//    }
-    public $fvisitors;
-
-    public function mount()
-    {
-        $this->fvisitors = Visitor::all();
-    }
-
-
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $perPage = 10;
+    public $sortField = 'id';
+    public $sortAsc = true;
     public ?string $search = null;
-    public $orderBy = 'id';
-    public $orderAsc = true;
+    public $visitorTypeId;
+    public $identificationTypeId;
+    public $sortTimeField = 'time';
+    public $sortTimeAsc = true;
+    public function sortBy($field)
+    {
+        if ($field === $this->sortField) {
+            $this->sortAsc = !$this->sortAsc;
+        } else {
+            $this->sortField = $field;
+            $this->sortAsc = true;
+        }
+    }
+
     public function render()
     {
-
         $searchTerm = '%' . $this->search . '%';
-        $dvisitors = DriveIn::with('dorganization')
-            ->with('vehicle')->with('timeLogs')
-            ->where('type', 'drivein')
-            ->where(function ($query) use ($searchTerm) {
-                $query->where('name', 'like', $searchTerm);
+        $dvisitors = DriveIn::with('organization','vehicle', 'timeLogs')
+            ->when($this->visitorTypeId, function ($query) {
+                $query->where('visitor_type_id', $this->visitorTypeId);
             })
-            ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
+            ->when($this->identificationTypeId, function ($query) {
+                $query->where('identification_type_id', $this->identificationTypeId);
+            })
+            ->where('type', 'drivein')
+            ->whereLike(['vehicle.registration', 'name','user.email','purpose.name', 'premises.name','organization1.name', 'unit.name'], $searchTerm)
+            ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
             ->paginate($this->perPage);
-//
-//        if ($this->selectedVisitorType) {
-//            $dvisitors->whereHas('visitorType', function ($dvisitors) {
-//                $dvisitors->where('id', $this->selectedVisitorType);
-//            });
-//        }
-//        if ($this->selectedIdentificationType) {
-//           $dvisitors->whereHas('identificationType', function ($dvisitors) {
-//               dd( $dvisitors->where('id', $this->selectedIdentificationType));
-//            });
-//        }
-        return view('livewire.visit.drivers.dashboard')->with(['dvisitors' => $dvisitors]);
-    }
-    public function visitorTypeIdSelected($selectedVisitorTypeId)
-    {
-        dd($selectedVisitorTypeId);
+        $visitorTypes = VisitorType::all();
+        $identificationTypes = IdentificationType::all();
+        foreach ($dvisitors as $visitor) {
+            $entryTime = Carbon::parse($visitor->timeLogs->entry_time);
+            $exitTime = Carbon::parse($visitor->timeLogs->exit_time);
+            $duration = $entryTime->diff($exitTime);
 
-        if ($selectedVisitorTypeId == 0) {
-            $this->visitors = Visitor::all();
-        } else {
-            $this->visitors = Visitor::where('visitor_type_id', $selectedVisitorTypeId)->get();
+            $visitor->duration = $duration->format('%H Hours %I Minutes %S Seconds');
         }
-    }
-    public function identificationTypeIdSelected($selectedIdentificationTypeId)
-    {
-        if ($selectedIdentificationTypeId == 0) {
-            $this->visitors = Visitor::all();
-        } else {
-            $this->visitors = Visitor::where('identification_type_id', $selectedIdentificationTypeId)->get();
-        }
+        return view('livewire.visit.drivers.dashboard', [
+            'dvisitors' => $dvisitors,
+            'visitorTypes' => $visitorTypes,
+            'identificationTypes' => $identificationTypes,
+            ]);
     }
 }

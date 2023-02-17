@@ -23,9 +23,7 @@ class Dashboard extends Component
         $searchTerm = '%' . $this->search . '%';
         $types = IdentificationType::whereLike(['name', 'user.email'], $searchTerm)
             ->get();
-        return view('livewire.identification-type.dashboard', [
-            'types' => $types,
-        ]);
+        return view('livewire.identification-type.dashboard', ['types' => $types]);
     }
     private function resetInput()
     {
