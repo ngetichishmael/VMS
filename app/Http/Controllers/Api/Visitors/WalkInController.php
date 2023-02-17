@@ -19,9 +19,12 @@ class WalkInController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Visitor::with(['resident2','createdBy', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('type','walkin')->get());
+
+        return response()->json(Visitor::with(['resident2','createdBy', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
+        ->where('type', 'walkin')
+        ->get());
     }
 
     /**

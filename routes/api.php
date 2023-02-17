@@ -22,7 +22,7 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('verify/otp/{number}/{otp}', [AuthenticationController::class, 'verifyOTP']);
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::prefix('visitors')->group(function () {
-            Route::get('/all', [VisitorController::class, 'index']);
+            Route::get('/my_all', [VisitorController::class, 'index']);
             Route::get('visitor/{id}', [DriveInController::class, 'show']);
             Route::get('organization-options', [VisitorController::class, 'organizationOptions']);
             Route::get('identification-options', [VisitorController::class, 'identificationOptions']);

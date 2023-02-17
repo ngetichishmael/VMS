@@ -15,6 +15,7 @@ class Organization extends Model
 
 {
     use HasFactory;
+
     protected $guarded=[];
 //    public function organization(): HasMany
 //    {
@@ -24,9 +25,6 @@ class Organization extends Model
 //    {
 //        return $this->hasMany(DriveIn::class, 'organization_id', 'organization_id');
 //    }
+
 }
 
-
-// {
-//     use HasFactory;
-// }

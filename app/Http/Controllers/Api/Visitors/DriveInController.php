@@ -19,9 +19,12 @@ class DriveInController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Visitor::with(['resident2', 'createdBy', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('type', 'drivein')->get());
+
+        return response()->json(Visitor::with(['resident2', 'createdBy', 'vehicle', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
+            ->where('type', 'drivein')
+            ->get());
     }
 
     public function store(Request $request)

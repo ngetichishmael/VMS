@@ -8,7 +8,7 @@ use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Vehicle;
+use App\Models\VehicleInformation;
 use App\Models\TimeLog;
 
 
@@ -18,10 +18,6 @@ class DriveIn extends Model
     protected $table = 'visitors';
     protected $guarded = [];
 
-    public function dorganization(): BelongsTo
-    {
-        return $this->belongsTo(Organization::class, 'organization_id', 'id');
-    }
     public function vehicle(): BelongsTo
     {
         return $this->BelongsTo(VehicleInformation::class, 'id', 'visitor_id');
@@ -29,14 +25,33 @@ class DriveIn extends Model
 //    public function visitorType() {
 //        return $this->belongsTo(VisitorType::class);
 //    }
+    public function timeLog()
+    {
+        return $this->belongsTo(TimeLog::class);
+    }
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class, 'organization_id');
     }
 
-    public function premises(): BelongsTo
+    public function premises()
     {
-        return $this->belongsTo(Premise::class, 'premises_id');
+        return $this->hasMany(Premise::class, 'id');
+    }public function user(): \Illuminate\Database\Eloquent\Relations\HasMany
+{
+        return $this->hasMany(User::class, 'id');
+    }
+    public function unit()
+    {
+        return $this->hasMany(Unit::class, 'id' );
+    }
+    public function purpose()
+    {
+        return $this->hasMany(Purpose::class, 'id');
+    }
+    public function organization1()
+    {
+        return $this->hasMany(\App\Models\Organization::class, 'id' );
     }
 
 //    public function vehicle(): BelongsTo

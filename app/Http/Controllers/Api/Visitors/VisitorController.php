@@ -43,11 +43,28 @@ class VisitorController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Visitor::with(['resident2','createdBy', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->get());
-    }
 
+        return response()->json(Visitor::with(['resident2','createdBy', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)->get());
+    }
+    public function checkout(Request $request, Visitor $visitor)
+    {
+
+        $timeLog = $visitor->timeLogs;
+        if (!$timeLog) {
+            return response()->json(['error' => 'Visitor not found'], 404);
+        }
+        if ($timeLog->exit_time) {
+            return response()->json(['error' => 'Visitor has already checked out'], 400);
+        }
+
+        $timeLog->update([
+            'exit_time' => now(),
+        ]);
+
+        return response()->json(['message' => 'Visitor checked out successfully', 200]);
+    }
     /**
      * Store a newly created resource in storage.
      *
