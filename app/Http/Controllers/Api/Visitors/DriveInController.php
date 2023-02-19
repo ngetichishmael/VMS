@@ -8,6 +8,7 @@ use App\Models\TimeLog;
 use App\Models\UserDetail;
 use App\Models\VehicleInformation;
 use App\Models\Visitor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -29,6 +30,7 @@ class DriveInController extends Controller
 
     public function store(Request $request)
     {
+        $userTimezone = $request->header('X-Timezone');
         // Validate the request data
 
                 $validator = Validator::make($request->all(), [
@@ -54,6 +56,10 @@ class DriveInController extends Controller
             $nationality->name = $request['nationality'];
             $nationality->save();
         }
+        $timeLog = new TimeLog;
+        $now = Carbon::now();
+        $nairobiNow = $now->setTimezone('Africa/Nairobi');
+        $timeLog->entry_time=$nairobiNow->format('Y-m-d H:i:s') ;
 
         $visitor = new Visitor();
         $visitor->name = $request->input('name');
@@ -65,12 +71,10 @@ class DriveInController extends Controller
         $visitor->nationality_id = $nationality->id;
         $visitor->resident_id = $request->input('resident_id');
 
-        $timeLog = new TimeLog;
-        $timeLog->entry_time=now();
+
         $timeLog->save();
 
         $visitor->time_log_id = $timeLog->id;
-        $visitor->save();
 
         $user_details= UserDetail::where('ID_number', $request['IDNO'])->first();
         if (!$user_details) {
@@ -82,6 +86,9 @@ class DriveInController extends Controller
             $user_details->gender = $request->input('gender');
             $user_details->save();
         }
+        $visitor->user_detail_id = $user_details->id;
+        $visitor->save();
+
         $vehicle = new VehicleInformation();
         $vehicle->registration = $request->input('registration');
         $vehicle->type = $request->input('vehicle_type');

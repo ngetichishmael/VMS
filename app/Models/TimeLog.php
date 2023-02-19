@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class TimeLog extends Model
 {
     use HasFactory;
+
+    /**
+     * @var mixed|string
+     */
     protected $table='time_logs';
     protected $guarded=[];
 }

@@ -164,7 +164,7 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a href="#">View Details</a>
+                                        <a href="{{ route('VisitDriveIn.show', $visitor->id) }}">View Details</a>
                                         <a href="#">View History</a>
                                     </div>
                                 </div>

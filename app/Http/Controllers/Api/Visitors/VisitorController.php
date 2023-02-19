@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Visitors;
 use App\Http\Controllers\Controller;
 use App\Models\IdentificationType;
 use App\Models\Purpose;
+use App\Models\Resident;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use App\Models\Organization;
@@ -37,6 +38,11 @@ class VisitorController extends Controller
     {
         return Purpose::all();
     }
+    public function hostOptions()
+    {
+        return Resident::all();
+    }
+
 
     /**
      * Display a listing of the resource.

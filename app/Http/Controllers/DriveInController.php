@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDriveInRequest;
 use App\Http\Requests\UpdateDriveInRequest;
 use App\Models\DriveIn;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class DriveInController extends Controller
 {
@@ -43,11 +45,19 @@ class DriveInController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\DriveIn  $driveIn
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show(DriveIn $driveIn)
+    public function show( $driveIn)
     {
-        //
+         $visitor = DriveIn::with('identificationType','nationality','user_details','purpose1','createdBy')->find($driveIn);
+
+            $entryTime = Carbon::parse($visitor->timeLogs->entry_time);
+            $exitTime = Carbon::parse($visitor->timeLogs->exit_time);
+            $duration = $entryTime->diff($exitTime);
+
+            $visitor->duration = $duration->format('%H Hours %I Minutes %S Seconds');
+
+        return view('app.visitor.drivers.visitorDetails', compact('visitor'));
     }
 
     /**

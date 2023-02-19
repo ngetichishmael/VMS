@@ -72,7 +72,7 @@ class WalkInController extends Controller
         $timeLog->save();
 
         $visitor->time_log_id = $timeLog->id;
-        $visitor->save();
+
 
         $user_details= UserDetail::where('ID_number', $request['IDNO'])->first();
         if (!$user_details) {
@@ -84,7 +84,8 @@ class WalkInController extends Controller
             $user_details->gender = $request->input('gender');
             $user_details->save();
         }
-
+        $visitor->user_detail_id = $user_details->id;
+        $visitor->save();
         return response()->json(['success' => 'Visitor Walkin information added successfully.'], 201);
 
     }

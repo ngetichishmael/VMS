@@ -26,6 +26,7 @@ Route::group(['namespace' => 'Api'], function () {
         Route::get('identification-options', [VisitorController::class, 'identificationOptions']);
         Route::get('premises-options', [VisitorController::class,'premisesOptions']);
         Route::get('purpose-options', [VisitorController::class,'purposeOptions']);
+        Route::get('host-options', [VisitorController::class,'hostOptions']);
         Route::get('tag-options', [VisitorController::class,'tagOptions']);
 
         Route::get('/drivein/all', [DriveInController::class,'index']);
