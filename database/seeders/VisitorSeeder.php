@@ -22,35 +22,24 @@ class VisitorSeeder extends Seeder
                 'name' => 'John Doe',
                 'type' => 'walkIn',
                 'identification_type_id' => 1,
-                'visitor_type_id' => 2,
-                'purpose_id' => 3,
-                'sentry_id' => 4,
-                'nationality_id' => 5,
-                'resident_id' => 6,
-                'time_log_id' => 7
+                'visitor_type_id' => 1,
+                'purpose_id' => 1,
+                'sentry_id' => 1,
+                'nationality_id' => 1,
+                'resident_id' => 1,
+                'time_log_id' => 1
             ],
             [
                 'name' => 'Jane Smith',
                 'type' => 'driveIn',
-                'identification_type_id' => 1,
-                'visitor_type_id' => 3,
-                'purpose_id' => 2,
-                'sentry_id' => 4,
-                'nationality_id' => 5,
-                'resident_id' => 6,
-                'time_log_id' => 8
-            ],
-            [
-                'name' => 'Jim Brown',
-                'type' => 'walkIn',
                 'identification_type_id' => 2,
-                'visitor_type_id' => 1,
-                'purpose_id' => 3,
-                'sentry_id' => 5,
-                'nationality_id' => 5,
-                'resident_id' => 6,
-                'time_log_id' => 9
-            ],
+                'visitor_type_id' => 2,
+                'purpose_id' => 2,
+                'sentry_id' => 2,
+                'nationality_id' => 2,
+                'resident_id' => 2,
+                'time_log_id' => 2
+            ]
         ];
 
         foreach ($visitors as $visitor) {

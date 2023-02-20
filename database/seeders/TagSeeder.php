@@ -18,7 +18,7 @@ class TagSeeder extends Seeder
             ['tagName' => 'Technology'],
             ['tagName' => 'Science'],
             ['tagName' => 'Health'],
-            ['tagName' => 'Sports'],
+            ['tagName' => 'Business'],
             ['tagName' => 'Entertainment'],
         ];
 

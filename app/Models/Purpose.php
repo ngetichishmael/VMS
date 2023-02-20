@@ -9,5 +9,6 @@ class Purpose extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $table='purposes';
 
 }

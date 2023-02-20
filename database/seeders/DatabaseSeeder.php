@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
             PremiseSeeder::class,
             PurposeSeeder::class,
             ResidentSeeder::class,
+            UserDetailSeeder::class,
+            TimeLogSeeder::class,
         ]);
     }
 }

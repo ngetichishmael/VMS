@@ -31,7 +31,6 @@ class Dashboard extends Component
             $this->sortAsc = true;
         }
     }
-
     public function render()
     {
         $searchTerm = '%' . $this->search . '%';
@@ -61,4 +60,6 @@ class Dashboard extends Component
             'identificationTypes' => $identificationTypes,
             ]);
     }
+
+
 }
