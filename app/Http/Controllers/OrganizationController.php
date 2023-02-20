@@ -7,7 +7,6 @@ use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
-use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -69,20 +68,6 @@ class OrganizationController extends Controller
         session()->flash('message', 'Post successfully updated.');
         // return response()->json(['success' => 'organization information added successfully.'], 201);
         return redirect()->to('/organization/information')->with('success', 'Organization created successfully.');
-    }
-
-    public function generateUniqueCode()
-
-    {
-
-        do {
-
-            $code = random_int(100000, 999999);
-        } while (organization::where("code", "=", $code)->first());
-
-
-
-        return $code;
     }
 
     /**
