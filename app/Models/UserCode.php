@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Purpose extends Model
+class UserCode extends Model
 {
     use HasFactory;
-    protected $guarded = [];
-    protected $table='purposes';
+    public $table = "user_codes";
 
+    protected $fillable = [
+        'user_id',
+        'code',
+    ];
 }

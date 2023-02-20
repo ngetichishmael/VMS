@@ -70,9 +70,9 @@ class DriveIn extends Model
     {
         return $this->belongsTo(VisitorType::class, 'visitor_type_id');
     }
-    public function identificationType(): BelongsTo
+    public function identificationType()
     {
-        return $this->belongsTo(IdentificationType::class, 'identification_id');
+        return $this->belongsTo(IdentificationType::class);
     }
     public function timeLogs():BelongsTo
     {
@@ -81,5 +81,21 @@ class DriveIn extends Model
     public function Resident():BelongsTo
     {
         return $this->belongsTo(Resident::class, 'resident_id');
+    }
+    public function user_details():BelongsTo
+    {
+        return $this->belongsTo(UserDetail::class, 'user_detail_id');
+    }
+    public function purpose1()
+    {
+        return $this->belongsTo(Purpose::class,'purpose_id');
+    }
+    public function nationality()
+    {
+        return $this->belongsTo(Nationality::class);
+    }
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(Sentry::class);
     }
 }

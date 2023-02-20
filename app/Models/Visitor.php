@@ -71,5 +71,9 @@ class Visitor extends Model
     {
         return $this->belongsTo(Resident::class, 'resident_id');
     }
+    public function user_details():BelongsTo
+    {
+        return $this->belongsTo(UserDetail::class, 'user_detail_id');
+    }
 
 }

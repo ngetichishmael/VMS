@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreWalkInRequest;
 use App\Http\Requests\UpdateWalkInRequest;
+use App\Models\DriveIn;
 use App\Models\WalkIn;
+use Carbon\Carbon;
 
 class WalkInController extends Controller
 {
@@ -43,11 +45,19 @@ class WalkInController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\WalkIn  $walkIn
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show(WalkIn $walkIn)
+
+    public function show( $walkIn)
     {
-        //
+        $visitor = DriveIn::with('identificationType','nationality','user_details','purpose1','createdBy')->find($walkIn);
+
+        $entryTime = Carbon::parse($visitor->timeLogs->entry_time);
+        $exitTime = Carbon::parse($visitor->timeLogs->exit_time);
+        $duration = $entryTime->diff($exitTime);
+
+        $visitor->duration = $duration->format('%H Hours %I Minutes %S Seconds');
+        return view('app.visitor.walks.visitorDetails', compact('visitor'));
     }
 
     /**

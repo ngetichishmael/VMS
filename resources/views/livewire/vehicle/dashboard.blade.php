@@ -1,7 +1,5 @@
-
+<div>
     <!-- Dashboard Ecommerce Starts -->
-    <section id="dashboard-ecommerce">
-        <section>
             <!-- users filter start -->
             <div class="card">
                 <h5 class="card-header">Search Filter</h5>
@@ -11,8 +9,8 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i data-feather="search"></i></span>
                             </div>
-                            <input type="text" id="fname-icon" class="form-control" name="fname-icon"
-                                placeholder="Search" />
+                            <input wire:model="search" type="text" id="fname-icon" class="form-control" name="fname-icon"
+                                   placeholder="Search" />
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -26,18 +24,19 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="selectSmall">Sort</label>
-                            <select class="form-control form-control-sm" id="selectSmall">
-                                <option value="1">Ascending</option>
-                                <option value="0">Descending</option>
-                            </select>
-                        </div>
-                    </div>
+{{--                    <div class="col-md-2">--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label for="sort_time">Sort by Time:</label>--}}
+{{--                            <select wire:model="sortTimeField" class="form-control form-control-sm" id="sort_time">--}}
+{{--                                <option value="time">Ascending</option>--}}
+{{--                                <option value="time_desc">Descending</option>--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                 </div>
             </div>
+
             <!-- users filter end -->
             {{-- @include('partials.loaderstyle') --}}
             <!-- list section start -->
@@ -122,13 +121,11 @@
                             @endforelse
                             </tbody>
                         </table>
-{{--                        <div class="mt-1">{!! $vehicles->links() !!}</div>--}}
+                        <div class="mt-1">{!! $vehicles->links() !!}</div>
                         </div>
                     </div>
                 </div>
-        </section>
-        </div>
-
+</div>
 {{--        <h2 class="brand-text">TODO ON USERS</h2>--}}
 {{--        <div class="card-body">--}}
 {{--            <div id="jstree-basic">--}}
@@ -163,6 +160,6 @@
 {{--                </ul>--}}
 {{--            </div>--}}
 {{--        </div>--}}
-    </section>
+
     <!-- Dashboard Ecommerce ends -->
 
