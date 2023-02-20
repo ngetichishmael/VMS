@@ -35,6 +35,8 @@ class WalkInController extends Controller
      */
     public function store(Request $request)
     {
+
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'type' => 'required|string',
@@ -66,7 +68,7 @@ class WalkInController extends Controller
         $visitor->sentry_id = $request->user()->id;
         $visitor->nationality_id = $nationality->id;
         $visitor->resident_id = $request->input('resident_id');
-
+        $visitor->tag=$request->input('tag');
         $timeLog = new TimeLog;
         $timeLog->entry_time=now();
         $timeLog->save();

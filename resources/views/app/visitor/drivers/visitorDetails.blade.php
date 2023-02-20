@@ -132,29 +132,8 @@
                                 <input type="text" class="form-control" value="{{ $visitor->vehicle->registration ?? 'Not Available' }}" readonly />
                             </div>
                         </div>
-                        <div class="col-md-10  mb-1">
-                            <div class="form-group">
-                                <label >Type</label>
-                                <input type="text" class="form-control" value="{{ $visitor->vehicle->type ?? 'Not Available' }}" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-10">
-                            <div class="form-group">
-                                <label >Model</label>
-                                <input type="text" class="form-control" value="{{ $visitor->vehicle->model }}" readonly>
-                            </div>
-                        </div>
-
                     </div>
-                    <div class="row">
-                        <div class="col-md-10  mb-1">
-                            <div class="form-group">
-                                <label>Color</label>
-                                <input type="text" class="form-control" value="{{ $visitor->vehicle->color }}" readonly>
-                            </div>
-                        </div>
 
-                    </div>
                 </div>
             </div>
 

@@ -24,7 +24,6 @@ class UserDetailFactory extends Factory
             'company' => $this->faker->company,
             'ID_number' => $this->faker->randomNumber(8),
             'image' => $this->faker->imageUrl(),
-            'KRA_pin' => $this->faker->randomNumber(6),
             'gender' => $this->faker->randomElement(['male', 'female']),
             'physical_address' => $this->faker->address,
         ];

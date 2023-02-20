@@ -27,7 +27,8 @@ class VisitorSeeder extends Seeder
                 'sentry_id' => 1,
                 'nationality_id' => 1,
                 'resident_id' => 1,
-                'time_log_id' => 1
+                'time_log_id' => 1,
+                'tag'=>'123',
             ],
             [
                 'name' => 'Jane Smith',
@@ -38,7 +39,22 @@ class VisitorSeeder extends Seeder
                 'sentry_id' => 2,
                 'nationality_id' => 2,
                 'resident_id' => 2,
-                'time_log_id' => 2
+                'time_log_id' => 2,
+                'tag'=>'122',
+
+            ],
+            [
+                'name' => 'kibet tanui',
+                'type' => 'sms',
+                'identification_type_id' => 3,
+                'visitor_type_id' => 3,
+                'purpose_id' => 3,
+                'sentry_id' => 2,
+                'nationality_id' => 3,
+                'resident_id' => 3,
+                'time_log_id' => 3,
+                'tag'=>'1092',
+
             ]
         ];
 

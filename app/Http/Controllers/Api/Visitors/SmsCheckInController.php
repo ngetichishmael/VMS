@@ -10,10 +10,9 @@ use App\Models\VehicleInformation;
 use App\Models\Visitor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class DriveInController extends Controller
+class SmsCheckInController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,17 +22,24 @@ class DriveInController extends Controller
     public function index(Request $request)
     {
 
-        return response()->json(Visitor::with(['resident2','createdBy', 'vehicle', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
-            ->where('type', 'drivein')
+        return response()->json(Visitor::with(['resident2','createdBy', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
+            ->where('type', 'sms')
             ->get());
     }
 
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         $userTimezone = $request->header('X-Timezone');
         // Validate the request data
 
-                $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'type' => 'required|string',
             'identification_type_id' => 'required|integer',
@@ -42,7 +48,6 @@ class DriveInController extends Controller
             'nationality' => 'required|string',
             'resident_id' => 'required|integer',
             'IDNO'=>'required|numeric',
-            'registration' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -88,57 +93,24 @@ class DriveInController extends Controller
         }
         $visitor->user_detail_id = $user_details->id;
         $visitor->save();
-
+    if ($request->input('registration'==!null)){
         $vehicle = new VehicleInformation();
         $vehicle->registration = $request->input('registration');
         $vehicle->visitor_id = $visitor->id;
         $vehicle->save();
-
-        return response()->json(['success' => 'Visitor and vehicle information added successfully.'], 201);
     }
 
-
-
-//    public function store(Request $request)
-//    {
-//        $validatedData = $request->validate([
-//            'name' => 'required|string',
-//            'phoneNumber' => 'required|string',
-//            'gender' => 'required|string',
-//            'type' => 'required|string',
-//            'purpose_id' => 'required|exists:purposes,id',
-////            'organizationId' => 'required|exists:organizations,id',
-////            'premisesId' => 'required|exists:premises,id',
-//            'nationality_id' => 'required',
-////            'tag_id' => 'required|exists:tags,id',
-//            'visitor_type_id' => 'required|exists:visitor_types,id',
-////            'sentry_id' => 'required|exists:sentry, id',
-//
-////            'timeIn' => 'required|date_format:Y-m-d H:i:s',
-//        ]);
-//        /** @var TYPE_NAME $validatedData */
-//        if ($validatedData->fails()) {
-//            return response()->json($validatedData->errors(), 400);
-//        }
-//
-//        $visitor = Visitor::create([
-//            'name' => $validatedData['name'],
-//            'type' => $validatedData['type'],
-//            'identification_type_id' => $validatedData['identification_type_id'],
-//            'visitor_type_id' => $validatedData['visitor_type_id'],
-//            'purpose_id' => $validatedData['purpose_id'],
-//            'sentry_id' => auth()->user()->id,
-//            'nationality_id' => $validatedData['nationality_id'],
-//            'resident_id' => $validatedData['resident_id'],
-//            'time_log_id' => $validatedData['time_log_id'],
-//        ]);
-//
-//        return response()->json($visitor, 201);
-//    }
-
-    public function show(Visitor $visitor): Visitor
+        return response()->json(['success' => 'Visitor verified by sms information added successfully.'], 201);
+    }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        return $visitor;
+        //
     }
 
     /**

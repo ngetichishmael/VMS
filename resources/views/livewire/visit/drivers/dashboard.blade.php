@@ -149,7 +149,7 @@
                             <td>{!! $visitor->name!!} </td>
                             <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}</td>
                             <td>{!! $visitor->resident->unit->name !!}</td>
-                            <td>{!! $visitor->resident->unit->block->premise->organization->name !!}</td>
+                            <td>{!! $visitor->resident->unit->block->premise->organization()->pluck("name")->implode('') !!}</td>
                             <td>{!! $visitor->timeLogs->entry_time !!}</td>
                             @if($visitor->timeLogs->exit_time=='0000-00-00 00:00:00' || $visitor->timeLogs->exit_time=='' || $visitor->timeLogs->exit_time==null)
                                 <td>...</td>

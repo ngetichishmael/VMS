@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthenticationController extends Controller
 {
@@ -12,7 +13,7 @@ class AuthenticationController extends Controller
     {
 
 
-        $user = User::where('phone_number', $request->phone_number)->where('status', 1)->first();;
+        $user = User::with('premise')->where('phone_number', $request->phone_number)->where('status', 1)->first();;
         if (!$user) {
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
@@ -82,6 +83,7 @@ class AuthenticationController extends Controller
 
         $responsePassanda = curl_exec($curl);
         curl_close($curl);
+
         return response()->json([
             "success" => true,
             "token_type" => 'Bearer',

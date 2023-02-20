@@ -14,4 +14,8 @@ class Sentry extends Model
     {
         return $this->belongsTo(Visitor::class, 'id', 'sentry_id');
     }
+    public function premise():BelongsTo
+    {
+        return $this->belongsTo(Premise::class);
+    }
 }

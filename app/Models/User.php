@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -36,7 +37,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
-
+    public function premise():BelongsTo
+    {
+        return $this->belongsTo(Premise::class);
+    }
 
     /**
      * The attributes that should be cast to native types.
