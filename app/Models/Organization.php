@@ -16,15 +16,10 @@ class Organization extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
-//    public function organization(): HasMany
-//    {
-//        return $this->hasMany(WalkIn::class, 'organization_id', 'organization_id');
-//    }
-//    public function dorganization(): HasMany
-//    {
-//        return $this->hasMany(DriveIn::class, 'organization_id', 'organization_id');
-//    }
+    protected $table = 'organizations';
+    protected $guarded = [];
+
+  
 
 }
 

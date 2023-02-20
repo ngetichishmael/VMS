@@ -11,14 +11,16 @@
                                 placeholder="Search" />
                         </div>
                     </div>
-                    <div class="col-ms-3">
-                        <label style="color: #070707" for="">Items Per</label>
-                        <select wire:model="perPage" class="form-control">`
-                            <option value="10" selected>10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="selectSmall">Select Per Page</label>
+                            <select class="form-control form-control-sm" id="selectSmall" id="table1">
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
@@ -50,80 +52,81 @@
                                 <tr>
                                   
                                     <th>Name</th>
-                                    <th>Email</th>
                                     <th>Phone Number</th>
                                     <th>ID Number</th>
                                     <th>Organization</th>
                                     <th>Shift</th>
+                                    <th>Device</th>
                                     <th>Last Login</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            @forelse ($sentries as $sentry)
+                            @forelse ($sentries as $key => $sentry)
                                 <tr>
                                    
                                     <td> {{ $sentry ->name }} </td>
-                                    <td> {{ $sentry ->email }} </td>
-                                    <td> {{ $sentry ->phone_number }} </td>
-                                    <td> {{ $sentry ->ID_number }} </td>
-                                    <td> {{ $sentry ->company }} </td>
-                                    <td> {{ $sentry ->shiftname }} </td>
+                                    <td>{!! $sentry->user_detail()->pluck("phone_number")->implode('')!!} </td>
+                                    <td>{!! $sentry->user_detail()->pluck("ID_number")->implode('')!!} </td>
+                                    <td>{!! $sentry->user_detail()->pluck("company")->implode('')!!} </td>
+                                    <td>{!! $sentry->shift()->pluck("name")->implode('')!!} </td>
+                                    <td>{!! $sentry->device()->pluck("identifier")->implode('')!!} </td>
                                     <td>{{ $sentry ->updated_at }}</td>
                                     <td>
                                     <?php if($sentry->status == '1'){ ?> 
 
-                                        <a href="#" class="Active" style="color:#00FF00;">Active</a>
+                                        <a href="#" class="Active" style="color:#73A561;">Active</a>
 
                                         <?php }else{ ?> 
 
-                                        <a href="#" class="inactive" style="color:#FF0000;">Disabled</a>
+                                        <a href="#" class="inactive" style="color:#8B0000;">Disabled</a>
 
                                     <?php } ?>
 
                                     </td>
                                
-                                    <td>     
-                                    <div class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu">
-                                                 <!--update link-->
-                                                 <a href="{{ url('OrganizationInformation.suspend'.$sentry->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+                                    <td>
+                                        <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu">
+
+                                                <!--update link-->
+                                        <a  wire:ignore.self href="#" class="" wire:click="editsentryanization({{ $sentry->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
                                         <!-- delete link -->
-                                        <?php if($sentry->status == '0'){ ?> 
-                                        <a href="{{ url('users/sentries/suspend/'.$sentry->id) }}" onclick="return confirm('Are you sure to want to unblock the sentry?')" style="padding-right:20px; " > Unblock </a>
-                                        <?php }else{ ?> 
-                                            <a href="{{ url('users/sentries/suspend/'.$sentry->id) }}" onclick="return confirm('Are you sure to want to block the sentry?')" style="padding-right:20px; " title="Disable"> Block </a>
+                                        <?php if($sentry->status == '0'){ ?>
+                                        <a wire:ignore.self href="#" wire:click="activate({{ $sentry->id }})"  onclick="return confirm('Are you sure to want to Activate the sentry?')" style="padding-right:20px; " > Activate </a>
+                                        <?php }else{ ?>
+                                        <a wire:ignore.self href="#" wire:click="deactivate({{ $sentry->id }})"  onclick="return confirm('Are you sure to want to suspend the sentry?')" style="padding-right:20px; " > Suspend</i> </a>
                                         <?php } ?>
 
-                                        <a href="{{ url('users/sentries/delete/'.$sentry->id) }}" onclick="return confirm('Are you sure to want to delete the sentry?')" > Delete </a>
-                                  
-                                            </div>
+                                        <a wire:ignore.self href="#" wire:click="destroy({{ $sentry->id }})" onclick="return confirm('Are you sure to want to delete the sentry?')" > Delete </a>
+
                                         </div>
-                                    </td>
+                                        </div>
+                                        </td>
                                 </tr>
 
                                 @empty
                                 <tr>
-                                    <td colspan="6" style="text-align: center; color:red;"> No Sentry Found</td>
+                                    <td colspan="8" style="text-align: center;"> No Record Found !!</td>
                                 </tr>
                             @endforelse
                             </tbody>
                         </table>
-                        <div class="mt-1">
+                        <div style="margin-left: 80%"  class="mt-1">{{ $sentries->links() }}
                         </div>
                     </div>
                 </div>
     
         </div>
 
-          <!-- Modal to add new sentry starts-->
-    <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+           <!-- Modal to add new user starts-->
+    <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
-        <form class="add-new-user modal-content pt-0" method="POST" action="{{ route('Sentry.store') }}">
+        <form class="add-new-user modal-content pt-0" >
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
@@ -131,100 +134,49 @@
           </div>
           <div class="modal-body flex-grow-1">
             <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Name</label>
-              <input
-                type="text"
-                name="sname" 
-               
-                class="form-control dt-full-name"
-                id="basic-icon-default-fullname"
-                aria-describedby="basic-icon-default-fullname2"
-              />
+              <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
+              <input  type="text" wire:model="name"  class="form-control" required />
+
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Email</label>
-              <input
-                type="text"
-                name="email" 
-               
-                class="form-control dt-full-name"
-                id="basic-icon-default-fullname"
-                aria-describedby="basic-icon-default-fullname2"
-              />
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">ID Number</label>
-              <input
-                type="text"
-                name="id_number" 
-               
-                class="form-control dt-full-name"
-                id="basic-icon-default-fullname"
-                aria-describedby="basic-icon-default-fullname2"
-              />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Zone</label>
-              <input
-                type="text"
-                name="zone" 
-               
-                class="form-control dt-full-name"
-                id="basic-icon-default-fullname"
-                aria-describedby="basic-icon-default-fullname2"
-              />
-            </div>
-
-       
             
-            <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-email">Email</label>
+              <input  type="text" wire:model="email"  class="form-control" required />
+
+              <small class="form-text text-muted"> You can use letters, numbers & periods </small>
+            </div>
+       
+
+            <fieldset class="form-group">
+              <label class="form-label" for="user-role">Shift</label>
+              <select id="role_id" name="shift_id" class="form-control">
+                
+                @foreach ($shifts as $shift)
+                    <option  value="{{ $shift ->id }}"> {{ $shift ->name }}</option>
+                @endforeach  
+              </select>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label class="form-label" for="user-role">Shift</label>
+              <select id="role_id" name="device_id" class="form-control">
+                
+                @foreach ($devices as $device)
+                    <option  value="{{ $device ->id }}"> {{ $device ->identifier }}</option>
+                @endforeach  
+              </select>
+            </fieldset>
+
+
+
+        
+            
+            <button wire:click="store" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </form>
       </div>
     </div>
-    <!-- Modal to add new unit Ends-->
-        <h2 class="brand-text">TODO ON SENTRIES</h2>
-        <div class="card-body">
-            <div id="jstree-basic">
-                <ul>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        CRUD
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Create</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Read</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Updated</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Delete</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Action
-                        <ul data-jstree='{"icon" : "far fa-folder"}'>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Suspend</li>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Others</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Relationship
-                        <ul data-jstree='{"icon" : "far fa-folder"}'>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Organization</li>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Hierarchy under Organization</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Table
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Filter</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Pagination</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Search by *</li>
-                        </ul>
-                    </li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Any Other</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Martin to Advise</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Isaac to Provide images, and secondary colors</li>
-                </ul>
-            </div>
-        </div>
-    </section>
+    <!-- Modal to add new user Ends-->
+

@@ -96,7 +96,7 @@
 
                                         <?php }else{ ?> 
 
-                                        <a href="#" class="inactive" style="color:#FF0000;">Disabled</a>
+                                        <a href="#" class="inactive" style="color:#8B0000;">Disabled</a>
 
                                     <?php } ?>
 

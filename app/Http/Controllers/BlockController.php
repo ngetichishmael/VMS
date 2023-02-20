@@ -19,19 +19,19 @@ class BlockController extends Controller
      */
     public function index()
     {
-        $blocks = DB::table('blocks')
+        // $blocks = DB::table('blocks')
 
-            ->join('premises', 'blocks.premise', '=', 'premises.id')
+        //     ->join('premises', 'blocks.premise', '=', 'premises.id')
 
-            ->select('blocks.*', 'premises.name')
+        //     ->select('blocks.*', 'premises.name')
 
-            ->get();
+        //     ->get();
 
-        $premises = DB::table('premises')
+        // $premises = DB::table('premises')
 
-            ->get();
+        //     ->get();
 
-        return view('livewire.premises.block.dashboard', compact('blocks', 'premises'));
+        return view('livewire.premises.block.layout');
     }
 
     /**

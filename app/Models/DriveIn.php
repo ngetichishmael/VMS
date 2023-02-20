@@ -37,8 +37,9 @@ class DriveIn extends Model
     public function premises()
     {
         return $this->hasMany(Premise::class, 'id');
-    }public function user(): \Illuminate\Database\Eloquent\Relations\HasMany
-{
+    }
+    public function user(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(User::class, 'id');
     }
     public function unit()

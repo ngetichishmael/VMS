@@ -22,8 +22,7 @@ class OrganizationController extends Controller
     public function index()
     {
 
-       return view('livewire.organization.layout');
-
+        return view('livewire.organization.layout');
     }
 
     /**
@@ -47,7 +46,7 @@ class OrganizationController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|max:255|unique:organizations,email',
-            'phone'=> 'required|numeric',
+            'phone' => 'required|numeric',
             'location' => 'required',
 
 
@@ -68,10 +67,23 @@ class OrganizationController extends Controller
         $organization->save();
 
         session()->flash('message', 'Post successfully updated.');
-       // return response()->json(['success' => 'organization information added successfully.'], 201);
-       return redirect()->to('/organization/information')->with('success','Organization created successfully.');
- }
+        // return response()->json(['success' => 'organization information added successfully.'], 201);
+        return redirect()->to('/organization/information')->with('success', 'Organization created successfully.');
+    }
 
+    public function generateUniqueCode()
+
+    {
+
+        do {
+
+            $code = random_int(100000, 999999);
+        } while (organization::where("code", "=", $code)->first());
+
+
+
+        return $code;
+    }
 
     /**
      * Display the specified resource.
@@ -176,5 +188,4 @@ class OrganizationController extends Controller
 
         return response($output);
     }
-
 }

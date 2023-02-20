@@ -38,10 +38,10 @@ class SentryController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [
-            'sname' => 'required',
+            'name' => 'required',
             'id_number' => 'required',
             'email' => 'required',  
-            'zone' => 'required', 
+            'shift' => 'required', 
 
         ]);
         

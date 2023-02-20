@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('shifts', ShiftController::class)->names([
-        'index' => 'shifts',
+        'index' => 'Shifts',
         'show' => 'shifts.show',
         'edit' => 'shifts.edit',
         'update' => 'shifts.update',
@@ -96,7 +96,7 @@ Route::middleware('auth')->group(function () {
         'destroy' => 'OrganizationInformation.destroy',
         'create' => 'OrganizationInformation.create',
         'store' => 'OrganizationInformation.store',
-     
+        'deactivate' => 'OrganizationInformation.deactivate',
     ]);
 
 
@@ -155,56 +155,3 @@ Route::middleware('auth')->group(function () {
         'store' => 'VisitWalkIn.store',
     ]);
 });
-
-
-// // users
-// Route::get('/search',[UserController::class,'search']);
-// Route::get('organization/users/delete/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->middleware('auth');
-// Route::get('organization/users/edit/{id}}', [App\Http\Controllers\UserController::class, 'editt'])->middleware('auth');
-// Route::get('organization/users/suspend/{id}',[App\Http\Controllers\UserController::class, 'status_update'])->middleware('auth');
-
-
-// // organizations
-// Route::get('/search',[OrganizationController::class,'search']);
-// Route::get('organization/information/delete/{id}', [App\Http\Controllers\OrganizationController::class, 'destroy'])->middleware('auth');
-// Route::get('organization/information/suspend/{id}',[App\Http\Controllers\OrganizationController::class, 'status_update'])->middleware('auth');
-
-// // Premises
-// Route::get('/search',[PremiseController::class,'search']);
-// Route::get('premise/information/delete/{id}', [App\Http\Controllers\PremiseController::class, 'destroy'])->middleware('auth');
-// Route::get('premise/information/{id}}', [App\Http\Controllers\PremiseController::class, 'edit'])->middleware('auth');
-// Route::get('premise/information/suspend/{id}',[App\Http\Controllers\PremiseController::class, 'status_update'])->middleware('auth');
-
-// // Blocks
-// Route::get('/search',[BlockController::class,'search']);
-// Route::get('block/information/delete/{id}', [App\Http\Controllers\BlockController::class, 'destroy'])->middleware('auth');
-// Route::get('block/information/{id}}', [App\Http\Controllers\BlockController::class, 'edit'])->middleware('auth');
-// Route::get('block/information/suspend/{id}',[App\Http\Controllers\BlockController::class, 'status_update'])->middleware('auth');
-
-// // Units
-// Route::get('/search',[UnitController::class,'search']);
-// Route::get('unit/information/delete/{id}', [App\Http\Controllers\UnitController::class, 'destroy'])->middleware('auth');
-// Route::get('unit/information/{id}}', [App\Http\Controllers\UnitController::class, 'edit'])->middleware('auth');
-// Route::get('unit/information/suspend/{id}',[App\Http\Controllers\UnitController::class, 'status_update'])->middleware('auth');
-
-// // Residents
-// Route::get('/search',[ResidentController::class,'search']);
-// Route::get('resident/information/delete/{id}', [App\Http\Controllers\ResidentController::class, 'destroy'])->middleware('auth');
-// Route::get('resident/information/{id}}', [App\Http\Controllers\ResidentController::class, 'edit'])->middleware('auth');
-// Route::get('resident/information/suspend/{id}',[App\Http\Controllers\ResidentController::class, 'status_update'])->middleware('auth');
-
-
-
-// // Sentries
-// Route::get('/search',[SentryController::class,'search']);
-// Route::get('users/sentries/delete/{id}', [App\Http\Controllers\SentryController::class, 'destroy'])->middleware('auth');
-// Route::get('users/sentries/{id}}', [App\Http\Controllers\SentryController::class, 'edit'])->middleware('auth');
-// Route::get('users/sentries/suspend/{id}',[App\Http\Controllers\SentryController::class, 'status_update'])->middleware('auth');
-
-
-
-// // Sservice category
-// Route::get('/search',[ServiceCategoryController::class,'search']);
-// Route::get('service/category/delete/{id}', [App\Http\Controllers\ServiceCategoryController::class, 'destroy'])->middleware('auth');
-// Route::get('service/category/{id}}', [App\Http\Controllers\ServiceCategoryController::class, 'edit'])->middleware('auth');
-// Route::get('service/category/suspend/{id}',[App\Http\Controllers\ServiceCategoryController::class, 'status_update'])->middleware('auth');

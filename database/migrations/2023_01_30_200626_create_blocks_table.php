@@ -18,6 +18,7 @@ class CreateBlocksTable extends Migration
             $table->id();
             $table->foreignIdFor(Premise::class);
             $table->string('name');
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }
