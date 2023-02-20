@@ -4,6 +4,7 @@
 use App\Http\Controllers\Api\Visitors\DriveInController;
 use App\Http\Controllers\Api\Visitors\WalkInController;
 use App\Http\Controllers\Api\AuthenticationController;
+use App\Http\Controllers\Api\SMSCheckingController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\Visitors\VisitorController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,12 @@ Route::group(['namespace' => 'Api'], function () {
 
     Route::post('verify/otp/{number}/{otp}', [AuthenticationController::class, 'verifyOTP']);
     Route::middleware(['auth:sanctum'])->group(function () {
+
+
+        Route::post('phone-number/{phone_number}', [SMSCheckingController::class, 'SMSChecking']);
+        Route::post('verify/otp/{otp}', [SMSCheckingController::class, 'verifyOTP']);
+
+
         Route::prefix('visitors')->group(function () {
             Route::get('/my_all', [VisitorController::class, 'index']);
             Route::get('visitor/{id}', [DriveInController::class, 'show']);
@@ -39,10 +46,8 @@ Route::group(['namespace' => 'Api'], function () {
                 Route::get('purpose-options', [VisitorController::class, 'purposeOptions']);
                 Route::get('host-options', [VisitorController::class, 'hostOptions']);
                 Route::get('tag-options', [VisitorController::class, 'tagOptions']);
-
                 Route::get('/drivein/all', [DriveInController::class, 'index']);
                 Route::post('/drivein/create', [DriveInController::class, 'store']);
-
                 Route::get('/walkin/all', [WalkInController::class, 'index']);
                 Route::post('/walkin/create', [WalkInController::class, 'store']);
             });

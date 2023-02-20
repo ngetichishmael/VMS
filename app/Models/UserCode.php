@@ -10,8 +10,5 @@ class UserCode extends Model
     use HasFactory;
     public $table = "user_codes";
 
-    protected $fillable = [
-        'user_id',
-        'code',
-    ];
+    protected $guarded = [""];
 }
