@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('/login', [AuthenticationController::class, 'Login']);
 Route::group(['namespace' => 'Api'], function () {
 
     Route::post('verify/otp/{number}/{otp}', [AuthenticationController::class, 'verifyOTP']);
@@ -47,4 +48,3 @@ Route::group(['namespace' => 'Api'], function () {
         });
     });
 });
-Route::post('/login', [AuthenticationController::class, 'Login']);
