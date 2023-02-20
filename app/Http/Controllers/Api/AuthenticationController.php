@@ -17,7 +17,16 @@ class AuthenticationController extends Controller
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
         }
-
+        if ($user === null) {
+            return response()
+                ->json(
+                    [
+                        'message' => 'Unauthorized',
+                        'phone_number' => $request->phone_number
+                    ],
+                    401
+                );
+        }
         $code = rand(100000, 999999);
         $tokenUser = $user->createToken('auth_token')->plainTextToken;
         UserCode::updateOrCreate([
