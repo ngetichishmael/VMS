@@ -31,7 +31,6 @@ class AuthenticationController extends Controller
         $tokenUser = $user->createToken('auth_token')->plainTextToken;
         UserCode::updateOrCreate([
             'user_id' => $user->id,
-            'sentry_id' => $user->id,
             'code' => $code
         ]);
         $curl = curl_init();
