@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Premises\Block;
 
 use Livewire\Component;
 use App\Models\Block;
+use App\Models\Premise;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Livewire\WithPagination;
@@ -12,23 +13,32 @@ use phpDocumentor\Reflection\Types\This;
 class Dashboard extends Component
 {
     use WithPagination;
+
     protected $paginationTheme = 'bootstrap';
     public $perPage = 10;
+    public $sortField = 'id';
+    public $sortAsc = true;
     public ?string $search = null;
     public $orderBy = 'id';
     public $orderAsc = true;
+    public $sortTimeField = 'time';
+    public $sortTimeAsc = true;
 
-    public $data, $name, $shift_edit_id;
-    public $updateMode = false;
+    public $premiseId;
 
     public function render()
     {
 
-        $searchTerm = '%' . $this->search . '%';
+    
+            $searchTerm = '%' . $this->search . '%';
 
-        $blocks = Block::whereLike(['name'], $searchTerm)
-            ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
-            ->paginate($this->perPage);
+            $blocks = Block::with('premise')
+                ->when($this->premiseId, function ($query) {
+                    $query->where('premise_id', $this->premiseId);
+                })
+                ->whereLike(['name','premise.name'], $searchTerm)
+                ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
+                ->paginate($this->perPage);
         return view('livewire.premises.block.dashboard', ['blocks' => $blocks]);
     }
 

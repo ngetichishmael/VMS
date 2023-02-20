@@ -10,7 +10,7 @@ class Dashboard extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    public $perPage = 40;
+    public $perPage = 10;
     public $sortField = 'id';
     public $sortAsc = true;
     public ?string $search = null;
@@ -22,7 +22,8 @@ class Dashboard extends Component
     {
         $searchTerm = '%' . $this->search . '%';
         $types = IdentificationType::whereLike(['name', 'user.email'], $searchTerm)
-            ->get();
+        ->paginate($this->perPage);
+
         return view('livewire.identification-type.dashboard', ['types' => $types]);
     }
     private function resetInput()

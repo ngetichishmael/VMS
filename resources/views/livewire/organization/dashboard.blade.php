@@ -12,14 +12,16 @@
                         </div>
                     </div>
 
-                    <div class="col-ms-3">
-                        <label style="color: #070707" for="">Items Per</label>
-                        <select wire:model="perPage" class="form-control">`
-                            <option value="10" selected>10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="selectSmall">Select Per Page</label>
+                            <select class="form-control form-control-sm" id="selectSmall" id="table1">
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
@@ -32,8 +34,7 @@
                     </div>
                     <div class="col-md-3">
                         <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal" style="background-color: #1877F2; color:#fff;" id="smallButton" data-target="#modals-slide-in" 
-                            data-placement="top" title="New Organazition">+ Add New Organization
-                           
+                            data-placement="top" >+ Add New Organization 
                         </button>
                    
                     </div>
@@ -74,11 +75,11 @@
                                     <td>
                                     <?php if($org->status == '1'){ ?>
 
-                                    <a href="#" class="Active" style="color:#00FF00;">Active</a>
+                                    <a href="#" class="Active" style="color:#73A561;">Active</a>
 
                                     <?php }else{ ?>
 
-                                    <a href="#" class="inactive" style="color:#FF0000;">Suspended</a>
+                                    <a href="#" class="inactive" style="color:#8B0000;">Suspended</a>
 
                                     <?php } ?>
 
@@ -117,8 +118,8 @@
                            
                         </table>
                       
-                        <div class="mt-1">
-                        </div>
+                        <div style="margin-left: 80%" class="mt-1">{{ $organizations->links() }}
+                </div>
                     </div>
                 </div>
             </div>

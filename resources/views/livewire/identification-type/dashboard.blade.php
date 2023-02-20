@@ -65,11 +65,11 @@
                                     <td>
                                     <?php if($type->status == '1'){ ?>
 
-                                    <a href="#" class="Active" style="color:#00FF00;">Active</a>
+                                    <a href="#" class="Active" style="color:#73A561;">Active</a>
 
                                     <?php }else{ ?>
 
-                                    <a href="#" class="inactive" style="color:#FF0000;"> Disabled</a>
+                                    <a href="#" class="inactive" style="color:#8B0000;"> Disabled</a>
 
                                     <?php } ?>
 
@@ -99,13 +99,13 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4">Empty </td>
+                                <td colspan="6" style="text-align: center;"> No Record Found </td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
-                    <div class="mt-1">
-                    </div>
+                    <div style="margin-left: 80%"  class="mt-1">{{ $types->links() }}
+                </div>
                 </div>
             </div>
         </div>

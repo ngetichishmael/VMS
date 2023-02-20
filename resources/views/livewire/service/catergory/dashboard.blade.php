@@ -66,11 +66,11 @@
                                     <td>
                                     <?php if($category->status == '1'){ ?> 
 
-                                        <a href="#" class="Active" style="color:#00FF00;">Active</a>
+                                        <a href="#" class="Active" style="color:#73A561;">Active</a>
 
                                         <?php }else{ ?> 
 
-                                        <a href="#" class="inactive" style="color:#FF0000;">Disabled</a>
+                                        <a href="#" class="inactive" style="color:#8B0000;">Disabled</a>
 
                                     <?php } ?>
 
@@ -103,8 +103,8 @@
 
                             </tbody>
                         </table>
-                        <div class="mt-1">
-                        </div>
+                        <div style="margin-left: 80%"  class="mt-1">{{ $categories->links() }}
+                </div>
                     </div>
                 </div>
             </div>

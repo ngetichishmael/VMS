@@ -8,6 +8,10 @@ use App\Models\Organization;
 use App\Models\Role;
 use Livewire\WithPagination;
 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+
 class Dashboard extends Component
 {
     use WithPagination;
@@ -20,33 +24,35 @@ class Dashboard extends Component
     public ?string $search = null;
     public $orderBy = 'id';
     public $orderAsc = true;
+    public $sortTimeField = 'time';
+    public $sortTimeAsc = true;
+
+    public $organizationId;
+    public $roleId;
 
     public  $name, $email, $phone_number, $role_id, $password, $organization_id;
 
 
     public function render()
     {
-        $this->users = User::join('organizations', 'users.organization_id', '=', 'organizations.id')
-       
-        ->join('roles', 'users.role_id', '=', 'roles.id')
-       
-        ->select('users.*', 'organizations.name AS org_name', 'roles.name AS role_name')
-        
-        ->get();
     
         $searchTerm = '%' . $this->search . '%';
-        
-        $users = User::whereLike(['name'], $searchTerm)
-        
-        ->get();
 
-        $organizations = Organization::select(['id','name'])
+        $users = User::with('organization','role')
+            ->when($this->organizationId, function ($query) {
+                $query->where('organization_id', $this->organizationId);
+            })
+            ->when($this->roleId, function ($query) {
+                $query->where('role_id', $this->roleId);
+            })
+            ->whereLike(['name','organization.name','role.name'], $searchTerm)
+            ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
+            ->paginate($this->perPage);
 
-        ->get();
+        $organizations = Organization::all();
 
-        $roles = Role::select(['id','name'])
+        $roles = Role::all();
 
-        ->get();
 
         return view('livewire.user.dashboard', [ 
             'users' => $users, 
@@ -75,17 +81,15 @@ class Dashboard extends Component
 
             'phone_number'=> 'required|numeric',
 
-            'organization_id' => 'required',
+            'organization_id'=> 'required|numeric',
 
-            'role_id' => 'required',
+            'role_id'=> 'required|numeric',
 
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
-        }
-    
-        $code = Str::random(20);
+        // if ($this->validator->fails()) {
+        //     return response()->json(['error' => $this->validator->errors()], 400);
+        // }
 
         $user = new User;
 
@@ -101,11 +105,10 @@ class Dashboard extends Component
 
         $user->password = Hash::make($this->password);
 
-      if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
-        }
+
         $user->save();
   
+        $this-> resetInput();
 
         return redirect()->route('OrganizationUsers');
     }

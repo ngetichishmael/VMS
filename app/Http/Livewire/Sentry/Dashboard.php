@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Sentry;
 
 use Livewire\Component;
 use App\Models\Sentry;
+use App\Models\Device;
 use App\Models\Organization;
 use App\Models\Shift;
 use Livewire\WithPagination;
@@ -12,38 +13,50 @@ class Dashboard extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    public $perPage = 40;
+    public $perPage = 10;
     public $sortField = 'id';
     public $sortAsc = true;
     public ?string $search = null;
+    public $orderBy = 'id';
+    public $orderAsc = true;
+    public $sortTimeField = 'time';
+    public $sortTimeAsc = true;
+
+    public $userDetailsId;
+    public $shiftId;
+
+    public  $name, $email, $phone_number, $role_id, $password, $organization_id;
+
+
+
     public function render()
     {
-        $this->sentries = Sentry::join('user_details', 'sentries.user_detail_id', '=', 'user_details.id')
-       
-        ->join('shifts', 'sentries.shift_id', '=', 'shifts.id')
-
-        ->select('sentries.*', 'user_details.ID_number','user_details.phone_number', 'user_details.company','shifts.name AS shiftname')
-        
-        ->get();
+  
 
         $searchTerm = '%' . $this->search . '%';
 
-        $sentries = Sentry::whereLike(['name', ], $searchTerm)
+        $sentries = Sentry::with('user_detail','shift','device')
+            ->when($this->userDetailsId, function ($query) {
+                $query->where('user_detail_id', $this->userDetailsId);
+            })
+            ->when($this->shiftId, function ($query) {
+                $query->where('shift_id', $this->shiftId);
+            })
+            ->whereLike(['name','user_detail.ID_number','user_detail.phone_number', 'user_detail.company','shift.name','device.identifier'], $searchTerm)
+            ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
+            ->paginate($this->perPage);
 
-        ->get();
+        $organizations = Organization::all();
 
-        $organizations = Organization::select(['id','name'])
+        $shifts = Shift::all();
 
-        ->get();
-
-        $shifts = Shift::select(['id','name'])
-
-        ->get();
+        $devices = Device::all();
 
         return view('livewire.sentry.dashboard', [
             'sentries' => $sentries,
             'organizations' => $organizations,
             'shifts' => $shifts,
+            'devices' => $devices,
         ]);
     }
 
@@ -67,6 +80,8 @@ class Dashboard extends Component
             'email' => 'required|email|max:255|unique:organizations,email',
 
             'phone_number'=> 'required|numeric',
+
+            ''=> 'required|numeric',
 
             'organization_id' => 'required',
 

@@ -10,13 +10,13 @@ class Premise extends Model
 {
     use HasFactory;
 
-    protected $guarded;
+    protected $table = 'premises';
+    protected $guarded = [];
+
     public function organization()
     {
-        return $this->belongsTo(Organization::class, 'organization_id', 'id');
+        return $this->belongsTo(Organization::class, 'organization_id');
     }
 
-    protected $fillable = [
-        'name',
-    ];
+
 }

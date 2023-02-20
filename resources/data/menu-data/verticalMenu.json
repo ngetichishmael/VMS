@@ -101,10 +101,10 @@
             "slug": ""
         },
         {
-            "url": "organization/information",
+            "url": "service/information",
             "name": "Name",
             "icon": "type",
-            "slug": "OrganizationInformation"
+            "slug": "ServiceInformation"
         },
         {
             "url": "service/category",
