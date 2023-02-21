@@ -1,11 +1,11 @@
 <?php
 
-use App\Models\Premise;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
 
-class CreateBlocksTable extends Migration
+class CreateUserCodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,10 @@ class CreateBlocksTable extends Migration
      */
     public function up()
     {
-        Schema::create('blocks', function (Blueprint $table) {
+        Schema::create('user_codes', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Premise::class);
-            $table->string('name');
-            $table->tinyInteger('status')->default(1);
+            $table->foreignIdFor(User::class);
+            $table->string('code');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateBlocksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blocks');
+        Schema::dropIfExists('user_codes');
     }
 }

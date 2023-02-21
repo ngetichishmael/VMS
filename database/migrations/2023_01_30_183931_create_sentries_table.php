@@ -20,10 +20,9 @@ class CreateSentriesTable extends Migration
         Schema::create('sentries', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email');
             $table->string('status')->default(1);
             $table->foreignIdFor(Device::class);
-            $table->foreignIdFor(UserDetail::class);
+            $table->foreignIdFor(UserDetail::class)->nullable();
             $table->foreignIdFor(Shift::class);
             $table->foreignIdFor(Premise::class);
             $table->timestamps();

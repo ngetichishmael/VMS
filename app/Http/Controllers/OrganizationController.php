@@ -7,7 +7,6 @@ use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
-use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -22,8 +21,7 @@ class OrganizationController extends Controller
     public function index()
     {
 
-       return view('livewire.organization.layout');
-
+        return view('livewire.organization.layout');
     }
 
     /**
@@ -47,9 +45,8 @@ class OrganizationController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|max:255|unique:organizations,email',
-            'phone'=> 'required|numeric',
+            'phone' => 'required|numeric',
             'location' => 'required',
-
 
         ]);
         if ($validator->fails()) {
@@ -66,25 +63,12 @@ class OrganizationController extends Controller
         $organization->websiteUrl  = $request->input('url');
         $organization->description = $request->input('description');
         $organization->save();
-        
+
         session()->flash('message', 'Post successfully updated.');
-       // return response()->json(['success' => 'organization information added successfully.'], 201);
-       return redirect()->to('/organization/information')->with('success','Organization created successfully.');
- }
-
-    public function generateUniqueCode()
-
-    {
-
-        do {
-
-            $code = random_int(100000, 999999);
-        } while (organization::where("code", "=", $code)->first());
-
-
-
-        return $code;
+        // return response()->json(['success' => 'organization information added successfully.'], 201);
+        return redirect()->to('/organization/information')->with('success', 'Organization created successfully.');
     }
+
 
     /**
      * Display the specified resource.
@@ -189,5 +173,4 @@ class OrganizationController extends Controller
 
         return response($output);
     }
-
 }

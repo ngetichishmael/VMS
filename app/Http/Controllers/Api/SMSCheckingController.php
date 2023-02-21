@@ -3,37 +3,33 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Models\UserCode;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
-class AuthenticationController extends Controller
+class SMSCheckingController extends Controller
 {
-    public function Login(Request $request)
+    public function SMSChecking(Request $request, $phone_number)
     {
-        $user = User::with('premise')->where('phone_number', $request->phone_number)->where('status', 1)->first();
-        if (!$user) {
-            return response()
-                ->json(['message' => 'Unauthorized'], 401);
-        }
-        if ($user === null) {
-            return response()
-                ->json(
-                    [
-                        'message' => 'Unauthorized',
-                        'phone_number' => $request->phone_number
-                    ],
-                    401
-                );
-        }
-        $code = rand(100000, 999999);
-        $tokenUser = $user->createToken('auth_token')->plainTextToken;
-        UserCode::updateOrCreate([
-            'user_id' => $user->id,
-            'code' => $code
+        $sentry_number = $request->user()->phone_number;
+        $user_id = $request->user()->id;
+        $user_code = rand(100, 999);
+        $sentry_code = rand(100, 999);
+        UserCode::create([
+            'user_id' => $user_id,
+            'code' => $user_code . $sentry_code
         ]);
+        $user_respoonse = $this->sendUserSMS($user_code . $sentry_code, $phone_number);
+        $sentry_response = $this->sendUserSMS($user_code . $sentry_code, $sentry_number);
+        return response()->json([
+            "success" => true,
+            'status' => 200,
+            'message' => "User and Sentry verification codes",
+            'user_response' => $user_respoonse,
+            'sentry_response' => $sentry_response,
+        ]);
+    }
+    public function sendUserSMS($code, $phone_number)
+    {
         $curl = curl_init();
         $url = 'https://accounts.jambopay.com/auth/token';
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -81,7 +77,7 @@ class AuthenticationController extends Controller
             CURLOPT_POSTFIELDS => json_encode(
                 array(
                     "sender_name" => "PASANDA",
-                    "contact" => $request->phone_number,
+                    "contact" => $phone_number,
                     "message" => $message,
                     "callback" => "https://pasanda.com/sms/callback"
                 )
@@ -93,30 +89,14 @@ class AuthenticationController extends Controller
             ),
         ));
 
-        $responsePassanda = curl_exec($curl);
+        $response = curl_exec($curl);
         curl_close($curl);
-
-        return response()->json([
-            "success" => true,
-            "token_type" => 'Bearer',
-            "message" => "User Logged in",
-            "access_token" => $tokenUser,
-            "user" => $user,
-            "code" => $code,
-            "response" => $responsePassanda,
-        ]);
+        return $response;
     }
-
-    /**
-     * verify otp
-     *
-     * @return response()
-     */
-    public function verifyOTP($number, $otp)
+    public function verifyOTP(Request $request, $otp)
     {
 
-        $user = DB::table('users')->where('phone_number', $number)->get();
-        $exists = UserCode::where('user_id', $user[0]->id)
+        $exists = UserCode::where('user_id', $request->user()->id)
             ->where('code', $otp)
             ->where('updated_at', '>=', now()->subMinutes(5))
             ->latest('updated_at')

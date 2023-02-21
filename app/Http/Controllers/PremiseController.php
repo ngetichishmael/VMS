@@ -20,10 +20,10 @@ class PremiseController extends Controller
      */
     public function index()
     {
-        $premises = DB::table('premises')
-        ->get();
+        // $premises = DB::table('premises')
+        // ->get();
 
-        return view('livewire.premises.premise.dashboard',compact('premises'));
+        return view('livewire.premises.premise.layout');
     }
 
     /**

@@ -9,12 +9,12 @@ class Block extends Model
 {
     use HasFactory;
 
-    public function premise(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    protected $table = 'blocks';
+    protected $guarded = [];
+
+    public function premise()
     {
-        return $this->belongsTo(Premise::class);
+        return $this->belongsTo(Premise::class, 'premise_id');
     }
-
-
-    protected $guarded = [""];
 
 }
