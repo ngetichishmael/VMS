@@ -1,8 +1,8 @@
-<div class="row mb-6">
+<div class="row">
     <label style="color: #070707" ><h3>Filter By:</h3></label>
     <div class="col-md-5">
-        <label  style="color: #070707"><h5> Visitor Type          </h5></label>
-        <select class="form-select" wire:model="visitorTypeId">
+        <label  style="color: #070707"><h5> Visitor Type </h5></label>
+        <select class="form-control form-select" wire:model="visitorTypeId">
             <option value="">All          </option>
             @foreach($visitorTypes as $type)
                 <option value="{{ $type->id }}">{{ $type->name }}</option>
@@ -18,6 +18,15 @@
 {{--            @endforeach--}}
 {{--        </select>--}}
 {{--    </div>--}}
+    <div class="col-md-5">
+        <label  style="color: #070707"><h6> Time </h6></label> &nbsp;&nbsp;
+        <select class="form-control" wire:model="timeFilter" wire:change="applyTimeFilter">
+            <option value="all">Select Time Duration </option>
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+        </select>
+    </div>
     <div>
 
 
@@ -44,16 +53,13 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label for="sort_time">Sort by Time:</label>
-                        <select wire:model="sortTimeField" class="form-control form-control-sm" id="sort_time">
-                            <option value="time">Ascending</option>
-                            <option value="time_desc">Descending</option>
-                        </select>
-                    </div>
+                  <div class="form-group col-md-3">
+                    <label for="sortTimeAsc">Sort By Time:</label>
+                    <select wire:model="sortTimeAsc" class="form-control">
+                        <option value="1">Ascending</option>
+                        <option value="0">Descending</option>
+                    </select>
                 </div>
-
             </div>
         </div>
         <!-- users filter end -->

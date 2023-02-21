@@ -1,71 +1,67 @@
-<div class="row mb-6 m-1">
+<div class="row">
     <label style="color: #070707" ><h3>Filter By:</h3></label>
     <div class="col-md-5">
-        <label  style="color: #070707"><h6> Visitor Type </h6></label>
-        <select class="form-select form-control" wire:model="visitorTypeId">
-            <option value="">      All       </option>
+        <label  style="color: #070707"><h5> Visitor Type </h5></label>
+        <select class="form-control form-select" wire:model="visitorTypeId">
+            <option value="">All          </option>
             @foreach($visitorTypes as $type)
                 <option value="{{ $type->id }}">{{ $type->name }}</option>
             @endforeach
         </select>
     </div>
-{{--    <div class="col-md-5">--}}
-{{--        <label  style="color: #070707"><h6>Organization </h6></label> &nbsp;&nbsp;--}}
-{{--        <select class="form-select" wire:model="organizationCodeId">--}}
-{{--            <option value="">           All                 </option>--}}
-{{--            @foreach($organizationCodes as $type)--}}
-{{--                <option value="{{ $type->id }}">{{ $type->name }}</option>--}}
-{{--            @endforeach--}}
-{{--        </select>--}}
-{{--    </div>--}}
-        <div class="col-md-5">
+    {{--    <div class="col-md-5">--}}
+    {{--        <label  style="color: #070707"><h5>Identification Type </h5></label> &nbsp;&nbsp;--}}
+    {{--        <select class="form-select" wire:model="identificationTypeId">--}}
+    {{--            <option value=""> All                 </option>--}}
+    {{--            @foreach($identificationTypes as $type)--}}
+    {{--                <option value="{{ $type->id }}">{{ $type->name }}</option>--}}
+    {{--            @endforeach--}}
+    {{--        </select>--}}
+    {{--    </div>--}}
+    <div class="col-md-5">
         <label  style="color: #070707"><h6> Time </h6></label> &nbsp;&nbsp;
-            <select class="form-control form-select" name="time_filter" id="time_filter" wire:model="timeFilter">
-                <option value="">Select Time Filter </option>
-                <option value="daily">Daily</option>
-                <option value="weekly">Weekly</option>
-                <option value="monthly">Monthly</option>
-            </select>
+        <select class="form-control" wire:model="timeFilter" wire:change="applyTimeFilter">
+            <option value="all">Select Time Duration </option>
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+        </select>
     </div>
-    <hr/>
-<div>
+    <div>
 
 
-    <div class="card">
-        <h5 class="card-header">Search Filter</h5>
-        <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
-            <div class="col-md-4 user_role">
-                <div class="input-group input-group-merge">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i data-feather="search"></i></span>
+        <div class="card">
+            <h5 class="card-header">Search Filter</h5>
+            <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
+                <div class="col-md-4 user_role">
+                    <div class="input-group input-group-merge">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i data-feather="search"></i></span>
+                        </div>
+                        <input wire:model="search" type="text" id="fname-icon" class="form-control" name="fname-icon"
+                               placeholder="Search" />
                     </div>
-                    <input wire:model="search" type="text" id="fname-icon" class="form-control" name="fname-icon"
-                           placeholder="Search" />
                 </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="selectSmall">Select Per Page</label>
-                    <select class="form-control form-control-sm" id="selectSmall">
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="selectSmall">Select Per Page</label>
+                        <select class="form-control form-control-sm" id="selectSmall">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="sortTimeAsc">Sort By Time:</label>
+                    <select wire:model="sortTimeAsc" class="form-control">
+                        <option value="1">Ascending</option>
+                        <option value="0">Descending</option>
                     </select>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="sort_time">Sort by Time:</label>
-                    <select wire:model="sortTimeField" class="form-control form-control-sm" id="sort_time">
-                        <option value="time">Ascending</option>
-                        <option value="time_desc">Descending</option>
-                    </select>
-                </div>
-            </div>
-
         </div>
-    </div>
     <!-- users filter end -->
     {{-- @include('partials.loaderstyle') --}}
     <!-- list section start -->
