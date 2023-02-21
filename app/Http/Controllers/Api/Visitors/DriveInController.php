@@ -23,16 +23,24 @@ class DriveInController extends Controller
     public function index(Request $request)
     {
 
-        return response()->json(Visitor::with(['resident2', 'createdBy', 'vehicle', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
-            ->where('type', 'drivein')
-            ->get());
+        return response()->json(
+            Visitor::with(
+                [
+                    'resident2',
+                    'createdBy',
+                    'vehicle',
+                    'purpose',
+                    'visitorType',
+                    'timeLogs'
+                ]
+            )->where('sentry_id', $request->user()->id)
+                ->where('type', 'drivein')
+                ->get()
+        );
     }
 
     public function store(Request $request)
     {
-        $userTimezone = $request->header('X-Timezone');
-        // Validate the request data
-
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'type' => 'required|string',
@@ -48,7 +56,6 @@ class DriveInController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        // check if nationality already exists
         $nationality = Nationality::whereLike(['name'], (string)$request->nationality)->first();
         $timeLog = new TimeLog;
         $now = Carbon::now();
@@ -93,45 +100,6 @@ class DriveInController extends Controller
 
         return response()->json(['success' => 'Visitor and vehicle information added successfully.'], 201);
     }
-
-
-
-    //    public function store(Request $request)
-    //    {
-    //        $validatedData = $request->validate([
-    //            'name' => 'required|string',
-    //            'phoneNumber' => 'required|string',
-    //            'gender' => 'required|string',
-    //            'type' => 'required|string',
-    //            'purpose_id' => 'required|exists:purposes,id',
-    ////            'organizationId' => 'required|exists:organizations,id',
-    ////            'premisesId' => 'required|exists:premises,id',
-    //            'nationality_id' => 'required',
-    ////            'tag_id' => 'required|exists:tags,id',
-    //            'visitor_type_id' => 'required|exists:visitor_types,id',
-    ////            'sentry_id' => 'required|exists:sentry, id',
-    //
-    ////            'timeIn' => 'required|date_format:Y-m-d H:i:s',
-    //        ]);
-    //        /** @var TYPE_NAME $validatedData */
-    //        if ($validatedData->fails()) {
-    //            return response()->json($validatedData->errors(), 400);
-    //        }
-    //
-    //        $visitor = Visitor::create([
-    //            'name' => $validatedData['name'],
-    //            'type' => $validatedData['type'],
-    //            'identification_type_id' => $validatedData['identification_type_id'],
-    //            'visitor_type_id' => $validatedData['visitor_type_id'],
-    //            'purpose_id' => $validatedData['purpose_id'],
-    //            'sentry_id' => auth()->user()->id,
-    //            'nationality_id' => $validatedData['nationality_id'],
-    //            'resident_id' => $validatedData['resident_id'],
-    //            'time_log_id' => $validatedData['time_log_id'],
-    //        ]);
-    //
-    //        return response()->json($visitor, 201);
-    //    }
 
     public function show(Visitor $visitor): Visitor
     {
