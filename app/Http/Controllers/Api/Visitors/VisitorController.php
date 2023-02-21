@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Api\Visitors;
 
 use App\Http\Controllers\Controller;
+use App\Models\Block;
 use App\Models\IdentificationType;
 use App\Models\Purpose;
 use App\Models\Resident;
+use App\Models\Sentry;
 use App\Models\TimeLog;
+use App\Models\Unit;
 use App\Models\UserDetail;
 use App\Models\Visitor;
+use App\Models\VisitorType;
 use Illuminate\Http\Request;
 use App\Models\Organization;
 use App\Models\Premise;
@@ -32,9 +36,9 @@ class VisitorController extends Controller
         return Premise::all();
     }
 
-    public function tagOptions()
+    public function visitorTypeOptions()
     {
-        return Tag::all();
+        return VisitorType::all();
     }
     public function purposeOptions()
     {
@@ -44,7 +48,12 @@ class VisitorController extends Controller
     {
         return Resident::all();
     }
-
+    public function unitOptions(Request $request)
+    {
+        $sentry=Sentry::where('user_detail_id', $request->user()->id)->first();
+       $units=Premise::with('blocks.units')->where('id', $sentry->premise_id)->get();
+        return response()->json($units);
+    }
 
     /**
      * Display a listing of the resource.

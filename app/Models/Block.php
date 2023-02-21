@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static pluck(string $string)
+ */
 class Block extends Model
 {
     use HasFactory;
@@ -16,5 +19,13 @@ class Block extends Model
     {
         return $this->belongsTo(Premise::class, 'premise_id');
     }
+    public function units()
+    {
+        return $this->hasMany(Unit::class);
+    }
 
+    public function premises()
+    {
+        return $this->belongsTo(Premise::class);
+    }
 }

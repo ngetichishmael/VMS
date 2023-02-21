@@ -24,6 +24,7 @@ class Dashboard extends Component
     public $organizationCodeId;
     public $sortTimeField = 'time';
     public $sortTimeAsc = true;
+    public $timeFilter;
     public function sortBy($field)
     {
         if ($field === $this->sortField) {
@@ -36,7 +37,6 @@ class Dashboard extends Component
     public function render()
     {
         $searchTerm = '%' . $this->search . '%';
-        $timeFilter = (new \Symfony\Component\HttpFoundation\Request)->get('time_filter');
         $today = Carbon::today();
 
         $dvisitors = DriveIn::with('organization','vehicle', 'timeLogs')
@@ -44,18 +44,18 @@ class Dashboard extends Component
                 $query->where('visitor_type_id', $this->visitorTypeId);
             })
             ->when($this->organizationCodeId, function ($query) {
-                $query->where('resident->unit->block->premise->organization->code', $this->organizationCodeId);
+                $query->where('resident.unit.block.premise.organization.code', $this->organizationCodeId);
             })
             ->where('type', 'drivein')
             ->whereLike(['vehicle.registration', 'name','user.email','purpose.name', 'premises.name','organization1.name', 'unit.name'], $searchTerm)
-            ->when($timeFilter == 'daily', function ($query) use ($today) {
-                $query->whereDate('time_logs.entry_time', $today);
+            ->when($this->timeFilter == 'daily', function ($query) use ($today) {
+                $query->whereDate('timeLogs.entry_time', $today);
             })
-            ->when($timeFilter == 'weekly', function ($query) use ($today) {
-                $query->whereBetween('time_logs.entry_time', [$today->startOfWeek(), $today->endOfWeek()]);
+            ->when($this->timeFilter == 'weekly', function ($query) use ($today) {
+                $query->whereBetween('timeLogs.entry_time', [$today->startOfWeek(), $today->endOfWeek()]);
             })
-            ->when($timeFilter == 'monthly', function ($query) use ($today) {
-                $query->whereMonth('time_logs.entry_time', $today->month);
+            ->when($this->timeFilter== 'monthly', function ($query) use ($today) {
+                $query->whereMonth('timeLogs.entry_time', $today->month);
             })
             ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
             ->paginate($this->perPage);

@@ -8,8 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Unit extends Model
 {
     use HasFactory;
-    public function block(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function block()
     {
         return $this->belongsTo(Block::class);
+    }
+
+    public function premises()
+    {
+        return $this->block->premise();
+
     }
 }

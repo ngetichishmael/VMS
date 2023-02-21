@@ -9,15 +9,15 @@
             @endforeach
         </select>
     </div>
-    <div class="col-md-5">
-        <label  style="color: #070707"><h5>Identification Type </h5></label> &nbsp;&nbsp;
-        <select class="form-select" wire:model="identificationTypeId">
-            <option value=""> All                 </option>
-            @foreach($identificationTypes as $type)
-                <option value="{{ $type->id }}">{{ $type->name }}</option>
-            @endforeach
-        </select>
-    </div>
+{{--    <div class="col-md-5">--}}
+{{--        <label  style="color: #070707"><h5>Identification Type </h5></label> &nbsp;&nbsp;--}}
+{{--        <select class="form-select" wire:model="identificationTypeId">--}}
+{{--            <option value=""> All                 </option>--}}
+{{--            @foreach($identificationTypes as $type)--}}
+{{--                <option value="{{ $type->id }}">{{ $type->name }}</option>--}}
+{{--            @endforeach--}}
+{{--        </select>--}}
+{{--    </div>--}}
     <div>
 
 

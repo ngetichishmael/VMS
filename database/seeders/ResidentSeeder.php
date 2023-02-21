@@ -21,7 +21,7 @@ class ResidentSeeder extends Seeder
             'name' => 'John Doe',
             'phone_number' => '1234567890',
             'email' => 'johndoe@example.com',
-            'user_detail_id' => 4,
+            'user_detail_id' => 1,
         ]);
 
         Resident::create([
@@ -29,7 +29,7 @@ class ResidentSeeder extends Seeder
             'name' => 'Jane Doe',
             'phone_number' => '0987654321',
             'email' => 'janedoe@example.com',
-            'user_detail_id' => 5,
+            'user_detail_id' => 2,
         ]);
 
 
@@ -39,14 +39,14 @@ class ResidentSeeder extends Seeder
             'name' => 'John Mwangi',
                 'phone_number' => $faker->phoneNumber,
                 'email' => 'johndoe@example.com',
-            'user_detail_id' => 5,
+            'user_detail_id' => 3,
         ]);
             Resident::create([
                 'unit_id' => 4,
                 'name' => 'Jane Waweru',
                 'phone_number' => $faker->phoneNumber,
                 'email' => 'janesmith@example.com',
-                'user_detail_id' => 5,
+                'user_detail_id' => 4,
             ]);
                 Resident::create([
                     'unit_id' => 5,

@@ -14,4 +14,8 @@ class TimeLog extends Model
      */
     protected $table='time_logs';
     protected $guarded=[];
+    public function visitor()
+    {
+        return $this->hasMany(Visitor::class, );
+    }
 }

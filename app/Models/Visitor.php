@@ -40,6 +40,10 @@ class Visitor extends Model
     {
         return $this->belongsTo(TimeLog::class, 'time_log_id', 'id');
     }
+    public function timeLog()
+    {
+        return $this->belongsTo(TimeLog::class);
+    }
 
     public function visitorsVisits()
     {
@@ -51,14 +55,8 @@ class Visitor extends Model
     }
     public function vehicle()
     {
-        return $this->belongsTo(VehicleInformation::class );
+        return $this->hasMany(VehicleInformation::class );
     }
-
-
-//    public function tag(): BelongsTo
-//    {
-//        return $this->belongsTo(Tag::class, 'tagId');
-//    }
     public function visitorType(): BelongsTo
     {
         return $this->belongsTo(VisitorType::class, 'visitor_type_id');

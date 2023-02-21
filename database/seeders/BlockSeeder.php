@@ -40,10 +40,32 @@ class BlockSeeder extends Seeder
                 'premise_id' => 4,
                 'name' => $name,
             ]);
-        }$blockNames5 = ['Block M', 'Block N', 'Block O', 'Block P', 'Block Q'];
+        }
+        $blockNames5 = ['Block M', 'Block N', 'Block O', 'Block P', 'Block Q'];
         foreach ($blockNames5 as $name) {
             Block::create([
                 'premise_id' => 5,
+                'name' => $name,
+            ]);
+        }
+        $blockNames6 = ['Block M', 'Block N', 'Block O', 'Block P', 'Block Q'];
+        foreach ($blockNames6 as $name) {
+            Block::create([
+                'premise_id' => 6,
+                'name' => $name,
+            ]);
+        }
+        $blockNames7 = ['Block M', 'Block N', 'Block O', 'Block P', 'Block Q'];
+        foreach ($blockNames7 as $name) {
+            Block::create([
+                'premise_id' => 7,
+                'name' => $name,
+            ]);
+        }
+        $blockNames8 = ['Block M', 'Block N', 'Block O', 'Block P', 'Block Q'];
+        foreach ($blockNames8 as $name) {
+            Block::create([
+                'premise_id' => 8,
                 'name' => $name,
             ]);
         }

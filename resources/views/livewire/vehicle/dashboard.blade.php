@@ -49,7 +49,7 @@
 {{--                                    <th>#</th>--}}
                                     <th>Registration Number</th>
                                     <th>User Name</th>
-                                    <th>Last Login</th>
+                                    <th>Check In</th>
                                     <th>Check Out</th>
                                 </tr>
                             </thead>
@@ -103,9 +103,9 @@
                                 <tr>
 {{--                                    <td>1</td>--}}
                                     <td>{!! $vehicle-> registration!!}</td>
-                                    <td>{!! $vehicle->visitor()->name !!}</td>
-                                    <td>{!! $vehicle->updated_at!!}</td>
-                                    <td>{!! $vehicle->updated_at!!}</td>
+                                    <td>{!! $vehicle->visitor()->pluck("name")->implode('') !!} </td>
+                                    <td>{!! $vehicle->visitor->timeLogs->entry_time ?? null!!}</td>
+                                    <td>{!! $vehicle->visitor->timeLogs->exit_time ?? null!!}</td>
                                 </tr>
                             @empty
                                 <tr>

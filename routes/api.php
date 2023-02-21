@@ -33,7 +33,8 @@ Route::group(['namespace' => 'Api'], function () {
         Route::get('visitors/premises-options', [VisitorController::class, 'premisesOptions']);
         Route::get('visitors/purpose-options', [VisitorController::class, 'purposeOptions']);
         Route::get('visitors/host-options', [VisitorController::class, 'hostOptions']);
-        Route::get('visitors/tag-options', [VisitorController::class, 'tagOptions']);
+        Route::get('visitors/unit-options', [VisitorController::class, 'unitOptions']);
+        Route::get('visitors/visitortype-options', [VisitorController::class, 'visitorTypeOptions']);
         Route::get('visitors/drivein/all', [DriveInController::class, 'index']);
         Route::post('visitors/drivein/create', [DriveInController::class, 'store']);
         Route::get('visitors/smsCheckin/all', [SmsCheckInController::class, 'index']);

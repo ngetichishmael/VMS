@@ -85,7 +85,7 @@ class WalkIn extends Model
     {
         return $this->belongsTo(Nationality::class);
     }
-    public function createdBy(): BelongsTo
+    public function sentry(): BelongsTo
     {
         return $this->belongsTo(Sentry::class);
     }

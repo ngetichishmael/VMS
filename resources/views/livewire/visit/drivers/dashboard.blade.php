@@ -20,7 +20,7 @@
 {{--    </div>--}}
         <div class="col-md-5">
         <label  style="color: #070707"><h6> Time </h6></label> &nbsp;&nbsp;
-            <select class="form-control" name="time_filter" id="time_filter" wire:model="timeFilter">
+            <select class="form-control form-select" name="time_filter" id="time_filter" wire:model="timeFilter">
                 <option value="">Select Time Filter </option>
                 <option value="daily">Daily</option>
                 <option value="weekly">Weekly</option>

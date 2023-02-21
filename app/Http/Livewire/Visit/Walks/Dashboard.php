@@ -38,15 +38,15 @@ class Dashboard extends Component
             ->when($this->visitorTypeId, function ($query) {
                 $query->where('visitor_type_id', $this->visitorTypeId);
             })
-            ->when($this->identificationTypeId, function ($query) {
-                $query->where('identification_type_id', $this->identificationTypeId);
-            })
+//            ->when($this->identificationTypeId, function ($query) {
+//                $query->where('identification_type_id', $this->identificationTypeId);
+//            })
             ->where('type', 'WalkIn')
             ->whereLike([ 'name','user.email','purpose.name', 'premises.name','organization1.name', 'unit.name'], $searchTerm)
             ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
             ->paginate($this->perPage);
         $visitorTypes = VisitorType::all();
-        $identificationTypes = IdentificationType::all();
+//        $identificationTypes = IdentificationType::all();
 
         foreach ($visitors as $visitor) {
             $entryTime = Carbon::parse($visitor->timeLogs->entry_time);
@@ -58,7 +58,7 @@ class Dashboard extends Component
         return view('livewire.visit.walks.dashboard', [
             'visitors' => $visitors,
             'visitorTypes' => $visitorTypes,
-            'identificationTypes' => $identificationTypes,
+//            'identificationTypes' => $identificationTypes,
         ]);
     }
 }

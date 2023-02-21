@@ -179,7 +179,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label >Signed In By</label>
-                                <input type="text" class="form-control" value="{{ $visitor->createdBy2->name ?? 'Not Available' }}" readonly />
+                                <input type="text" class="form-control" value="{{ $visitor->sentry->name ?? 'Not Available' }}" readonly />
                             </div>
                         </div>
                     </div>

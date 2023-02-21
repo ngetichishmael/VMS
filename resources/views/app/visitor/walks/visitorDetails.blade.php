@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Drive-in Visitor Details')
+@section('title', 'Walk-in Visitor Details')
 
 @section('vendor-style')
     {{-- vendor css files --}}
@@ -37,12 +37,6 @@
                             <div class="form-group">
                                 <label >Gender</label>
                                 <input type="text" class="form-control" value="{{ $visitor->user_details->gender ?? 'Not Available' }}" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-6  mb-1 pl-2">
-                            <div class="form-group">
-                                <label >Identification Type</label>
-                                <input type="text" class="form-control" value="{!! $visitor->identificationType->name ?? 'Not Available' !!}" readonly />
                             </div>
                         </div>
                         <div class="col-md-6  mb-1 pl-2">
@@ -159,7 +153,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label >Signed In By</label>
-                                <input type="text" class="form-control" value="{{ $visitor->createdBy->name ?? 'Not Available' }}" readonly />
+                                <input type="text" class="form-control" value="{{ $visitor->sentry->name ?? 'Not Available' }}" readonly />
                             </div>
                         </div>
                     </div>

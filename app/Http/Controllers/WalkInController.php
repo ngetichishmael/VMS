@@ -50,7 +50,7 @@ class WalkInController extends Controller
 
     public function show( $walkIn)
     {
-        $visitor = DriveIn::with('nationality','user_details','purpose1','createdBy')->find($walkIn);
+        $visitor = DriveIn::with('nationality','user_details','purpose1','sentry')->find($walkIn);
 
         $entryTime = Carbon::parse($visitor->timeLogs->entry_time);
         $exitTime = Carbon::parse($visitor->timeLogs->exit_time);

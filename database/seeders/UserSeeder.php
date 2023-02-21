@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Sentry;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -29,6 +30,24 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             "role_id" => 2,
             'password' => '$2y$10$y5KwRinBAUzQsBuK6EvRXuu0i2RrjTHGs00SOD44S1L9VCMgvx3I6',
+        ]);
+        Sentry::create([
+            'name'=>'Ishmael ',
+            'status'=>1,
+            'device_id'=>1,
+            'user_detail_id'=>1,
+            'shift_id'=>1,
+            'premise_id'=>1,
+
+        ]);
+        Sentry::create([
+            'name'=>'John Mbugua',
+            'status'=>1,
+            'device_id'=>1,
+            'user_detail_id'=>2,
+            'shift_id'=>1,
+            'premise_id'=>1,
+
         ]);
     }
 }

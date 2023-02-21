@@ -17,7 +17,7 @@ class OrganizationSeeder extends Seeder
     public function run()
     {
         Organization::create([
-            'code' => Str::random(20),
+            'code' => 'wM1z4nZsIYughLausC6D',
             'name' => 'Velocies',
             'location' => 'Location 1',
             'email' => 'organization1@email.com',
@@ -29,7 +29,7 @@ class OrganizationSeeder extends Seeder
         ]);
 
         Organization::create([
-            'code' => Str::random(20),
+            'code' => 'wM1z4nZsIYughLausC6E',
             'name' => 'Deveint',
             'location' => 'Location 2',
             'email' => 'organization2@email.com',
@@ -41,7 +41,7 @@ class OrganizationSeeder extends Seeder
         ]);
 
         Organization::create([
-            'code' => Str::random(20),
+            'code' => 'wM1z4nZsIYughLausC6F',
             'name' => 'prime bank',
             'location' => 'Location 3',
             'email' => 'organization3@email.com',
@@ -53,7 +53,7 @@ class OrganizationSeeder extends Seeder
         ]);
 
         Organization::create([
-            'code' => Str::random(20),
+            'code' => 'wM1z4nZsIYughLausC6G',
             'name' => 'Equity',
             'location' => 'Location 4',
             'email' => 'organization4@email.com',
@@ -65,7 +65,7 @@ class OrganizationSeeder extends Seeder
         ]);
 
         Organization::create([
-            'code' => Str::random(20),
+            'code' => 'wM1z4nZsIYughLausC6H',
             'name' => 'JAMBOPAY',
             'location' => 'Location 5',
             'email' => 'organization5@email.com',
