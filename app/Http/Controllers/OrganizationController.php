@@ -48,7 +48,6 @@ class OrganizationController extends Controller
             'phone' => 'required|numeric',
             'location' => 'required',
 
-
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
@@ -69,6 +68,7 @@ class OrganizationController extends Controller
         // return response()->json(['success' => 'organization information added successfully.'], 201);
         return redirect()->to('/organization/information')->with('success', 'Organization created successfully.');
     }
+
 
     /**
      * Display the specified resource.
