@@ -49,7 +49,7 @@ class DriveInController extends Controller
      */
     public function show( $driveIn)
     {
-         $visitor = DriveIn::with('identificationType','nationality','user_details','purpose1','createdBy')->find($driveIn);
+         $visitor = DriveIn::with('nationality','user_details','purpose1','sentry')->find($driveIn);
 
             $entryTime = Carbon::parse($visitor->timeLogs->entry_time);
             $exitTime = Carbon::parse($visitor->timeLogs->exit_time);

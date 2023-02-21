@@ -13,8 +13,8 @@ class VehicleInformation extends Model
 {
     use HasFactory;
     protected $guarded;
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function visitor()
     {
-          return $this->belongsTo(Visitor::class, 'visitor_id', 'id');
+          return $this->belongsTo(Visitor::class, );
     }
 }

@@ -49,9 +49,6 @@
 {{--                                    <th>#</th>--}}
                                     <th>Registration Number</th>
                                     <th>User Name</th>
-                                    <th>Vehicle Type</th>
-                                    <th>Vehicle Color</th>
-                                    <th>Vehicle Model</th>
                                     <th>Last Login</th>
                                     <th>Check Out</th>
                                 </tr>
@@ -106,13 +103,9 @@
                                 <tr>
 {{--                                    <td>1</td>--}}
                                     <td>{!! $vehicle-> registration!!}</td>
-                                    <td>{!! $vehicle->user->name !!}</td>
-                                    <td>{!! $vehicle->type !!}</td>
-                                    <td>{!! $vehicle->color !!}</td>
-                                    <td>{!! $vehicle->model !!}</td>
+                                    <td>{!! $vehicle->visitor()->name !!}</td>
                                     <td>{!! $vehicle->updated_at!!}</td>
                                     <td>{!! $vehicle->updated_at!!}</td>
-
                                 </tr>
                             @empty
                                 <tr>

@@ -1,23 +1,33 @@
-<div class="row mb-6">
+<div class="row mb-6 m-1">
     <label style="color: #070707" ><h3>Filter By:</h3></label>
     <div class="col-md-5">
         <label  style="color: #070707"><h6> Visitor Type </h6></label>
-        <select class="form-select" wire:model="visitorTypeId">
+        <select class="form-select form-control" wire:model="visitorTypeId">
             <option value="">      All       </option>
             @foreach($visitorTypes as $type)
                 <option value="{{ $type->id }}">{{ $type->name }}</option>
             @endforeach
         </select>
     </div>
-    <div class="col-md-5">
-        <label  style="color: #070707"><h6>Identification Type </h6></label> &nbsp;&nbsp;
-        <select class="form-select" wire:model="identificationTypeId">
-            <option value="">           All                 </option>
-            @foreach($identificationTypes as $type)
-                <option value="{{ $type->id }}">{{ $type->name }}</option>
-            @endforeach
-        </select>
+{{--    <div class="col-md-5">--}}
+{{--        <label  style="color: #070707"><h6>Organization </h6></label> &nbsp;&nbsp;--}}
+{{--        <select class="form-select" wire:model="organizationCodeId">--}}
+{{--            <option value="">           All                 </option>--}}
+{{--            @foreach($organizationCodes as $type)--}}
+{{--                <option value="{{ $type->id }}">{{ $type->name }}</option>--}}
+{{--            @endforeach--}}
+{{--        </select>--}}
+{{--    </div>--}}
+        <div class="col-md-5">
+        <label  style="color: #070707"><h6> Time </h6></label> &nbsp;&nbsp;
+            <select class="form-control" name="time_filter" id="time_filter" wire:model="timeFilter">
+                <option value="">Select Time Filter </option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+            </select>
     </div>
+    <hr/>
 <div>
 
 

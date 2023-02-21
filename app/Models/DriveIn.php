@@ -59,19 +59,9 @@ class DriveIn extends Model
 //        return $this->belongsTo(VehicleInformation::class, 'vehicleId');
 //    }
 
-
-
-//    public function tag(): BelongsTo
-//    {
-//        return $this->belongsTo(Tag::class, 'tagId');
-//    }
     public function visitorType(): BelongsTo
     {
         return $this->belongsTo(VisitorType::class, 'visitor_type_id');
-    }
-    public function identificationType()
-    {
-        return $this->belongsTo(IdentificationType::class);
     }
     public function timeLogs():BelongsTo
     {
@@ -93,7 +83,7 @@ class DriveIn extends Model
     {
         return $this->belongsTo(Nationality::class);
     }
-    public function createdBy(): BelongsTo
+    public function sentry(): BelongsTo
     {
         return $this->belongsTo(Sentry::class);
     }

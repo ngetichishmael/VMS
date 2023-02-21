@@ -12,7 +12,7 @@ class Sentry extends Model
     protected $guarded = [];
     public function createdBy():BelongsTo
     {
-        return $this->belongsTo(Visitor::class, 'id', 'sentry_id');
+        return $this->belongsTo(Visitor::class);
     }
     public function premise():BelongsTo
     {

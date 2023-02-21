@@ -18,8 +18,8 @@ class Dashboard extends Component
     public function render()
     {
         $searchTerm = '%' . $this->search . '%';
-        $vehicle = VehicleInformation::with('user')
-        ->whereLike(['registration', 'user.name', 'model', 'color','type'], $searchTerm)
+        $vehicle = VehicleInformation::with('visitor')
+        ->whereLike(['registration', 'visitor.name'], $searchTerm)
             ->paginate($this->perPage);
         return view('livewire.vehicle.dashboard', ['vehicles'=>$vehicle]);
     }

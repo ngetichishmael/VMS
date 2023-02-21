@@ -45,13 +45,13 @@ class Visitor extends Model
     {
         return $this->belongsTo(TimeLog::class, 'id');
     }
-    public function createdBy():HasOneOrMany
+    public function sentry():BelongsTo
     {
-        return $this->hasMany(Sentry::class, 'id', 'sentry_id' );
+        return $this->belongsTo(Sentry::class);
     }
-    public function vehicle(): HasOne
+    public function vehicle()
     {
-        return $this->hasOne(VehicleInformation::class );
+        return $this->belongsTo(VehicleInformation::class );
     }
 
 
