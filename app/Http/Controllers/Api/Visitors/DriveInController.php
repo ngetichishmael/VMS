@@ -50,11 +50,6 @@ class DriveInController extends Controller
         }
         // check if nationality already exists
         $nationality = Nationality::whereLike(['name'], (string)$request->nationality)->first();
-        if (!$nationality) {
-            $nationality = new Nationality;
-            $nationality->name = $request['nationality'];
-            $nationality->save();
-        }
         $timeLog = new TimeLog;
         $now = Carbon::now();
         $nairobiNow = $now->setTimezone('Africa/Nairobi');
@@ -67,9 +62,9 @@ class DriveInController extends Controller
         $visitor->visitor_type_id = $request->input('visitor_type_id');
         $visitor->purpose_id = $request->input('purpose_id');
         $visitor->sentry_id = $request->user()->id;
-        $visitor->nationality_id = $nationality->id;
+        $visitor->nationality_id = $nationality->id ?? "110";
         $visitor->resident_id = $request->input('resident_id');
-        $visitor->tag=$request->input('tag');
+        $visitor->tag = $request->input('tag');
 
         $timeLog = new TimeLog;
         $timeLog->entry_time = now();

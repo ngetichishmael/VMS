@@ -18,8 +18,8 @@ class SMSCheckingController extends Controller
             'user_id' => $user_id,
             'code' => $user_code . $sentry_code
         ]);
-        $user_respoonse = $this->sendUserSMS($user_code, $phone_number);
-        $sentry_response = $this->sendUserSMS($sentry_code, $sentry_number);
+        $user_respoonse = $this->sendUserSMS($user_code . $sentry_code, $phone_number);
+        $sentry_response = $this->sendUserSMS($user_code . $sentry_code, $sentry_number);
         return response()->json([
             "success" => true,
             'status' => 200,
