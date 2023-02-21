@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Device;
+use App\Models\Premise;
 use App\Models\Shift;
 use App\Models\UserDetail;
 use Illuminate\Database\Migrations\Migration;
@@ -23,6 +24,7 @@ class CreateSentriesTable extends Migration
             $table->foreignIdFor(Device::class);
             $table->foreignIdFor(UserDetail::class)->nullable();
             $table->foreignIdFor(Shift::class);
+            $table->foreignIdFor(Premise::class);
             $table->timestamps();
         });
     }

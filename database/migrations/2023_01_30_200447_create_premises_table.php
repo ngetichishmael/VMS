@@ -16,7 +16,9 @@ class CreatePremisesTable extends Migration
     {
         Schema::create('premises', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Organization::class);
+//            $table->foreignIdFor(Organization::class);
+            $table->string('organization_code');
+//            $table->foreign('organization_code')->references('code')->on((new Organization())->getTable());
             $table->string('name');
             $table->string('address');
             $table->string('location');

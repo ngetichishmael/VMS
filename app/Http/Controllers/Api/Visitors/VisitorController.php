@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\IdentificationType;
 use App\Models\Purpose;
 use App\Models\Resident;
+use App\Models\TimeLog;
+use App\Models\UserDetail;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use App\Models\Organization;
@@ -54,22 +56,38 @@ class VisitorController extends Controller
 
         return response()->json(Visitor::with(['resident2','createdBy', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)->get());
     }
-    public function checkout(Request $request, Visitor $visitor)
+    public function verifyUser(Request $request)
     {
+        $id_number = $request->input('id_number');
+        $user = UserDetail::where('ID_number', $id_number)->first();
 
-        $timeLog = $visitor->timeLogs;
-        if (!$timeLog) {
-            return response()->json(['error' => 'Visitor not found'], 404);
+        if (!$user) {
+            return response()->json(['message' => 'Visitor not found'], 404);
         }
-        if ($timeLog->exit_time) {
-            return response()->json(['error' => 'Visitor has already checked out'], 400);
+        $visitor=Visitor::where('user_detail_id',  $user->id)->orderBy('id', 'desc')->first();
+        $time_log = TimeLog::where('id', $visitor->time_log_id)
+            ->whereNull('exit_time')
+            ->first();
+        if (!$time_log) {
+            return response()->json(['message' => 'User has already exited'], 400);
         }
 
-        $timeLog->update([
+        return response()->json(['Message' => 'Visitor exists', 'visitor'=>$visitor], 200);
+    }
+
+    public function checkout(Request $request)
+    {
+        $time_log = $request->time_log_id;
+
+
+        $result = TimeLog::whereId($time_log)->whereNull('exit_time')->update([
             'exit_time' => now(),
         ]);
+        if ($result===0){
+            return response()->json(['message' =>'Visitor time log does not exist or has already checked out!'], 406);
+        }
 
-        return response()->json(['message' => 'Visitor checked out successfully', 200]);
+        return response()->json(['message' => 'Visitor checked out successfully','result'=>$result], 200);
     }
     /**
      * Store a newly created resource in storage.

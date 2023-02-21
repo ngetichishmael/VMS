@@ -26,4 +26,8 @@ class Sentry extends Model
     {
         return $this->belongsTo(Device::class, 'device_id');
     }
+    public function premise():BelongsTo
+    {
+        return $this->belongsTo(Premise::class);
+    }
 }

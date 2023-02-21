@@ -43,7 +43,6 @@ class DriveInController extends Controller
             'resident_id' => 'required|integer',
             'IDNO' => 'required|numeric',
             'registration' => 'required|string',
-            'vehicle_type' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -70,6 +69,7 @@ class DriveInController extends Controller
         $visitor->sentry_id = $request->user()->id;
         $visitor->nationality_id = $nationality->id;
         $visitor->resident_id = $request->input('resident_id');
+        $visitor->tag=$request->input('tag');
 
         $timeLog = new TimeLog;
         $timeLog->entry_time = now();
@@ -93,9 +93,6 @@ class DriveInController extends Controller
 
         $vehicle = new VehicleInformation();
         $vehicle->registration = $request->input('registration');
-        $vehicle->type = $request->input('vehicle_type');
-        $vehicle->color = $request->input('color');
-        $vehicle->model = $request->input('model');
         $vehicle->visitor_id = $visitor->id;
         $vehicle->save();
 

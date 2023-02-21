@@ -17,9 +17,6 @@ class CreateVehicleInformationTable extends Migration
         Schema::create('vehicle_information', function (Blueprint $table) {
             $table->id();
             $table->string('registration');
-            $table->string('type')->nullable();
-            $table->string('color')->nullable();
-            $table->string('model')->nullable();
             $table->foreignIdFor(Visitor::class);
             $table->timestamps();
         });

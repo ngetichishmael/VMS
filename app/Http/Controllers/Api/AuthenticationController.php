@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserCode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AuthenticationController extends Controller
 {
     public function Login(Request $request)
     {
-        $user = User::where('phone_number', $request->phone_number)->where('status', 1)->first();
+        $user = User::with('premise')->where('phone_number', $request->phone_number)->where('status', 1)->first();
         if (!$user) {
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
@@ -94,6 +95,7 @@ class AuthenticationController extends Controller
 
         $responsePassanda = curl_exec($curl);
         curl_close($curl);
+
         return response()->json([
             "success" => true,
             "token_type" => 'Bearer',

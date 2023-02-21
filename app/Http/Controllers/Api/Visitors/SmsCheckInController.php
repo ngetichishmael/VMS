@@ -8,11 +8,11 @@ use App\Models\TimeLog;
 use App\Models\UserDetail;
 use App\Models\VehicleInformation;
 use App\Models\Visitor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class WalkInController extends Controller
+class SmsCheckInController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,9 +23,10 @@ class WalkInController extends Controller
     {
 
         return response()->json(Visitor::with(['resident2','createdBy', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
-        ->where('type', 'walkin')
-        ->get());
+            ->where('type', 'sms')
+            ->get());
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +36,8 @@ class WalkInController extends Controller
      */
     public function store(Request $request)
     {
-
+        $userTimezone = $request->header('X-Timezone');
+        // Validate the request data
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
@@ -58,6 +60,10 @@ class WalkInController extends Controller
             $nationality->name = $request['nationality'];
             $nationality->save();
         }
+        $timeLog = new TimeLog;
+        $now = Carbon::now();
+        $nairobiNow = $now->setTimezone('Africa/Nairobi');
+        $timeLog->entry_time=$nairobiNow->format('Y-m-d H:i:s') ;
 
         $visitor = new Visitor();
         $visitor->name = $request->input('name');
@@ -69,12 +75,11 @@ class WalkInController extends Controller
         $visitor->nationality_id = $nationality->id;
         $visitor->resident_id = $request->input('resident_id');
         $visitor->tag=$request->input('tag');
-        $timeLog = new TimeLog;
-        $timeLog->entry_time=now();
+
+
         $timeLog->save();
 
         $visitor->time_log_id = $timeLog->id;
-
 
         $user_details= UserDetail::where('ID_number', $request['IDNO'])->first();
         if (!$user_details) {
@@ -88,10 +93,15 @@ class WalkInController extends Controller
         }
         $visitor->user_detail_id = $user_details->id;
         $visitor->save();
-        return response()->json(['success' => 'Visitor Walkin information added successfully.'], 201);
-
+    if ($request->input('registration'==!null)){
+        $vehicle = new VehicleInformation();
+        $vehicle->registration = $request->input('registration');
+        $vehicle->visitor_id = $visitor->id;
+        $vehicle->save();
     }
 
+        return response()->json(['success' => 'Visitor verified by sms information added successfully.'], 201);
+    }
     /**
      * Display the specified resource.
      *

@@ -23,7 +23,7 @@ class PremiseSeeder extends Seeder
                 'description' => 'A modern office building located in the heart of the city.',
 //                'zone' => 'Commercial',
 //                'type' => 'Office Building',
-                'organization_id' => 1,
+                'organization_code' => "MxtHUoetmH2vDA87xmR8",
 //                'lookUpId' => 1,
             ],
             [
@@ -33,7 +33,7 @@ class PremiseSeeder extends Seeder
                 'description' => 'A popular shopping destination for locals and tourists alike.',
 //                'zone' => 'Commercial',
 //                'type' => 'Shopping Mall',
-                'organization_id' => 2,
+                'organization_code' => "PxtHUoetmH2vDA46xmR0",
 //                'lookUpId' => 2,
             ],
             [
@@ -43,7 +43,7 @@ class PremiseSeeder extends Seeder
                 'description' => 'A luxurious hotel with breathtaking ocean views.',
 //                'zone' => 'Residential',
 //                'type' => 'Hotel',
-                'organization_id' => 3,
+                'organization_code' => "BxtHUoetmH2vDA46xmR8",
 //                'lookUpId' => 3,
             ],
             [
@@ -53,7 +53,7 @@ class PremiseSeeder extends Seeder
                 'description' => 'A well-respected school known for its strong academic programs.',
 //                'zone' => 'Education',
 //                'type' => 'School',
-                'organization_id' => 4,
+                'organization_code' => "ZxtHUoetmH2vDA46xmR8",
 //                'lookUpId' => 4,
             ],
             [
@@ -63,7 +63,7 @@ class PremiseSeeder extends Seeder
                 'description' => 'A world-renowned museum showcasing some of the most valuable art collections.',
 //                'zone' => 'Cultural',
 //                'type' => 'Museum',
-                'organization_id' => 5,
+                'organization_code' => "XxtHUoetmH2vDA46xmR8",
 //                'lookUpId' => 5,
             ],
         ]);

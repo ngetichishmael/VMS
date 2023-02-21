@@ -14,14 +14,14 @@ class TagSeeder extends Seeder
      */
     public function run()
     {
-        $tags = [
-            ['tagName' => 'Technology'],
-            ['tagName' => 'Science'],
-            ['tagName' => 'Health'],
-            ['tagName' => 'Business'],
-            ['tagName' => 'Entertainment'],
-        ];
-
-        DB::table('tags')->insert($tags);
+//        $tags = [
+//            ['tagName' => 'Technology'],
+//            ['tagName' => 'Science'],
+//            ['tagName' => 'Health'],
+//            ['tagName' => 'Business'],
+//            ['tagName' => 'Entertainment'],
+//        ];
+//
+//        DB::table('tags')->insert($tags);
     }
 }

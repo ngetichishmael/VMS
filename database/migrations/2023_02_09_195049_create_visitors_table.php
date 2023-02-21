@@ -6,6 +6,7 @@ use App\Models\Purpose;
 use App\Models\Resident;
 use App\Models\Sentry;
 use App\Models\TimeLog;
+use App\Models\UserDetail;
 use App\Models\VisitorType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -25,14 +26,16 @@ class CreateVisitorsTable extends Migration
         Schema::create('visitors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('type', ["WalkIn", "DriveIn"]);
+            $table->enum('type', ["WalkIn", "DriveIn", "Sms","Manual"]);
             $table->foreignIdFor(IdentificationType::class);
             $table->foreignIdFor(VisitorType::class);
             $table->foreignIdFor(Purpose::class);
             $table->foreignIdFor(Sentry::class);
             $table->foreignIdFor(Nationality::class);
             $table->foreignIdFor(Resident::class);
+            $table->foreignIdFor(UserDetail::class)->nullable();
             $table->foreignIdFor(TimeLog::class);
+            $table->string('Tag')->nullable();
             $table->timestamps();
         });
     }

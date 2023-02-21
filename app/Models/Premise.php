@@ -10,13 +10,13 @@ class Premise extends Model
 {
     use HasFactory;
 
-    protected $table = 'premises';
     protected $guarded = [];
-
     public function organization()
     {
-        return $this->belongsTo(Organization::class, 'organization_id');
+        return $this->belongsTo(Organization::class, 'organization_code', 'code');
     }
-
-
+    public function sentry()
+    {
+        return $this->hasMany(Sentry::class);
+    }
 }
