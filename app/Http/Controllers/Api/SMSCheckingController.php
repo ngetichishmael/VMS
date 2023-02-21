@@ -89,8 +89,9 @@ class SMSCheckingController extends Controller
             ),
         ));
 
-        curl_exec($curl);
+        $response = curl_exec($curl);
         curl_close($curl);
+        return $response;
     }
     public function verifyOTP(Request $request, $otp)
     {
