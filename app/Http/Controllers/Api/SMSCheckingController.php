@@ -12,8 +12,8 @@ class SMSCheckingController extends Controller
     {
         $sentry_number = $request->user()->phone_number;
         $user_id = $request->user()->id;
-        $user_code = rand(1000, 9999);
-        $sentry_code = rand(1000, 9999);
+        $user_code = rand(100, 999);
+        $sentry_code = rand(100, 999);
         UserCode::create([
             'user_id' => $user_id,
             'code' => $user_code . $sentry_code
