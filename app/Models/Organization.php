@@ -19,12 +19,12 @@ class Organization extends Model
     protected $table = 'organizations';
     protected $guarded = [];
 
+
     public function user()
     {
-        return $this->hasMany(User::class, 'organization_id', 'id');
+        return $this->hasMany(User::class, 'organization_code');
     }
 
-  
 
 }
 

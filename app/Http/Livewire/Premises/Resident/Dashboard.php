@@ -91,7 +91,7 @@ class Dashboard extends Component
         //     return response()->json(['error' => $this->validator->errors()], 400);
         // }
 
-        $user = new User;
+        $user = new Resident;
 
         $user->name = $this->name;
 
@@ -145,7 +145,7 @@ class Dashboard extends Component
            
         ]);
 
-        $user  = User::where('id', $this->user_edit_id)->first();
+        $user  = Resident::where('id', $this->user_edit_id)->first();
 
         $user ->name = $this->name;
         $user->email = $this->email;
@@ -161,7 +161,7 @@ class Dashboard extends Component
     public function destroy($id)
     {
         if ($id) {
-            $user = User::where('id', $id);
+            $user = Resident::where('id', $id);
             $user ->delete();
 
             return redirect()->to('/organization/users');
@@ -171,7 +171,7 @@ class Dashboard extends Component
     public function activate($id)
     {
        
-       User::whereId($id)->update(
+        Resident::whereId($id)->update(
           ['status' => "1"]
        );
        return redirect()->to('/organization/users');
@@ -180,7 +180,7 @@ class Dashboard extends Component
     public function deactivate($id)
     {
        
-       User::whereId($id)->update(
+       Resident::whereId($id)->update(
           ['status' => "0"]
        );
        return redirect()->to('/organization/users');

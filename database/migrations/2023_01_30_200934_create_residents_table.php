@@ -21,7 +21,7 @@ class CreateResidentsTable extends Migration
             $table->string('name');
             $table->string('phone_number');
             $table->string('email');
-            $table->foreignIdFor(UserDetail::class);
+            $table->foreignIdFor(UserDetail::class)->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

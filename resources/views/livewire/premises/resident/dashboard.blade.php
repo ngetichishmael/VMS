@@ -13,24 +13,23 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="selectSmall">Organization</label>
-                            <select wire:model="organizationId" class="form-control form-control-sm" >
-                                <option value="">  All  </option>
-                                @foreach ($organizations as $org)
-                                    <option  value="{{ $org ->id }}"> {{ $org ->name }}</option>
-                                @endforeach  
+                            <label for="selectSmall">Select Per Page</label>
+                            <select wire:model="perPage" class="form-control form-control-sm" id="selectSmall" id="table1">
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="selectSmall">Role</label>
-                            <select wire:model="roleId" class="form-control form-control-sm" id="selectSmall">
-                                <option value="">All</option>
-                                @foreach ($roles as $rol)
-                                    <option  value="{{ $rol ->id }}"> {{ $rol ->name }}</option>
-                                @endforeach  
-                              </select>
+                            <label for="selectSmall">Sort</label>
+                            <select wire:click.prevent="sortBy('name')" class="form-control form-control-sm" id="selectSmall">
+                          
+                            <option value="desc">Ascending</option>
+                                <option value="asc">Descending</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -54,9 +53,8 @@
                              
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>PhoneNumber</th>
+                                    <th>PhoneN umber</th>
                                     <th>Unit Name</th>
-                              
                                     <th>Status</th>
                                     <th>Last Login</th>
                                     <th>Check Out</th>
@@ -141,7 +139,7 @@
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">New resident</h5>
+            <h5 class="modal-title" id="exampleModalLabel">New Resident</h5>
           </div>
           <div class="modal-body flex-grow-1">
             <div class="form-group">
