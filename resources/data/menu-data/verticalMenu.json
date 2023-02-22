@@ -16,19 +16,19 @@
         },
         {
             "name": "Visits",
-            "icon": "file-text",
+            "icon": "local_library",
             "slug": "",
             "submenu": [
                 {
                     "url": "Visits/DriveIn",
                     "name": "Driver-in",
-                    "icon": "circle",
+                    "icon": "emoji_transportation",
                     "slug": "VisitDriveIn"
                 },
                 {
                     "url": "Visits/WalkIn",
                     "name": "Walks Ins",
-                    "icon": "circle",
+                    "icon": "directions_walk",
                     "slug": "VisitWalkIn"
                 }
             ]
@@ -46,13 +46,13 @@
         {
             "url": "organization/users",
             "name": "Users",
-            "icon": "type",
+            "icon": "group",
             "slug": "OrganizationUsers"
         },
         {
             "url": "users/sentries",
             "name": "Sentry",
-            "icon": "type",
+            "icon": "person_pin",
             "slug": "Sentry"
         },
         {
@@ -62,36 +62,36 @@
         {
             "url": "organization/information",
             "name": "Organization",
-            "icon": "server",
+            "icon": "corporate_fare",
             "slug": "OrganizationInformation"
         },
         {
             "name": "Premises",
-            "icon": "grid",
+            "icon": "location_city",
             "slug": "",
             "submenu": [
                 {
                     "url": "premise/information",
                     "name": "Premises",
-                    "icon": "circle",
+                    "icon": "domain",
                     "slug": "PremiseInformation"
                 },
                 {
                     "url": "block/information",
                     "name": "Blocks",
-                    "icon": "circle",
+                    "icon": "roofing",
                     "slug": "BlockInformation"
                 },
                 {
                     "url": "unit/information",
                     "name": "Units",
-                    "icon": "circle",
+                    "icon": "room_preferences",
                     "slug": "UnitInformation"
                 },
                 {
                     "url": "resident/information",
                     "name": "Residents",
-                    "icon": "circle",
+                    "icon": "location_away",
                     "slug": "ResidentInformation"
                 }
             ]
@@ -103,13 +103,13 @@
         {
             "url": "service/information",
             "name": "Name",
-            "icon": "type",
+            "icon": "support_agent",
             "slug": "ServiceInformation"
         },
         {
             "url": "service/category",
             "name": "Catergory",
-            "icon": "type",
+            "icon": "format_list_bulleted",
             "slug": "ServiceCategory"
         },
         {
@@ -119,7 +119,7 @@
         {
             "url": "vehicle/information",
             "name": "Vehicles",
-            "icon": "map",
+            "icon": "garage",
             "slug": "VehicleInformation"
         },
         {
@@ -129,13 +129,13 @@
         {
             "url": "identification/type",
             "name": "Identification Types",
-            "icon": "map",
+            "icon": "fingerprint",
             "slug": "IdentificationType"
         },
         {
             "url": "shifts",
             "name": "Shifts",
-            "icon": "map",
+            "icon": "track_changes",
             "slug": "shifts"
         }
     ]

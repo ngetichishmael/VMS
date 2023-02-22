@@ -7,16 +7,13 @@ use App\Models\User;
 use App\Models\Organization;
 use App\Models\Role;
 use Livewire\WithPagination;
-
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class Dashboard extends Component
 {
     use WithPagination;
-    
-    
+
+
     protected $paginationTheme = 'bootstrap';
     public $perPage = 10;
     public $sortField = 'id';
@@ -26,26 +23,31 @@ class Dashboard extends Component
     public $orderAsc = true;
     public $sortTimeField = 'time';
     public $sortTimeAsc = true;
-
-    public $organizationId;
+    public $location;
+    public $primary_phone;
+    public $secondary_phone;
+    public $websiteUrl;
+    public $description;
     public $roleId;
+    public $organizationId;
+    public $organization_edit_id;
 
     public  $name, $email, $phone_number, $role_id, $password, $organization_id;
 
 
     public function render()
     {
-    
+
         $searchTerm = '%' . $this->search . '%';
 
-        $users = User::with('organization','role')
+        $users = User::with('organization', 'role')
             ->when($this->organizationId, function ($query) {
                 $query->where('organization_id', $this->organizationId);
             })
             ->when($this->roleId, function ($query) {
                 $query->where('role_id', $this->roleId);
             })
-            ->whereLike(['name','organization.name','role.name'], $searchTerm)
+            ->whereLike(['name', 'organization.name', 'role.name'], $searchTerm)
             ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
             ->paginate($this->perPage);
 
@@ -54,10 +56,10 @@ class Dashboard extends Component
         $roles = Role::all();
 
 
-        return view('livewire.user.dashboard', [ 
-            'users' => $users, 
-             'organizations' => $organizations,
-             'roles' => $roles,
+        return view('livewire.user.dashboard', [
+            'users' => $users,
+            'organizations' => $organizations,
+            'roles' => $roles,
         ]);
     }
 
@@ -79,11 +81,11 @@ class Dashboard extends Component
 
             'email' => 'required|email|max:255|unique:organizations,email',
 
-            'phone_number'=> 'required|numeric',
+            'phone_number' => 'required|numeric',
 
-            'organization_id'=> 'required|numeric',
+            'organization_id' => 'required|numeric',
 
-            'role_id'=> 'required|numeric',
+            'role_id' => 'required|numeric',
 
         ]);
 
@@ -107,20 +109,20 @@ class Dashboard extends Component
 
 
         $user->save();
-  
-        $this-> resetInput();
+
+        $this->resetInput();
 
         return redirect()->route('OrganizationUsers');
     }
 
     public function editOrganization($id)
     {
-        
+
         $organization  = Organization::where('id', $id)->first();
 
         $this->organization_edit_id = $id;
 
-        $this->name = $organization ->name;
+        $this->name = $organization->name;
 
         $this->location = $organization->location;
 
@@ -132,7 +134,7 @@ class Dashboard extends Component
 
         $this->websiteUrl = $organization->websiteUrl;
 
-        $this->description = $organization->description; 
+        $this->description = $organization->description;
 
         $this->dispatchBrowserEvent('show-edit-org-modal');
     }
@@ -143,13 +145,13 @@ class Dashboard extends Component
         $this->validate([
             'name' => 'required|min:2',
             'email' => 'required|email|max:255|unique:organizations,email',
-            'primary_phone'=> 'required|numeric',
+            'primary_phone' => 'required|numeric',
             'location' => 'required',
         ]);
 
         $organization  = Organization::where('id', $this->organization_edit_id)->first();
 
-        $organization ->name = $this->name;
+        $organization->name = $this->name;
         $organization->location = $this->location;
         $organization->email = $this->email;
         $organization->primary_phone  = $this->primary_phone;
@@ -160,7 +162,7 @@ class Dashboard extends Component
 
         session()->flash('message', 'Organization has been updated successfully');
 
-      
+
         return redirect()->route('OrganizationUsers');
     }
 
@@ -168,7 +170,7 @@ class Dashboard extends Component
     {
         if ($id) {
             $user = User::where('id', $id);
-            $user ->delete();
+            $user->delete();
 
             return redirect()->to('/organization/users');
         }
@@ -176,20 +178,19 @@ class Dashboard extends Component
 
     public function activate($id)
     {
-       
-       User::whereId($id)->update(
-          ['status' => "1"]
-       );
-       return redirect()->to('/organization/users');
+
+        User::whereId($id)->update(
+            ['status' => "1"]
+        );
+        return redirect()->to('/organization/users');
     }
 
     public function deactivate($id)
     {
-       
-       User::whereId($id)->update(
-          ['status' => "0"]
-       );
-       return redirect()->to('/organization/users');
-    }
 
+        User::whereId($id)->update(
+            ['status' => "0"]
+        );
+        return redirect()->to('/organization/users');
+    }
 }

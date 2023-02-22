@@ -7,7 +7,7 @@
                     class="d-flex align-items-center"
                     target="{{ isset($submenu->newTab) && $submenu->newTab === true ? '_blank' : '_self' }}">
                     @if (isset($submenu->icon))
-                        <i data-feather="{{ $submenu->icon }}"></i>
+                        <span class="material-symbols-outlined">{{ $submenu->icon }}</span>
                     @endif
                     <span class="menu-item text-truncate">{{ __(' ' . $submenu->name) }}</span>
                 </a>

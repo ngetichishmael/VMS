@@ -21,11 +21,9 @@
     <title>@yield('title') Visitor Management System</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/logo/favicon.ico') }}">
 
-    {{-- Include core + vendor Styles --}}
-    @include('panels/styles')
 
     {{-- Include core + vendor Styles --}}
-    @include('panels/styles')
+    @include('panels.styles')
 </head>
 
 
