@@ -47,7 +47,6 @@ class SmsCheckInController extends Controller
             'purpose_id' => 'required|integer',
             'nationality' => 'required|string',
             'resident_id' => 'required|integer',
-            'IDNO' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -81,7 +80,7 @@ class SmsCheckInController extends Controller
             $user_details->phone_number = $request->input('phone1');
             $user_details->secondary_phone_number = $request->input('phone2') ?? "NULL";
             $user_details->date_of_birth = $request->input('DOB') ?? "NULL";
-            $user_details->ID_number = $request->input('IDNO');
+            $user_details->ID_number = $request->input('IDNO') ?? "NULL";
             $user_details->gender = $request->input('gender');
             $user_details->save();
         }
