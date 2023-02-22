@@ -11,10 +11,22 @@
                                 placeholder="Search" />
                         </div>
                     </div>
+                  
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="selectSmall">Premise</label>
+                            <select wire:model="premiseId" class="form-control form-control-sm" >
+                                <option value="">  All  </option>
+                                @foreach ($premises as $pre)
+                                    <option  value="{{ $pre ->id }}"> {{ $pre ->name }}</option>
+                                @endforeach  
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="selectSmall">Select Per Page</label>
-                            <select class="form-control form-control-sm" id="selectSmall">
+                            <select wire:model="perPage" class="form-control form-control-sm" id="selectSmall">
                                 <option value="10">10</option>
                                 <option value="20">20</option>
                                 <option value="50">50</option>
@@ -22,15 +34,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="selectSmall">Sort</label>
-                            <select class="form-control form-control-sm" id="selectSmall">
-                                <option value="1">Ascending</option>
-                                <option value="0">Descending</option>
-                            </select>
-                        </div>
-                    </div>
+
                     <div class="col-md-3">
                     <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2; color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
                             data-placement="top" > + Add Block   
@@ -47,7 +51,7 @@
                         <table class="table">
                             <thead>
                                 <tr>        
-                                   <th>Name</th>
+                                   <th>Block Name</th>
                                    <th>Premise</th>
                                     <th>Created At</th>
                                     <th>Status</th>
@@ -55,7 +59,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach ($blocks as $block)
+                            @forelse ($blocks as $block)
                                 <tr>
                                    
                                     <td> {{ $block ->name }} </td>
@@ -82,7 +86,7 @@
 <div class="dropdown-menu">
 
         <!--update link-->
-<a  wire:ignore.self href="#" class="" wire:click="editblock({{ $block->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+<a  wire:ignore.self href="#" class="" wire:click="editBlock({{ $block->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
 <!-- delete link -->
 <?php if($block->status == '0'){ ?>
 <a wire:ignore.self href="#" wire:click="activate({{ $block->id }})"  onclick="return confirm('Are you sure to want to Activate the block?')" style="padding-right:20px; " > Activate </a>
@@ -97,7 +101,11 @@
 </td>
                                 </tr>
 
-                                @endforeach
+                                @empty
+                                <tr>
+                                <td colspan="5" style="text-align: center;"> No Record Found </td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
                         <div style="margin-left: 80%"  class="mt-1">{{ $blocks->links() }}
@@ -110,9 +118,9 @@
 
 
          <!-- Modal to add new block starts-->
-    <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+    <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
-        <form class="add-new-user modal-content pt-0" method="POST" action="{{ route('BlockInformation.store') }}">
+        <form class="add-new-user modal-content pt-0" >
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
@@ -121,30 +129,53 @@
           <div class="modal-body flex-grow-1">
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-fullname">Block Name</label>
-              <input
-                type="text"
-                name="blockname" 
-                :value="old('blockname')"
-                class="form-control dt-full-name"
-                id="basic-icon-default-fullname"
-                aria-describedby="basic-icon-default-fullname2"
-              />
+              <input  type="text" wire:model="name"  class="form-control" required />
+
             </div>
-
-
-
-m
             <fieldset class="form-group">
               <label class="form-label" for="user-role">Premise Name</label>
-              <select id="premise" name="premise" class="form-control">
+              <select id="premise_id"  wire:model="premise_id" class="form-control">
                 
-                @foreach ($blocks as $block)
-                    <option  value="{{ $block ->id }}"> {{ $block ->name }}</option>
+                @foreach ($premises as $premise)
+                    <option  value="{{ $premise ->id }}"> {{ $premise ->name }}</option>
                 @endforeach  
               </select>
             </fieldset>
             
-            <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+            <button wire:click="store" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal to add new block Ends-->
+
+          <!-- Modal to edit block starts-->
+          <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-edit-slide-in">
+      <div class="modal-dialog">
+        <form class="add-new-user modal-content pt-0" >
+        {{ csrf_field() }} 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+          <div class="modal-header mb-1">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Block</h5>
+          </div>
+          <div class="modal-body flex-grow-1">
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Block Name</label>
+              <input  type="text" wire:model="name"  class="form-control" required />
+
+            </div>
+            <fieldset class="form-group">
+              <label class="form-label" for="user-role">Premise Name</label>
+              <select id="premise_id"  wire:model="premise_id" class="form-control">
+                
+                @foreach ($premises as $premise)
+                    <option  value="{{ $premise ->id }}"> {{ $premise ->name }}</option>
+                @endforeach  
+              </select>
+            </fieldset>
+            
+            <button wire:click="editBlockData" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Update') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </form>
@@ -153,3 +184,15 @@ m
     <!-- Modal to add new block Ends-->
 
 
+
+    @push('scripts')
+    <script>
+  
+
+        window.addEventListener('show-edit-block-modal', event =>{
+            $('#modals-edit-slide-in').modal('show');
+        });
+
+    
+    </script>
+@endpush

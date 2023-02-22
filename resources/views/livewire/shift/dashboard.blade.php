@@ -14,7 +14,7 @@
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="selectSmall">Select Per Page</label>
-                            <select class="form-control form-control-sm" id="selectSmall">
+                            <select  wire:model="perPage"  class="form-control form-control-sm" id="selectSmall">
                                 <option value="10">10</option>
                                 <option value="20">20</option>
                                 <option value="50">50</option>

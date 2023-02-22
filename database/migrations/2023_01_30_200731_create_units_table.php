@@ -18,6 +18,7 @@ class CreateUnitsTable extends Migration
             $table->id();
             $table->foreignIdFor(Block::class);
             $table->string('name');
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

@@ -24,7 +24,7 @@ class Dashboard extends Component
     public $sortTimeField = 'time';
     public $sortTimeAsc = true;
 
-    public $premiseId;
+    public $premiseId, $name, $premise_id, $block_edit_id;
 
     public function render()
     {
@@ -39,7 +39,10 @@ class Dashboard extends Component
                 ->whereLike(['name','premise.name'], $searchTerm)
                 ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
                 ->paginate($this->perPage);
-        return view('livewire.premises.block.dashboard', ['blocks' => $blocks]);
+
+            $premises = Premise::all();
+
+        return view('livewire.premises.block.dashboard', ['blocks' => $blocks, 'premises' => $premises]);
     }
 
 
@@ -52,52 +55,61 @@ class Dashboard extends Component
     {
         $this->validate([
             'name' => 'required|min:2',
-        
+            'premise_id' => 'required',
         ]);
   
-        Block::create([
-            'name' => $this->name,
-        ]);
+        //Add Student Data
+        $block = new Block();
+    
+        $block->name = $this->name;
+
+        $block->premise_id = $this->premise_id;
+
+        $block->save();
+
+        return redirect()->route('BlockInformation');
+
         $this->resetInput();
 
-        return redirect()->route('Shifts');
     }
 
-    public function editShift($id)
+    public function editBlock($id)
     {
-        $shift = Block::where('id', $id)->first();
+        $block = Block::where('id', $id)->first();
 
-        $this->shift_edit_id = $id;
+        $this->block_edit_id = $id;
 
-        $this->name = $shift->name;
+        $this->name = $block->name;
   
-        $this->dispatchBrowserEvent('show-edit-shift-modal');
+        $this->dispatchBrowserEvent('show-edit-block-modal');
     }
 
-    public function editShiftData()
+    public function editBlockData()
     {
         //on form submit validation
         $this->validate([
             'name' => 'required|min:2',
+            'premise_id' => 'required',
         ]);
 
-        $shift = Block::where('id', $this->shift_edit_id)->first();
+        $block = Block::where('id', $this->block_edit_id)->first();
 
-        $shift->name = $this->name;
+        $block->name = $this->name;
+
+        $block->premise_id = $this->premise_id;
  
-        $shift->save();
+        $block->save();
 
-        session()->flash('message', 'Shift has been updated successfully');
+        return redirect()->route('BlockInformation');
 
-      
-        return redirect()->route('Shifts');
+        $this->resetInput();
     }
 
     public function destroy($id)
     {
         if ($id) {
-            $shift = Block::where('id', $id);
-            $shift->delete();
+            $block = Block::where('id', $id);
+            $block->delete();
 
             return redirect()->to('/block/information');
         }

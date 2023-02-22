@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Organization;
 
 
+use App\Models\User;
 use App\Models\Organization;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -15,21 +16,47 @@ class Dashboard extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $perPage = 10;
+    public $sortField = 'id';
+    public $sortAsc = true;
     public ?string $search = null;
     public $orderBy = 'id';
     public $orderAsc = true;
 
+    public $sortTimeAsc = true;
+
     public $data, $name, $email, $primary_phone, $secondary_phone, $location, $websiteUrl, $description, $organization_edit_id;
+
+    public function sortBy($field)
+    {
+        if ($field === $this->sortField) {
+            $this->sortAsc = !$this->sortAsc;
+        } else {
+            $this->sortField = $field;
+            $this->sortAsc = true;
+        }
+    }
 
     public function render()
     {
 
         $searchTerm = '%' . $this->search . '%';
 
-        $organization = Organization::whereLike(['name', 'email' ,'primary_phone','location'], $searchTerm)
-            ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
+        $organization = Organization::withCount(['user' => function($query) {$query->where('organization_id','=','$id');}])
+    
+            ->whereLike(['name', 'email' ,'primary_phone','location','user.organization_id'], $searchTerm)
+                
+        ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
             ->paginate($this->perPage);
         return view('livewire.organization.dashboard', ['organizations' => $organization]);
+    }
+
+    public $orgs, $orgCount;
+
+    public function mount(Organization $id)
+    {
+        $this->orgs = Organization::all();
+        $this->orgCount = User::where('organization_id', '=', $id)->count();
+
     }
  
     private function resetInput()
@@ -79,6 +106,8 @@ class Dashboard extends Component
         $organization->save();
 
         return redirect()->route('OrganizationInformation');
+
+         $this->resetInput();
     }
 
     public function editOrganization($id)
@@ -116,7 +145,7 @@ class Dashboard extends Component
         ]);
 
         $organization  = Organization::where('id', $this->organization_edit_id)->first();
-
+        $identificationType->name = $this->name;
         $organization ->name = $this->name;
         $organization->location = $this->location;
         $organization->email = $this->email;
@@ -126,9 +155,6 @@ class Dashboard extends Component
         $organization->description = $this->description;
         $organization->save();
 
-        session()->flash('message', 'Organization has been updated successfully');
-
-      
         return redirect()->route('OrganizationInformation');
     }
 

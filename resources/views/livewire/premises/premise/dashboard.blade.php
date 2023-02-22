@@ -13,8 +13,19 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
+                            <label for="selectSmall">Organization</label>
+                            <select wire:model="organizationId" class="form-control form-control-sm" >
+                                <option value="">  All  </option>
+                                @foreach ($organizations as $org)
+                                    <option  value="{{ $org ->id }}"> {{ $org ->name }}</option>
+                                @endforeach  
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
                             <label for="selectSmall">Select Per Page</label>
-                            <select class="form-control form-control-sm" id="selectSmall">
+                            <select wire:model="perPage"  class="form-control form-control-sm" id="selectSmall">
                                 <option value="10">10</option>
                                 <option value="20">20</option>
                                 <option value="50">50</option>
@@ -22,15 +33,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="selectSmall">Sort</label>
-                            <select class="form-control form-control-sm" id="selectSmall">
-                                <option value="1">Ascending</option>
-                                <option value="0">Descending</option>
-                            </select>
-                        </div>
-                    </div>
+               
                     <div class="col-md-3">
                     <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2;color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
                             data-placement="top" title="New User">
@@ -49,7 +52,7 @@
                             <thead>
                                 <tr>
                                   
-                                    <th>Name</th>
+                                    <th>Premise Name</th>
                                     <th>Organization</th>
                                     <th>Location</th>
                                     <th>Address</th>
@@ -63,7 +66,9 @@
                                 <tr>
                                    
                                     <td> {{ $prem ->name }} </td>
-                                    <td>{!! $prem->organization->name !!}</td>                                  <td> {{ $prem ->location }} </td>
+
+                                    <td>{!! $prem->organization()->pluck("name")->implode('')!!} </td>
+                                    <td> {{ $prem ->location }} </td>
                                     <td> {{ $prem ->address }} </td>
                                     <td>{{ $prem ->created_at }}</td>
                                     <td>
@@ -87,7 +92,7 @@
 <div class="dropdown-menu">
 
         <!--update link-->
-<a  wire:ignore.self href="#" class="" wire:click="editIdentityprem({{ $prem->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit   </a>
+<a  wire:ignore.self href="#" class="" wire:click="editPremise({{ $prem->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit   </a>
 <!-- delete link -->
 <?php if($prem->status == '0'){ ?>
 <a wire:ignore.self href="#" wire:click="activate({{ $prem->id }})"  onclick="return confirm('Are you sure to want to Activate the premise?')" style="padding-right:20px; " > Activate </a>
@@ -120,7 +125,7 @@
           <!-- Modal to add new premise starts-->
    <div wire:ignore.self  class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
-        <form class="add-new-user modal-content pt-0" method="POST" action="{{ route('PremiseInformation.store') }}">
+        <form class="add-new-user modal-content pt-0" >
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
@@ -167,15 +172,53 @@
     <!-- Modal to add new premise Ends-->
 
 
+
+         <!-- Modal to edit premise starts-->
+   <div wire:ignore.self  class="modal modal-slide-in new-user-modal fade" id="modals-edit-slide-in">
+      <div class="modal-dialog">
+        <form class="add-new-user modal-content pt-0" >
+        {{ csrf_field() }} 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+          <div class="modal-header mb-1">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Premise</h5>
+          </div>
+          <div class="modal-body flex-grow-1">
+     
+            
+  
+            
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Name</label>
+              <input  type="text" wire:model="name"  class="form-control" required />
+
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Address</label>
+              <input  type="text" wire:model="address"  class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Location</label>
+              <input  type="text" wire:model="location"  class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Description</label>
+              <input  type="text" wire:model="description"  class="form-control" required />
+            </div>
+
+            <button wire:click="editPremiseData" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Update') }} </button>
+            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal to Edit premise Ends-->
+
+
     @push('scripts')
     <script>
-        window.addEventListener('close-modal', event =>{
-            $('#addStudentModal').modal('hide');
-            $('#editStudentModal').modal('hide');
-            $('#deleteStudentModal').modal('hide');
-        });
+  
 
-        window.addEventListener('show-edit-shift-modal', event =>{
+        window.addEventListener('show-edit-premise-modal', event =>{
             $('#modals-edit-slide-in').modal('show');
         });
 

@@ -20,29 +20,29 @@ class UnitController extends Controller
      */
     public function index()
     {
-        $units = DB::table('units')
+        // $units = DB::table('units')
 
-        ->get();
+        // ->get();
 
-        $units = DB::table('units')
+        // $units = DB::table('units')
 
-        ->join('premises', 'units.premise', '=', 'premises.id')
+        // ->join('premises', 'units.premise', '=', 'premises.id')
 
-        ->join('blocks', 'units.block', '=', 'blocks.id')
+        // ->join('blocks', 'units.block', '=', 'blocks.id')
       
-        ->select('units.*', 'premises.name', 'blocks.blockname')
+        // ->select('units.*', 'premises.name', 'blocks.blockname')
 
-        ->get();
+        // ->get();
 
-        $premises = DB::table('premises')
+        // $premises = DB::table('premises')
 
-        ->get();
+        // ->get();
 
-        $blocks = DB::table('blocks')
+        // $blocks = DB::table('blocks')
 
-        ->get();
+        // ->get();
 
-        return view('livewire.premises.unit.dashboard',compact('units', 'premises', 'blocks'));
+        return view('livewire.premises.unit.layout');
     }
 
     /**
