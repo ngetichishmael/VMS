@@ -6,6 +6,7 @@ use App\Http\Requests\StoreDriveInRequest;
 use App\Http\Requests\UpdateDriveInRequest;
 use App\Models\DriveIn;
 use Carbon\Carbon;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\DB;
 
 class DriveInController extends Controller
@@ -58,6 +59,18 @@ class DriveInController extends Controller
             $visitor->duration = $duration->format('%H Hours %I Minutes %S Seconds');
 
         return view('app.visitor.drivers.visitorDetails', compact('visitor'));
+    }
+    public function showhistory(Request $request)
+    {
+         $visitor = DriveIn::with('nationality','user_details','purpose1','sentry')->find($driveIn);
+
+            $entryTime = Carbon::parse($visitor->timeLogs->entry_time);
+            $exitTime = Carbon::parse($visitor->timeLogs->exit_time);
+            $duration = $entryTime->diff($exitTime);
+
+            $visitor->duration = $duration->format('%H Hours %I Minutes %S Seconds');
+
+        return view('app.visitor.drivers.history', compact('visitor'));
     }
 
     /**

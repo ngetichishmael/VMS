@@ -144,7 +144,12 @@ Route::middleware('auth')->group(function () {
         'destroy' => 'VisitDriveIn.destroy',
         'create' => 'VisitDriveIn.create',
         'store' => 'VisitDriveIn.store',
+        'showhistory'=>'VisitDriveIn.showhistory'
+
+
     ]);
+   Route::get('/visit/drive-in/history', [DriveInController::class, 'showhistory'])->name('VisitDriveIn.showhistory');
+
     Route::resource('Visits/WalkIn', WalkInController::class)->names([
         'index' => 'VisitWalkIn',
         'show' => 'VisitWalkIn.show',

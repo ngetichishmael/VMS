@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Drive-in')
+@section('title', 'History')
 
 @section('vendor-style')
     {{-- vendor css files --}}

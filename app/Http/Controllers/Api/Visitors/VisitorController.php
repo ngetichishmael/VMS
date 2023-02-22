@@ -63,7 +63,7 @@ class VisitorController extends Controller
     public function index(Request $request)
     {
 
-        return response()->json(Visitor::with(['resident2','createdBy', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)->get());
+        return response()->json(Visitor::with(['resident2','sentry', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)->get());
     }
     public function verifyUser(Request $request)
     {

@@ -22,11 +22,21 @@ class SmsCheckInController extends Controller
     public function index(Request $request)
     {
 
-        return response()->json(Visitor::with(['resident2','createdBy', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
+        return response()->json(Visitor::with(['resident2','sentry', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
             ->where('type', 'sms')
             ->get());
     }
-
+    public function smsUncheckout(Request $request)
+    {
+        return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'visitorType'])
+        ->where('sentry_id', $request->user()->id)
+        ->where('type', 'sms')
+        ->whereHas('timeLogs', function ($query) {
+            $query->whereNull('exit_time');
+        })
+        ->latest()
+        ->get());
+    }
 
     /**
      * Store a newly created resource in storage.

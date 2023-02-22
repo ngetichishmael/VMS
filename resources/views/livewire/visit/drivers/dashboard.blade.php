@@ -162,7 +162,7 @@
                                     </a>
                                     <div class="dropdown-menu">
                                         <a href="{{ route('VisitDriveIn.show', $visitor->id) }}">View Details</a>
-                                        <a href="#">View History</a>
+                                        <a href="{{ route('VisitDriveIn.showhistory', ['id' => $visitor->id]) }}">View History</a>
                                     </div>
                                 </div>
                             </td>

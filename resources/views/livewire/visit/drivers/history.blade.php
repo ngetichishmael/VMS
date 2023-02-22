@@ -1,27 +1,11 @@
-<div class="row">
-    <label style="color: #070707" ><h3>Filter By:</h3></label>
-    <div class="col-md-5">
-        <label  style="color: #070707"><h5> Visitor Type </h5></label>
-        <select class="form-control form-select" wire:model="visitorTypeId">
-            <option value="">All          </option>
-            @foreach($visitorTypes as $type)
-                <option value="{{ $type->id }}">{{ $type->name }}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="col-md-5">
-        <label  style="color: #070707"><h6> Time </h6></label> &nbsp;&nbsp;
-        <select class="form-control form-select" wire:model="timeFilter" wire:change="applyTimeFilter">
-            <option value="all">Select Time Duration </option>
-            <option value="daily">Daily</option>
-            <option value="weekly">Weekly</option>
-            <option value="monthly">Monthly</option>
-        </select>
-    </div>
-    <div>
-
-
+<div class="row" >
+    <div class="col-md-12">
         <div class="card">
+            <div class="col-md-12">
+                <div class="card">
+
+                </div>
+            </div>
             <h5 class="card-header">Search Filter</h5>
             <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
                 <div class="col-md-4 user_role">
@@ -179,3 +163,5 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
