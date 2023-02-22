@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Sentry;
 use App\Http\Requests\StoreSentryRequest;
 use App\Http\Requests\UpdateSentryRequest;
-
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
 
 class SentryController extends Controller
 {
@@ -40,18 +42,18 @@ class SentryController extends Controller
         $this->validate(request(), [
             'name' => 'required',
             'id_number' => 'required',
-            'email' => 'required',  
-            'shift' => 'required', 
+            'email' => 'required',
+            'shift' => 'required',
 
         ]);
-        
+
         $sentry = new Sentry;
         $sentry->sname = $request->sname;
         $sentry->id_number = $request->id_number;
         $sentry->email = $request->email;
         $sentry->zone = $request->zone;
         $sentry->save();
-          
+
         return redirect()->to('users/sentries');
     }
 
@@ -101,32 +103,32 @@ class SentryController extends Controller
 
         $delete->delete();
 
-        Toastr::success('Data deleted successfully :)','Success');
+        Toastr::success('Data deleted successfully :)', 'Success');
 
         return redirect()->route('Sentry');
     }
 
-    public function status_update($id){
+    public function status_update($id)
+    {
 
         //get unit status with the help of  ID
         $sentries = DB::table('sentries')
-                    ->select('status')
-                    ->where('id','=',$id)
-                    ->first();
+            ->select('status')
+            ->where('id', '=', $id)
+            ->first();
 
         //Check unit status
-        if($sentries->status == '1'){
+        if ($sentries->status == '1') {
             $status = '0';
-        }else{
+        } else {
             $status = '1';
         }
 
         //update unit status
-        $values = array('status' => $status );
-        DB::table('sentries')->where('id',$id)->update($values);
+        $values = array('status' => $status);
+        DB::table('sentries')->where('id', $id)->update($values);
 
-        session()->flash('msg','User status has been updated successfully.');
+        session()->flash('msg', 'User status has been updated successfully.');
         return redirect()->route('Sentry');
     }
-
 }
