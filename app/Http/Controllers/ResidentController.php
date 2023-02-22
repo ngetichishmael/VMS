@@ -20,26 +20,8 @@ class ResidentController extends Controller
      */
     public function index()
     {
-        $residents = DB::table('residents')
 
-        ->join('blocks', 'residents.block', '=', 'blocks.id')
-      
-        ->join('premises', 'blocks.premise', '=', 'premises.id')
-
-        ->select('residents.*', 'blocks.blockname', 'premises.name')
-
-        ->get();
-
-        $premises = DB::table('premises')
-
-        ->get();
-
-        $blocks = DB::table('blocks')
-
-        ->get();
-
-
-        return view('livewire.premises.resident.dashboard',compact('residents', 'premises', 'blocks'));
+        return view('livewire.premises.resident.layout');
     }
 
     /**

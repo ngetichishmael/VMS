@@ -8,9 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Unit extends Model
 {
     use HasFactory;
+    protected $table = 'units';
+    protected $guarded = [];
+
     public function block()
     {
-        return $this->belongsTo(Block::class);
+        return $this->belongsTo(Block::class, 'block_id');
     }
 
     public function premises()

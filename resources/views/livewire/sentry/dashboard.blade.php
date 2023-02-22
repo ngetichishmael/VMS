@@ -25,18 +25,17 @@
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="selectSmall">Sort</label>
-                            <select wire:model="sortAsc" class="form-control form-control-sm" id="selectSmall">
-                                <option value="1">Ascending</option>
-                                <option value="0">Descending</option>
+                            <select wire:click.prevent="sortBy('name')" class="form-control form-control-sm" id="selectSmall">
+                          
+                            <option value="desc">Ascending</option>
+                                <option value="asc">Descending</option>
                             </select>
                         </div>
                     </div>
               
                     <div class="col-md-3">
-                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2;color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
-                            data-placement="top" title="New User">
-                              + Add New Sentry
-                               
+                    <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal" style="background-color: #1877F2; color:#fff;" id="smallButton" data-target="#modals-slide-in" 
+                            data-placement="top" >+ Add New Sentry
                         </button>
                     </div>
                 </div>
@@ -94,7 +93,7 @@
                                         <div class="dropdown-menu">
 
                                                 <!--update link-->
-                                        <a  wire:ignore.self href="#" class="" wire:click="editsentryanization({{ $sentry->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+                                        <a  wire:ignore.self href="#" class="" wire:click="editSentry({{ $sentry->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
                                         <!-- delete link -->
                                         <?php if($sentry->status == '0'){ ?>
                                         <a wire:ignore.self href="#" wire:click="activate({{ $sentry->id }})"  onclick="return confirm('Are you sure to want to Activate the sentry?')" style="padding-right:20px; " > Activate </a>
@@ -123,54 +122,53 @@
     
         </div>
 
-           <!-- Modal to add new user starts-->
-    <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+          <!-- Modal to add new user starts-->
+  <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
         <form class="add-new-user modal-content pt-0" >
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">New Sentry</h5>
+            <h5 class="modal-title" id="exampleModalLabel">New User</h5>
           </div>
           <div class="modal-body flex-grow-1">
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
-              <input  type="text" wire:model="name"  class="form-control" required />
+          <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Name</label>
+                            <input  type="text" wire:model="name"  class="form-control" required />
 
-            </div>
-
-            
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-email">Email</label>
-              <input  type="text" wire:model="email"  class="form-control" required />
-
-              <small class="form-text text-muted"> You can use letters, numbers & periods </small>
-            </div>
-       
-
-            <fieldset class="form-group">
-              <label class="form-label" for="user-role">Shift</label>
-              <select id="role_id" name="shift_id" class="form-control">
-                
-                @foreach ($shifts as $shift)
-                    <option  value="{{ $shift ->id }}"> {{ $shift ->name }}</option>
-                @endforeach  
-              </select>
-            </fieldset>
-
-            <fieldset class="form-group">
-              <label class="form-label" for="user-role">Shift</label>
-              <select id="role_id" name="device_id" class="form-control">
-                
-                @foreach ($devices as $device)
-                    <option  value="{{ $device ->id }}"> {{ $device ->identifier }}</option>
-                @endforeach  
-              </select>
-            </fieldset>
+                        </div>
 
 
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-email">Email</label>
+                            <input  type="email" wire:model="email"  class="form-control" required />
 
-        
+                            <small class="form-text text-muted"> You can use letters, numbers & periods </small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-email">Phone Number</label>
+                            <input  type="tel" wire:model="primary_phone"  class="form-control" required />
+
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-email">Other Phone Number</label>
+                            <input  type="tel" wire:model="secondary_phone"  class="form-control"  />
+
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Location</label>
+                            <input  type="text" wire:model="location"  class="form-control" required />
+
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Website URL</label>
+                            <input  type="text" wire:model="websiteUrl"  class="form-control" required />
+
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Organization Description</label>
+                            <input  type="text" wire:model="description"  class="form-control" required />
+
+                        </div>
             
             <button wire:click="store" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
@@ -179,4 +177,74 @@
       </div>
     </div>
     <!-- Modal to add new user Ends-->
+
+     <!-- Modal to Edit user starts-->
+     <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-edit-slide-in">
+      <div class="modal-dialog">
+        <form class="add-new-user modal-content pt-0" >
+        {{ csrf_field() }} 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+          <div class="modal-header mb-1">
+            <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+          </div>
+          <div class="modal-body flex-grow-1">
+          <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Name</label>
+                            <input  type="text" wire:model="name"  class="form-control" required />
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-email">Email</label>
+                            <input  type="email" wire:model="email"  class="form-control" required />
+
+                            <small class="form-text text-muted"> You can use letters, numbers & periods </small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-email">Phone Number</label>
+                            <input  type="tel" wire:model="primary_phone"  class="form-control" required />
+
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-email">Other Phone Number</label>
+                            <input  type="tel" wire:model="secondary_phone"  class="form-control"  />
+
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Location</label>
+                            <input  type="text" wire:model="location"  class="form-control" required />
+
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Website URL</label>
+                            <input  type="text" wire:model="websiteUrl"  class="form-control" required />
+
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="basic-icon-default-fullname">Organization Description</label>
+                            <input  type="text" wire:model="description"  class="form-control" required />
+
+                        </div>
+
+            
+            <button wire:click="editUserData" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal to Edit user Ends-->
+                                        </div>
+      <!-- Dashboard Ecommerce ends -->
+      @push('scripts')
+    <script>
+
+
+        window.addEventListener('show-edit-sentry-modal', event =>{
+            $('#modals-edit-slide-in').modal('show');
+        });
+
+    
+    </script>
+@endpush
 

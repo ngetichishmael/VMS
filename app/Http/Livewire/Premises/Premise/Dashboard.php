@@ -54,7 +54,7 @@ class Dashboard extends Component
         $this->validate([
             'name' => 'required|min:2',
 
-            'address' => 'required',
+            'organization_id' => 'required',
 
             'address' => 'required',
 
@@ -87,6 +87,12 @@ class Dashboard extends Component
         $this->premise_edit_id = $id;
 
         $this->name = $premise->name;
+        $this->organization_id = $premise->organization_id;
+        $this->location = $premise->location;
+        $this->address = $premise->address;
+        $this->description = $premise->name;
+
+        $premises = Premise::with('organization') ->get();
   
         $this->dispatchBrowserEvent('show-edit-premise-modal');
     }
@@ -96,16 +102,21 @@ class Dashboard extends Component
         //on form submit validation
         $this->validate([
             'name' => 'required|min:2',
+            'location' => 'required',
+            'address' => 'required',
         ]);
 
         $premise = Premise::where('id', $this->premise_edit_id)->first();
 
         $premise->name = $this->name;
+
+        $premise->location = $this->location;
+
+        $premise->address = $this->address;
+
+        $premise->description = $this->description;
  
         $premise->save();
-
-        session()->flash('message', 'Premise has been updated successfully');
-
       
         return redirect()->to('/premise/information');
     }

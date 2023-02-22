@@ -7,13 +7,16 @@ use App\Models\User;
 use App\Models\Organization;
 use App\Models\Role;
 use Livewire\WithPagination;
+
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class Dashboard extends Component
 {
     use WithPagination;
-
-
+    
+    
     protected $paginationTheme = 'bootstrap';
     public $perPage = 10;
     public $sortField = 'id';
@@ -23,31 +26,26 @@ class Dashboard extends Component
     public $orderAsc = true;
     public $sortTimeField = 'time';
     public $sortTimeAsc = true;
-    public $location;
-    public $primary_phone;
-    public $secondary_phone;
-    public $websiteUrl;
-    public $description;
-    public $roleId;
+
     public $organizationId;
-    public $organization_edit_id;
+    public $roleId;
 
     public  $name, $email, $phone_number, $role_id, $password, $organization_id;
 
 
     public function render()
     {
-
+    
         $searchTerm = '%' . $this->search . '%';
 
-        $users = User::with('organization', 'role')
+        $users = User::with('organization','role')
             ->when($this->organizationId, function ($query) {
                 $query->where('organization_id', $this->organizationId);
             })
             ->when($this->roleId, function ($query) {
                 $query->where('role_id', $this->roleId);
             })
-            ->whereLike(['name', 'organization.name', 'role.name'], $searchTerm)
+            ->whereLike(['name','organization.name','role.name'], $searchTerm)
             ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
             ->paginate($this->perPage);
 
@@ -56,10 +54,10 @@ class Dashboard extends Component
         $roles = Role::all();
 
 
-        return view('livewire.user.dashboard', [
-            'users' => $users,
-            'organizations' => $organizations,
-            'roles' => $roles,
+        return view('livewire.user.dashboard', [ 
+            'users' => $users, 
+             'organizations' => $organizations,
+             'roles' => $roles,
         ]);
     }
 
@@ -81,11 +79,11 @@ class Dashboard extends Component
 
             'email' => 'required|email|max:255|unique:organizations,email',
 
-            'phone_number' => 'required|numeric',
+            'phone_number'=> 'required|numeric',
 
-            'organization_id' => 'required|numeric',
+            'organization_id'=> 'required|numeric',
 
-            'role_id' => 'required|numeric',
+            'role_id'=> 'required|numeric',
 
         ]);
 
@@ -109,59 +107,53 @@ class Dashboard extends Component
 
 
         $user->save();
-
-        $this->resetInput();
+  
+        $this-> resetInput();
 
         return redirect()->route('OrganizationUsers');
     }
 
-    public function editOrganization($id)
+    public function edituser($id)
     {
+        
+        $user  = User::where('id', $id)->first();
 
-        $organization  = Organization::where('id', $id)->first();
+        $this->user_edit_id = $id;
 
-        $this->organization_edit_id = $id;
+        $this->name = $user ->name;
 
-        $this->name = $organization->name;
+        $this->email = $user->email;
 
-        $this->location = $organization->location;
+        $this->phone_number =  $user->phone_number;
 
-        $this->email =  $organization->email;
+        $this->organization_id = $user->organization_id;
 
-        $this->primary_phone = $organization->primary_phone;
+        $this->role_id = $user->role_id;
 
-        $this->secondary_phone = $organization->secondary_phone;
-
-        $this->websiteUrl = $organization->websiteUrl;
-
-        $this->description = $organization->description;
+  
 
         $this->dispatchBrowserEvent('show-edit-org-modal');
     }
 
-    public function editOrganizationData()
+    public function editUserData()
     {
         //on form submit validation
         $this->validate([
             'name' => 'required|min:2',
             'email' => 'required|email|max:255|unique:organizations,email',
-            'primary_phone' => 'required|numeric',
-            'location' => 'required',
+            'phone_number'=> 'required|numeric',
+           
         ]);
 
-        $organization  = Organization::where('id', $this->organization_edit_id)->first();
+        $user  = User::where('id', $this->user_edit_id)->first();
 
-        $organization->name = $this->name;
-        $organization->location = $this->location;
-        $organization->email = $this->email;
-        $organization->primary_phone  = $this->primary_phone;
-        $organization->secondary_phone  = $this->secondary_phone;
-        $organization->websiteUrl  = $this->websiteUrl;
-        $organization->description = $this->description;
-        $organization->save();
+        $user ->name = $this->name;
+        $user->email = $this->email;
+        $user->phone_number = $this->phone_number;
+        $user->organization_id  = $this->organization_id;
+        $user->role_id  = $this->role_id;
 
-        session()->flash('message', 'Organization has been updated successfully');
-
+        $user->save();
 
         return redirect()->route('OrganizationUsers');
     }
@@ -170,7 +162,7 @@ class Dashboard extends Component
     {
         if ($id) {
             $user = User::where('id', $id);
-            $user->delete();
+            $user ->delete();
 
             return redirect()->to('/organization/users');
         }
@@ -178,19 +170,20 @@ class Dashboard extends Component
 
     public function activate($id)
     {
-
-        User::whereId($id)->update(
-            ['status' => "1"]
-        );
-        return redirect()->to('/organization/users');
+       
+       User::whereId($id)->update(
+          ['status' => "1"]
+       );
+       return redirect()->to('/organization/users');
     }
 
     public function deactivate($id)
     {
-
-        User::whereId($id)->update(
-            ['status' => "0"]
-        );
-        return redirect()->to('/organization/users');
+       
+       User::whereId($id)->update(
+          ['status' => "0"]
+       );
+       return redirect()->to('/organization/users');
     }
+
 }

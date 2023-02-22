@@ -1,188 +1,196 @@
-@extends('layouts.contentLayoutMaster')
-
-@section('title', 'Resident')
-
-@section('vendor-style')
-    {{-- vendor css files --}}
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/charts/apexcharts.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('fonts/font-awesome/css/font-awesome.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/jstree.min.css')) }}">
-@endsection
-@section('page-style')
-    {{-- Page css files --}}
-
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-tree.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/pages/dashboard-ecommerce.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/charts/chart-apex.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
-@endsection
-
-@section('content')
-    <!-- Dashboard Ecommerce Starts -->
-    <section id="dashboard-ecommerce">
-        <section>
-            <!-- users filter start -->
+<div>
             <div class="card">
                 <h5 class="card-header">Search Filter</h5>
                 <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
-                    <div class="col-md-4 user_role">
+                    <div class="col-md-4 resident_role">
                         <div class="input-group input-group-merge">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i data-feather="search"></i></span>
                             </div>
-                            <input type="text" id="fname-icon" class="form-control" name="fname-icon"
-                                placeholder="Search" />
+                            <input wire:model="search" type="search" id="search" class="form-control" name="search"
+                              placeholder="Search" />
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="selectSmall">Select Per Page</label>
-                            <select class="form-control form-control-sm" id="selectSmall">
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
+                            <label for="selectSmall">Organization</label>
+                            <select wire:model="organizationId" class="form-control form-control-sm" >
+                                <option value="">  All  </option>
+                                @foreach ($organizations as $org)
+                                    <option  value="{{ $org ->id }}"> {{ $org ->name }}</option>
+                                @endforeach  
                             </select>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="selectSmall">Sort</label>
-                            <select class="form-control form-control-sm" id="selectSmall">
-                                <option value="1">Ascending</option>
-                                <option value="0">Descending</option>
-                            </select>
+                            <label for="selectSmall">Role</label>
+                            <select wire:model="roleId" class="form-control form-control-sm" id="selectSmall">
+                                <option value="">All</option>
+                                @foreach ($roles as $rol)
+                                    <option  value="{{ $rol ->id }}"> {{ $rol ->name }}</option>
+                                @endforeach  
+                              </select>
                         </div>
                     </div>
                     <div class="col-md-3">
-                    <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
-                            data-placement="top" title="New User">
-                            <img src="{{ asset('images/icons/exceal.png') }}"alt="Add" width="20" height="20">
+                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2; color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
+                            data-placement="top" title="New resident">
+                          + Add New Resident
                                
                         </button>
                     </div>
                 </div>
             </div>
-            <!-- users filter end -->
+            <!-- residents filter end -->
             {{-- @include('partials.loaderstyle') --}}
             <!-- list section start -->
             <div class="card">
                 <div class="pt-0 card-datatable table-responsive">
                     <div class="card-datatable table-responsive">
-                        <table class="table">
+                        <table class="table" >
                             <thead>
                                 <tr>
-                                  
-                                    <th>Full Names</th>
-                                    <th>Premise</th>
-                                    <th>Block</th>
+                             
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>PhoneNumber</th>
+                                    <th>Unit Name</th>
+                              
                                     <th>Status</th>
                                     <th>Last Login</th>
                                     <th>Check Out</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                            @foreach ($residents as $resident)
-                                <tr>
-                                   
-                                    <td> {{ $resident ->rname }} </td>
-                                    <td> {{ $resident ->name }} </td>
-                                    <td> {{ $resident ->blockname }} </td>
-                                    <td>
-                                    <?php if($resident->status == '1'){ ?> 
 
-                                        <a href="#" class="Active" style="color:#00FF00;">Active</a>
+                         
+
+                            <tbody>
+                            @forelse ($residents as $key => $resident)
+                                <tr>
+                                    <!-- <td> {{ $resident ->id }} </td> -->
+                                    <td> {{ $resident ->name }} </td>
+
+                                    <td>{{ $resident ->email }}</td>
+                                    <td> {{ $resident ->phone_number }} </td>
+                                   
+                                    <td>{!! $resident->unit()->pluck("name")->implode('')!!} </td>
+                                
+                                  
+                                     <td>
+                                     <?php if($resident->status == '1'){ ?> 
+
+                                        <a href="#" class="Active" style="color:#73A561;">Active</a>
 
                                         <?php }else{ ?> 
 
                                         <a href="#" class="inactive" style="color:#8B0000;">Disabled</a>
 
-                                    <?php } ?>
-
+                                        <?php } ?>
+                                    
                                     </td>
-                                    <td>{{ $resident ->created_at }}</td>
-                                    <td>     
-                                    <div class="dropdown">
+                                    <td>{{ now() }}</td>
+                                    <td>{{ now() }}</td>
+                                    <td>
+                                        <div class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu">
-                                            <!--update link-->
-                                            <a href="{{ url('resident/information/'.$resident->id) }}" class="" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+
+                                                <!--update link-->
+                                        <a  wire:ignore.self href="#" class="" wire:click="editresident({{ $resident->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
                                         <!-- delete link -->
-                                        <?php if($resident->status == '0'){ ?> 
-                                        <a href="{{ url('resident/information/suspend/'.$resident->id) }}" onclick="return confirm('Are you sure to want to unblock the resident?')" style="padding-right:20px; " > Unblock </a>
-                                        <?php }else{ ?> 
-                                        <a href="{{ url('resident/information/suspend/'.$resident->id) }}" onclick="return confirm('Are you sure to want to block the resident?')" style="padding-right:20px; " title="Disable"> Block </a>
+                                        <?php if($resident->status == '0'){ ?>
+                                        <a wire:ignore.self href="#" wire:click="activate({{ $resident->id }})"  onclick="return confirm('Are you sure to want to Activate the resident?')" style="padding-right:20px; " > Activate </a>
+                                        <?php }else{ ?>
+                                        <a wire:ignore.self href="#" wire:click="deactivate({{ $resident->id }})"  onclick="return confirm('Are you sure to want to suspend the resident?')" style="padding-right:20px; " > Suspend</i> </a>
                                         <?php } ?>
 
-                                        <a href="{{ url('resident/information/delete/'.$resident->id) }}" onclick="return confirm('Are you sure to want to delete the resident?')" > Delete </a>
+                                        <a wire:ignore.self href="#" wire:click="destroy({{ $resident->id }})" onclick="return confirm('Are you sure to want to delete the resident?')" > Delete </a>
 
                                         </div>
                                         </div>
-
-                                    </td>
+                                        </td>
                                 </tr>
-
-                                @endforeach
-
+                              
+                         
+                                @empty
+                                <tr>
+                                    <td colspan="8" style="text-align: center; ">No Record Found</td>
+                                </tr>
+                            @endforelse
+                       
                             </tbody>
+                          
                         </table>
-                        <div class="mt-1">
+             
+                        <div style="margin-left: 80%"  class="mt-1">{{ $residents->links() }}
                         </div>
                     </div>
                 </div>
-        </section>
+   
         </div>
 
     
               <!-- Modal to add new resident starts-->
-    <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+    <div wire:ignore.self class="modal modal-slide-in new-resident-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
-        <form class="add-new-user modal-content pt-0" method="POST" action="{{ route('ResidentInformation.store') }}">
+        <form class="add-new-resident modal-content pt-0" >
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">New Resident</h5>
+            <h5 class="modal-title" id="exampleModalLabel">New resident</h5>
           </div>
           <div class="modal-body flex-grow-1">
             <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Full Names</label>
-              <input
-                type="text"
-                name="rname" 
-               
-                class="form-control dt-full-name"
-                id="basic-icon-default-fullname"
-                aria-describedby="basic-icon-default-fullname2"
-              />
+              <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
+              <input  type="text" wire:model="name"  class="form-control" required />
+
+            </div>
+   
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-email">Email</label>
+              <input  type="email" wire:model="email"  class="form-control" required />
+
+              <small class="form-text text-muted"> You can use letters, numbers & periods </small>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
+              <input  type="tel" wire:model="phone_number"  class="form-control" required />
+
             </div>
 
 
+            <fieldset class="form-group">
+              <label class="form-label" for="resident-role">Organization</label>
+              <select id="organization_id" wire:model="organization_id" class="form-control">
+               <option  value="#"> Select</option>
+                @foreach ($organizations as $organizat)
+                    <option  value="{{ $organizat ->id }}"> {{ $organizat ->name }}</option>
+                @endforeach  
+              </select>
+            </fieldset>
 
             <fieldset class="form-group">
-              <label class="form-label" for="user-role">Premise Name</label>
-              <select id="premise" name="premise" class="form-control">
-                
-                @foreach ($premises as $prem)
-                    <option  value="{{ $prem ->id }}"> {{ $prem ->name }}</option>
+              <label class="form-label" for="resident-role">Role</label>
+              <select id="role_id" wire:model="role_id" class="form-control" required>
+              <option  value="#"> Select</option>
+                @foreach ($roles as $ros)
+                    <option  value="{{ $ros ->id }}"> {{ $ros ->name }}</option>
                 @endforeach  
               </select>
             </fieldset>
 
 
-            <fieldset class="form-group">
-              <label class="form-label" for="user-role">Block Name</label>
-              <select id="block" name="block" class="form-control">
-                
-                @foreach ($blocks as $block)
-                    <option  value="{{ $block ->id }}"> {{ $block ->blockname }}</option>
-                @endforeach  
-              </select>
-            </fieldset>
+
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Password</label>
+              <input  type="password" wire:model="password"  class="form-control" required />
+            </div>
             
-            <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+            <button wire:click="store" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </form>
@@ -190,52 +198,73 @@
     </div>
     <!-- Modal to add new resident Ends-->
 
-        <h2 class="brand-text">TODO ON RESIDENTS</h2>
-        <div class="card-body">
-            <div id="jstree-basic">
-                <ul>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        CRUD
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Create</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Read</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Updated</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Delete</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Relationship
-                        <ul data-jstree='{"icon" : "far fa-folder"}'>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Zone</li>
-                            <li data-jstree='{"icon" : "far fa-file-image"}'>Hierarchy above the Zone</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Table
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Filter</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Pagination</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Search by *</li>
-                        </ul>
-                    </li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Any Other</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Martin from Advise</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Isaac to Provide images, and secondary colors</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!-- Dashboard Ecommerce ends -->
-@endsection
+     <!-- Modal to Edit resident starts-->
+     <div wire:ignore.self class="modal modal-slide-in new-resident-modal fade" id="modals-edit-slide-in">
+      <div class="modal-dialog">
+        <form class="add-new-resident modal-content pt-0" >
+        {{ csrf_field() }} 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+          <div class="modal-header mb-1">
+            <h5 class="modal-title" id="exampleModalLabel">Edit resident</h5>
+          </div>
+          <div class="modal-body flex-grow-1">
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
+              <input  type="text" wire:model="name"  class="form-control" required />
 
-@section('vendor-script')
-    {{-- vendor files --}}
-    <script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/extensions/jstree.min.js')) }}"></script>
-@endsection
-@section('page-script')
-    {{-- Page js files --}}
-    <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script>
-    <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
-@endsection
+            </div>
+   
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-email">Email</label>
+              <input  type="email" wire:model="email"  class="form-control" required />
+
+              <small class="form-text text-muted"> You can use letters, numbers & periods </small>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
+              <input  type="tel" wire:model="phone_number"  class="form-control" required />
+
+            </div>
+
+
+            <fieldset class="form-group">
+              <label class="form-label" for="resident-role">Organization</label>
+              <select id="organization_id" wire:model="organization_id" class="form-control">
+               <option  value="#"> Select</option>
+                @foreach ($organizations as $organ)
+                    <option  value="{{ $organ ->id }}"> {{ $organ ->name }}</option>
+                @endforeach  
+              </select>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label class="form-label" for="resident-role">Role</label>
+              <select id="role_id" wire:model="role_id" class="form-control" required>
+              <option  value="#"> Select</option>
+                @foreach ($roles as $roll)
+                    <option  value="{{ $roll ->id }}"> {{ $roll ->name }}</option>
+                @endforeach  
+              </select>
+            </fieldset>
+
+            
+            <button wire:click="editresidentData" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Update') }} </button>
+            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal to Edit resident Ends-->
+
+      <!-- Dashboard Ecommerce ends -->
+      @push('scripts')
+    <script>
+
+
+        window.addEventListener('show-edit-org-modal', event =>{
+            $('#modals-edit-slide-in').modal('show');
+        });
+
+    
+    </script>
+@endpush
