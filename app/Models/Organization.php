@@ -25,6 +25,6 @@ class Organization extends Model
     }
     public function user()
     {
-        return $this->hasMany(User::class, 'organization_id', 'id');
+        return $this->hasMany(User::class, 'organization_code', 'id');
     }
 }
