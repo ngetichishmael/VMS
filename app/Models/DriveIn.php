@@ -55,11 +55,6 @@ class DriveIn extends Model
         return $this->hasMany(\App\Models\Organization::class, 'id' );
     }
 
-//    public function vehicle(): BelongsTo
-//    {
-//        return $this->belongsTo(VehicleInformation::class, 'vehicleId');
-//    }
-
     public function visitorType(): BelongsTo
     {
         return $this->belongsTo(VisitorType::class, 'visitor_type_id');

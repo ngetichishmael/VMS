@@ -44,7 +44,7 @@
                         </select>
                     </div>
                 </div>
-                  <div class="form-group col-md-3 ">
+                <div class="form-group col-md-3">
                     <label for="sortTimeAsc">Sort By Time:</label>
                     <select wire:model="sortTimeAsc" class="form-control form-select">
                         <option value="1">Ascending</option>
@@ -71,6 +71,7 @@
                                     @endif
                                 @endif
                             </th>
+                            <th>Vehicle Reg</th>
                             <th wire:click="sortBy('name')">Name
                                 @if($sortField === 'name')
                                     @if($sortAsc)
@@ -138,9 +139,10 @@
 
                         </style>
                         <tbody style="font-size: small">
-                        @forelse($visitors as $key => $visitor)
+                        @forelse($dvisitors as $key => $visitor)
                             <tr>
                                 <td>{{ $visitor->id }}</td>
+                                <td>{!! $visitor->vehicle()->pluck("registration")->implode('')!!} </td>
                                 <td>{!! $visitor->name!!} </td>
                                 <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}</td>
                                 <td>{!! $visitor->resident->unit->name !!}</td>
@@ -159,7 +161,7 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu">
-                                            <a href="{{ route('VisitWalkIn.show', $visitor->id) }}">View Details</a>
+                                            <a href="{{ route('VisitDriveIn.show', $visitor->id) }}">View Details</a>
                                             <a href="#">View History</a>
                                         </div>
                                     </div>
@@ -167,12 +169,12 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="10" style="padding-left: 40%">No Walk In Records Found!... </td>
+                                <td colspan="10" style="padding-left: 40%">No Drive In Records Found!... </td>
                             </tr>
                         @endforelse
                         </tbody>
                     </table>
-                    <div class="mt-1">{{ $visitors->links() }}
+                    <div class="mt-1">{{ $dvisitors->links() }}
                     </div>
                 </div>
             </div>

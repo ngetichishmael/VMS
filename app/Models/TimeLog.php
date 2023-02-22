@@ -18,4 +18,8 @@ class TimeLog extends Model
     {
         return $this->hasMany(Visitor::class, );
     }
+    public function drivein()
+    {
+        return $this->hasMany(DriveIn::class, 'time_log_id');
+    }
 }
