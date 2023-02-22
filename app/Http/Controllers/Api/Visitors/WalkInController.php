@@ -22,7 +22,7 @@ class WalkInController extends Controller
     public function index(Request $request)
     {
 
-        return response()->json(Visitor::with(['resident2','createdBy', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
+        return response()->json(Visitor::with(['resident2','sentry', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
         ->where('type', 'walkin')
         ->get());
     }
