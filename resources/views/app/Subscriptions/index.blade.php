@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'History')
+@section('title', 'Drive-in')
 
 @section('vendor-style')
     {{-- vendor css files --}}
@@ -20,7 +20,7 @@
 
 @section('content')
     <!-- Dashboard Ecommerce Starts -->
-    @livewire('visit.drivers.history')
+    @livewire('subscriptions.dashboard')
     <!-- Dashboard Ecommerce ends -->
 @endsection
 

@@ -19,7 +19,10 @@ class Organization extends Model
     protected $table = 'organizations';
     protected $guarded = [];
 
-  
+    public function subscription(){
+        return $this->hasOne(Subscription::class,'organization_code' );
+    }
+
 
 }
 

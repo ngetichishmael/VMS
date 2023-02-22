@@ -10,6 +10,7 @@ use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\SentryController;
 use App\Http\Controllers\ServiceCategoryController;
 use App\Http\Controllers\ShiftController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleInformationController;
@@ -98,6 +99,16 @@ Route::middleware('auth')->group(function () {
         'store' => 'OrganizationInformation.store',
         'deactivate' => 'OrganizationInformation.deactivate',
     ]);
+    Route::resource('organization/subscription', SubscriptionController::class)->names([
+        'index' => 'OrganizationSubscription',
+        'show' => 'OrganizationSubscription.show',
+        'edit' => 'OrganizationSubscription.edit',
+        'update' => 'OrganizationSubscription.update',
+        'destroy' => 'OrganizationSubscription.destroy',
+        'create' => 'OrganizationSubscription.create',
+        'store' => 'OrganizationSubscription.store',
+        'deactivate' => 'OrganizationSubscription.deactivate',
+    ]);
 
 
     Route::resource('premise/information', PremiseController::class)->names([
@@ -144,12 +155,7 @@ Route::middleware('auth')->group(function () {
         'destroy' => 'VisitDriveIn.destroy',
         'create' => 'VisitDriveIn.create',
         'store' => 'VisitDriveIn.store',
-        'showhistory'=>'VisitDriveIn.showhistory'
-
-
     ]);
-   Route::get('/visit/drive-in/history', [DriveInController::class, 'showhistory'])->name('VisitDriveIn.showhistory');
-
     Route::resource('Visits/WalkIn', WalkInController::class)->names([
         'index' => 'VisitWalkIn',
         'show' => 'VisitWalkIn.show',
