@@ -21,9 +21,8 @@ class VisitorTypeSeeder extends Seeder
             ['id' => 4, 'name' => 'Vendor'],
             ['id' => 5, 'name' => 'Business'],
             ['id' => 6, 'name' => 'Intern'],
-            // ...
         ];
 
-        DB::table('visitor_types')->insert($type);
+        DB::create($type);
     }
 }

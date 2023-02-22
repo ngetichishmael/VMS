@@ -50,8 +50,8 @@ class VisitorController extends Controller
     }
     public function unitOptions(Request $request)
     {
-        $sentry=Sentry::where('user_detail_id', $request->user()->id)->first();
-       $units=Premise::with('blocks.units')->where('id', $sentry->premise_id)->get();
+        $sentry = Sentry::where('user_detail_id', $request->user()->id)->first();
+        $units = Premise::with('blocks.units')->where('id', $sentry->premise_id)->get();
         return response()->json($units);
     }
 
@@ -63,7 +63,7 @@ class VisitorController extends Controller
     public function index(Request $request)
     {
 
-        return response()->json(Visitor::with(['resident2','createdBy', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)->get());
+        return response()->json(Visitor::with(['resident2', 'createdBy', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)->get());
     }
     public function verifyUser(Request $request)
     {
@@ -73,7 +73,7 @@ class VisitorController extends Controller
         if (!$user) {
             return response()->json(['message' => 'Visitor not found'], 404);
         }
-        $visitor=Visitor::where('user_detail_id',  $user->id)->orderBy('id', 'desc')->first();
+        $visitor = Visitor::where('user_detail_id',  $user->id)->orderBy('id', 'desc')->first();
         $time_log = TimeLog::where('id', $visitor->time_log_id)
             ->whereNull('exit_time')
             ->first();
@@ -81,22 +81,32 @@ class VisitorController extends Controller
             return response()->json(['message' => 'User has already exited'], 400);
         }
 
-        return response()->json(['Message' => 'Visitor exists', 'visitor'=>$visitor], 200);
+        return response()->json(['Message' => 'Visitor exists', 'visitor' => $visitor], 200);
     }
 
     public function checkout(Request $request)
     {
-        $time_log = $request->time_log_id;
-
-
-        $result = TimeLog::whereId($time_log)->whereNull('exit_time')->update([
-            'exit_time' => now(),
-        ]);
-        if ($result===0){
-            return response()->json(['message' =>'Visitor time log does not exist or has already checked out!'], 406);
+        $user_details = UserDetail::find($request->phone_number);
+        if ($user_details) {
+            $result = TimeLog::whereId($user_details->id)->whereNull('exit_time')->update([
+                'exit_time' => now(),
+            ]);
+            if ($result === 0) {
+                return response()->json(
+                    ['message' => 'Visitor time log does not exist or has already checked out!'],
+                    406
+                );
+            }
+            return response()->json(['message' => 'Visitor checked out successfully', 'result' => $result], 200);
         }
 
-        return response()->json(['message' => 'Visitor checked out successfully','result'=>$result], 200);
+        return response()->json(
+            [
+                'status' => 406,
+                'message' => 'An error occurred while checking out the customer',
+            ],
+            406
+        );
     }
     /**
      * Store a newly created resource in storage.
@@ -124,7 +134,6 @@ class VisitorController extends Controller
         }
 
         return response()->json($visitor);
-
     }
 
 
