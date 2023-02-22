@@ -12,7 +12,7 @@ $configData = Helper::applClasses();
   data-menu="menu-wrapper"
   data-menu-type="floating-nav">
     <div class="navbar-header">
-      <ul class="nav navbar-nav flex-row">
+      <ul class="nav navbar-nav flex-row" style="font-weight: bolder; color: black;">
         <li class="nav-item mr-auto"><a class="navbar-brand" href="{{url('/')}}"><span class="brand-logo">
           <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
             <defs>
@@ -37,7 +37,7 @@ $configData = Helper::applClasses();
               </g>
             </g>
           </svg></span>
-          <h2 class="brand-text mb-0">Vuexy</h2></a></li>
+          <h2 class="brand-text mb-0">MojaPass</h2></a></li>
         <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i></a></li>
       </ul>
     </div>

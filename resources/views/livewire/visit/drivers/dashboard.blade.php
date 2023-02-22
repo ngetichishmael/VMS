@@ -9,18 +9,9 @@
             @endforeach
         </select>
     </div>
-    {{--    <div class="col-md-5">--}}
-    {{--        <label  style="color: #070707"><h5>Identification Type </h5></label> &nbsp;&nbsp;--}}
-    {{--        <select class="form-select" wire:model="identificationTypeId">--}}
-    {{--            <option value=""> All                 </option>--}}
-    {{--            @foreach($identificationTypes as $type)--}}
-    {{--                <option value="{{ $type->id }}">{{ $type->name }}</option>--}}
-    {{--            @endforeach--}}
-    {{--        </select>--}}
-    {{--    </div>--}}
     <div class="col-md-5">
         <label  style="color: #070707"><h6> Time </h6></label> &nbsp;&nbsp;
-        <select class="form-control" wire:model="timeFilter" wire:change="applyTimeFilter">
+        <select class="form-control form-select" wire:model="timeFilter" wire:change="applyTimeFilter">
             <option value="all">Select Time Duration </option>
             <option value="daily">Daily</option>
             <option value="weekly">Weekly</option>
@@ -45,7 +36,7 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="selectSmall">Select Per Page</label>
-                        <select class="form-control form-control-sm" id="selectSmall">
+                        <select class="form-control form-control-sm form-select" id="selectSmall" wire:model="perPage">
                             <option value="10">10</option>
                             <option value="20">20</option>
                             <option value="50">50</option>
@@ -55,7 +46,7 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label for="sortTimeAsc">Sort By Time:</label>
-                    <select wire:model="sortTimeAsc" class="form-control">
+                    <select wire:model="sortTimeAsc" class="form-control form-select">
                         <option value="1">Ascending</option>
                         <option value="0">Descending</option>
                     </select>

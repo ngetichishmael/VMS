@@ -22,7 +22,6 @@ class Dashboard extends Component
     public $sortAsc = true;
     public ?string $search = null;
     public $visitorTypeId;
-    public $organizationCodeId;
     public $sortTimeField='entry_time';
     public $sortTimeAsc = true;
     public $timeFilter = 'all';
@@ -49,13 +48,10 @@ class Dashboard extends Component
     public function applyTimeFilter()
     {
         $this->resetPage();
-
-        $this->visitors = WalkIn::with('organization', 'timeLogs')
+        $searchTerm = '%' . $this->search . '%';
+        $this->visitors = WalkIn::with('organization', 'timeLogs','Resident.unit.block.premise.organization')
             ->when($this->visitorTypeId, function ($query) {
                 $query->where('visitor_type_id', $this->visitorTypeId);
-            })
-            ->when($this->organizationCodeId, function ($query) {
-                $query->where('resident.unit.block.premise.organization.code', $this->organizationCodeId);
             })
             ->where('type', 'walkin')
             ->when($this->timeFilter != 'all', function ($query) {
@@ -72,6 +68,14 @@ class Dashboard extends Component
                             ->whereMonth('entry_time', Carbon::now()->month);
                     }
                 });
+            })->whereLike(['name'], $searchTerm)->orWhereHas('Resident.unit.block.premise.organization', function ($query) use ($searchTerm) {
+                $query->where('name', 'like', $searchTerm);
+            })->orWhereHas('Resident.unit.block.premise', function ($query) use ($searchTerm) {
+                $query->where('name', 'like', $searchTerm);
+            })->orWhereHas('Resident.unit.block', function ($query) use ($searchTerm) {
+                $query->where('name', 'like', $searchTerm);
+            })->orWhereHas('Resident.unit', function ($query) use ($searchTerm) {
+                $query->where('name', 'like', $searchTerm);
             })
             ->leftJoin('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->orderBy('time_logs.entry_time', $this->sortTimeAsc ? 'asc' : 'desc')
@@ -80,10 +84,8 @@ class Dashboard extends Component
     }
     public function render()
     {
-        $searchTerm = '%' . $this->search . '%';
         $this->applyTimeFilter();
         $visitorTypes = VisitorType::all();
-        $organizationCodes = Organization::all();
         foreach ($this->visitors as $visitor) {
             $entryTime = Carbon::parse($visitor->timeLogs->entry_time);
             $exitTime = Carbon::parse($visitor->timeLogs->exit_time);
@@ -94,7 +96,6 @@ class Dashboard extends Component
         return view('livewire.visit.walks.dashboard', [
             'visitors' => $this->visitors,
             'visitorTypes' => $visitorTypes,
-//        'organizationCodes' => $organizationCodes,
         ]);
     }
 }
