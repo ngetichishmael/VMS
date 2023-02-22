@@ -24,5 +24,9 @@ class TimeLogSeeder extends Seeder
             'entry_time' => Carbon::now()->subDays(1)->addHours(10),
             'exit_time' => Carbon::now()->subDays(1)->addHours(18),
         ]);
+        DB::table('time_logs')->insert([
+            'entry_time' => Carbon::now()->subDays(1)->addHours(9),
+            'exit_time' => Carbon::now()->subDays(1)->addHours(18),
+        ]);
     }
 }

@@ -31,6 +31,14 @@ class UserSeeder extends Seeder
             "role_id" => 2,
             'password' => '$2y$10$y5KwRinBAUzQsBuK6EvRXuu0i2RrjTHGs00SOD44S1L9VCMgvx3I6',
         ]);
+        User::create([
+            'name' => "Stephen Maina",
+            'email' => "info@deveint.com",
+            'phone_number' => "0710767015",
+            'email_verified_at' => now(),
+            "role_id" => 2,
+            'password' => '$2y$10$y5KwRinBAUzQsBuK6EvRXuu0i2RrjTHGs00SOD44S1L9VCMgvx3I6',
+        ]);
         Sentry::create([
             'name'=>'Ishmael ',
             'status'=>1,
