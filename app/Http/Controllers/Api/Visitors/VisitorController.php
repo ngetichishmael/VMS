@@ -3,22 +3,17 @@
 namespace App\Http\Controllers\Api\Visitors;
 
 use App\Http\Controllers\Controller;
-use App\Models\Block;
 use App\Models\IdentificationType;
 use App\Models\Purpose;
 use App\Models\Resident;
 use App\Models\Sentry;
 use App\Models\TimeLog;
-use App\Models\Unit;
 use App\Models\UserDetail;
 use App\Models\Visitor;
 use App\Models\VisitorType;
 use Illuminate\Http\Request;
 use App\Models\Organization;
 use App\Models\Premise;
-use App\Models\VehicleInformation;
-use App\Models\Nationality;
-use App\Models\Tag;
 
 class VisitorController extends Controller
 {

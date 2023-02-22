@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\VisitorType;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class VisitorTypeSeeder extends Seeder
 {
@@ -14,15 +14,17 @@ class VisitorTypeSeeder extends Seeder
      */
     public function run()
     {
-        $type = [
+        $type = array(
             ['id' => 1, 'name' => 'Visitor'],
             ['id' => 2, 'name' => 'Staff'],
             ['id' => 3, 'name' => 'Contractor'],
             ['id' => 4, 'name' => 'Vendor'],
             ['id' => 5, 'name' => 'Business'],
             ['id' => 6, 'name' => 'Intern'],
-        ];
+        );
 
-        DB::create($type);
+        foreach ($type as $value) {
+            VisitorType::create($value);
+        }
     }
 }

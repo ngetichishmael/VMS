@@ -22,7 +22,7 @@ class Dashboard extends Component
     public $sortAsc = true;
     public ?string $search = null;
     public $visitorTypeId;
-    public $sortTimeField='entry_time';
+    public $sortTimeField = 'entry_time';
     public $sortTimeAsc = true;
     public $timeFilter = 'all';
     protected $dvisitors;
@@ -89,8 +89,8 @@ class Dashboard extends Component
         $this->applyTimeFilter();
         $visitorTypes = VisitorType::all();
         foreach ($this->dvisitors as $visitor) {
-            $entryTime = Carbon::parse($visitor->timeLogs->entry_time);
-            $exitTime = Carbon::parse($visitor->timeLogs->exit_time);
+            $entryTime = Carbon::parse($visitor->timeLogs->entry_time ?? now());
+            $exitTime = Carbon::parse($visitor->timeLogs->exit_time ?? now());
             $duration = $entryTime->diff($exitTime);
 
             $visitor->duration = $duration->format('%H Hours %I Minutes %S Seconds');
@@ -100,7 +100,4 @@ class Dashboard extends Component
             'visitorTypes' => $visitorTypes,
         ]);
     }
-
-
-
 }

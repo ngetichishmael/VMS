@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\VehicleInformation;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class VehicleInformationSeeder extends Seeder
 {
@@ -14,7 +14,7 @@ class VehicleInformationSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('vehicle_information')->insert([
+        $data = [
             [
                 'registration' => 'ABC123',
                 'visitor_id' => '1'
@@ -35,6 +35,9 @@ class VehicleInformationSeeder extends Seeder
                 'registration' => 'KCN 456J',
                 'visitor_id' => '5'
             ]
-        ]);
+        ];
+        foreach ($data as $value) {
+            VehicleInformation::create($value);
+        }
     }
 }
