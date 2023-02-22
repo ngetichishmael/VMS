@@ -12,14 +12,14 @@ class SMSCheckingController extends Controller
     {
         $sentry_number = $request->user()->phone_number;
         $user_id = $request->user()->id;
-        $user_code = rand(100, 999);
-        $sentry_code = rand(100, 999);
+        $user_code = rand(10, 99);
+        $sentry_code = rand(10, 99);
         UserCode::create([
             'user_id' => $user_id,
             'code' => $user_code . $sentry_code
         ]);
         $user_respoonse = $this->sendUserSMS($user_code . $sentry_code, $phone_number);
-        $sentry_response = $this->sendUserSMS($user_code . $sentry_code, $sentry_number);
+        // $sentry_response = $this->sendUserSMS($user_code . $sentry_code, $sentry_number);
         return response()->json([
             "success" => true,
             'status' => 200,
