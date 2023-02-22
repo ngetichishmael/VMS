@@ -69,6 +69,10 @@ class WalkInController extends Controller
         $visitor->nationality_id = $nationality->id;
         $visitor->resident_id = $request->input('resident_id');
         $visitor->tag=$request->input('tag');
+        $visitor->attachment1=$request->input('attachment1');
+        $visitor->attachment2=$request->input('attachment2');
+        $visitor->attachment3=$request->input('attachment3');
+        $visitor->attachment4=$request->input('attachment4');
         $timeLog = new TimeLog;
         $timeLog->entry_time=now();
         $timeLog->save();
@@ -84,6 +88,7 @@ class WalkInController extends Controller
             $user_details->date_of_birth = $request->input('DOB');
             $user_details->ID_number= $request->input('IDNO');
             $user_details->gender = $request->input('gender');
+            $user_details->image = $request->input('image');
             $user_details->save();
         }
         $visitor->user_detail_id = $user_details->id;

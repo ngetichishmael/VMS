@@ -68,11 +68,8 @@ class SmsCheckInController extends Controller
      */
     public function store(Request $request)
     {
-        $userTimezone = $request->header('X-Timezone');
-        // Validate the request data
-
         $validator = Validator::make($request->all(), [
-            'type' => 'required|string',
+            'phone1' => 'required',
 
         ]);
 
