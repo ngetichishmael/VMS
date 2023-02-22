@@ -19,13 +19,10 @@ class SMSCheckingController extends Controller
             'code' => $user_code . $sentry_code
         ]);
         $user_respoonse = $this->sendUserSMS($user_code . $sentry_code, $phone_number);
-        // $sentry_response = $this->sendUserSMS($user_code . $sentry_code, $sentry_number);
         return response()->json([
             "success" => true,
             'status' => 200,
-            'message' => "User and Sentry verification codes",
-            'user_response' => $user_respoonse,
-            'sentry_response' => $sentry_response,
+            'message' => "User and Sentry verification codes"
         ]);
     }
     public function sendUserSMS($code, $phone_number)
