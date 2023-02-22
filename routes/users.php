@@ -9,6 +9,7 @@ use App\Http\Controllers\PremiseController;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\SentryController;
 use App\Http\Controllers\ServiceCategoryController;
+use App\Http\Controllers\ServiceNameController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\UnitController;
@@ -36,6 +37,16 @@ Route::middleware('auth')->group(function () {
         'destroy' => 'ServiceCategory.destroy',
         'create' => 'ServiceCategory.create',
         'store' => 'ServiceCategory.store',
+    ]);
+
+    Route::resource('service/information', ServiceNameController::class)->names([
+        'index' => 'ServiceName',
+        'show' => 'ServiceName.show',
+        'edit' => 'ServiceName.edit',
+        'update' => 'ServiceName.update',
+        'destroy' => 'ServiceName.destroy',
+        'create' => 'ServiceName.create',
+        'store' => 'ServiceName.store',
     ]);
     Route::resource('users/sentries', SentryController::class)->names([
         'index' => 'Sentry',

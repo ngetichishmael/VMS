@@ -162,32 +162,16 @@
 
 
             <fieldset class="form-group">
-              <label class="form-label" for="resident-role">Organization</label>
-              <select id="organization_id" wire:model="organization_id" class="form-control">
+              <label class="form-label" for="resident-role">Unit</label>
+              <select id="unit_id" wire:model="unit_id" class="form-control">
                <option  value="#"> Select</option>
-                @foreach ($organizations as $organizat)
-                    <option  value="{{ $organizat ->id }}"> {{ $organizat ->name }}</option>
-                @endforeach  
-              </select>
-            </fieldset>
-
-            <fieldset class="form-group">
-              <label class="form-label" for="resident-role">Role</label>
-              <select id="role_id" wire:model="role_id" class="form-control" required>
-              <option  value="#"> Select</option>
-                @foreach ($roles as $ros)
-                    <option  value="{{ $ros ->id }}"> {{ $ros ->name }}</option>
+                @foreach ($units as $uni)
+                    <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
                 @endforeach  
               </select>
             </fieldset>
 
 
-
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Password</label>
-              <input  type="password" wire:model="password"  class="form-control" required />
-            </div>
-            
             <button wire:click="store" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
@@ -206,7 +190,7 @@
             <h5 class="modal-title" id="exampleModalLabel">Edit resident</h5>
           </div>
           <div class="modal-body flex-grow-1">
-            <div class="form-group">
+          <div class="form-group">
               <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
               <input  type="text" wire:model="name"  class="form-control" required />
 
@@ -226,24 +210,15 @@
 
 
             <fieldset class="form-group">
-              <label class="form-label" for="resident-role">Organization</label>
-              <select id="organization_id" wire:model="organization_id" class="form-control">
+              <label class="form-label" for="resident-role">Unit</label>
+              <select id="unit_id" wire:model="unit_id" class="form-control">
                <option  value="#"> Select</option>
-                @foreach ($organizations as $organ)
-                    <option  value="{{ $organ ->id }}"> {{ $organ ->name }}</option>
+                @foreach ($units as $uni)
+                    <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
                 @endforeach  
               </select>
             </fieldset>
 
-            <fieldset class="form-group">
-              <label class="form-label" for="resident-role">Role</label>
-              <select id="role_id" wire:model="role_id" class="form-control" required>
-              <option  value="#"> Select</option>
-                @foreach ($roles as $roll)
-                    <option  value="{{ $roll ->id }}"> {{ $roll ->name }}</option>
-                @endforeach  
-              </select>
-            </fieldset>
 
             
             <button wire:click="editresidentData" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Update') }} </button>

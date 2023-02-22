@@ -128,7 +128,7 @@
             "url": "service/information",
             "name": "Name",
             "icon": "support_agent",
-            "slug": "ServiceInformation"
+            "slug": "ServiceName"
         },
         {
             "url": "service/category",
