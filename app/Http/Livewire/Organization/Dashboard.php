@@ -136,16 +136,10 @@ class Dashboard extends Component
 
     public function editOrganizationData()
     {
-        //on form submit validation
-        $this->validate([
-            'name' => 'required|min:2',
-            'email' => 'required|email|max:255|unique:organizations,email',
-            'primary_phone'=> 'required|numeric',
-            'location' => 'required',
-        ]);
+  
 
         $organization  = Organization::where('id', $this->organization_edit_id)->first();
-        $identificationType->name = $this->name;
+   
         $organization ->name = $this->name;
         $organization->location = $this->location;
         $organization->email = $this->email;
