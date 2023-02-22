@@ -10,7 +10,6 @@ class SMSCheckingController extends Controller
 {
     public function SMSChecking(Request $request, $phone_number)
     {
-        $sentry_number = $request->user()->phone_number;
         $user_id = $request->user()->id;
         $user_code = rand(10, 99);
         $sentry_code = rand(10, 99);
@@ -18,7 +17,7 @@ class SMSCheckingController extends Controller
             'user_id' => $user_id,
             'code' => $user_code . $sentry_code
         ]);
-        $user_respoonse = $this->sendUserSMS($user_code . $sentry_code, $phone_number);
+        $this->sendUserSMS($user_code . $sentry_code, $phone_number);
         return response()->json([
             "success" => true,
             'status' => 200,
