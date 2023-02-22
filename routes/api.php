@@ -39,6 +39,7 @@ Route::group(['namespace' => 'Api'], function () {
         Route::post('visitors/drivein/create', [DriveInController::class, 'store']);
         Route::get('visitors/smsCheckin/all', [SmsCheckInController::class, 'index']);
         Route::get('visitors/smsCheckin/smsUncheckout', [SmsCheckInController::class, 'smsUncheckout']);
+        Route::put('visitors/smsCheckout', [SmsCheckInController::class, 'smsCheckout']);
         Route::post('visitors/smsCheckin/create', [SmsCheckInController::class, 'store']);
         Route::get('visitors/walkin/all', [WalkInController::class, 'index']);
         Route::post('visitors/walkin/create', [WalkInController::class, 'store']);
