@@ -27,7 +27,7 @@ class DriveInController extends Controller
             Visitor::with(
                 [
                     'resident2',
-                    'createdBy',
+                    'sentry',
                     'vehicle',
                     'purpose',
                     'visitorType',
