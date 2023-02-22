@@ -57,7 +57,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach ($categories as $category)
+                            @forelse ($categories as $category)
                                 <tr>
                                    
                                     
@@ -99,7 +99,11 @@
 </td>
                                 </tr>
 
-                                @endforeach
+                                @empty
+                                <tr>
+                                <td colspan="6" style="text-align: center;"> No Record Found </td>
+                                </tr>
+                            @endforelse
 
                             </tbody>
                         </table>

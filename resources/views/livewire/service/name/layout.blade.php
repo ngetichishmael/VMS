@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Service Category')
+@section('title', 'Service Names')
 
 @section('vendor-style')
     {{-- vendor css files --}}
@@ -20,7 +20,7 @@
 
 @section('content')
     <!-- Dashboard Ecommerce Starts -->
-    @livewire('service.catergory.dashboard')
+    @livewire('service.name.dashboard')
     <!-- Dashboard Ecommerce ends -->
 @endsection
 

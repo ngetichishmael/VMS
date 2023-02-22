@@ -29,7 +29,7 @@ class Dashboard extends Component
             ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
             ->paginate($this->perPage);
 
-        return view('livewire.service.catergory.dashboard', ['categories' => $categories]);
+        return view('livewire.service.name.dashboard', ['categories' => $categories]);
     }
 
 
