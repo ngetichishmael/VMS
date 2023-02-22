@@ -29,6 +29,7 @@ class VisitorSeeder extends Seeder
                 'resident_id' => 1,
                 'time_log_id' => 1,
                 'tag'=>'123',
+                'user_detail_id'=>1
             ],
             [
                 'name' => 'Jane Smith',
@@ -41,6 +42,7 @@ class VisitorSeeder extends Seeder
                 'resident_id' => 2,
                 'time_log_id' => 2,
                 'tag'=>'122',
+                'user_detail_id'=>1
 
             ],
             [
@@ -54,6 +56,7 @@ class VisitorSeeder extends Seeder
                 'resident_id' => 3,
                 'time_log_id' => 3,
                 'tag'=>'1092',
+                'user_detail_id'=>1
 
             ]
         ];

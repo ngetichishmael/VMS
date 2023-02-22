@@ -30,6 +30,24 @@
                     "name": "Walks Ins",
                     "icon": "directions_walk",
                     "slug": "VisitWalkIn"
+                },
+                {
+                    "url": "Visits/WalkIn",
+                    "name": "SMS Check-in",
+                    "icon": "directions_walk",
+                    "slug": "VisitWalkIn"
+                },
+                {
+                    "url": "Visits/WalkIn",
+                    "name": "ID Check-in",
+                    "icon": "directions_walk",
+                    "slug": "VisitWalkIn"
+                },
+                {
+                    "url": "Visits/WalkIn",
+                    "name": "IPass Check-in",
+                    "icon": "directions_walk",
+                    "slug": "VisitWalkIn"
                 }
             ]
         },
@@ -64,6 +82,12 @@
             "name": "Organization",
             "icon": "corporate_fare",
             "slug": "OrganizationInformation"
+        },
+        {
+            "url": "organization/subscription",
+            "name": "Subscriptions",
+            "icon": "fingerprint",
+            "slug": "Subscriptions"
         },
         {
             "name": "Premises",

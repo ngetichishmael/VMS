@@ -140,7 +140,6 @@
                             td {
                                 text-align: left;
                             }
-
                             tr:nth-child(even) {
                                 background-color: #f2f2f2;
                             }
@@ -190,3 +189,5 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>

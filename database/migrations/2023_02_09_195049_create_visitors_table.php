@@ -25,17 +25,21 @@ class CreateVisitorsTable extends Migration
     {
         Schema::create('visitors', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->enum('type', ["WalkIn", "DriveIn", "Sms","Manual"]);
-            $table->foreignIdFor(IdentificationType::class);
-            $table->foreignIdFor(VisitorType::class);
-            $table->foreignIdFor(Purpose::class);
-            $table->foreignIdFor(Sentry::class);
-            $table->foreignIdFor(Nationality::class);
-            $table->foreignIdFor(Resident::class);
+            $table->foreignIdFor(IdentificationType::class)->nullable();;
+            $table->foreignIdFor(VisitorType::class)->nullable();;
+            $table->foreignIdFor(Purpose::class)->nullable();;
+            $table->foreignIdFor(Sentry::class)->nullable();;
+            $table->foreignIdFor(Nationality::class)->nullable();;
+            $table->foreignIdFor(Resident::class)->nullable();;
             $table->foreignIdFor(UserDetail::class)->nullable();
             $table->foreignIdFor(TimeLog::class);
-            $table->string('Tag')->nullable();
+            $table->string('tag')->nullable();
+            $table->binary('attachment1')->nullable();
+            $table->binary('attachment2')->nullable();
+            $table->binary('attachment3')->nullable();
+            $table->binary('attachment4')->nullable();
             $table->timestamps();
         });
     }

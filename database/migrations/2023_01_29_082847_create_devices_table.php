@@ -17,10 +17,13 @@ class CreateDevicesTable extends Migration
     {
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
-            $table->uuid('identifier');
-            $table->text('description');
-            $table->string('device_code');
-            $table->foreignIdFor(Premise::class);
+            $table->uuid('identifier')->nullable();
+            $table->text('description')->nullable();
+            $table->string('device_code')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('name_of_address')->nullable();
+            $table->foreignIdFor(Premise::class)->nullable();
             $table->foreignIdFor(Sentry::class);
             $table->timestamps();
         });

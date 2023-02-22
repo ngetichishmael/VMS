@@ -20,7 +20,7 @@
 
 @section('content')
     <!-- Dashboard Ecommerce Starts -->
-    @livewire('visit.drivers.history')
+    @livewire('subscriptions.dashboard')
     <!-- Dashboard Ecommerce ends -->
 @endsection
 

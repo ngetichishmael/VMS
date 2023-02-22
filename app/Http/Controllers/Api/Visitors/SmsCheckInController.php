@@ -21,14 +21,46 @@ class SmsCheckInController extends Controller
      */
     public function index(Request $request)
     {
-
-        return response()->json(Visitor::with(['resident2', 'createdBy', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
+        return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
             ->where('type', 'sms')
             ->get());
     }
+    public function smsUncheckout(Request $request)
+    {
+        return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'visitorType'])
+            ->where('sentry_id', $request->user()->id)
+            ->where('type', 'sms')
+            ->whereIn('time_log_id', function ($query) {
+                $query->selectRaw('MAX(time_log_id)')
+                    ->from('visitors')
+                    ->groupBy('user_detail_id');
+            })
+            ->whereHas('timeLogs', function ($query) {
+                $query->whereNull('exit_time');
+            })
+            ->orderBy('time_log_id', 'desc')
+            ->get()
+            ->unique('user_detail_id')
+        );
+    }
+    public function smsCheckout(Request $request)
+    {
+        $timeLogId = $request->input('timeLogId');
+        $timeLog = TimeLog::find($timeLogId);
+        if (!$timeLog) {
+            return response()->json(['message' => 'Time log not found'], 404);
+        }
 
+        if ($timeLog->exit_time) {
+            return response()->json(['message' => 'Time log already checked out'], 400);
+        }
 
-    /**
+        $timeLog->exit_time = now();
+        $timeLog->save();
+
+        return response()->json(['message' => 'Time log checked out successfully']);
+    }
+   /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -36,17 +68,9 @@ class SmsCheckInController extends Controller
      */
     public function store(Request $request)
     {
-        $userTimezone = $request->header('X-Timezone');
-        // Validate the request data
-
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'type' => 'required|string',
-            'identification_type_id' => 'required|integer',
-            'visitor_type_id' => 'required|integer',
-            'purpose_id' => 'required|integer',
-            'nationality' => 'required|string',
-            'resident_id' => 'required|integer',
+            'phone1' => 'required',
+
         ]);
 
         if ($validator->fails()) {
@@ -67,6 +91,10 @@ class SmsCheckInController extends Controller
         $visitor->sentry_id = $request->user()->id;
         $visitor->nationality_id = $nationality->id ?? "101";
         $visitor->resident_id = $request->input('resident_id');
+        $visitor->attachment1=$request->input('attachment1');
+        $visitor->attachment2=$request->input('attachment2');
+        $visitor->attachment3=$request->input('attachment3');
+        $visitor->attachment4=$request->input('attachment4');
         $visitor->tag = $request->input('tag');
 
 
@@ -82,6 +110,7 @@ class SmsCheckInController extends Controller
             $user_details->date_of_birth = $request->input('DOB') ?? "NULL";
             $user_details->ID_number = $request->input('IDNO') ?? "NULL";
             $user_details->gender = $request->input('gender');
+            $user_details->image = $request->input('image');
             $user_details->save();
         }
         $visitor->user_detail_id = $user_details->id;
