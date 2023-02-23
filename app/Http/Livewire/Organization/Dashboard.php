@@ -26,6 +26,15 @@ class Dashboard extends Component
 
     public $data, $name, $email, $primary_phone, $secondary_phone, $location, $websiteUrl, $description, $organization_edit_id;
 
+
+    public $organization, $postsCount;
+
+    public function mount(organization $id)
+    {
+        $this->organization = Organization::all();
+        $this->postsCount = User::where('status', '=', $id)->count();
+    }
+
     public function sortBy($field)
     {
         if ($field === $this->sortField) {
@@ -41,9 +50,9 @@ class Dashboard extends Component
 
         $searchTerm = '%' . $this->search . '%';
 
-        $organization = Organization::withCount(['user' => function($query) {$query->where('organization_code','=','$code');}])
+        $organization = Organization::withCount('user')
     
-            ->whereLike(['name', 'email' ,'primary_phone','location','user.organization_code'], $searchTerm)
+            ->whereLike(['name', 'email' ,'primary_phone','location'], $searchTerm)
                 
         ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
             ->paginate($this->perPage);

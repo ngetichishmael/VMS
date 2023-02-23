@@ -64,14 +64,14 @@
                          
 
                             <tbody>
-                            @forelse ($organizations as $org)
+                            @forelse ($organization as $org)
                                 <tr>
                                   
                                     <td>{{ $org ->name }}</td>
                                     <td>{{ $org ->email }}</td>   
                                     <td>{{ $org ->primary_phone }}</td>  
                                     <td>{{ $org ->location }}</td>  
-                                    <td>{{ $org ->organization_id_ount }}</td>  
+                                    <td>{{ $org ->user->count() }}</td>  
                                     <td>
                                     <?php if($org->status == '1'){ ?>
 

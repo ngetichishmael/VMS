@@ -70,7 +70,7 @@
                                     <td>{!! $prem->organization()->pluck("name")->implode('')!!} </td>
                                     <td> {{ $prem ->location }} </td>
                                     <td> {{ $prem ->address }} </td>
-                                    <td>{{ $prem ->created_at }}</td>
+                                    <td>{{ $prem ->updated_at }}</td>
                                     <td>
                                     <?php if($prem->status == '1'){ ?> 
 

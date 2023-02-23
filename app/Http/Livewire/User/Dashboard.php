@@ -49,7 +49,7 @@ class Dashboard extends Component
             ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
             ->paginate($this->perPage);
 
-        $organizations = Organization::all();
+        $organizations = Organization::where('status', 1) ->get();
 
         $roles = Role::all();
 

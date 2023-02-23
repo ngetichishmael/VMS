@@ -46,9 +46,9 @@ class Dashboard extends Component
             ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
             ->paginate($this->perPage);
 
-        $premises = Premise::all();
+        $premises = Premise::where('status', 1) ->get();
 
-        $shifts = Shift::all();
+        $shifts = Shift::where('status', 1) ->get();
 
         $devices = Device::all();
 
