@@ -61,7 +61,7 @@ class VisitorController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json(Visitor::with(['resident2','sentry', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)->get());
+        return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)->get());
     }
     public function verifyUser(Request $request)
     {
@@ -83,9 +83,9 @@ class VisitorController extends Controller
     }
     public function checkout(Request $request)
     {
-        $user_details = UserDetail::find($request->phone_number);
+        $user_details = TimeLog::whereId($request->time_log_id)->first();
         if ($user_details) {
-            $result = TimeLog::whereId($user_details->id)->whereNull('exit_time')->update([
+            $result = TimeLog::whereId($request->time_log_id)->update([
                 'exit_time' => now(),
             ]);
             if ($result === 0) {
@@ -109,7 +109,8 @@ class VisitorController extends Controller
     {
         $number = $request->input('number');
         $stripped_number = preg_replace('/[^0-9]/', '', $number);
-        $user = UserDetail::whereRaw("REPLACE(phone_number, '-', '') LIKE '%$stripped_number'")->orwhere('ID_number', $number)->orwhere('phone_number', $number)->first();
+        $user = UserDetail::whereRaw("REPLACE(phone_number, '-', '') LIKE '%$stripped_number'")
+            ->orwhere('ID_number', $number)->orwhere('phone_number', $number)->first();
         //$user = UserDetail::where('ID_number', $number)->orWhere('phone_number', $number)->first();
 
         if (!$user) {
@@ -143,6 +144,7 @@ class VisitorController extends Controller
         $nairobiNow = $now->setTimezone('Africa/Nairobi');
         $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
 
+        $nationality = Nationality::find($request->nationality);
         $visitor = new Visitor();
         $visitor->name = $request->input('name');
         $visitor->type = $request->input('type');
@@ -152,10 +154,10 @@ class VisitorController extends Controller
         $visitor->sentry_id = $request->user()->id;
         $visitor->nationality_id = $nationality->id ?? "101";
         $visitor->resident_id = $request->input('resident_id');
-        $visitor->attachment1=$request->input('attachment1');
-        $visitor->attachment2=$request->input('attachment2');
-        $visitor->attachment3=$request->input('attachment3');
-        $visitor->attachment4=$request->input('attachment4');
+        $visitor->attachment1 = $request->input('attachment1');
+        $visitor->attachment2 = $request->input('attachment2');
+        $visitor->attachment3 = $request->input('attachment3');
+        $visitor->attachment4 = $request->input('attachment4');
         $visitor->tag = $request->input('tag');
         $timeLog->save();
 

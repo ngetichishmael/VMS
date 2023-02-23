@@ -72,10 +72,10 @@ class DriveInController extends Controller
         $visitor->nationality_id = $nationality->id ?? "110";
         $visitor->resident_id = $request->input('resident_id');
         $visitor->tag = $request->input('tag');
-        $visitor->attachment1 =$request->input('attachment1');
-        $visitor->attachment2 =$request->input('attachment2');
-        $visitor->attachment3 =$request->input('attachment3');
-        $visitor->attachment4 =$request->input('attachment4');
+        $visitor->attachment1 = $request->input('attachment1');
+        $visitor->attachment2 = $request->input('attachment2');
+        $visitor->attachment3 = $request->input('attachment3');
+        $visitor->attachment4 = $request->input('attachment4');
         $timeLog = new TimeLog;
         $timeLog->entry_time = now();
 

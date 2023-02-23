@@ -27,20 +27,21 @@ class SmsCheckInController extends Controller
     }
     public function smsUncheckout(Request $request)
     {
-        return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'visitorType'])
-            ->where('sentry_id', $request->user()->id)
-            ->where('type', 'sms')
-            ->whereIn('time_log_id', function ($query) {
-                $query->selectRaw('MAX(time_log_id)')
-                    ->from('visitors')
-                    ->groupBy('user_detail_id');
-            })
-            ->whereHas('timeLogs', function ($query) {
-                $query->whereNull('exit_time');
-            })
-            ->orderBy('time_log_id', 'desc')
-            ->get()
-            ->unique('user_detail_id')
+        return response()->json(
+            Visitor::with(['resident2', 'sentry', 'purpose', 'visitorType'])
+                ->where('sentry_id', $request->user()->id)
+                ->where('type', 'sms')
+                ->whereIn('time_log_id', function ($query) {
+                    $query->selectRaw('MAX(time_log_id)')
+                        ->from('visitors')
+                        ->groupBy('user_detail_id');
+                })
+                ->whereHas('timeLogs', function ($query) {
+                    $query->whereNull('exit_time');
+                })
+                ->orderBy('time_log_id', 'desc')
+                ->get()
+                ->unique('user_detail_id')
         );
     }
     public function smsCheckout(Request $request)
@@ -60,7 +61,7 @@ class SmsCheckInController extends Controller
 
         return response()->json(['message' => 'Time log checked out successfully']);
     }
-   /**
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -83,7 +84,7 @@ class SmsCheckInController extends Controller
         $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
 
         $visitor = new Visitor();
-        $visitor->name = $request->input('name');
+        $visitor->name = $request->input('phone1');
         $visitor->type = $request->input('type');
         $visitor->identification_type_id = $request->input('identification_type_id');
         $visitor->visitor_type_id = $request->input('visitor_type_id');
@@ -91,10 +92,10 @@ class SmsCheckInController extends Controller
         $visitor->sentry_id = $request->user()->id;
         $visitor->nationality_id = $nationality->id ?? "101";
         $visitor->resident_id = $request->input('resident_id');
-        $visitor->attachment1=$request->input('attachment1');
-        $visitor->attachment2=$request->input('attachment2');
-        $visitor->attachment3=$request->input('attachment3');
-        $visitor->attachment4=$request->input('attachment4');
+        // $visitor->attachment1=$request->input('attachment1');
+        // $visitor->attachment2=$request->input('attachment2');
+        // $visitor->attachment3=$request->input('attachment3');
+        // $visitor->attachment4=$request->input('attachment4');
         $visitor->tag = $request->input('tag');
 
 
@@ -102,7 +103,7 @@ class SmsCheckInController extends Controller
 
         $visitor->time_log_id = $timeLog->id;
 
-        $user_details = UserDetail::where('ID_number', $request['IDNO'])->first();
+        $user_details = UserDetail::find($request->IDNO);
         if (!$user_details) {
             $user_details = new UserDetail();
             $user_details->phone_number = $request->input('phone1');

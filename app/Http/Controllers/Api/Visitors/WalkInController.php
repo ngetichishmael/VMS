@@ -21,10 +21,10 @@ class WalkInController extends Controller
      */
     public function index(Request $request)
     {
-
         return response()->json(Visitor::with(['resident2','sentry', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
         ->where('type', 'walkin')
         ->get());
+
     }
 
     /**
@@ -43,20 +43,14 @@ class WalkInController extends Controller
             'purpose_id' => 'required|integer',
             'nationality' => 'required|string',
             'resident_id' => 'required|integer',
-            'IDNO'=>'required|numeric',
+            'IDNO' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-// check if nationality already exists
-        $nationality = Nationality::where('name', $request['nationality'])->first();
-        if (!$nationality) {
-            $nationality = new Nationality;
-            $nationality->name = $request['nationality'];
-            $nationality->save();
-        }
-
+        // check if nationality already exists
+        $nationality = Nationality::find($request->nationality);
         $visitor = new Visitor();
         $visitor->name = $request->input('name');
         $visitor->type = $request->input('type');
@@ -64,27 +58,23 @@ class WalkInController extends Controller
         $visitor->visitor_type_id = $request->input('visitor_type_id');
         $visitor->purpose_id = $request->input('purpose_id');
         $visitor->sentry_id = $request->user()->id;
-        $visitor->nationality_id = $nationality->id;
+        $visitor->nationality_id = $nationality->id ?? "101";
         $visitor->resident_id = $request->input('resident_id');
-        $visitor->tag=$request->input('tag');
-        $visitor->attachment1=$request->input('attachment1');
-        $visitor->attachment2=$request->input('attachment2');
-        $visitor->attachment3=$request->input('attachment3');
-        $visitor->attachment4=$request->input('attachment4');
+        $visitor->tag = $request->input('tag');
         $timeLog = new TimeLog;
-        $timeLog->entry_time=now();
+        $timeLog->entry_time = now();
         $timeLog->save();
 
         $visitor->time_log_id = $timeLog->id;
 
 
-        $user_details= UserDetail::where('ID_number', $request['IDNO'])->first();
+        $user_details = UserDetail::where('ID_number', $request['IDNO'])->first();
         if (!$user_details) {
-            $user_details= new UserDetail();
+            $user_details = new UserDetail();
             $user_details->phone_number = $request->input('phone1');
             $user_details->secondary_phone_number = $request->input('phone2');
             $user_details->date_of_birth = $request->input('DOB');
-            $user_details->ID_number= $request->input('IDNO');
+            $user_details->ID_number = $request->input('IDNO');
             $user_details->gender = $request->input('gender');
             $user_details->image = $request->input('image');
             $user_details->save();
@@ -92,7 +82,6 @@ class WalkInController extends Controller
         $visitor->user_detail_id = $user_details->id;
         $visitor->save();
         return response()->json(['success' => 'Visitor Walkin information added successfully.'], 201);
-
     }
 
     /**
