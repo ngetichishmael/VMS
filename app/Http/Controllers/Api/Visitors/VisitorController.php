@@ -83,7 +83,7 @@ class VisitorController extends Controller
     }
     public function checkout(Request $request)
     {
-        $user_details = UserDetail::whereId($request->time_log_id)->first();
+        $user_details = TimeLog::whereId($request->time_log_id)->first();
         if ($user_details) {
             $result = TimeLog::whereId($request->time_log_id)->update([
                 'exit_time' => now(),
