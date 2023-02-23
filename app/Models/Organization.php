@@ -21,7 +21,11 @@ class Organization extends Model
 
     public function subscription()
     {
-        return $this->hasOne(Subscription::class, 'organization_code');
+        return $this->hasOne(Setting::class, 'organization_code');
+    }
+    public function premise()
+    {
+        return $this->hasMany(Premise::class, 'organization_code', 'id');
     }
     public function user()
     {

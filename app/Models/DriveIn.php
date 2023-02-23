@@ -52,7 +52,7 @@ class DriveIn extends Model
     }
     public function organization1()
     {
-        return $this->hasMany(\App\Models\Organization::class, 'id' );
+        return $this->hasMany(Organization::class );
     }
 
     public function visitorType(): BelongsTo

@@ -20,6 +20,12 @@
             "slug": "",
             "submenu": [
                 {
+                    "url": "Visits/WalkIn",
+                    "name": "All Check-in",
+                    "icon": "check",
+                    "slug": "VisitWalkIn"
+                },
+                {
                     "url": "Visits/DriveIn",
                     "name": "Driver-in",
                     "icon": "emoji_transportation",
@@ -46,7 +52,7 @@
                 {
                     "url": "Visits/WalkIn",
                     "name": "IPass Check-in",
-                    "icon": "directions_walk",
+                    "icon": "check",
                     "slug": "VisitWalkIn"
                 }
             ]
@@ -84,10 +90,10 @@
             "slug": "OrganizationInformation"
         },
         {
-            "url": "organization/subscription",
-            "name": "Subscriptions",
-            "icon": "fingerprint",
-            "slug": "Subscriptions"
+            "url": "organization/setting",
+            "name": "Settings",
+            "icon": "settings",
+            "slug": "Settings"
         },
         {
             "name": "Premises",

@@ -91,13 +91,22 @@
                     }
                 </style>
                 <tbody style="font-size: small">
-                @forelse($subscriptions as $subscription)
+                @forelse($settings as $setting)
                     <tr>
-                        <td>{!! $subscription->organization->name ?? null !!} </td>
-                        <td>{!! $subscription->id_checkin ?? null!!} </td>
-                        <td>{!! $subscription->automatic_id_checkin ?? null !!}</td>
-                        <td>{!! $subscription->sms_checkin ?? null !!}</td>
-                        <td>{!! $subscription->ipass_checkin ?? null !!}</td>
+                        <td>{!! $setting->organization->name ?? null !!} </td>
+                        <td style="color: {{ $setting->id_checkin == 1 ? 'green' : 'orange' }}">
+                            {{ $setting->id_checkin == 1 ? 'subscribed' : 'not subscribed' }}
+                        </td>
+                        <td style="color: {{ $setting->automatic_id_checkin == 1 ? 'green' : 'orange' }}">
+                            {{ $setting->automatic_id_checkin == 1 ? 'subscribed' : 'not subscribed' }}
+                        </td>
+                        <td style="color: {{ $setting->sms_checkin == 1 ? 'green' : 'orange' }}">
+                            {{ $setting->sms_checkin == 1 ? 'subscribed' : 'not subscribed' }}
+                        </td>
+                        <td style="color: {{ $setting->ipass_checkin == 1 ? 'green' : 'orange' }}">
+                            {{ $setting->ipass_checkin == 1 ? 'subscribed' : 'not subscribed' }}
+                        </td>
+
                         <td>
 {{--                            <div class="dropdown">--}}
 {{--                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"--}}
@@ -112,12 +121,12 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="10" style="padding-left: 40%">No Subscription(s) In Records Found!... </td>
+                        <td colspan="10" style="padding-left: 40%">No setting(s) In Records Found!... </td>
                     </tr>
                 @endforelse
                 </tbody>
             </table>
-            <div class="mt-1">{{ $subscriptions->links() }}
+            <div class="mt-1">{{ $settings->links() }}
             </div>
         </div>
     </div>

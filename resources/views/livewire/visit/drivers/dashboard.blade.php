@@ -150,10 +150,9 @@
                                     <td>{{ $visitor->id }}</td>
                                     <td>{!! $visitor->vehicle()->pluck('registration')->implode('') !!} </td>
                                     <td>{!! $visitor->name !!} </td>
-                                    <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}
-                                    </td>
+                                    <td>{{ $visitor->resident->unit->block->premise->name ?? ' Not Found' }}</td>
                                     <td>{!! $visitor->resident->unit->name !!}</td>
-                                    <td>{!! $visitor->resident->unit->block->premise->organization()->pluck('name')->implode('') !!}</td>
+                                    <td>{!! $visitor->organization->name ?? 'Not Found' !!}</td>
                                     <td>{!! $visitor->timeLogs->entry_time ?? null !!}</td>
                                     @if (!isset($visitor->timeLogs->exit_time))
                                         <td>...</td>
@@ -163,18 +162,16 @@
                                         <td style="color: #70ce52;">{!! $visitor->duration !!}</td>
                                     @endif
                                     <td>
-                                        <div class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                                                role="button" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu">
-                                                <a
-                                                    href="{{ route('VisitDriveIn.show', ['DriveIn' => $vistor->id ?? 1]) }}">View
-                                                    Details</a>
-                                                <a href="#">View History</a>
-                                            </div>
-                                        </div>
+{{--                                        <div class="dropdown">--}}
+{{--                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"--}}
+{{--                                                role="button" aria-haspopup="true" aria-expanded="false">--}}
+{{--                                                <i class="fas fa-ellipsis-v"></i>--}}
+{{--                                            </a>--}}
+{{--                                            <div class="dropdown-menu">--}}
+                                                <a href="{{ route('VisitDriveIn.show', ['DriveIn' => $vistor->id ?? 1]) }}"><i class="fa fa-eye">&nbsp; View</i></a>
+{{--                                                <a href="#">View History</a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                     </td>
                                 </tr>
                             @empty

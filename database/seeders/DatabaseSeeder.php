@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             ResidentSeeder::class,
             UserDetailSeeder::class,
             TimeLogSeeder::class,
-            SubscriptionSeeder::class,
+            SettingSeeder::class,
         ]);
     }
 }

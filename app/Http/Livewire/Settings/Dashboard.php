@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Livewire\Subscriptions;
-
-use App\Models\Subscription;
+namespace App\Http\Livewire\Settings;
+use App\Models\Setting;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -16,7 +15,7 @@ class Dashboard extends Component
     public $sortField = 'id';
     public $sortAsc = true;
     public ?string $search = null;
-    public $subscription;
+    public $setting;
 
 //    public function mount($organization_code)
 //    {
@@ -26,10 +25,10 @@ class Dashboard extends Component
     public function render()
     {
         $searchTerm = '%' . $this->search . '%';
-        //$subscriptions = Subscription::where('organization_code', $this->organization_code)->get();
-        $subscription = Subscription::with('organization')
+        //$settings = Setting::where('organization_code', $this->organization_code)->get();
+        $setting = Setting::with('organization')
             ->whereLike(['organization.name'], $searchTerm)
             ->paginate($this->perPage);
-        return view('livewire.subscriptions.dashboard', ['subscriptions' => $subscription]);
+        return view('livewire.settings.dashboard', ['settings' => $setting]);
     }
 }

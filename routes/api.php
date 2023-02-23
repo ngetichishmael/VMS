@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\Api\DeviceController;
 use App\Http\Controllers\Api\Visitors\DriveInController;
 use App\Http\Controllers\Api\Visitors\SmsCheckInController;
 use App\Http\Controllers\Api\Visitors\WalkInController;
@@ -50,5 +51,7 @@ Route::group(['namespace' => 'Api'], function () {
         Route::post('visitors/verify_returning_visitor', [VisitorController::class, 'returningVisitorVerify']);
         Route::put('visitors/checkin_returning_visitor', [VisitorController::class, 'store'])->name('api.visitors.store');
 
+        Route::post('visitors/device', [DeviceController::class, 'store']);
+        Route::get('visitors/device/all', [DeviceController::class, 'store']);
     });
 });

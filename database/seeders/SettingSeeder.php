@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Subscription;
+use App\Models\Setting;
 use Illuminate\Database\Seeder;
 
-class SubscriptionSeeder extends Seeder
+class SettingSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class SubscriptionSeeder extends Seeder
      */
     public function run()
     {
-        Subscription::create([
+        Setting::create([
             'organization_code' => 'wM1z4nZsIYughLausC6D',
             'id_checkin' => true,
             'automatic_id_checkin' => true,
@@ -22,7 +22,7 @@ class SubscriptionSeeder extends Seeder
             'ipass_checkin' => true,
         ]);
 
-        Subscription::create([
+        Setting::create([
             'organization_code' => 'wM1z4nZsIYughLausC6E',
             'id_checkin' => false,
             'automatic_id_checkin' => true,
@@ -30,7 +30,7 @@ class SubscriptionSeeder extends Seeder
             'ipass_checkin' => true,
         ]);
 
-        Subscription::create([
+        Setting::create([
             'organization_code' => 'wM1z4nZsIYughLausC6F',
             'id_checkin' => true,
             'automatic_id_checkin' => false,
@@ -38,7 +38,7 @@ class SubscriptionSeeder extends Seeder
             'ipass_checkin' => false,
         ]);
 
-        Subscription::create([
+        Setting::create([
             'organization_code' => 'wM1z4nZsIYughLausC6G',
             'id_checkin' => false,
             'automatic_id_checkin' => false,
@@ -46,7 +46,7 @@ class SubscriptionSeeder extends Seeder
             'ipass_checkin' => false,
         ]);
 
-        Subscription::create([
+        Setting::create([
             'organization_code' => 'wM1z4nZsIYughLausC6H',
             'id_checkin' => true,
             'automatic_id_checkin' => true,

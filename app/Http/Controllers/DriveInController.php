@@ -50,29 +50,16 @@ class DriveInController extends Controller
      */
     public function show( $driveIn)
     {
-         $visitor = DriveIn::with('nationality','user_details','purpose1','sentry')->find($driveIn);
 
+         $visitor = DriveIn::with('nationality','user_details','purpose1','sentry')->find($driveIn);
             $entryTime = Carbon::parse($visitor->timeLogs->entry_time);
             $exitTime = Carbon::parse($visitor->timeLogs->exit_time);
             $duration = $entryTime->diff($exitTime);
-
             $visitor->duration = $duration->format('%H Hours %I Minutes %S Seconds');
+        $visitorCount = DriveIn::where('user_detail_id', $visitor->user_details->id)->count();
 
-        return view('app.visitor.drivers.visitorDetails', compact('visitor'));
+        return view('app.visitor.drivers.visitorDetails',compact('visitor', 'visitorCount'));
     }
-    public function showhistory(Request $request)
-    {
-         $visitor = DriveIn::with('nationality','user_details','purpose1','sentry')->find($driveIn);
-
-            $entryTime = Carbon::parse($visitor->timeLogs->entry_time);
-            $exitTime = Carbon::parse($visitor->timeLogs->exit_time);
-            $duration = $entryTime->diff($exitTime);
-
-            $visitor->duration = $duration->format('%H Hours %I Minutes %S Seconds');
-
-        return view('app.visitor.drivers.history', compact('visitor'));
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
