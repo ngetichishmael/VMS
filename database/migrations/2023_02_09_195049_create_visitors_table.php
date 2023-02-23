@@ -26,8 +26,8 @@ class CreateVisitorsTable extends Migration
         Schema::create('visitors', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->enum('type', ["WalkIn", "DriveIn", "Sms","Manual"]);
-            $table->foreignIdFor(IdentificationType::class)->nullable();;
+            $table->enum('type', ["WalkIn", "DriveIn", "SMS","ID",'iPass']);
+//            $table->foreignIdFor(IdentificationType::class)->nullable();;
             $table->foreignIdFor(VisitorType::class)->nullable();;
             $table->foreignIdFor(Purpose::class)->nullable();;
             $table->foreignIdFor(Sentry::class)->nullable();;

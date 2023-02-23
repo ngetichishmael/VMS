@@ -1,20 +1,17 @@
 <?php
 
-namespace App\Http\Livewire\Visit\Walks;
+namespace App\Http\Livewire\Visit\IDCheckins;
 
-use App\Models\Organization;
-use App\Models\TimeLog;
 use App\Models\Visitor;
+use App\Models\VisitorType;
 use App\Models\WalkIn;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\VisitorType;
 
 class Dashboard extends Component
 {
     use WithPagination;
-
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $perPage = 10;
@@ -27,7 +24,7 @@ class Dashboard extends Component
     public $timeFilter = 'all';
     protected $visitors;
 
-      public function sortBy($field)
+    public function sortBy($field)
     {
         if ($field === $this->sortField) {
             $this->sortAsc = !$this->sortAsc;
@@ -49,11 +46,11 @@ class Dashboard extends Component
     {
         $this->resetPage();
         $searchTerm = '%' . $this->search . '%';
-        $this->visitors = WalkIn::with('organization', 'timeLogs')
-            ->where('type', 'walkin')
+        $this->visitors = WalkIn::with('organization', 'timeLogs','Resident.unit.block.premise.organization')
             ->when($this->visitorTypeId, function ($query) {
                 $query->where('visitor_type_id', $this->visitorTypeId);
             })
+            ->where('type', 'ID')
             ->when($this->timeFilter != 'all', function ($query) {
                 $query->whereHas('timeLogs', function ($subQuery) {
                     if ($this->timeFilter == 'daily') {
@@ -93,7 +90,7 @@ class Dashboard extends Component
 
             $visitor->duration = $duration->format('%H Hours %I Minutes %S Seconds');
         }
-        return view('livewire.visit.walks.dashboard', [
+        return view('livewire.visit.i-d-checkins.dashboard', [
             'visitors' => $this->visitors,
             'visitorTypes' => $visitorTypes,
         ]);

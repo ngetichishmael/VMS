@@ -1,3 +1,4 @@
+<div>
 <div class="row">
     <label style="color: #070707">
         <h3>Filter By:</h3>
@@ -168,7 +169,7 @@
 {{--                                                <i class="fas fa-ellipsis-v"></i>--}}
 {{--                                            </a>--}}
 {{--                                            <div class="dropdown-menu">--}}
-                                                <a href="{{ route('VisitDriveIn.show', ['DriveIn' => $vistor->id ?? 1]) }}"><i class="fa fa-eye">&nbsp; View</i></a>
+                                                <a href="{{ route('VisitDriveIn.show', ['DriveIn' => $vistor->id ?? 1]) }}"><i class="fa fa-eye">&nbsp;Details</i></a>
 {{--                                                <a href="#">View History</a>--}}
 {{--                                            </div>--}}
 {{--                                        </div>--}}
@@ -187,4 +188,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

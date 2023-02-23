@@ -20,10 +20,10 @@
             "slug": "",
             "submenu": [
                 {
-                    "url": "Visits/WalkIn",
+                    "url": "Visits/AllCheckIn",
                     "name": "All Check-in",
-                    "icon": "check",
-                    "slug": "VisitWalkIn"
+                    "icon": "people",
+                    "slug": "VisitAllCheckIn"
                 },
                 {
                     "url": "Visits/DriveIn",
@@ -38,22 +38,22 @@
                     "slug": "VisitWalkIn"
                 },
                 {
-                    "url": "Visits/WalkIn",
+                    "url": "Visits/SMSCheckIn",
                     "name": "SMS Check-in",
-                    "icon": "directions_walk",
-                    "slug": "VisitWalkIn"
+                    "icon": "SMS",
+                    "slug": "VisitSMSCheckIn"
                 },
                 {
-                    "url": "Visits/WalkIn",
-                    "name": "ID Check-in",
-                    "icon": "directions_walk",
-                    "slug": "VisitWalkIn"
+                    "url": "Visits/IDCheckIn",
+                    "name": " ID Check-in",
+                    "icon": "badge",
+                    "slug": "VisitIDCheckIn"
                 },
                 {
-                    "url": "Visits/WalkIn",
+                    "url": "Visits/IPassCheckIn",
                     "name": "IPass Check-in",
-                    "icon": "check",
-                    "slug": "VisitWalkIn"
+                    "icon": "QR_CODE",
+                    "slug": "VisitIPassCheckIn"
                 }
             ]
         },

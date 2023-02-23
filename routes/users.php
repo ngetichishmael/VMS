@@ -14,6 +14,10 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleInformationController;
+use App\Http\Controllers\Visit\AllCheckinsController;
+use App\Http\Controllers\Visit\IDCheckinsController;
+use App\Http\Controllers\Visit\iPassCheckinsController;
+use App\Http\Controllers\Visit\SmsCheckinsController;
 use App\Http\Controllers\WalkInController;
 use Illuminate\Support\Facades\Route;
 
@@ -164,5 +168,36 @@ Route::middleware('auth')->group(function () {
         'destroy' => 'VisitWalkIn.destroy',
         'create' => 'VisitWalkIn.create',
         'store' => 'VisitWalkIn.store',
+    ]);
+    Route::resource('Visits/SMSCheckIn', SmsCheckinsController::class)->names([
+        'index' => 'VisitSMSCheckInIn',
+        'show' => 'VisitSMSCheckIn.show',
+        'edit' => 'VisitSMSCheckIn.edit',
+        'update' => 'VisitSMSCheckIn.update',
+        'destroy' => 'VisitSMSCheckIn.destroy',
+        'create' => 'VisitSMSCheckIn.create',
+        'store' => 'VisitSMSCheckIn.store',
+    ]);
+    Route::resource('Visits/IDCheckIn', IDCheckinsController::class)->names([
+        'index' => 'VisitIDCheckIn',
+        'show' => 'VisitIDCheckIn.show',
+        'edit' => 'VisitIDCheckIn.edit',
+        'update' => 'VisitIDCheckIn.update',
+        'destroy' => 'VisitIDCheckIn.destroy',
+        'create' => 'VisitIDCheckIn.create',
+        'store' => 'VisitIDCheckIn.store',
+    ]);
+    Route::resource('Visits/IPassCheckIn', iPassCheckinsController::class)->names([
+        'index' => 'VisitIPassCheckIn',
+        'show' => 'VisitIPassCheckIn.show',
+        'edit' => 'VisitIPassCheckIn.edit',
+        'update' => 'VisitIPassCheckIn.update',
+        'destroy' => 'VisitIPassCheckIn.destroy',
+        'create' => 'VisitIPassCheckIn.create',
+        'store' => 'VisitIPassCheckIn.store',
+    ]);
+    Route::resource('Visits/AllCheckIn', AllCheckinsController::class)->names([
+        'index' => 'VisitAllCheckIn',
+        'show' => 'VisitAllCheckIn.show',
     ]);
 });

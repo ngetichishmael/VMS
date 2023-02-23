@@ -44,7 +44,7 @@
                         </select>
                     </div>
                 </div>
-                  <div class="form-group col-md-3 ">
+                <div class="form-group col-md-3 ">
                     <label for="sortTimeAsc">Sort By Time:</label>
                     <select wire:model="sortTimeAsc" class="form-control form-select">
                         <option value="1">Ascending</option>
@@ -154,12 +154,12 @@
                                     <td style="color: #70ce52;">{!! $visitor->duration !!}</td>
                                 @endif
                                 <td >
-                                    <a href="{{ route('VisitWalkIn.show', $visitor->id) }}"><i class="fa fa-eye">&nbsp;Details</i></a>
+                                    <a href="{{ route('VisitIPassCheckIn.show', $visitor->id) }}"><i class="fa fa-eye">&nbsp;Details</i></a>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="10" style="padding-left: 40%">No Walk In Records Found!... </td>
+                                <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
                             </tr>
                         @endforelse
                         </tbody>
