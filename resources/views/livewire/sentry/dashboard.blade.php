@@ -52,8 +52,8 @@
                                   
                                     <th>Name</th>
                                     <th>Phone Number</th>
-                                    <th>ID Number</th>
-                                    <th>Organization</th>
+                                 
+                                    <th>Premise</th>
                                     <th>Shift</th>
                                     <th>Device</th>
                                     <th>Last Login</th>
@@ -67,8 +67,8 @@
                                    
                                     <td> {{ $sentry ->name }} </td>
                                     <td>{!! $sentry->user_detail()->pluck("phone_number")->implode('')!!} </td>
-                                    <td>{!! $sentry->user_detail()->pluck("ID_number")->implode('')!!} </td>
-                                    <td>{!! $sentry->user_detail()->pluck("company")->implode('')!!} </td>
+                                    <!-- <td>{!! $sentry->user_detail()->pluck("ID_number")->implode('')!!} </td> -->
+                                    <td>{!! $sentry->premise()->pluck("name")->implode('')!!} </td>
                                     <td>{!! $sentry->shift()->pluck("name")->implode('')!!} </td>
                                     <td>{!! $sentry->device()->pluck("identifier")->implode('')!!} </td>
                                     <td>{{ $sentry ->updated_at }}</td>
@@ -122,17 +122,17 @@
     
         </div>
 
-          <!-- Modal to add new user starts-->
+          <!-- Modal to add new sentry starts-->
   <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
         <form class="add-new-user modal-content pt-0" >
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">New User</h5>
+            <h5 class="modal-title" id="exampleModalLabel">New Sentry</h5>
           </div>
           <div class="modal-body flex-grow-1">
-          <div class="form-group">
+                      <div class="form-group">
                             <label class="form-label" for="basic-icon-default-fullname">Name</label>
                             <input  type="text" wire:model="name"  class="form-control" required />
 
@@ -140,35 +140,41 @@
 
 
                         <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-email">Email</label>
-                            <input  type="email" wire:model="email"  class="form-control" required />
+                            <label class="form-label" for="basic-icon-default-email">Phone Number</label>
+                            <input  type="email" wire:model="phone_number"  class="form-control"  />
 
                             <small class="form-text text-muted"> You can use letters, numbers & periods </small>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-email">Phone Number</label>
-                            <input  type="tel" wire:model="primary_phone"  class="form-control" required />
+        
 
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-email">Other Phone Number</label>
-                            <input  type="tel" wire:model="secondary_phone"  class="form-control"  />
 
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Location</label>
-                            <input  type="text" wire:model="location"  class="form-control" required />
-
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Website URL</label>
-                            <input  type="text" wire:model="websiteUrl"  class="form-control" required />
-
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Organization Description</label>
-                            <input  type="text" wire:model="description"  class="form-control" required />
-
-                        </div>
+                        <fieldset class="form-group">
+                            <label class="form-label" for="user-role">Premise</label>
+                            <select id="premise_id" wire:model="premise_id" class="form-control">
+                            <option  value="#"> Select</option>
+                                @foreach ($premises as $pre)
+                                    <option  value="{{ $pre ->id }}"> {{ $pre ->name }}</option>
+                                @endforeach  
+                            </select>
+                         </fieldset>
+                         <fieldset class="form-group">
+                            <label class="form-label" for="user-role">Shift</label>
+                            <select id="shift_id" wire:model="shift_id" class="form-control">
+                            <option  value="#"> Select</option>
+                                @foreach ($shifts as $shift)
+                                    <option  value="{{ $shift ->id }}"> {{ $shift ->name }}</option>
+                                @endforeach  
+                            </select>
+                         </fieldset>
+                         <fieldset class="form-group">
+                            <label class="form-label" for="user-role">Device</label>
+                            <select id="device_id" wire:model="device_id" class="form-control">
+                            <option  value="#"> Select</option>
+                                @foreach ($devices as $device)
+                                    <option  value="{{ $device ->id }}"> {{ $device ->identifier }}</option>
+                                @endforeach  
+                            </select>
+                         </fieldset>
             
             <button wire:click="store" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
@@ -176,16 +182,16 @@
         </form>
       </div>
     </div>
-    <!-- Modal to add new user Ends-->
+    <!-- Modal to add new sentry Ends-->
 
-     <!-- Modal to Edit user starts-->
+     <!-- Modal to Edit sentry starts-->
      <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-edit-slide-in">
       <div class="modal-dialog">
         <form class="add-new-user modal-content pt-0" >
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Edit Sentry</h5>
           </div>
           <div class="modal-body flex-grow-1">
           <div class="form-group">
@@ -196,38 +202,44 @@
 
 
                         <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-email">Email</label>
-                            <input  type="email" wire:model="email"  class="form-control" required />
+                            <label class="form-label" for="basic-icon-default-email">Phone Number</label>
+                            <input  type="email" wire:model="phone_number"  class="form-control"  />
 
                             <small class="form-text text-muted"> You can use letters, numbers & periods </small>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-email">Phone Number</label>
-                            <input  type="tel" wire:model="primary_phone"  class="form-control" required />
+        
 
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-email">Other Phone Number</label>
-                            <input  type="tel" wire:model="secondary_phone"  class="form-control"  />
 
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Location</label>
-                            <input  type="text" wire:model="location"  class="form-control" required />
-
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Website URL</label>
-                            <input  type="text" wire:model="websiteUrl"  class="form-control" required />
-
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Organization Description</label>
-                            <input  type="text" wire:model="description"  class="form-control" required />
-
-                        </div>
+                        <fieldset class="form-group">
+                            <label class="form-label" for="user-role">Premise</label>
+                            <select id="premise_id" wire:model="premise_id" class="form-control">
+                            <option  value="#"> Select</option>
+                                @foreach ($premises as $pre)
+                                    <option  value="{{ $pre ->id }}"> {{ $pre ->name }}</option>
+                                @endforeach  
+                            </select>
+                         </fieldset>
+                         <fieldset class="form-group">
+                            <label class="form-label" for="user-role">Shift</label>
+                            <select id="shift_id" wire:model="shift_id" class="form-control">
+                            <option  value="#"> Select</option>
+                                @foreach ($shifts as $shift)
+                                    <option  value="{{ $shift ->id }}"> {{ $shift ->name }}</option>
+                                @endforeach  
+                            </select>
+                         </fieldset>
+                         <fieldset class="form-group">
+                            <label class="form-label" for="user-role">Device</label>
+                            <select id="device_id" wire:model="device_id" class="form-control">
+                            <option  value="#"> Select</option>
+                                @foreach ($devices as $device)
+                                    <option  value="{{ $device ->id }}"> {{ $device ->identifier }}</option>
+                                @endforeach  
+                            </select>
+                         </fieldset>
 
             
-            <button wire:click="editUserData" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+            <button wire:click="editsentryData" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Update') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </form>
