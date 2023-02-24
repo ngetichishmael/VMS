@@ -50,11 +50,11 @@ class Dashboard extends Component
         $searchTerm = '%' . $this->search . '%';
         $this->resetPage();
 
-        $this->dvisitors = DriveIn::with( 'vehicle', 'timeLogs', 'Resident.unit.block.premise.organization')
+        $this->dvisitors = DriveIn::with( 'vehicle', 'timeLogs', 'Resident.unit.block.premise.organization', 'visitorType')
             ->when($this->visitorTypeId, function ($query) {
                 $query->where('visitor_type_id', $this->visitorTypeId);
             })
-            ->where('type', 'drivein')
+            ->where('type', '=','DriveIn')
             ->when($this->timeFilter != 'all', function ($query) {
                 $query->whereHas('timeLogs', function ($subQuery) {
                     if ($this->timeFilter == 'daily') {

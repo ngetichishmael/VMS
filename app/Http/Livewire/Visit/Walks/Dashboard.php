@@ -49,11 +49,11 @@ class Dashboard extends Component
     {
         $this->resetPage();
         $searchTerm = '%' . $this->search . '%';
-        $this->visitors = WalkIn::with('organization', 'timeLogs')
-            ->where('type', 'walkin')
+        $this->visitors = WalkIn::with( 'timeLogs', 'visitorType','Resident.unit.block.premise.organization')
             ->when($this->visitorTypeId, function ($query) {
                 $query->where('visitor_type_id', $this->visitorTypeId);
             })
+            ->where('type', '=', 'WalkIn')
             ->when($this->timeFilter != 'all', function ($query) {
                 $query->whereHas('timeLogs', function ($subQuery) {
                     if ($this->timeFilter == 'daily') {

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Premise;
+use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserCode;
 use Illuminate\Http\Request;
@@ -110,7 +112,7 @@ class AuthenticationController extends Controller
     /**
      * verify otp
      *
-     * @return response()
+     * @return \Illuminate\Http\JsonResponse()
      */
     public function verifyOTP($number, $otp)
     {
@@ -122,7 +124,26 @@ class AuthenticationController extends Controller
             ->latest('updated_at')
             ->exists();
         if ($exists) {
-            return response()->json(['message' => 'Valid OTP entered'], 200);
+            $settings = Setting::where('organization_code', $user->organization->code)->first();
+            $data = [
+                'organization_code' => $user->organization->code,
+            ];
+
+            if ($settings->id_checkin) {
+                $data['is_subscribed_to_id_checkin'] = $settings->id_checkin;
+            }
+
+            if ($settings->automatic_id_checkin) {
+                $data['is_subscribed_to_auto_id_checkin'] = $settings->automatic_id_checkin;
+            }
+            if ($settings->sms_checkin) {
+                $data['is_subscribed_to_sms_checkin'] = $settings->sms_checkin;
+            }
+
+            if ($settings->ipass_checkin) {
+                $data['is_subscribed_to_ipass_checkin'] = $settings->ipass_checkin;
+            }
+            return response()->json(['message' => 'Valid OTP entered', 'settings'=>$data ], 200);
         }
         return response()->json(['message' => 'Invalid OTP entered'], 406);
     }

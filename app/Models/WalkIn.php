@@ -23,13 +23,13 @@ class WalkIn extends Model
     }
     public function organization(): BelongsTo
     {
-        return $this->belongsTo(Organization::class, 'organization_code');
+        return $this->belongsTo(Organization::class, 'organization_code', 'code');
     }
 
     public function premises()
     {
         return $this->hasMany(Premise::class, 'id');
-    }public function user(): \Illuminate\Database\Eloquent\Relations\HasMany
+    }public function user(): HasMany
 {
     return $this->hasMany(User::class, 'id');
 }
@@ -43,27 +43,11 @@ class WalkIn extends Model
     }
     public function organization1()
     {
-        return $this->hasMany(\App\Models\Organization::class, 'id' );
+        return $this->hasMany(Organization::class, 'organization_code' );
     }
-
-//    public function vehicle(): BelongsTo
-//    {
-//        return $this->belongsTo(VehicleInformation::class, 'vehicleId');
-//    }
-
-
-
-//    public function tag(): BelongsTo
-//    {
-//        return $this->belongsTo(Tag::class, 'tagId');
-//    }
     public function visitorType(): BelongsTo
     {
         return $this->belongsTo(VisitorType::class, 'visitor_type_id');
-    }
-    public function identificationType()
-    {
-        return $this->belongsTo(IdentificationType::class);
     }
     public function timeLogs():BelongsTo
     {

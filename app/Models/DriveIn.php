@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\VehicleInformation;
 use App\Models\TimeLog;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 class DriveIn extends Model
@@ -31,14 +32,14 @@ class DriveIn extends Model
     }
     public function organization(): BelongsTo
     {
-        return $this->belongsTo(Organization::class, 'organization_code');
+        return $this->belongsTo(Organization::class, 'organization_code', 'code');
     }
 
     public function premises()
     {
         return $this->hasMany(Premise::class, 'id');
     }
-    public function user(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function user(): HasMany
     {
         return $this->hasMany(User::class, 'id');
     }

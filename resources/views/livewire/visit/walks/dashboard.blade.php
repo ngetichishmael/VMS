@@ -138,9 +138,8 @@
 
                         </style>
                         <tbody style="font-size: small">
-                        @forelse($visitors as $key => $visitor)
+                        @forelse($visitors as $visitor)
                             <tr>
-{{--                                <td>{{ $visitor->id }}</td>--}}
                                 <td>{!! $visitor->name!!} </td>
                                 <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}</td>
                                 <td>{!! $visitor->resident->unit->name !!}</td>
