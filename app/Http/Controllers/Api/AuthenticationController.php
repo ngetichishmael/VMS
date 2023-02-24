@@ -97,8 +97,7 @@ class AuthenticationController extends Controller
 
         $responsePassanda = curl_exec($curl);
         curl_close($curl);
-
-        return response()->json([
+           return response()->json([
             "success" => true,
             "token_type" => 'Bearer',
             "message" => "User Logged in",
@@ -124,27 +123,17 @@ class AuthenticationController extends Controller
             ->latest('updated_at')
             ->exists();
         if ($exists) {
-            $settings = Setting::where('organization_code', $user->organization->code)->first();
-            $data = [
-                'organization_code' => $user->organization->code,
-            ];
 
-            if ($settings->id_checkin) {
-                $data['is_subscribed_to_id_checkin'] = $settings->id_checkin;
-            }
-
-            if ($settings->automatic_id_checkin) {
-                $data['is_subscribed_to_auto_id_checkin'] = $settings->automatic_id_checkin;
-            }
-            if ($settings->sms_checkin) {
-                $data['is_subscribed_to_sms_checkin'] = $settings->sms_checkin;
-            }
-
-            if ($settings->ipass_checkin) {
-                $data['is_subscribed_to_ipass_checkin'] = $settings->ipass_checkin;
-            }
-            return response()->json(['message' => 'Valid OTP entered', 'settings'=>$data ], 200);
+            return response()->json(
+                [
+                    'message' => 'Valid OTP entered'
+                ], 200);
         }
         return response()->json(['message' => 'Invalid OTP entered'], 406);
+    }
+    public function settings(){
+        $user = auth()->user();
+        $settings = Setting::where('organization_code', $user->organization->code ?? 'not found')->first();
+            return response()->json(['settings'=>$settings ?? 'No Subscription settings found or user not logged in'], 200);
     }
 }

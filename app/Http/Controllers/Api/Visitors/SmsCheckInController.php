@@ -92,10 +92,10 @@ class SmsCheckInController extends Controller
         $visitor->sentry_id = $request->user()->id;
         $visitor->nationality_id = $nationality->id ?? "101";
         $visitor->resident_id = $request->input('resident_id');
-        // $visitor->attachment1=$request->input('attachment1');
-        // $visitor->attachment2=$request->input('attachment2');
-        // $visitor->attachment3=$request->input('attachment3');
-        // $visitor->attachment4=$request->input('attachment4');
+         $visitor->attachment1=$request->input('attachment1');
+         $visitor->attachment2=$request->input('attachment2');
+         $visitor->attachment3=$request->input('attachment3');
+         $visitor->attachment4=$request->input('attachment4');
         $visitor->tag = $request->input('tag');
 
 
@@ -112,6 +112,7 @@ class SmsCheckInController extends Controller
             $user_details->ID_number = $request->input('IDNO') ?? "NULL";
             $user_details->gender = $request->input('gender');
             $user_details->image = $request->input('image');
+            $user_details->company = $request->input('company');
             $user_details->save();
         }
         $visitor->user_detail_id = $user_details->id;
