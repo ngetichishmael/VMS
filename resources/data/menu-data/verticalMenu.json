@@ -126,22 +126,8 @@
                 }
             ]
         },
-        {
-            "navheader": "Service Providers",
-            "slug": ""
-        },
-        {
-            "url": "service/information",
-            "name": "Name",
-            "icon": "support_agent",
-            "slug": "ServiceInformation"
-        },
-        {
-            "url": "service/category",
-            "name": "Catergory",
-            "icon": "format_list_bulleted",
-            "slug": "ServiceCategory"
-        },
+
+
         {
             "navheader": "Vehicles",
             "slug": ""
