@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Sentry;
 use Livewire\Component;
 use App\Models\Sentry;
 use App\Models\Device;
-use App\Models\Organization;
+use App\Models\Premise;
 use App\Models\Shift;
 use Livewire\WithPagination;
 
@@ -25,7 +25,7 @@ class Dashboard extends Component
     public $userDetailsId;
     public $shiftId;
 
-    public  $name, $email, $phone_number, $role_id, $password, $organization_id;
+    public  $name, $email, $phone_number, $shift_id, $device_id, $premise_id;
 
 
 
@@ -35,26 +35,26 @@ class Dashboard extends Component
 
         $searchTerm = '%' . $this->search . '%';
 
-        $sentries = Sentry::with('user_detail','shift','device')
+        $sentries = Sentry::with('user_detail','shift','device','premise')
             ->when($this->userDetailsId, function ($query) {
                 $query->where('user_detail_id', $this->userDetailsId);
             })
             ->when($this->shiftId, function ($query) {
                 $query->where('shift_id', $this->shiftId);
             })
-            ->whereLike(['name','user_detail.ID_number','user_detail.phone_number', 'user_detail.company','shift.name','device.identifier'], $searchTerm)
+            ->whereLike(['name','user_detail.ID_number','user_detail.phone_number', 'user_detail.company','shift.name','device.identifier','premise.name'], $searchTerm)
             ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
             ->paginate($this->perPage);
 
-        $organizations = Organization::all();
+        $premises = Premise::where('status', 1) ->get();
 
-        $shifts = Shift::all();
+        $shifts = Shift::where('status', 1) ->get();
 
         $devices = Device::all();
 
         return view('livewire.sentry.dashboard', [
             'sentries' => $sentries,
-            'organizations' => $organizations,
+            'premises' => $premises,
             'shifts' => $shifts,
             'devices' => $devices,
         ]);
@@ -77,96 +77,67 @@ class Dashboard extends Component
         $this->validate([
             'name' => 'required|min:2',
 
-            'email' => 'required|email|max:255|unique:organizations,email',
+        
 
-            'phone_number'=> 'required|numeric',
+            'device_id'=> 'required',
 
-            ''=> 'required|numeric',
+            'premise_id' => 'required',
 
-            'organization_id' => 'required',
-
-            'role_id' => 'required',
+            'shift_id' => 'required',
 
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
-        }
-    
-        $code = Str::random(20);
 
-        $user = new User;
+   
+        $sentry = new Sentry;
 
-        $user->name = $this->name;
+        $sentry->name = $this->name;
 
-        $user->email = $this->email;
+   
 
-        $user->phone_number  = $this->phone_number;
+        $sentry->premise_id  = $this->premise_id;
 
-        $user->organization_id  = $this->organization_id;
+        $sentry->shift_id  = $this->shift_id;
 
-        $user->role_id  = $this->role_id;
+        $sentry->device_id  = $this->device_id;
 
-        $user->password = Hash::make($this->password);
-
-      if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
-        }
-        $user->save();
+        $sentry->save();
   
 
-        return redirect()->route('OrganizationUsers');
+        return redirect()->route('Sentry');
     }
 
-    public function editOrganization($id)
+    public function editSentry($id)
     {
         
-        $organization  = Organization::where('id', $id)->first();
+        $sentry  = Sentry::where('id', $id)->first();
 
-        $this->organization_edit_id = $id;
+        $this->sentry_edit_id = $id;
 
-        $this->name = $organization ->name;
+        $this->name = $sentry ->name;
 
-        $this->location = $organization->location;
+        $this->premise_id = $sentry->premise_id;
 
-        $this->email =  $organization->email;
+        $this->shift_id =  $sentry->shift_id;
 
-        $this->primary_phone = $organization->primary_phone;
+        $this->device_id = $sentry->device_id;
 
-        $this->secondary_phone = $organization->secondary_phone;
-
-        $this->websiteUrl = $organization->websiteUrl;
-
-        $this->description = $organization->description; 
-
-        $this->dispatchBrowserEvent('show-edit-org-modal');
+        $this->dispatchBrowserEvent('show-edit-sentry-modal');
     }
 
-    public function editOrganizationData()
+    public function editsentryData()
     {
-        //on form submit validation
-        $this->validate([
-            'name' => 'required|min:2',
-            'email' => 'required|email|max:255|unique:organizations,email',
-            'primary_phone'=> 'required|numeric',
-            'location' => 'required',
-        ]);
 
-        $organization  = Organization::where('id', $this->organization_edit_id)->first();
+        $sentry  = Sentry::where('id', $this->sentry_edit_id)->first();
 
-        $organization ->name = $this->name;
-        $organization->location = $this->location;
-        $organization->email = $this->email;
-        $organization->primary_phone  = $this->primary_phone;
-        $organization->secondary_phone  = $this->secondary_phone;
-        $organization->websiteUrl  = $this->websiteUrl;
-        $organization->description = $this->description;
-        $organization->save();
+        $sentry ->name = $this->name;
+        $sentry->premise_id = $this->premise_id;
+        $sentry->shift_id = $this->shift_id;
+        $sentry->device_id  = $this->device_id;
+ 
+        $sentry->save();
 
-        session()->flash('message', 'Organization has been updated successfully');
-
-      
-        return redirect()->route('OrganizationUsers');
+        return redirect()->route('Sentry');
     }
 
     public function destroy($id)

@@ -13,24 +13,23 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="selectSmall">Organization</label>
-                            <select wire:model="organizationId" class="form-control form-control-sm" >
-                                <option value="">  All  </option>
-                                @foreach ($organizations as $org)
-                                    <option  value="{{ $org ->id }}"> {{ $org ->name }}</option>
-                                @endforeach  
+                            <label for="selectSmall">Select Per Page</label>
+                            <select wire:model="perPage" class="form-control form-control-sm" id="selectSmall" id="table1">
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="selectSmall">Role</label>
-                            <select wire:model="roleId" class="form-control form-control-sm" id="selectSmall">
-                                <option value="">All</option>
-                                @foreach ($roles as $rol)
-                                    <option  value="{{ $rol ->id }}"> {{ $rol ->name }}</option>
-                                @endforeach  
-                              </select>
+                            <label for="selectSmall">Sort</label>
+                            <select wire:click.prevent="sortBy('name')" class="form-control form-control-sm" id="selectSmall">
+                          
+                            <option value="desc">Ascending</option>
+                                <option value="asc">Descending</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -54,9 +53,8 @@
                              
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>PhoneNumber</th>
+                                    <th>PhoneN umber</th>
                                     <th>Unit Name</th>
-                              
                                     <th>Status</th>
                                     <th>Last Login</th>
                                     <th>Check Out</th>
@@ -141,7 +139,7 @@
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">New resident</h5>
+            <h5 class="modal-title" id="exampleModalLabel">New Resident</h5>
           </div>
           <div class="modal-body flex-grow-1">
             <div class="form-group">
@@ -164,32 +162,16 @@
 
 
             <fieldset class="form-group">
-              <label class="form-label" for="resident-role">Organization</label>
-              <select id="organization_id" wire:model="organization_id" class="form-control">
+              <label class="form-label" for="resident-role">Unit</label>
+              <select id="unit_id" wire:model="unit_id" class="form-control">
                <option  value="#"> Select</option>
-                @foreach ($organizations as $organizat)
-                    <option  value="{{ $organizat ->id }}"> {{ $organizat ->name }}</option>
-                @endforeach  
-              </select>
-            </fieldset>
-
-            <fieldset class="form-group">
-              <label class="form-label" for="resident-role">Role</label>
-              <select id="role_id" wire:model="role_id" class="form-control" required>
-              <option  value="#"> Select</option>
-                @foreach ($roles as $ros)
-                    <option  value="{{ $ros ->id }}"> {{ $ros ->name }}</option>
+                @foreach ($units as $uni)
+                    <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
                 @endforeach  
               </select>
             </fieldset>
 
 
-
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Password</label>
-              <input  type="password" wire:model="password"  class="form-control" required />
-            </div>
-            
             <button wire:click="store" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
@@ -208,7 +190,7 @@
             <h5 class="modal-title" id="exampleModalLabel">Edit resident</h5>
           </div>
           <div class="modal-body flex-grow-1">
-            <div class="form-group">
+          <div class="form-group">
               <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
               <input  type="text" wire:model="name"  class="form-control" required />
 
@@ -228,24 +210,15 @@
 
 
             <fieldset class="form-group">
-              <label class="form-label" for="resident-role">Organization</label>
-              <select id="organization_id" wire:model="organization_id" class="form-control">
+              <label class="form-label" for="resident-role">Unit</label>
+              <select id="unit_id" wire:model="unit_id" class="form-control">
                <option  value="#"> Select</option>
-                @foreach ($organizations as $organ)
-                    <option  value="{{ $organ ->id }}"> {{ $organ ->name }}</option>
+                @foreach ($units as $uni)
+                    <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
                 @endforeach  
               </select>
             </fieldset>
 
-            <fieldset class="form-group">
-              <label class="form-label" for="resident-role">Role</label>
-              <select id="role_id" wire:model="role_id" class="form-control" required>
-              <option  value="#"> Select</option>
-                @foreach ($roles as $roll)
-                    <option  value="{{ $roll ->id }}"> {{ $roll ->name }}</option>
-                @endforeach  
-              </select>
-            </fieldset>
 
             
             <button wire:click="editresidentData" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Update') }} </button>

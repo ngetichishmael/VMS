@@ -26,6 +26,15 @@ class Dashboard extends Component
 
     public $data, $name, $email, $primary_phone, $secondary_phone, $location, $websiteUrl, $description, $organization_edit_id;
 
+
+    public $organization, $postsCount;
+
+    public function mount(organization $id)
+    {
+        $this->organization = Organization::all();
+        $this->postsCount = User::where('status', '=', $id)->count();
+    }
+
     public function sortBy($field)
     {
         if ($field === $this->sortField) {
@@ -41,23 +50,16 @@ class Dashboard extends Component
 
         $searchTerm = '%' . $this->search . '%';
 
-        $organization = Organization::withCount(['user' => function($query) {$query->where('organization_id','=','$id');}])
+        $organization = Organization::withCount('user')
     
-            ->whereLike(['name', 'email' ,'primary_phone','location','user.organization_id'], $searchTerm)
+            ->whereLike(['name', 'email' ,'primary_phone','location'], $searchTerm)
                 
         ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
             ->paginate($this->perPage);
         return view('livewire.organization.dashboard', ['organizations' => $organization]);
     }
 
-    public $orgs, $orgCount;
 
-    public function mount(Organization $id)
-    {
-        $this->orgs = Organization::all();
-        $this->orgCount = User::where('organization_id', '=', $id)->count();
-
-    }
  
     private function resetInput()
     {
@@ -136,16 +138,10 @@ class Dashboard extends Component
 
     public function editOrganizationData()
     {
-        //on form submit validation
-        $this->validate([
-            'name' => 'required|min:2',
-            'email' => 'required|email|max:255|unique:organizations,email',
-            'primary_phone'=> 'required|numeric',
-            'location' => 'required',
-        ]);
+  
 
         $organization  = Organization::where('id', $this->organization_edit_id)->first();
-        $identificationType->name = $this->name;
+   
         $organization ->name = $this->name;
         $organization->location = $this->location;
         $organization->email = $this->email;

@@ -16,6 +16,7 @@ class CreateIdentificationTypesTable extends Migration
         Schema::create('identification_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

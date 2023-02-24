@@ -6,7 +6,7 @@ use Livewire\Component;
 
 use App\Models\Resident;
 use App\Models\Organization;
-use App\Models\Role;
+use App\Models\Unit;
 use Livewire\WithPagination;
 
 use Illuminate\Support\Facades\Hash;
@@ -30,7 +30,7 @@ class Dashboard extends Component
     public $unitId;
     public $userdetailId;
 
-    public  $name, $email, $phone_number, $role_id, $password, $organization_id;
+    public  $name, $email, $phone_number, $unit_id, $password, $organization_id;
 
 
     public function render()
@@ -51,13 +51,13 @@ class Dashboard extends Component
 
         $organizations = Organization::all();
 
-        $roles = Role::all();
+        $units = Unit::all();
 
 
         return view('livewire.premises.resident.dashboard', [ 
             'residents' => $residents, 
              'organizations' => $organizations,
-             'roles' => $roles,
+             'units' => $units,
         ]);
     }
 
@@ -81,108 +81,88 @@ class Dashboard extends Component
 
             'phone_number'=> 'required|numeric',
 
-            'organization_id'=> 'required|numeric',
-
-            'role_id'=> 'required|numeric',
 
         ]);
 
-        // if ($this->validator->fails()) {
-        //     return response()->json(['error' => $this->validator->errors()], 400);
-        // }
+        $resident = new Resident;
 
-        $user = new User;
+        $resident->name = $this->name;
 
-        $user->name = $this->name;
+        $resident->email = $this->email;
 
-        $user->email = $this->email;
+        $resident->phone_number  = $this->phone_number;
 
-        $user->phone_number  = $this->phone_number;
-
-        $user->organization_id  = $this->organization_id;
-
-        $user->role_id  = $this->role_id;
-
-        $user->password = Hash::make($this->password);
+        $resident->unit_id  = $this->unit_id;
 
 
-        $user->save();
+        $resident->save();
   
         $this-> resetInput();
 
-        return redirect()->route('OrganizationUsers');
+        return redirect()->route('ResidentInformation');
     }
 
-    public function edituser($id)
+    public function editresident($id)
     {
         
-        $user  = User::where('id', $id)->first();
+        $resident  = Resident::where('id', $id)->first();
 
-        $this->user_edit_id = $id;
+        $this->resident_edit_id = $id;
 
-        $this->name = $user ->name;
+        $this->name = $resident ->name;
 
-        $this->email = $user->email;
+        $this->email = $resident->email;
 
-        $this->phone_number =  $user->phone_number;
+        $this->phone_number =  $resident->phone_number;
 
-        $this->organization_id = $user->organization_id;
-
-        $this->role_id = $user->role_id;
+        $this->unit_id = $resident->unit_id;
 
   
 
         $this->dispatchBrowserEvent('show-edit-org-modal');
     }
 
-    public function editUserData()
+    public function editresidentData()
     {
-        //on form submit validation
-        $this->validate([
-            'name' => 'required|min:2',
-            'email' => 'required|email|max:255|unique:organizations,email',
-            'phone_number'=> 'required|numeric',
-           
-        ]);
+ 
+        $resident  = Resident::where('id', $this->resident_edit_id)->first();
 
-        $user  = User::where('id', $this->user_edit_id)->first();
+        $resident ->name = $this->name;
+        $resident->email = $this->email;
+        $resident->phone_number = $this->phone_number;
+        $resident->unit_id  = $this->unit_id;
+      
 
-        $user ->name = $this->name;
-        $user->email = $this->email;
-        $user->phone_number = $this->phone_number;
-        $user->organization_id  = $this->organization_id;
-        $user->role_id  = $this->role_id;
+        $resident->save();
 
-        $user->save();
-
-        return redirect()->route('OrganizationUsers');
+        return redirect()->route('ResidentInformation');
     }
 
     public function destroy($id)
     {
         if ($id) {
-            $user = User::where('id', $id);
-            $user ->delete();
+            $resident = Resident::where('id', $id);
+            $resident ->delete();
 
-            return redirect()->to('/organization/users');
+            return redirect()->to('/resident/information');
         }
     }
 
     public function activate($id)
     {
        
-       User::whereId($id)->update(
+        Resident::whereId($id)->update(
           ['status' => "1"]
        );
-       return redirect()->to('/organization/users');
+       return redirect()->to('/resident/information');
     }
 
     public function deactivate($id)
     {
        
-       User::whereId($id)->update(
+       Resident::whereId($id)->update(
           ['status' => "0"]
        );
-       return redirect()->to('/organization/users');
+       return redirect()->to('/resident/information');
     }
 }

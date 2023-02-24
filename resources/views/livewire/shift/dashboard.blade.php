@@ -124,7 +124,7 @@
          <!-- Modal to add new shift starts-->
          <div wire:ignore.self  class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
             <div class="modal-dialog">
-                <form  class="add-new-user modal-content pt-0"  >
+                <form  class="add-new-user modal-content pt-0" >
               
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
                     <div class="modal-header mb-1">

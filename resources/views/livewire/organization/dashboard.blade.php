@@ -7,11 +7,10 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i data-feather="search"></i></span>
                             </div>
-                            <input wire:model="search" type="text" class="form-control" 
-                                placeholder="Search" />
+                            <input wire:model="search" type="search" id="search" class="form-control" name="search"
+                              placeholder="Search" />
                         </div>
                     </div>
-
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="selectSmall">Select Per Page</label>
@@ -33,48 +32,46 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal" style="background-color: #1877F2; color:#fff;" id="smallButton" data-target="#modals-slide-in" 
-                            data-placement="top" >+ Add New Organization 
+                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2; color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
+                            data-placement="top" title="New User">
+                          + Add Organization
+                               
                         </button>
-                   
                     </div>
                 </div>
             </div>
             <!-- users filter end -->
             {{-- @include('partials.loaderstyle') --}}
             <!-- list section start -->
-
-
-
             <div class="card">
                 <div class="pt-0 card-datatable table-responsive">
                     <div class="card-datatable table-responsive">
-                        <table class="invoice-list-table table" >
+                        <table class="table" >
                             <thead>
                                 <tr>
-                                 
-                                    <th>Name</th>
+                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Phone Number</th>
                                     <th>Location</th>
                                     <th>No.of Users</th>
                                     <th>Status</th>
-                              
                                     <th>Action</th>
-
                                 </tr>
                             </thead>
-                            
+
+                         
+
                             <tbody>
-                            @forelse ($organizations as $org)
+                            @forelse ($organization as $org)
                                 <tr>
                                   
                                     <td>{{ $org ->name }}</td>
                                     <td>{{ $org ->email }}</td>   
                                     <td>{{ $org ->primary_phone }}</td>  
                                     <td>{{ $org ->location }}</td>  
-                                    <td>{{ $org ->organization_id_ount }}</td>  
+                                    <td>{{ $org ->user->count() }}</td>  
                                     <td>
                                     <?php if($org->status == '1'){ ?>
 
@@ -116,125 +113,129 @@
                                 <td colspan="6" style="text-align: center;"> No Record Found </td>
                                 </tr>
                             @endforelse
-                          
+                       
                             </tbody>
-                           
+                          
                         </table>
-                      
+             
                         <div style="margin-left: 80%" class="mt-1">{{ $organizations->links() }}
-                </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-       
-             
+   
+        </div>
 
-              <!-- Modal to add new user starts-->
-  <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+    
+              <!-- Modal to add new organzation starts-->
+    <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
         <form class="add-new-user modal-content pt-0" >
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">New User</h5>
+            <h5 class="modal-title" id="exampleModalLabel">New Organization</h5>
           </div>
           <div class="modal-body flex-grow-1">
-          <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Name</label>
-                            <input  type="text" wire:model="name"  class="form-control" required />
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Name</label>
+              <input  type="text" wire:model="name"  class="form-control" required />
 
-                        </div>
+            </div>
+   
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-email">Email</label>
+              <input  type="email" wire:model="email"  class="form-control" required />
 
+              <small class="form-text text-muted"> You can use letters, numbers & periods </small>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
+              <input  type="tel" wire:model="primary_phone"  class="form-control" required />
 
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-email">Email</label>
-                            <input  type="email" wire:model="email"  class="form-control" required />
+            </div>
 
-                            <small class="form-text text-muted"> You can use letters, numbers & periods </small>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-email">Phone Number</label>
-                            <input  type="tel" wire:model="primary_phone"  class="form-control" required />
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Alternative Phone Number</label>
+              <input  type="tel" wire:model="secondary_phone"  class="form-control" placeholder="Optional ...." required />
 
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-email">Other Phone Number</label>
-                            <input  type="tel" wire:model="secondary_phone"  class="form-control"  />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Location</label>
+              <input  type="text" wire:model="location"  class="form-control" required />
 
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Location</label>
-                            <input  type="text" wire:model="location"  class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Website Url</label>
+              <input  type="text" wire:model="websiteUrl"  class="form-control" required />
 
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Website URL</label>
-                            <input  type="text" wire:model="websiteUrl"  class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Description</label>
+              <input  type="text" wire:model="description"  class="form-control" required />
 
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Organization Description</label>
-                            <input  type="text" wire:model="description"  class="form-control" required />
+            </div>
 
-                        </div>
-            
             <button wire:click="store" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </form>
       </div>
     </div>
-    <!-- Modal to add new user Ends-->
+    <!-- Modal to add new organzation Ends-->
 
-     <!-- Modal to Edit user starts-->
+     <!-- Modal to Edit organzation starts-->
      <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-edit-slide-in">
       <div class="modal-dialog">
         <form class="add-new-user modal-content pt-0" >
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Edit Organization</h5>
           </div>
           <div class="modal-body flex-grow-1">
           <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Name</label>
-                            <input  type="text" wire:model="name"  class="form-control" required />
+              <label class="form-label" for="basic-icon-default-fullname">Name</label>
+              <input  type="text" wire:model="name"  class="form-control" required />
 
-                        </div>
+            </div>
+   
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-email">Email</label>
+              <input  type="email" wire:model="email"  class="form-control" required />
+
+              <small class="form-text text-muted"> You can use letters, numbers & periods </small>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
+              <input  type="tel" wire:model="primary_phone"  class="form-control" required />
+
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Alternative Phone Number</label>
+              <input  type="tel" wire:model="secondary_phone"  class="form-control" placeholder="Optional ...." />
+
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Location</label>
+              <input  type="text" wire:model="location"  class="form-control" required />
+
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Website Url</label>
+              <input  type="text" wire:model="websiteUrl"  class="form-control"  />
+
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="basic-icon-default-fullname">Description</label>
+              <input  type="text" wire:model="description"  class="form-control" />
+
+            </div>
 
 
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-email">Email</label>
-                            <input  type="email" wire:model="email"  class="form-control" required />
-
-                            <small class="form-text text-muted"> You can use letters, numbers & periods </small>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-email">Phone Number</label>
-                            <input  type="tel" wire:model="primary_phone"  class="form-control" required />
-
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-email">Other Phone Number</label>
-                            <input  type="tel" wire:model="secondary_phone"  class="form-control"  />
-
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Location</label>
-                            <input  type="text" wire:model="location"  class="form-control" required />
-
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Website URL</label>
-                            <input  type="text" wire:model="websiteUrl"  class="form-control" required />
-
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="basic-icon-default-fullname">Organization Description</label>
-                            <input  type="text" wire:model="description"  class="form-control" required />
-
-                        </div>
-
+     
             
-            <button wire:click="editUserData" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('update') }} </button>
+            <button wire:click="editOrganizationData" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Update') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </form>
@@ -254,3 +255,4 @@
     
     </script>
 @endpush
+
