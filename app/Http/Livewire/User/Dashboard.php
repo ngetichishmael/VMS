@@ -30,7 +30,7 @@ class Dashboard extends Component
     public $organizationId;
     public $roleId;
 
-    public  $name, $email, $phone_number, $role_id, $password, $organization_id;
+    public  $name, $email, $phone_number, $role_id, $password, $organization_code;
 
 
     public function render()
@@ -40,7 +40,7 @@ class Dashboard extends Component
 
         $users = User::with('organization','role')
             ->when($this->organizationId, function ($query) {
-                $query->where('organization_id', $this->organizationId);
+                $query->where('organization_code', $this->organizationId);
             })
             ->when($this->roleId, function ($query) {
                 $query->where('role_id', $this->roleId);
@@ -81,15 +81,13 @@ class Dashboard extends Component
 
             'phone_number'=> 'required|numeric',
 
-            'organization_id'=> 'required|numeric',
+            'organization_code'=> 'required',
 
-            'role_id'=> 'required|numeric',
+            'role_id'=> 'required',
 
         ]);
 
-        // if ($this->validator->fails()) {
-        //     return response()->json(['error' => $this->validator->errors()], 400);
-        // }
+
 
         $user = new User;
 
@@ -99,7 +97,7 @@ class Dashboard extends Component
 
         $user->phone_number  = $this->phone_number;
 
-        $user->organization_id  = $this->organization_id;
+        $user->organization_code  = $this->organization_code;
 
         $user->role_id  = $this->role_id;
 
@@ -109,6 +107,8 @@ class Dashboard extends Component
         $user->save();
   
         $this-> resetInput();
+
+        session()->flash('message', 'User added successfully.');
 
         return redirect()->route('OrganizationUsers');
     }
@@ -126,7 +126,7 @@ class Dashboard extends Component
 
         $this->phone_number =  $user->phone_number;
 
-        $this->organization_id = $user->organization_id;
+        $this->organization_code = $user->organization_code;
 
         $this->role_id = $user->role_id;
 
@@ -150,7 +150,7 @@ class Dashboard extends Component
         $user ->name = $this->name;
         $user->email = $this->email;
         $user->phone_number = $this->phone_number;
-        $user->organization_id  = $this->organization_id;
+        $user->organization_code  = $this->organization_code;
         $user->role_id  = $this->role_id;
 
         $user->save();

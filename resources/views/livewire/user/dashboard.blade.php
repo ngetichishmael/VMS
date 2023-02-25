@@ -44,8 +44,17 @@
             </div>
             <!-- users filter end -->
             {{-- @include('partials.loaderstyle') --}}
+
+            <div>
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+    </div>
             <!-- list section start -->
             <div class="card">
+  
                 <div class="pt-0 card-datatable table-responsive">
                     <div class="card-datatable table-responsive">
                         <table class="table" >
@@ -74,7 +83,7 @@
 
                                     <td>{{ $user ->email }}</td>
                                     <td> {{ $user ->phone_number }} </td>
-                                   
+                                 
                                     <td>{!! $user->organization()->pluck("name")->implode('')!!} </td>
                                     <td>{!! $user->role()->pluck("name")->implode('')!!} </td>
                                   
@@ -165,7 +174,7 @@
 
             <fieldset class="form-group">
               <label class="form-label" for="user-role">Organization</label>
-              <select id="organization_id" wire:model="organization_id" class="form-control">
+              <select id="organization_code" wire:model="organization_code" class="form-control">
                <option  value="#"> Select</option>
                 @foreach ($organizations as $organizat)
                     <option  value="{{ $organizat ->id }}"> {{ $organizat ->name }}</option>
@@ -229,7 +238,7 @@
 
             <fieldset class="form-group">
               <label class="form-label" for="user-role">Organization</label>
-              <select id="organization_id" wire:model="organization_id" class="form-control">
+              <select id="organization_code" wire:model="organization_code" class="form-control">
                <option  value="#"> Select</option>
                 @foreach ($organizations as $organ)
                     <option  value="{{ $organ ->id }}"> {{ $organ ->name }}</option>
