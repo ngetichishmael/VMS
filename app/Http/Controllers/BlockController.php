@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateBlockRequest;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
 class BlockController extends Controller
@@ -52,17 +53,23 @@ class BlockController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate(request(), [
-            'blockname' => 'required',
-            'premise' => 'required',
+          
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'premise_id' => 'required',
+
+
         ]);
 
         $block = new Block;
-        $block->blockname = $request->blockname;
-        $block->premise = $request->premise;
+
+        $block->name = $request->input('name');
+
+        $block->premise_id  = $request->input('premise_id'); 
+
         $block->save();
 
-        return redirect()->to('/block/information');
+        return redirect()->to('/block/information')->with('success','Block added successfully.');
     }
 
     /**

@@ -110,7 +110,7 @@ class Dashboard extends Component
 
         session()->flash('message', 'User added successfully.');
 
-        return redirect()->route('OrganizationUsers');
+        return redirect()->to('/organization/users');
     }
 
     public function edituser($id)
@@ -164,7 +164,7 @@ class Dashboard extends Component
             $user = User::where('id', $id);
             $user ->delete();
 
-            return redirect()->to('/organization/users');
+            return redirect()->to('/organization/users')->with('error','User Deleted successfully!');
         }
     }
 
@@ -174,7 +174,8 @@ class Dashboard extends Component
        User::whereId($id)->update(
           ['status' => "1"]
        );
-       return redirect()->to('/organization/users');
+
+       return redirect()->to('/organization/users')->with('success','User Activated successfully!');
     }
 
     public function deactivate($id)
@@ -183,7 +184,8 @@ class Dashboard extends Component
        User::whereId($id)->update(
           ['status' => "0"]
        );
-       return redirect()->to('/organization/users');
+
+       return redirect()->to('/organization/users')->with('warning','User Disabled successfully!');
     }
 
 }

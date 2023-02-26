@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\IdentificationType;
 use App\Http\Requests\StoreIdentificationTypeRequest;
 use App\Http\Requests\UpdateIdentificationTypeRequest;
+use Illuminate\Http\Request;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class IdentificationTypeController extends Controller
 {
@@ -34,9 +39,17 @@ class IdentificationTypeController extends Controller
      * @param  \App\Http\Requests\StoreIdentificationTypeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreIdentificationTypeRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+    
+        ]);     
+        $identity = new IdentificationType;
+        $identity->name = $request->input('name');
+        $identity->save();
+        
+        return redirect()->to('/identification/type')->with('success','Indentity Type created successfully.');
     }
 
     /**

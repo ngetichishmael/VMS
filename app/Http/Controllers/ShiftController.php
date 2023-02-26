@@ -47,22 +47,17 @@ class ShiftController extends Controller
      * @param  \App\Http\Requests\StoreShiftRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreShiftRequest $request)
+    public function store(Request $request)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'name' => 'required',
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
     
-
-        // ]);
-        // if ($validator->fails()) {
-        //     return response()->json(['error' => $validator->errors()], 400);
-        // }
-     
-        // $shift = new Shift;
-        // $shift->name = $request->input('name');
-        // $shift->save();
+        ]);     
+        $shift = new Shift;
+        $shift->name = $request->input('name');
+        $shift->save();
         
-        return redirect()->route('Shifts');
+        return redirect()->to('/shifts')->with('success','Shift created successfully.');
     }
 
     /**

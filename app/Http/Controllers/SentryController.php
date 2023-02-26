@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Sentry;
 use App\Http\Requests\StoreSentryRequest;
 use App\Http\Requests\UpdateSentryRequest;
+
 use Brian2694\Toastr\Facades\Toastr;
+
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Http\Request;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class SentryController extends Controller
 {
@@ -40,21 +48,28 @@ class SentryController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [
-            'name' => 'required',
-            'id_number' => 'required',
-            'email' => 'required',
-            'shift' => 'required',
+
+            'name' => 'required|min:2',
+
+            'device_id'=> 'required',
+
+            'premise_id' => 'required',
+
+            'shift_id' => 'required',
+
+            'phone_number' => 'required',
 
         ]);
 
         $sentry = new Sentry;
-        $sentry->sname = $request->sname;
-        $sentry->id_number = $request->id_number;
-        $sentry->email = $request->email;
-        $sentry->zone = $request->zone;
+        $sentry->name = $request->input('name');
+        $sentry->phone_number = $request->input('phone_number');
+        $sentry->device_id = $request->input('device_id');
+        $sentry->premise_id = $request->input('premise_id');
+        $sentry->shift_id  = $request->input('shift_id');
         $sentry->save();
 
-        return redirect()->to('users/sentries');
+        return redirect()->to('users/sentries')->with('success','Sentry added successfully.');
     }
 
     /**

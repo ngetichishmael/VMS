@@ -84,7 +84,7 @@ class Dashboard extends Component
             $identificationType = IdentificationType::where('id', $id);
             $identificationType ->delete();
 
-            return redirect()->to('/identification/type');
+            return redirect()->to('/identification/type')->with('error','Indentification Type Deleted successfully!');
         }
     }
 
@@ -94,7 +94,7 @@ class Dashboard extends Component
         IdentificationType::whereId($id)->update(
           ['status' => "1"]
        );
-       return redirect()->to('/identification/type');
+       return redirect()->to('/identification/type')->with('success','Indentification Type Enabled successfully!');
     }
 
     public function deactivate($id)
@@ -103,6 +103,6 @@ class Dashboard extends Component
         IdentificationType::whereId($id)->update(
           ['status' => "0"]
        );
-       return redirect()->to('/identification/type');
+       return redirect()->to('/identification/type')->with('warning','Indentification Type Disabled successfully!');
     }
 }

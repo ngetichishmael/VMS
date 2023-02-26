@@ -89,7 +89,7 @@ class Dashboard extends Component
             $shift = Shift::where('id', $id);
             $shift->delete();
 
-            return redirect()->to('/shifts');
+            return redirect()->to('/shifts')->with('error','Shift Deleted successfully!');
         }
     }
 
@@ -99,7 +99,7 @@ class Dashboard extends Component
        Shift::whereId($id)->update(
           ['status' => "1"]
        );
-       return redirect()->to('/shifts');
+       return redirect()->to('/shifts')->with('success','Shift Disabled successfully!');
     }
 
     public function deactivate($id)
@@ -108,7 +108,7 @@ class Dashboard extends Component
        Shift::whereId($id)->update(
           ['status' => "0"]
        );
-       return redirect()->to('/shifts');
+       return redirect()->to('/shifts')->with('warning','Shift Disabled successfully!');
     }
 
 }

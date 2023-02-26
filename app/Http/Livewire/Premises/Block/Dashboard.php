@@ -111,7 +111,7 @@ class Dashboard extends Component
             $block = Block::where('id', $id);
             $block->delete();
 
-            return redirect()->to('/block/information');
+            return redirect()->to('/block/information')->with('error','Block Deleted successfully!');
         }
     }
 
@@ -121,7 +121,7 @@ class Dashboard extends Component
         Block::whereId($id)->update(
           ['status' => "1"]
        );
-       return redirect()->to('/block/information');
+       return redirect()->to('/block/information')->with('success','Block Enabled successfully!');
     }
 
     public function deactivate($id)
@@ -130,6 +130,6 @@ class Dashboard extends Component
         Block::whereId($id)->update(
           ['status' => "0"]
        );
-       return redirect()->to('/block/information');
+       return redirect()->to('/block/information')->with('warning','Block Disabled successfully!');
     }
 }

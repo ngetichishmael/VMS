@@ -43,6 +43,9 @@
             </div>
             <!-- residents filter end -->
             {{-- @include('partials.loaderstyle') --}}
+
+            @include('livewire.Notification.flash-message')
+
             <!-- list section start -->
             <div class="card">
                 <div class="pt-0 card-datatable table-responsive">
@@ -135,7 +138,7 @@
               <!-- Modal to add new resident starts-->
     <div wire:ignore.self class="modal modal-slide-in new-resident-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
-        <form class="add-new-resident modal-content pt-0" >
+        <form class="add-new-resident modal-content pt-0"  method="POST" action="{!! route('ResidentInformation.store') !!}">
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
@@ -144,26 +147,26 @@
           <div class="modal-body flex-grow-1">
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
-              <input  type="text" wire:model="name"  class="form-control" required />
+              <input  type="text" name="name"  class="form-control" required />
 
             </div>
    
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-email">Email</label>
-              <input  type="email" wire:model="email"  class="form-control" required />
+              <input  type="email" name="email"  class="form-control" required />
 
               <small class="form-text text-muted"> You can use letters, numbers & periods </small>
             </div>
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
-              <input  type="tel" wire:model="phone_number"  class="form-control" required />
+              <input  type="tel" name="phone_number"  class="form-control" required />
 
             </div>
 
 
             <fieldset class="form-group">
               <label class="form-label" for="resident-role">Unit</label>
-              <select id="unit_id" wire:model="unit_id" class="form-control">
+              <select id="unit_id" name="unit_id" class="form-control">
                <option  value="#"> Select</option>
                 @foreach ($units as $uni)
                     <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
@@ -172,7 +175,7 @@
             </fieldset>
 
 
-            <button wire:click="store" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+            <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </form>
