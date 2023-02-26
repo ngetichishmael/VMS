@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Premise;
+use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserCode;
 use Illuminate\Http\Request;
@@ -95,8 +97,7 @@ class AuthenticationController extends Controller
 
         $responsePassanda = curl_exec($curl);
         curl_close($curl);
-
-        return response()->json([
+           return response()->json([
             "success" => true,
             "token_type" => 'Bearer',
             "message" => "User Logged in",
@@ -110,7 +111,7 @@ class AuthenticationController extends Controller
     /**
      * verify otp
      *
-     * @return response()
+     * @return \Illuminate\Http\JsonResponse()
      */
     public function verifyOTP($number, $otp)
     {
@@ -122,8 +123,17 @@ class AuthenticationController extends Controller
             ->latest('updated_at')
             ->exists();
         if ($exists) {
-            return response()->json(['message' => 'Valid OTP entered'], 200);
+
+            return response()->json(
+                [
+                    'message' => 'Valid OTP entered'
+                ], 200);
         }
         return response()->json(['message' => 'Invalid OTP entered'], 406);
+    }
+    public function settings(){
+        $user = auth()->user();
+        $settings = Setting::where('organization_code', $user->organization->code ?? 'not found')->first();
+            return response()->json(['settings'=>$settings ?? 'No Subscription settings found or user not logged in'], 200);
     }
 }

@@ -19,16 +19,16 @@ class Organization extends Model
     protected $table = 'organizations';
     protected $guarded = [];
 
-    public function subscription()
+    public function setting()
     {
         return $this->hasOne(Setting::class, 'organization_code');
     }
     public function premise()
     {
-        return $this->hasMany(Premise::class, 'organization_code', 'id');
+        return $this->hasMany(Premise::class, 'organization_code', 'code');
     }
     public function user()
     {
-        return $this->hasMany(User::class, 'organization_code', 'id');
+        return $this->hasMany(User::class, 'organization_code');
     }
 }

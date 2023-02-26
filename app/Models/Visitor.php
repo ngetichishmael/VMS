@@ -25,7 +25,7 @@ class Visitor extends Model
     protected $guarded = [];
     public function organization(): BelongsTo
     {
-        return $this->belongsTo(Organization::class, 'organization_code');
+        return $this->belongsTo(Organization::class, 'organization_code', 'code');
     }
 
 //    public function premises(): BelongsTo

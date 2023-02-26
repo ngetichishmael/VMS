@@ -24,7 +24,9 @@ Route::post('/login', [AuthenticationController::class, 'Login']);
 Route::group(['namespace' => 'Api'], function () {
 
     Route::post('verify/otp/{number}/{otp}', [AuthenticationController::class, 'verifyOTP']);
+
     Route::middleware(['auth:sanctum'])->group(function () {
+        Route::post('verify/settings', [AuthenticationController::class, 'settings']);
         Route::post('phone-number/{phone_number}', [SMSCheckingController::class, 'SMSChecking']);
         Route::post('verify/otp/{otp}', [SMSCheckingController::class, 'verifyOTP']);
         Route::get('visitors/my_all', [VisitorController::class, 'index']);
@@ -34,7 +36,7 @@ Route::group(['namespace' => 'Api'], function () {
         Route::get('visitors/premises-options', [VisitorController::class, 'premisesOptions']);
         Route::get('visitors/purpose-options', [VisitorController::class, 'purposeOptions']);
         Route::get('visitors/host-options', [VisitorController::class, 'hostOptions']);
-        Route::get('visitors/unit-options', [VisitorController::class, 'unitOptions']);
+        Route::get('visitors/destination-options', [VisitorController::class, 'unitOptions']);
         Route::get('visitors/visitortype-options', [VisitorController::class, 'visitorTypeOptions']);
         Route::get('visitors/drivein/all', [DriveInController::class, 'index']);
         Route::post('visitors/drivein/create', [DriveInController::class, 'store']);

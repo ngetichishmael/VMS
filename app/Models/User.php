@@ -20,7 +20,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function organization(): BelongsTo
     {
-        return $this->belongsTo(Organization::class,'organization_code');
+        return $this->belongsTo(Organization::class, 'organization_code');
+
     }
 
     /**

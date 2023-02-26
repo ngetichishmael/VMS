@@ -22,6 +22,8 @@ class UserSeeder extends Seeder
             "role_id" => 1,
             'email_verified_at' => now(),
             'password' => '$2y$10$y5KwRinBAUzQsBuK6EvRXuu0i2RrjTHGs00SOD44S1L9VCMgvx3I6',
+            'organization_code'=>'wM1z4nZsIYughLausC6F'
+
         ]);
         User::create([
             'name' => "John Mbugua",
@@ -30,6 +32,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             "role_id" => 2,
             'password' => '$2y$10$y5KwRinBAUzQsBuK6EvRXuu0i2RrjTHGs00SOD44S1L9VCMgvx3I6',
+            'organization_code'=>'wM1z4nZsIYughLausC6E'
         ]);
         User::create([
             'name' => "Stephen Maina",
@@ -38,6 +41,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             "role_id" => 2,
             'password' => '$2y$10$y5KwRinBAUzQsBuK6EvRXuu0i2RrjTHGs00SOD44S1L9VCMgvx3I6',
+            'organization_code'=>'wM1z4nZsIYughLausC6D'
         ]);
         Sentry::create([
             'name'=>'Ishmael ',

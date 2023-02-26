@@ -151,9 +151,9 @@
                                     <td>{{ $visitor->id }}</td>
                                     <td>{!! $visitor->vehicle()->pluck('registration')->implode('') !!} </td>
                                     <td>{!! $visitor->name !!} </td>
-                                    <td>{{ $visitor->resident->unit->block->premise->name ?? ' Not Found' }}</td>
-                                    <td>{!! $visitor->resident->unit->name !!}</td>
-                                    <td>{!! $visitor->organization->name ?? 'Not Found' !!}</td>
+                                    <td>{{ $visitor->Resident->unit->block->premise->name ?? ' Not Found' }}</td>
+                                    <td>{!! $visitor->Resident->unit->name !!}</td>
+                                    <td>{!! $visitor->Resident->unit->block->premise->organization->name ?? 'Not Found' !!}</td>
                                     <td>{!! $visitor->timeLogs->entry_time ?? null !!}</td>
                                     @if (!isset($visitor->timeLogs->exit_time))
                                         <td>...</td>
