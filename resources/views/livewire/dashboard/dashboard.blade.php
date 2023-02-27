@@ -37,8 +37,8 @@
                         @forelse($allTypes as $key => $visitor)
                             <tr>
                                 <td>{!! $visitor->name !!} </td>
-                                <td>{!! $visitor->resident2->name !!} </td>
-                                <td>{!! $visitor->sentry->name !!} </td>
+                                <td>{!! $visitor->resident2->name ?? '' !!} </td>
+                                <td>{!! $visitor->sentry->name ?? '' !!} </td>
                                 <td>{!! $visitor->timeLog->exit_time ?? 'Null' !!} </td>
                                 <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
                                 @if ($visitor->timeLog->entry_time === null)
@@ -115,9 +115,9 @@
                         @forelse($DriveIn as $key => $visitor)
                             <tr>
                                 <td>{!! $visitor->name !!} </td>
-                                <td>{!! $visitor->resident2->name !!} </td>
-                                <td>{!! $visitor->sentry->name !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Null' !!} </td>
+                                <td>{!! $visitor->resident2->name ?? '' !!} </td>
+                                <td>{!! $visitor->sentry->name ?? '' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? ('' ?? 'Null') !!} </td>
                                 <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
                                 @if ($visitor->timeLog->entry_time === null)
                                     @php
@@ -193,8 +193,8 @@
                         @forelse($WalkIn as $key => $visitor)
                             <tr>
                                 <td>{!! $visitor->name !!} </td>
-                                <td>{!! $visitor->resident2->name !!} </td>
-                                <td>{!! $visitor->sentry->name !!} </td>
+                                <td>{!! $visitor->resident2->name ?? '' !!} </td>
+                                <td>{!! $visitor->sentry->name ?? '' !!} </td>
                                 <td>{!! $visitor->timeLog->exit_time ?? 'Null' !!} </td>
                                 <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
                                 @if ($visitor->timeLog->entry_time === null)
@@ -271,8 +271,8 @@
                         @forelse($Sms as $key => $visitor)
                             <tr>
                                 <td>{!! $visitor->name !!} </td>
-                                <td>{!! $visitor->resident2->name !!} </td>
-                                <td>{!! $visitor->sentry->name !!} </td>
+                                <td>{!! $visitor->resident2->name ?? '' !!} </td>
+                                <td>{!! $visitor->sentry->name ?? '' !!} </td>
                                 <td>{!! $visitor->timeLog->exit_time ?? 'Null' !!} </td>
                                 <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
                                 @if ($visitor->timeLog->entry_time === null)
@@ -349,8 +349,8 @@
                         @forelse($Id as $key => $visitor)
                             <tr>
                                 <td>{!! $visitor->name !!} </td>
-                                <td>{!! $visitor->resident2->name !!} </td>
-                                <td>{!! $visitor->sentry->name !!} </td>
+                                <td>{!! $visitor->resident2->name ?? '' !!} </td>
+                                <td>{!! $visitor->sentry->name ?? '' !!} </td>
                                 <td>{!! $visitor->timeLog->exit_time ?? 'Null' !!} </td>
                                 <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
                                 @if ($visitor->timeLog->entry_time === null)
@@ -427,8 +427,8 @@
                         @forelse($allTypes as $key => $visitor)
                             <tr>
                                 <td>{!! $visitor->name !!} </td>
-                                <td>{!! $visitor->resident2->name !!} </td>
-                                <td>{!! $visitor->sentry->name !!} </td>
+                                <td>{!! $visitor->resident2->name ?? '' !!} </td>
+                                <td>{!! $visitor->sentry->name ?? '' !!} </td>
                                 <td>{!! $visitor->timeLog->exit_time ?? 'Null' !!} </td>
                                 <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
                                 @if ($visitor->timeLog->entry_time === null)
