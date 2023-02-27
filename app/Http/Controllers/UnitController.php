@@ -64,18 +64,20 @@ class UnitController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [
-            'unitname' => 'required',
-            'block' => 'required',
-            'premise' => 'required',  
+            'name' => 'required',
+            'block_id' => 'required',
+      
         ]);
         
-        $unit = new Unit;
-        $unit->unitname = $request->unitname;
-        $unit->block = $request->block;
-        $unit->premise = $request->premise;
+        $unit = new Unit();
+    
+        $unit->name = $request->input('name');
+        
+        $unit->block_id  = $request->input('block_id');
+
         $unit->save();
           
-        return redirect()->to('/unit/information');
+        return redirect()->to('/unit/information')->with('success','Unit added successfully.');
     }
 
     /**

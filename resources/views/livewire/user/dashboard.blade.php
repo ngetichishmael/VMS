@@ -7,7 +7,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i data-feather="search"></i></span>
                             </div>
-                            <input wire:model="search" type="search" id="search" class="form-control" name="search"
+                            <input wire:model.debounce.300ms="search"  type="search" id="search" class="form-control" name="search"
                               placeholder="Search" />
                         </div>
                     </div>
@@ -44,14 +44,19 @@
             </div>
             <!-- users filter end -->
             {{-- @include('partials.loaderstyle') --}}
+
+
+            @include('livewire.Notification.flash-message')
+
             <!-- list section start -->
             <div class="card">
+  
                 <div class="pt-0 card-datatable table-responsive">
                     <div class="card-datatable table-responsive">
                         <table class="table" >
                             <thead>
                                 <tr>
-                             
+                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>PhoneNumber</th>
@@ -69,12 +74,13 @@
                             <tbody>
                             @forelse ($users as $key => $user)
                                 <tr>
-                                    <!-- <td> {{ $user ->id }} </td> -->
+                                    <td>{!! $key + 1 !!}</td>
+
                                     <td> {{ $user ->name }} </td>
 
                                     <td>{{ $user ->email }}</td>
                                     <td> {{ $user ->phone_number }} </td>
-                                   
+                                 
                                     <td>{!! $user->organization()->pluck("name")->implode('')!!} </td>
                                     <td>{!! $user->role()->pluck("name")->implode('')!!} </td>
                                   
@@ -137,7 +143,7 @@
               <!-- Modal to add new user starts-->
     <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
-        <form class="add-new-user modal-content pt-0" >
+        <form class="add-new-user modal-content pt-0" method="POST" action="{!! route('OrganizationUsers.store') !!}">
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
@@ -146,26 +152,26 @@
           <div class="modal-body flex-grow-1">
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
-              <input  type="text" wire:model="name"  class="form-control" required />
+              <input  type="text" name="name"  class="form-control" required />
 
             </div>
    
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-email">Email</label>
-              <input  type="email" wire:model="email"  class="form-control" required />
+              <input  type="email" name="email"  class="form-control" required />
 
               <small class="form-text text-muted"> You can use letters, numbers & periods </small>
             </div>
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
-              <input  type="tel" wire:model="phone_number"  class="form-control" required />
+              <input  type="tel" name="phone_number"  class="form-control" required />
 
             </div>
 
 
             <fieldset class="form-group">
               <label class="form-label" for="user-role">Organization</label>
-              <select id="organization_id" wire:model="organization_id" class="form-control">
+              <select id="organization_code" name="organization_code" class="form-control">
                <option  value="#"> Select</option>
                 @foreach ($organizations as $organizat)
                     <option  value="{{ $organizat ->id }}"> {{ $organizat ->name }}</option>
@@ -175,7 +181,7 @@
 
             <fieldset class="form-group">
               <label class="form-label" for="user-role">Role</label>
-              <select id="role_id" wire:model="role_id" class="form-control" required>
+              <select id="role_id" name="role_id" class="form-control" required>
               <option  value="#"> Select</option>
                 @foreach ($roles as $ros)
                     <option  value="{{ $ros ->id }}"> {{ $ros ->name }}</option>
@@ -187,10 +193,10 @@
 
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-fullname">Password</label>
-              <input  type="password" wire:model="password"  class="form-control" required />
+              <input  type="password" name="password"  class="form-control" required />
             </div>
             
-            <button wire:click="store" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+            <button  type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </form>
@@ -229,7 +235,7 @@
 
             <fieldset class="form-group">
               <label class="form-label" for="user-role">Organization</label>
-              <select id="organization_id" wire:model="organization_id" class="form-control">
+              <select id="organization_code" wire:model="organization_code" class="form-control">
                <option  value="#"> Select</option>
                 @foreach ($organizations as $organ)
                     <option  value="{{ $organ ->id }}"> {{ $organ ->name }}</option>
@@ -269,3 +275,70 @@
     </script>
 @endpush
 
+
+
+
+              <!-- Modal to add new user starts-->
+              <!-- <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+                <div class="modal-dialog">
+                  <form class="add-new-user modal-content pt-0" >
+                  {{ csrf_field() }} 
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                    <div class="modal-header mb-1">
+                      <h5 class="modal-title" id="exampleModalLabel">New User</h5>
+                    </div>
+                    <div class="modal-body flex-grow-1">
+                      <div class="form-group">
+                        <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
+                        <input  type="text" wire:model="name"  class="form-control" required />
+          
+                      </div>
+             
+                      <div class="form-group">
+                        <label class="form-label" for="basic-icon-default-email">Email</label>
+                        <input  type="email" wire:model="email"  class="form-control" required />
+          
+                        <small class="form-text text-muted"> You can use letters, numbers & periods </small>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
+                        <input  type="tel" wire:model="phone_number"  class="form-control" required />
+          
+                      </div>
+          
+          
+                      <fieldset class="form-group">
+                        <label class="form-label" for="user-role">Organization</label>
+                        <select id="organization_code" wire:model="organization_code" class="form-control">
+                         <option  value="#"> Select</option>
+                          @foreach ($organizations as $organizat)
+                              <option  value="{{ $organizat ->id }}"> {{ $organizat ->name }}</option>
+                          @endforeach  
+                        </select>
+                      </fieldset>
+          
+                      <fieldset class="form-group">
+                        <label class="form-label" for="user-role">Role</label>
+                        <select id="role_id" wire:model="role_id" class="form-control" required>
+                        <option  value="#"> Select</option>
+                          @foreach ($roles as $ros)
+                              <option  value="{{ $ros ->id }}"> {{ $ros ->name }}</option>
+                          @endforeach  
+                        </select>
+                      </fieldset>
+          
+          
+          
+                      <div class="form-group">
+                        <label class="form-label" for="basic-icon-default-fullname">Password</label>
+                        <input  type="password" wire:model="password"  class="form-control" required />
+                      </div>
+                      
+                      <button wire:click="store" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+                      <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                  </form>
+                </div>
+              </div> -->
+              <!-- Modal to add new user Ends-->
+          

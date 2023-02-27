@@ -144,7 +144,7 @@ class Dashboard extends Component
             $resident = Resident::where('id', $id);
             $resident ->delete();
 
-            return redirect()->to('/resident/information');
+            return redirect()->to('/resident/information')->with('error','Resident Deleted successfully!');
         }
     }
 
@@ -154,7 +154,7 @@ class Dashboard extends Component
         Resident::whereId($id)->update(
           ['status' => "1"]
        );
-       return redirect()->to('/resident/information');
+       return redirect()->to('/resident/information')->with('success','Resident Enabled successfully!');
     }
 
     public function deactivate($id)
@@ -163,6 +163,6 @@ class Dashboard extends Component
        Resident::whereId($id)->update(
           ['status' => "0"]
        );
-       return redirect()->to('/resident/information');
+       return redirect()->to('/resident/information')->with('warning','Resident Disabled successfully!');
     }
 }

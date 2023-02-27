@@ -84,6 +84,7 @@ Route::middleware('auth')->group(function () {
         'create' => 'shifts.create',
         'store' => 'shifts.store',
     ]);
+    
     Route::resource('identification/type', IdentificationTypeController::class)->names([
         'index' => 'IdentificationType',
         'show' => 'IdentificationType.show',

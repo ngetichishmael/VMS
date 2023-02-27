@@ -27,13 +27,6 @@ class Dashboard extends Component
     public $data, $name, $email, $primary_phone, $secondary_phone, $location, $websiteUrl, $description, $organization_edit_id;
 
 
-    public $organization, $postsCount;
-
-    public function mount(organization $id)
-    {
-        $this->organization = Organization::all();
-        $this->postsCount = User::where('status', '=', $id)->count();
-    }
 
     public function sortBy($field)
     {
@@ -56,7 +49,7 @@ class Dashboard extends Component
                 
         ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
             ->paginate($this->perPage);
-        return view('livewire.organization.dashboard', ['organizations' => $organization]);
+        return view('livewire.organization.dashboard', ['organization' => $organization]);
     }
 
 
@@ -160,7 +153,7 @@ class Dashboard extends Component
             $organization = Organization::where('id', $id);
             $organization ->delete();
 
-            return redirect()->to('/organization/information');
+            return redirect()->to('/organization/information')->with('error','Organization Deleted successfully!');
         }
     }
 
@@ -170,7 +163,7 @@ class Dashboard extends Component
        Organization::whereId($id)->update(
           ['status' => "1"]
        );
-       return redirect()->to('/organization/information');
+       return redirect()->to('/organization/information')->with('success','Organization Activated successfully!');
     }
 
     public function deactivate($id)
@@ -179,7 +172,7 @@ class Dashboard extends Component
        Organization::whereId($id)->update(
           ['status' => "0"]
        );
-       return redirect()->to('/organization/information');
+       return redirect()->to('/organization/information')->with('warning','Organization Disabled successfully!');
     }
 
 

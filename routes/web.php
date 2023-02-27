@@ -25,6 +25,6 @@ Route::get('/', function () {
 //})->middleware(['auth'])->name('dashboard');
 Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware(['auth']);
 
-// require __DIR__ . '/vuexy.php';
+require __DIR__ . '/vuexy.php';
 require __DIR__ . '/auth.php';
 require __DIR__ . '/users.php';

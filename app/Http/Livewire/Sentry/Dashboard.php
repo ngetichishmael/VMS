@@ -77,8 +77,6 @@ class Dashboard extends Component
         $this->validate([
             'name' => 'required|min:2',
 
-        
-
             'device_id'=> 'required',
 
             'premise_id' => 'required',
@@ -116,6 +114,8 @@ class Dashboard extends Component
 
         $this->name = $sentry ->name;
 
+        $this->phone_number = $sentry ->phone_number;
+
         $this->premise_id = $sentry->premise_id;
 
         $this->shift_id =  $sentry->shift_id;
@@ -131,13 +131,14 @@ class Dashboard extends Component
         $sentry  = Sentry::where('id', $this->sentry_edit_id)->first();
 
         $sentry ->name = $this->name;
+        $sentry ->phone_number = $this->phone_number;
         $sentry->premise_id = $this->premise_id;
         $sentry->shift_id = $this->shift_id;
         $sentry->device_id  = $this->device_id;
  
         $sentry->save();
 
-        return redirect()->route('Sentry');
+        return redirect()->route('Sentry')->with('success','Sentry updated successfully.');
     }
 
     public function destroy($id)
@@ -146,7 +147,7 @@ class Dashboard extends Component
             $sentry = Sentry::where('id', $id);
             $senry ->delete();
 
-            return redirect()->to('/users/sentries');
+            return redirect()->to('/users/sentries')->with('error','Sentry Deleted successfully!');
         }
     }
 
@@ -156,7 +157,7 @@ class Dashboard extends Component
        Sentry::whereId($id)->update(
           ['status' => "1"]
        );
-       return redirect()->to('/users/sentries');
+       return redirect()->to('/users/sentries')->with('success','Sentry Activated successfully!');
     }
 
     public function deactivate($id)
@@ -165,7 +166,7 @@ class Dashboard extends Component
        Sentry::whereId($id)->update(
           ['status' => "0"]
        );
-       return redirect()->to('/users/sentries');
+       return redirect()->to('/users/sentries')->with('warning','Sentry Disabled successfully!');
     }
 
 }

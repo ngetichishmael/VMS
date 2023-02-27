@@ -10,11 +10,12 @@ class Premise extends Model
 {
     use HasFactory;
 
+    protected $table = 'premises';
     protected $guarded = [];
 
     public function organization()
     {
-        return $this->belongsTo(Organization::class, 'organization_code', 'code');
+        return $this->belongsTo(Organization::class, 'organization_code');
     }
     public function sentry()
     {

@@ -5,10 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Sentry;
 use App\Http\Requests\StoreSentryRequest;
 use App\Http\Requests\UpdateSentryRequest;
-use App\Models\User;
+
+
 use Brian2694\Toastr\Facades\Toastr;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Http\Request;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class SentryController extends Controller
 {
@@ -41,23 +50,41 @@ class SentryController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [
-            'name' => 'required',
-            'id_number' => 'required',
-            'email' => 'required',
-            'shift' => 'required',
+
+            'name' => 'required|min:2',
+
+            'premise_id' => 'required',
+
+            'shift_id' => 'required',
+
+            'phone_number' => 'required',
 
         ]);
 
-        $sentry = new Sentry;
-        $sentry->sname = $request->sname;
-        $sentry->id_number = $request->id_number;
-        $sentry->email = $request->email;
-        $sentry->zone = $request->zone;
-        $sentry->save();
-         $user =  new User;
+
+        Sentry::create([
+            'name' => $request->name,
+            'phone_number' => $request->phone_number,
+            'status' => 1,
+            'device_id' => $request->device_id ?? 1,
+            'user_detail_id' => $request->user_detail_id ?? null,
+            'shift_id' => $request->shift_id,
+            'premise_id' => $request->premise_id
+        ]);
 
 
-        return redirect()->to('users/sentries');
+        User::create([
+            'name' => $request->input('name'),
+            'password' => Hash::make(Str::random(20)),
+            'email' => Str::uuid(),
+            'phone_number' => $request->input('phone_number'),
+            'status' => 1,
+            'organization_code' => Str::uuid(),
+            'role_id' => 4,
+            'email_verified_at' => now()
+        ]);
+
+        return redirect()->to('users/sentries')->with('success', 'Sentry added successfully.');
     }
 
     /**

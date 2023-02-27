@@ -44,6 +44,9 @@
             </div>
             <!-- users filter end -->
             {{-- @include('partials.loaderstyle') --}}
+
+            @include('livewire.Notification.flash-message')
+
             <!-- list section start -->
             <div class="card">
                 <div class="pt-0 card-datatable table-responsive">
@@ -120,7 +123,7 @@
          <!-- Modal to add new unit starts-->
     <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
-        <form class="add-new-user modal-content pt-0" >
+        <form class="add-new-user modal-content pt-0" method="POST" action="{!! route('UnitInformation.store') !!}">
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
@@ -129,12 +132,12 @@
           <div class="modal-body flex-grow-1">
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-fullname">Unit Name</label>
-              <input  type="text" wire:model="name"  class="form-control" required />
+              <input  type="text" name="name"  class="form-control" required />
 
             </div>
             <fieldset class="form-group">
               <label class="form-label" for="user-role">Premise Name</label>
-              <select id="block_id"  wire:model="block_id" class="form-control">
+              <select id="block_id"  name="block_id" class="form-control">
                 
                 @foreach ($blocks as $block)
                     <option  value="{{ $block ->id }}"> {{ $block ->name }}</option>
@@ -142,7 +145,7 @@
               </select>
             </fieldset>
             
-            <button wire:click="store" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+            <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </form>

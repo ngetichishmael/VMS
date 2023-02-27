@@ -10,6 +10,7 @@ use DB;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\Validator;
 
 class PremiseController extends Controller
 {
@@ -44,16 +45,31 @@ class PremiseController extends Controller
      */
     public function store(Request $request)
     {   
-        $this->validate(request(), [
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
-
-        ]);
-
-        $premise = Premise::create([
-            'name' => $request->name,
+            'location' => 'required',
+            'address'=> 'required',
+            'organization_code' => 'required',
             
+
+
         ]);
-        return redirect()->to('/premise/information');
+
+        $premise = new Premise;
+
+        $premise->name = $request->input('name');
+
+        $premise->location = $request->input('location');
+
+        $premise->address  = $request->input('address');
+
+        $premise->organization_code  = $request->input('organization_code');
+
+        $premise->description  = $request->input('description');
+
+        $premise->save();
+
+        return redirect()->to('/premise/information')->with('success','Premise added successfully.');
     }
 
     /**

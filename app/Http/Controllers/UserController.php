@@ -56,25 +56,30 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|max:255|unique:users,email',
             'phone_number'=> 'required|numeric',
-            'organization_id' => 'required',
+            'organization_code' => 'required',
             'role_id' => 'required',
 
 
         ]);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
-        }
+
      
         $user = new User;
+
         $user->name = $request->input('name');
+
         $user->email = $request->input('email');
+
         $user->phone_number  = $request->input('phone_number');
-        $user->organization_id  = $request->input('organization_id');
-        $user->role_id  = $request->input('role_id'); 
+
+        $user->organization_code  = $request->input('organization_code');
+
+        $user->role_id  = $request->input('role_id');
+
         $user->password  = Hash::make($request->password);
-        $user->save();
         
-        return redirect()->to('/organization/users');
+        $user->save();
+
+        return redirect()->to('/organization/users')->with('success','User added successfully.');
     }
 
     /**

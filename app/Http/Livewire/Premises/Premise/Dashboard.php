@@ -25,7 +25,7 @@ class Dashboard extends Component
 
     public $organizationId;
 
-    public $address, $name, $organization_id, $premise_edit_id, $location, $description;
+    public $address, $name,  $premise_edit_id, $location, $description;
     public $updateMode = false;
 
     public function render()
@@ -35,17 +35,18 @@ class Dashboard extends Component
 
         $premises = Premise::with('organization')
             ->when($this->organizationId, function ($query) {
-                $query->where('organization_id', $this->organizationId);
+                $query->where('organization_code', $this->organizationId);
             })
             ->whereLike(['name','organization.name'], $searchTerm)
             ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
             ->paginate($this->perPage);
 
-        $organizations = Organization::where('status', 1) ->get();
-        
+            $organizations = Organization::where('status', 1) ->get();
+
         return view('livewire.premises.premise.dashboard', [
             'premises' => $premises,
-            'organizations' => $organizations
+            'organizations' => $organizations,
+          
         ]);
     }
 
@@ -54,7 +55,7 @@ class Dashboard extends Component
         $this->validate([
             'name' => 'required|min:2',
 
-            'organization_id' => 'required',
+            'organization_code' => 'required',
 
             'address' => 'required',
 
@@ -65,7 +66,7 @@ class Dashboard extends Component
         //Add Student Data
         $premise = new Premise();
    
-        $premise->organization_id = $this->organization_id;
+        $premise->organization_code = $this->organization_code;
 
         $premise->name = $this->name;
 
@@ -87,7 +88,7 @@ class Dashboard extends Component
         $this->premise_edit_id = $id;
 
         $this->name = $premise->name;
-        $this->organization_id = $premise->organization_id;
+        $this->organization_code = $premise->organization_code;
         $this->location = $premise->location;
         $this->address = $premise->address;
         $this->description = $premise->name;
@@ -99,12 +100,6 @@ class Dashboard extends Component
 
     public function editPremiseData()
     {
-        //on form submit validation
-        $this->validate([
-            'name' => 'required|min:2',
-            'location' => 'required',
-            'address' => 'required',
-        ]);
 
         $premise = Premise::where('id', $this->premise_edit_id)->first();
 
@@ -114,11 +109,13 @@ class Dashboard extends Component
 
         $premise->address = $this->address;
 
+        $premise->organization_code = $this->organization_code;
+
         $premise->description = $this->description;
  
         $premise->save();
       
-        return redirect()->to('/premise/information');
+        return redirect()->to('/premise/information')->with('success','Premise Updated successfully!');
     }
 
     public function destroy($id)
@@ -127,7 +124,7 @@ class Dashboard extends Component
             $premise = Premise::where('id', $id);
             $premise ->delete();
 
-            return redirect()->to('/premise/information');
+            return redirect()->to('/premise/information')->with('error','Premise Deleted successfully!');
         }
     }
 
@@ -137,7 +134,7 @@ class Dashboard extends Component
         Premise::whereId($id)->update(
           ['status' => "1"]
        );
-       return redirect()->to('/premise/information');
+       return redirect()->to('/premise/information')->with('success','Premise Enabled successfully!');
     }
 
     public function deactivate($id)
@@ -146,6 +143,6 @@ class Dashboard extends Component
         Premise::whereId($id)->update(
           ['status' => "0"]
        );
-       return redirect()->to('/premise/information');
+       return redirect()->to('/premise/information')->with('warning','Premise Disabled successfully!');
     }
 }
