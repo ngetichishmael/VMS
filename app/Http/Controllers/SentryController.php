@@ -6,6 +6,8 @@ use App\Models\Sentry;
 use App\Http\Requests\StoreSentryRequest;
 use App\Http\Requests\UpdateSentryRequest;
 
+use App\Models\User;
+
 use Brian2694\Toastr\Facades\Toastr;
 
 use App\Http\Controllers\Controller;
@@ -69,6 +71,16 @@ class SentryController extends Controller
             'shift_id' => $request->shift_id,
             'premise_id' => $request->premise_id
         ]);
+
+
+        $sentry = new Sentry;
+        $sentry->sname = $request->sname;
+        $sentry->id_number = $request->id_number;
+        $sentry->email = $request->email;
+        $sentry->zone = $request->zone;
+        $sentry->save();
+         $user =  new User;
+
 
         User::create([
             'name' => $request->input('name'),

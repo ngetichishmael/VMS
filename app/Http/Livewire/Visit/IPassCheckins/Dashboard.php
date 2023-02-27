@@ -6,6 +6,7 @@ use App\Models\Visitor;
 use App\Models\VisitorType;
 use App\Models\WalkIn;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -50,7 +51,12 @@ class Dashboard extends Component
             ->when($this->visitorTypeId, function ($query) {
                 $query->where('visitor_type_id', $this->visitorTypeId);
             })
-            ->where('type', 'iPass')
+            ->where('type', '=','iPass')
+            ->whereIn('id', function ($query) {
+                $query->select(DB::raw('MAX(id)'))
+                    ->from('visitors')
+                    ->groupBy('user_detail_id');
+            })
             ->when($this->timeFilter != 'all', function ($query) {
                 $query->whereHas('timeLogs', function ($subQuery) {
                     if ($this->timeFilter == 'daily') {
@@ -65,17 +71,18 @@ class Dashboard extends Component
                             ->whereMonth('entry_time', Carbon::now()->month);
                     }
                 });
-            })->whereLike(['name'], $searchTerm)->orWhereHas('Resident.unit.block.premise.organization', function ($query) use ($searchTerm) {
-                $query->where('name', 'like', $searchTerm);
-            })->orWhereHas('Resident.unit.block.premise', function ($query) use ($searchTerm) {
-                $query->where('name', 'like', $searchTerm);
-            })->orWhereHas('Resident.unit.block', function ($query) use ($searchTerm) {
-                $query->where('name', 'like', $searchTerm);
-            })->orWhereHas('Resident.unit', function ($query) use ($searchTerm) {
-                $query->where('name', 'like', $searchTerm);
-            })
-            ->leftJoin('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
-            ->orderBy('time_logs.entry_time', $this->sortTimeAsc ? 'asc' : 'desc')
+            })->whereLike(['name'], $searchTerm)
+//            ->orWhereHas('Resident.unit.block.premise.organization', function ($query) use ($searchTerm) {
+//                $query->where('name', 'like', $searchTerm);
+//            })->orWhereHas('Resident.unit.block.premise', function ($query) use ($searchTerm) {
+//                $query->where('name', 'like', $searchTerm);
+//            })->orWhereHas('Resident.unit.block', function ($query) use ($searchTerm) {
+//                $query->where('name', 'like', $searchTerm);
+//            })->orWhereHas('Resident.unit', function ($query) use ($searchTerm) {
+//                $query->where('name', 'like', $searchTerm);
+//            })
+//            ->leftJoin('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+//            ->orderBy('time_logs.entry_time', $this->sortTimeAsc ? 'asc' : 'desc')
             ->orderBy('visitors.id', $this->sortField === 'id' ? ($this->sortAsc ? 'asc' : 'desc') : '')
             ->paginate($this->perPage);
     }
@@ -83,13 +90,13 @@ class Dashboard extends Component
     {
         $this->applyTimeFilter();
         $visitorTypes = VisitorType::all();
-        foreach ($this->visitors as $visitor) {
-            $entryTime = Carbon::parse($visitor->timeLogs->entry_time);
-            $exitTime = Carbon::parse($visitor->timeLogs->exit_time);
-            $duration = $entryTime->diff($exitTime);
-
-            $visitor->duration = $duration->format('%H Hours %I Minutes %S Seconds');
-        }
+//        foreach ($this->visitors as $visitor) {
+//            $entryTime = Carbon::parse($visitor->timeLogs->entry_time);
+//            $exitTime = Carbon::parse($visitor->timeLogs->exit_time);
+//            $duration = $entryTime->diff($exitTime);
+//
+//            $visitor->duration = $duration->format('%H Hours %I Minutes %S Seconds');
+//        }
         return view('livewire.visit.i-pass-checkins.dashboard', [
             'visitors' => $this->visitors,
             'visitorTypes' => $visitorTypes,

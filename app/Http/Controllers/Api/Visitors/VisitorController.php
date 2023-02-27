@@ -49,7 +49,9 @@ class VisitorController extends Controller
     }
     public function unitOptions(Request $request)
     {
-        $sentry = Sentry::where('user_detail_id', $request->user()->id)->first();
+
+        $sentry = Sentry::where('user_detail_id', $request->user()->id)->get();
+        return response()->json($sentry);
         if (!$sentry){
             return response()->json(['Error' => 'Sentry details not found'], 404);
         }
@@ -151,7 +153,7 @@ class VisitorController extends Controller
         $visitor = new Visitor();
         $visitor->name = $request->input('name');
         $visitor->type = $request->input('type');
-        $visitor->identification_type_id = $request->input('identification_type_id');
+//        $visitor->identification_type_id = $request->input('identification_type_id');
         $visitor->visitor_type_id = $request->input('visitor_type_id');
         $visitor->purpose_id = $request->input('purpose_id');
         $visitor->sentry_id = $request->user()->id;

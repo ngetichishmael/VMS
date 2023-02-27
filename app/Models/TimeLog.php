@@ -16,10 +16,10 @@ class TimeLog extends Model
     protected $guarded=[];
     public function visitor()
     {
-        return $this->hasMany(Visitor::class, );
+        return $this->hasMany(Visitor::class);
     }
     public function drivein()
     {
-        return $this->hasMany(DriveIn::class, 'time_log_id');
+        return $this->hasMany(DriveIn::class,   'time_log_id', 'id');
     }
 }

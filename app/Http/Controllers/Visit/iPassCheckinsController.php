@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Visit;
 
 use App\Http\Controllers\Controller;
+use App\Models\TimeLog;
+use App\Models\Visitor;
+use App\Models\WalkIn;
 use Illuminate\Http\Request;
 
 class iPassCheckinsController extends Controller
@@ -36,7 +39,11 @@ class iPassCheckinsController extends Controller
      */
     public function show($id)
     {
-        //
+        $visitor = WalkIn::with('purpose1','sentry','timeLogs')->whereId($id)->first();
+        $visitorCount = Visitor::where('user_detail_id', $visitor->user_details->id)->count();
+        $lastTimeLog=TimeLog::where('id', $visitor->time_log_id)->orderBy('id', 'desc')->first();
+        return view('app.visitor.ipasscheckins.visitorDetails',compact('visitor', 'visitorCount', 'lastTimeLog'));
+
     }
 
     /**
