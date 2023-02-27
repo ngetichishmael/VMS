@@ -26,6 +26,7 @@
     </div>
     <div class="col-md-3">
         <label  style="color: #070707"><h6> Time </h6></label> &nbsp;&nbsp;
+
         <select class="form-control form-select" wire:model="timeFilter" wire:change="applyTimeFilter">
             <option value="all">Select Time Duration </option>
             <option value="daily">Daily</option>
@@ -94,6 +95,7 @@
                                             <i class="fas fa-sort-down"></i>
                                         @endif
                                     @endif
+
                                 @endif
                             </th>
                             <th>Site</th>

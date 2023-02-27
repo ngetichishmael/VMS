@@ -56,7 +56,6 @@ class Dashboard extends Component
                     ->from('visitors')
                     ->groupBy('user_detail_id');
             })
-
             ->when($this->visitorTypeId, function ($query) {
                 $query->where('visitor_type_id', $this->visitorTypeId);
             })->when($this->CheckInTypeId, function ($query) {
