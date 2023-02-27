@@ -137,14 +137,7 @@ class Dashboard extends Component
 
     public function editUserData()
     {
-        //on form submit validation
-        $this->validate([
-            'name' => 'required|min:2',
-            'email' => 'required|email|max:255|unique:organizations,email',
-            'phone_number'=> 'required|numeric',
-           
-        ]);
-
+    
         $user  = User::where('id', $this->user_edit_id)->first();
 
         $user ->name = $this->name;
@@ -155,7 +148,8 @@ class Dashboard extends Component
 
         $user->save();
 
-        return redirect()->route('OrganizationUsers');
+      
+
     }
 
     public function destroy($id)
@@ -164,7 +158,7 @@ class Dashboard extends Component
             $user = User::where('id', $id);
             $user ->delete();
 
-            return redirect()->to('/organization/users')->with('error','User Deleted successfully!');
+            return redirect()->to('/organization/users')->with('success','User Updated successfully!');
         }
     }
 

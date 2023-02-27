@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Organization;
+use App\Models\Role;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 
@@ -90,7 +92,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+  
     }
 
     /**
@@ -102,8 +104,18 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $data = DB::table('users')->where('id',$id)->get();
-        return view('livewire.user.edit',compact('data'));
+        // $data = DB::table('users')->where('id',$id)->get();
+        // return view('livewire.user.edit',compact('data'));
+
+        $user = User::find($id);
+
+        $organizations = Organization::where('status', 1) ->get();
+
+        $roles = Role::all();
+
+        // $this->dispatchBrowserEvent('show-edit-org-modal', compact('users'));
+
+        return view('livewire.user.edit', compact('user','organizations','roles')); 
 
     }
 
@@ -116,7 +128,21 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+
+        $user->name = $request->input('name');
+
+        $user->email = $request->input('email');
+
+        $user->phone_number  = $request->input('phone_number');
+
+        $user->organization_code  = $request->input('organization_code');
+
+        $user->role_id  = $request->input('role_id');
+
+        $user->save();
+
+        return redirect()->to('/organization/users')->with('success','User Updated successfully.');
     }
 
     /**

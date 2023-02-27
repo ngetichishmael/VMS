@@ -97,9 +97,12 @@ class OrganizationController extends Controller
      * @param  \App\Models\Organization  $organization
      * @return \Illuminate\Http\Response
      */
-    public function edit(Organization $organization)
+    public function edit($id)
     {
-        //
+     
+        $organization = Organization::find($id);
+
+        return view('livewire.organization.edit', compact('organization'));
     }
 
     /**
@@ -109,9 +112,28 @@ class OrganizationController extends Controller
      * @param  \App\Models\Organization  $organization
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateOrganizationRequest $request, Organization $organization)
+    public function update(Request $request, $id)
     {
-        //
+      
+        $organization = Organization::find($id);
+
+        $organization ->name = $request->input('name');
+
+        $organization->location = $request->input('location');
+
+        $organization->email = $request->input('email');
+
+        $organization->primary_phone = $request->input('primary_phone');
+
+        $organization->secondary_phone = $request->input('secondary_phone');
+
+        $organization->websiteUrl = $request->input('websiteUrl');
+
+        $organization->description = $request->input('description');
+
+        $organization->save();
+
+        return redirect()->to('/organization/information')->with('success','Organization Updated successfully.');
     }
 
     /**
