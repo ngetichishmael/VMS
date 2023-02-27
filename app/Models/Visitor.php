@@ -28,15 +28,11 @@ class Visitor extends Model
         return $this->belongsTo(Organization::class, 'organization_code', 'code');
     }
 
-//    public function premises(): BelongsTo
-//    {
-//        return $this->belongsTo(Premise::class, 'premises_id');
-//    }
     public function purpose(): BelongsTo
     {
         return $this->belongsTo(Purpose::class, 'purpose_id');
     }
-    public function timeLogs():BelongsTo
+    public function timeLogs(): BelongsTo
     {
         return $this->belongsTo(TimeLog::class, 'time_log_id', 'id');
     }
@@ -49,13 +45,13 @@ class Visitor extends Model
     {
         return $this->belongsTo(TimeLog::class, 'id');
     }
-    public function sentry():BelongsTo
+    public function sentry(): BelongsTo
     {
         return $this->belongsTo(Sentry::class);
     }
     public function vehicle()
     {
-        return $this->hasMany(VehicleInformation::class );
+        return $this->hasMany(VehicleInformation::class);
     }
     public function visitorType(): BelongsTo
     {
@@ -69,9 +65,8 @@ class Visitor extends Model
     {
         return $this->belongsTo(Resident::class, 'resident_id');
     }
-    public function user_details():BelongsTo
+    public function user_details(): BelongsTo
     {
         return $this->belongsTo(UserDetail::class, 'user_detail_id');
     }
-
 }

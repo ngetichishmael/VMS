@@ -48,7 +48,7 @@ class Dashboard extends Component
         $searchTerm = '%' . $this->search . '%';
         $this->resetPage();
 
-        $this->visitors = DriveIn::with( 'vehicle', 'timeLogs', 'Resident.unit.block.premise.organization')
+        $this->visitors = DriveIn::with('vehicle', 'timeLogs', 'Resident.unit.block.premise.organization')
             ->when($this->visitorTypeId, function ($query) {
                 $query->where('visitor_type_id', $this->visitorTypeId);
             })

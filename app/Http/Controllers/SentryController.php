@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateSentryRequest;
 use Brian2694\Toastr\Facades\Toastr;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -51,8 +52,6 @@ class SentryController extends Controller
 
             'name' => 'required|min:2',
 
-            'device_id'=> 'required',
-
             'premise_id' => 'required',
 
             'shift_id' => 'required',
@@ -61,15 +60,28 @@ class SentryController extends Controller
 
         ]);
 
-        $sentry = new Sentry;
-        $sentry->name = $request->input('name');
-        $sentry->phone_number = $request->input('phone_number');
-        $sentry->device_id = $request->input('device_id');
-        $sentry->premise_id = $request->input('premise_id');
-        $sentry->shift_id  = $request->input('shift_id');
-        $sentry->save();
+        Sentry::create([
+            'name' => $request->name,
+            'phone_number' => $request->phone_number,
+            'status' => 1,
+            'device_id' => $request->device_id ?? 1,
+            'user_detail_id' => $request->user_detail_id ?? null,
+            'shift_id' => $request->shift_id,
+            'premise_id' => $request->premise_id
+        ]);
 
-        return redirect()->to('users/sentries')->with('success','Sentry added successfully.');
+        User::create([
+            'name' => $request->input('name'),
+            'password' => Hash::make(Str::random(20)),
+            'email' => Str::uuid(),
+            'phone_number' => $request->input('phone_number'),
+            'status' => 1,
+            'organization_code' => Str::uuid(),
+            'role_id' => 4,
+            'email_verified_at' => now()
+        ]);
+
+        return redirect()->to('users/sentries')->with('success', 'Sentry added successfully.');
     }
 
     /**

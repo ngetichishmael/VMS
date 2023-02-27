@@ -99,7 +99,7 @@ class Dashboard extends Component
        Shift::whereId($id)->update(
           ['status' => "1"]
        );
-       return redirect()->to('/shifts')->with('success','Shift Disabled successfully!');
+       return redirect()->to('/shifts')->with('success','Shift Enabled successfully!');
     }
 
     public function deactivate($id)
