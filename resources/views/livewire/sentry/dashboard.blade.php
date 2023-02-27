@@ -59,7 +59,7 @@
                                     <th>Phone Number</th>
                                     <th>Premise</th>
                                     <th>Shift</th>
-                                    <th>Device</th>
+                            
                                     <th>Last Login</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -74,7 +74,7 @@
                                     <!-- <td>{!! $sentry->user_detail()->pluck("ID_number")->implode('')!!} </td> -->
                                     <td>{!! $sentry->premise()->pluck("name")->implode('')!!} </td>
                                     <td>{!! $sentry->shift()->pluck("name")->implode('')!!} </td>
-                                    <td>{!! $sentry->device()->pluck("identifier")->implode('')!!} </td>
+
                                     <td>{{ $sentry ->updated_at }}</td>
                                     <td>
                                     <?php if($sentry->status == '1'){ ?> 

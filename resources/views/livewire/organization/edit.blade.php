@@ -67,7 +67,7 @@
                                 <div class="row">
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
-                                                <label for="account-username">Full Names</label>
+                                                <label for="account-username">Name</label>
                                                 <input type="text" class="form-control" 
                                                     name="name" 
                                                     value="{{ $organization ->name }}"  />
