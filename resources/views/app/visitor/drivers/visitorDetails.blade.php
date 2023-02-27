@@ -312,46 +312,49 @@
                 </div>
                     </div>
                 </div>
+
     </div>
-        <div class="row col-12" style="padding-left: 5%">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title" style="color: #1f8af5">Visitor History</h5>
-                            <div class="table-responsive">
 
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Time In</th>
-                                        <th>Time Out</th>
-                                        <th>Duration</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    @foreach ($visitor->timeLogs as $timeLog)
-
-                                        <tr>
-                                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}</td>
-                                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}</td>
-                                            <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}</td>
-                                            <td>{!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds');
-                                                        !!}</td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-    </div>
 </div>
-            <div class="mt-2 col-12 d-flex flex-sm-row flex-column" style="gap: 20px;">
-                <a href="{{ route('VisitDriveIn') }}" type="reset" style="margin-left: 85%;background: #54a4f3; color: #ffffff"
-                   class="btn btn-btn-secondary">  Back </a>
+    <div class="row pl-1">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: #1f8af5">Visitor History</h5>
+                    <div class="table-responsive">
+
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time In</th>
+                                <th>Time Out</th>
+                                <th>Duration</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            @foreach ($visitor->timeLogs as $timeLog)
+
+                                <tr>
+                                    <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}</td>
+                                    <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}</td>
+                                    <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}</td>
+                                    <td>{!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds');
+                                                        !!}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div></div>
+        </div>
+        <div class="mt-2 col-12 d-flex flex-sm-row flex-column" style="gap: 20px;">
+            <a href="{{ route('VisitDriveIn') }}" type="reset" style="margin-left: 85%;background: #54a4f3; color: #ffffff"
+               class="btn btn-btn-secondary">  Back </a>
+        </div>
+    </div></div>
 </div>
 
 @endsection

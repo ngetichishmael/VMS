@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Sentry;
 use App\Http\Requests\StoreSentryRequest;
 use App\Http\Requests\UpdateSentryRequest;
+use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
@@ -53,6 +54,8 @@ class SentryController extends Controller
         $sentry->email = $request->email;
         $sentry->zone = $request->zone;
         $sentry->save();
+         $user =  new User;
+
 
         return redirect()->to('users/sentries');
     }

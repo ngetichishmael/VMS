@@ -71,15 +71,16 @@ class Dashboard extends Component
                             ->whereMonth('entry_time', Carbon::now()->month);
                     }
                 });
-            })->whereLike(['name'], $searchTerm)->orWhereHas('Resident.unit.block.premise.organization', function ($query) use ($searchTerm) {
-                $query->where('name', 'like', $searchTerm);
-            })->orWhereHas('Resident.unit.block.premise', function ($query) use ($searchTerm) {
-                $query->where('name', 'like', $searchTerm);
-            })->orWhereHas('Resident.unit.block', function ($query) use ($searchTerm) {
-                $query->where('name', 'like', $searchTerm);
-            })->orWhereHas('Resident.unit', function ($query) use ($searchTerm) {
-                $query->where('name', 'like', $searchTerm);
-            })
+            })->whereLike(['name'], $searchTerm)
+//            ->orWhereHas('Resident.unit.block.premise.organization', function ($query) use ($searchTerm) {
+//                $query->where('name', 'like', $searchTerm);
+//            })->orWhereHas('Resident.unit.block.premise', function ($query) use ($searchTerm) {
+//                $query->where('name', 'like', $searchTerm);
+//            })->orWhereHas('Resident.unit.block', function ($query) use ($searchTerm) {
+//                $query->where('name', 'like', $searchTerm);
+//            })->orWhereHas('Resident.unit', function ($query) use ($searchTerm) {
+//                $query->where('name', 'like', $searchTerm);
+//            })
 //            ->leftJoin('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
 //            ->orderBy('time_logs.entry_time', $this->sortTimeAsc ? 'asc' : 'desc')
             ->orderBy('visitors.id', $this->sortField === 'id' ? ($this->sortAsc ? 'asc' : 'desc') : '')

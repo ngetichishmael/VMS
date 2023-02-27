@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Premise;
+use App\Models\Sentry;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserCode;
@@ -15,7 +16,8 @@ class AuthenticationController extends Controller
 {
     public function Login(Request $request)
     {
-        $user = User::with('premise')->where('phone_number', $request->phone_number)->where('status', 1)->first();
+        $user = User::with('premise', 'organization.name')->where('phone_number', $request->phone_number)->where('status', 1)->first();
+
         if (!$user) {
             return response()
                 ->json(['message' => 'Unauthorized'], 401);

@@ -153,7 +153,10 @@
                                     <td style="color: orange;"> Visitor Still in</td>
                                 @else
                                     <td>{!! $visitor->timeLog->exit_time !!}</td>
-                                    <td style="color: #70ce52;">{!! $visitor->duration !!}</td>
+                                    <td style="color: #70ce52;">
+                                        {!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds'); !!}
+
+                                    </td>
                                 @endif
                                 <td >
                                     <a href="{{ route('VisitWalkIn.show', $visitor->id) }}"><i class="fa fa-eye">&nbsp;Details</i></a>
