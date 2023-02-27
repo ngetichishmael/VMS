@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDriveInRequest;
 use App\Http\Requests\UpdateDriveInRequest;
 use App\Models\DriveIn;
+use App\Models\TimeLog;
+use App\Models\Visitor;
+use App\Models\VisitorType;
 use Carbon\Carbon;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\DB;
@@ -48,17 +51,13 @@ class DriveInController extends Controller
      * @param  \App\Models\DriveIn  $driveIn
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show( $driveIn)
+    public function show($driveIn)
     {
 
-         $visitor = DriveIn::with('nationality','user_details','purpose1','sentry')->find($driveIn);
-            $entryTime = Carbon::parse($visitor->timeLogs->entry_time);
-            $exitTime = Carbon::parse($visitor->timeLogs->exit_time);
-            $duration = $entryTime->diff($exitTime);
-            $visitor->duration = $duration->format('%H Hours %I Minutes %S Seconds');
-        $visitorCount = DriveIn::where('user_detail_id', $visitor->user_details->id)->count();
-
-        return view('app.visitor.drivers.visitorDetails',compact('visitor', 'visitorCount'));
+         $visitor = DriveIn::with('purpose1','sentry','timeLogs')->whereId($driveIn)->first();
+        $visitorCount = Visitor::where('user_detail_id', $visitor->user_details->id)->count();
+        $lastTimeLog=TimeLog::where('id', $visitor->time_log_id)->orderBy('id', 'desc')->first();
+        return view('app.visitor.drivers.visitorDetails',compact('visitor', 'visitorCount', 'lastTimeLog'));
     }
     /**
      * Show the form for editing the specified resource.

@@ -1,3 +1,6 @@
+@php
+    use Carbon\Carbon;
+@endphp
 <div class="row">
     <label style="color: #070707" ><h3>Filter By:</h3></label>
     <div class="col-md-5">
@@ -145,13 +148,16 @@
                                 <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}</td>
                                 <td>{!! $visitor->resident->unit->name !!}</td>
                                 <td>{!! $visitor->resident->unit->block->premise->organization()->pluck("name")->implode('') !!}</td>
-                                <td>{!! $visitor->timeLogs->entry_time !!}</td>
-                                @if($visitor->timeLogs->exit_time=='0000-00-00 00:00:00' || $visitor->timeLogs->exit_time=='' || $visitor->timeLogs->exit_time==null)
+                                <td>{!! $visitor->timeLog->entry_time ?? null !!}</td>
+                                @if (!isset($visitor->timeLog->exit_time))
                                     <td>...</td>
                                     <td style="color: orange;"> Visitor Still in</td>
                                 @else
-                                    <td>{!! $visitor->timeLogs->exit_time !!}</td>
-                                    <td style="color: #70ce52;">{!! $visitor->duration !!}</td>
+                                    <td>{!! $visitor->timeLog->exit_time ?? null !!}</td>
+                                    <td style="color: #70ce52;">
+                                        {!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds'); !!}
+
+                                    </td>
                                 @endif
                                 <td >
                                     <a href="{{ route('VisitSMSCheckIn.show', $visitor->id) }}"><i class="fa fa-eye">&nbsp;Details</i></a>

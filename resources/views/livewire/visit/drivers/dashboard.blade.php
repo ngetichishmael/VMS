@@ -1,3 +1,6 @@
+@php
+    use Carbon\Carbon;
+@endphp
 <div>
 <div class="row">
     <label style="color: #070707">
@@ -69,15 +72,15 @@
                     <table class="table">
                         <thead style="color: #070707">
                             <tr>
-                                <th wire:click="sortBy('id')">ID
-                                    @if ($sortField === 'id')
-                                        @if ($sortAsc)
-                                            <i class="fas fa-sort-up"></i>
-                                        @else
-                                            <i class="fas fa-sort-down"></i>
-                                        @endif
-                                    @endif
-                                </th>
+{{--                                <th wire:click="sortBy('id')">ID--}}
+{{--                                    @if ($sortField === 'id')--}}
+{{--                                        @if ($sortAsc)--}}
+{{--                                            <i class="fas fa-sort-up"></i>--}}
+{{--                                        @else--}}
+{{--                                            <i class="fas fa-sort-down"></i>--}}
+{{--                                        @endif--}}
+{{--                                    @endif--}}
+{{--                                </th>--}}
                                 <th>Vehicle Reg</th>
                                 <th wire:click="sortBy('name')">Name
                                     @if ($sortField === 'name')
@@ -97,70 +100,26 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <style>
-                            .option {
-                                color: #0c0c0c;
-                            }
 
-                            .dropdown {
-                                display: inline-block;
-                                position: relative;
-                            }
-
-                            .dropdown-toggle {
-                                cursor: pointer;
-                                color: darkgray;
-                            }
-
-                            .dropdown-menu {
-                                position: absolute;
-                                top: 100%;
-                                right: 0;
-                                display: none;
-                                background-color: #fff;
-                                box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-                                z-index: 1;
-                            }
-
-                            .dropdown-menu a {
-                                color: #333;
-                                padding: 12px 16px;
-                                text-decoration: none;
-                                display: block;
-                            }
-
-                            .dropdown-menu a:hover {
-                                background-color: #f1f1f1;
-                            }
-
-                            .dropdown:hover .dropdown-menu {
-                                display: block;
-                            }
-
-                            th,
-                            td {
-                                text-align: left;
-                            }
-                            tr:nth-child(even) {
-                                background-color: #f2f2f2;
-                            }
-                        </style>
                         <tbody style="font-size: small">
                             @forelse($dvisitors as $key => $visitor)
                                 <tr>
-                                    <td>{{ $visitor->id }}</td>
+{{--                                    <td>{{ $visitor->id }}</td>--}}
                                     <td>{!! $visitor->vehicle()->pluck('registration')->implode('') !!} </td>
                                     <td>{!! $visitor->name !!} </td>
                                     <td>{{ $visitor->Resident->unit->block->premise->name ?? ' Not Found' }}</td>
                                     <td>{!! $visitor->Resident->unit->name !!}</td>
                                     <td>{!! $visitor->Resident->unit->block->premise->organization->name ?? 'Not Found' !!}</td>
-                                    <td>{!! $visitor->timeLogs->entry_time ?? null !!}</td>
-                                    @if (!isset($visitor->timeLogs->exit_time))
+                                    <td>{!! $visitor->timeLog->entry_time ?? null !!}</td>
+                                    @if (!isset($visitor->timeLog->exit_time))
                                         <td>...</td>
                                         <td style="color: orange;"> Visitor Still in</td>
                                     @else
-                                        <td>{!! $visitor->timeLogs->exit_time ?? null !!}</td>
-                                        <td style="color: #70ce52;">{!! $visitor->duration !!}</td>
+                                        <td>{!! $visitor->timeLog->exit_time ?? null !!}</td>
+                                        <td style="color: #70ce52;">
+                                            {!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds'); !!}
+
+                                        </td>
                                     @endif
                                     <td>
 {{--                                        <div class="dropdown">--}}
@@ -169,7 +128,7 @@
 {{--                                                <i class="fas fa-ellipsis-v"></i>--}}
 {{--                                            </a>--}}
 {{--                                            <div class="dropdown-menu">--}}
-                                                <a href="{{ route('VisitDriveIn.show', ['DriveIn' => $vistor->id ?? 1]) }}"><i class="fa fa-eye">&nbsp;Details</i></a>
+                                                <a href="{{ route('VisitDriveIn.show', ['DriveIn' => $visitor->id ?? '']) }}"><i class="fa fa-eye">&nbsp;Details</i></a>
 {{--                                                <a href="#">View History</a>--}}
 {{--                                            </div>--}}
 {{--                                        </div>--}}
@@ -190,3 +149,51 @@
     </div>
 </div>
 </div>
+<style>
+    .option {
+        color: #0c0c0c;
+    }
+
+    .dropdown {
+        display: inline-block;
+        position: relative;
+    }
+
+    .dropdown-toggle {
+        cursor: pointer;
+        color: darkgray;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        display: none;
+        background-color: #fff;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-menu a {
+        color: #333;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-menu a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+    th,
+    td {
+        text-align: left;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
