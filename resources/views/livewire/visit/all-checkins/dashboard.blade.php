@@ -2,16 +2,19 @@
     use Carbon\Carbon;
 @endphp
 <div class="row">
+
     <label style="color: #070707" ><h3>Filter By:</h3></label>
     <div class="col-md-3">
         <label  style="color: #070707"><h5> Visitor Type </h5></label>
+
         <select class="form-control form-select" wire:model="visitorTypeId">
-            <option value="">All          </option>
-            @foreach($visitorTypes as $type)
+            <option value="">All </option>
+            @foreach ($visitorTypes as $type)
                 <option value="{{ $type->id }}">{{ $type->name }}</option>
             @endforeach
         </select>
     </div>
+
     <div class="col-md-3">
         <label  style="color: #070707"><h5> Check-In Type </h5></label>
         <select class="form-control form-select" wire:model="CheckInTypeId">
@@ -23,6 +26,7 @@
     </div>
     <div class="col-md-3">
         <label  style="color: #070707"><h6> Time </h6></label> &nbsp;&nbsp;
+
         <select class="form-control form-select" wire:model="timeFilter" wire:change="applyTimeFilter">
             <option value="all">Select Time Duration </option>
             <option value="daily">Daily</option>
@@ -42,7 +46,7 @@
                             <span class="input-group-text"><i data-feather="search"></i></span>
                         </div>
                         <input wire:model="search" type="text" id="fname-icon" class="form-control" name="fname-icon"
-                               placeholder="Search" />
+                            placeholder="Search" />
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -73,23 +77,25 @@
                 <div class="card-datatable table-responsive">
                     <table class="table">
                         <thead style="color: #070707">
-                        <tr>
-{{--                            <th wire:click="sortBy('id')">ID--}}
-{{--                                @if($sortField === 'id')--}}
-{{--                                    @if($sortAsc)--}}
-{{--                                        <i class="fas fa-sort-up"></i>--}}
-{{--                                    @else--}}
-{{--                                        <i class="fas fa-sort-down"></i>--}}
-{{--                                    @endif--}}
-{{--                                @endif--}}
-{{--                            </th>--}}
-                            <th wire:click="sortBy('name')">Name
-                                @if($sortField === 'name')
-                                    @if($sortAsc)
-                                        <i class="fas fa-sort-up"></i>
-                                    @else
-                                        <i class="fas fa-sort-down"></i>
+                            <tr>
+                                {{--                            <th wire:click="sortBy('id')">ID --}}
+                                {{--                                @if ($sortField === 'id') --}}
+                                {{--                                    @if ($sortAsc) --}}
+                                {{--                                        <i class="fas fa-sort-up"></i> --}}
+                                {{--                                    @else --}}
+                                {{--                                        <i class="fas fa-sort-down"></i> --}}
+                                {{--                                    @endif --}}
+                                {{--                                @endif --}}
+                                {{--                            </th> --}}
+                                <th wire:click="sortBy('name')">Name
+                                    @if ($sortField === 'name')
+                                        @if ($sortAsc)
+                                            <i class="fas fa-sort-up"></i>
+                                        @else
+                                            <i class="fas fa-sort-down"></i>
+                                        @endif
                                     @endif
+
                                 @endif
                             </th>
                             <th>Site</th>

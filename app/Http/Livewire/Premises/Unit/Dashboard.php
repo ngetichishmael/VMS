@@ -107,7 +107,7 @@ class Dashboard extends Component
             $unit = Unit::where('id', $id);
             $unit->delete();
 
-            return redirect()->to('/unit/information');
+            return redirect()->to('/unit/information')->with('error','Unit Deleted successfully!');
         }
     }
 
@@ -117,7 +117,7 @@ class Dashboard extends Component
         Unit::whereId($id)->update(
           ['status' => "1"]
        );
-       return redirect()->to('/unit/information');
+       return redirect()->to('/unit/information')->with('success','Unit Enabled successfully!');
     }
 
     public function deactivate($id)
@@ -126,6 +126,6 @@ class Dashboard extends Component
         Unit::whereId($id)->update(
           ['status' => "0"]
        );
-       return redirect()->to('/unit/information');
+       return redirect()->to('/unit/information')->with('warning',' Unit Disabled successfully!');
     }
 }

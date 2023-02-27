@@ -17,7 +17,7 @@ class AuthenticationController extends Controller
     public function Login(Request $request)
     {
         $user = null;
-        if (!FacadesAuth::attempt([
+        if (!Auth::attempt([
             'phone_number' => $request->phone_number, 'status' => '1'
         ], true)) {
             return response()

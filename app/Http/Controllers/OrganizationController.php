@@ -40,32 +40,42 @@ class OrganizationController extends Controller
      * @param  \App\Http\Requests\StoreOrganizationRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreOrganizationRequest $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+
+            'name' => 'required|min:2',
+
             'email' => 'required|email|max:255|unique:organizations,email',
-            'phone' => 'required|numeric',
+
+            'primary_phone'=> 'required|numeric',
+
             'location' => 'required',
 
         ]);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
-        }
+  
         $code = Str::random(20);
         $organization = new organization;
+
         $organization->code = $code;
+
         $organization->name = $request->input('name');
+
         $organization->location = $request->input('location');
+
         $organization->email = $request->input('email');
-        $organization->primary_phone  = $request->input('phone');
-        $organization->secondary_phone  = $request->input('phone2');
-        $organization->websiteUrl  = $request->input('url');
+
+        $organization->primary_phone  = $request->input('primary_phone');
+
+        $organization->secondary_phone  = $request->input('secondary_phone');
+
+        $organization->websiteUrl  = $request->input('websiteUrl');
+
         $organization->description = $request->input('description');
+
         $organization->save();
 
-        session()->flash('message', 'Post successfully updated.');
-        // return response()->json(['success' => 'organization information added successfully.'], 201);
+
         return redirect()->to('/organization/information')->with('success', 'Organization created successfully.');
     }
 

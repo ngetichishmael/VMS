@@ -45,6 +45,8 @@
             
             <!-- users filter end -->
             {{-- @include('partials.loaderstyle') --}}
+
+            @include('livewire.Notification.flash-message')
             <!-- list section start -->
             <div class="card">
                 <div class="pt-0 card-datatable table-responsive">
@@ -52,7 +54,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                   
+                                      <th>#</th>
                                     <th>Name</th>
                                     <th>Created</th>
                                     <th>Status</th>
@@ -60,12 +62,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @forelse ($shifts as $shift)
+                            @forelse ($shifts as $key => $shift)
                                 <tr>
-                                  
+                                    <td>{!! $key + 1 !!}</td>
                                     <td>{{ $shift ->name }}</td>
                                     
-                               
                                     <td>{{ $shift ->created_at }}</td>  
                                     <td>
                                     <?php if($shift->status == '1'){ ?>
@@ -122,7 +123,29 @@
 
         
          <!-- Modal to add new shift starts-->
-         <div wire:ignore.self  class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+         <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+            <div class="modal-dialog">
+                <form class="add-new-user modal-content pt-0" method="POST" action="{!! route('shifts.store') !!}">
+                {{ csrf_field() }} 
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                <div class="modal-header mb-1">
+                    <h5 class="modal-title" id="exampleModalLabel">New Shift</h5>
+                </div>
+                <div class="modal-body flex-grow-1">
+                    <div class="form-group">
+                    <label class="form-label" for="basic-icon-default-fullname">Shift Name</label>
+                    <input  type="text" name="name"  class="form-control" required />
+                    </div>
+                    
+                    <button  type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+                    <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+                </form>
+            </div>
+            </div>
+
+
+        <!-- <div wire:ignore.self  class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
             <div class="modal-dialog">
                 <form  class="add-new-user modal-content pt-0" >
               
@@ -142,7 +165,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </div> -->
     <!-- Modal to add new shift Ends-->
 
         <!-- Modal to edit shift starts-->
@@ -169,44 +192,10 @@
         </div>
     <!-- Modal to edit shift Ends-->
 
-        <h2 class="brand-text">TODO ON SENTRIES</h2>
-        <div class="card-body">
-            <div id="jstree-basic">
-                <ul>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        CRUD
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Create</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Read</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Updated</li>
-                            <li data-jstree='{"icon" : "fab fa-css3-alt"}'>Delete</li>
-                        </ul>
-                    </li>
-                    <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
-                        Table
-                        <ul>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Filter</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Pagination</li>
-                            <li data-jstree='{"icon" : "fab fa-node-js"}'>Search by *</li>
-                        </ul>
-                    </li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Any Other</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Martin to Advise</li>
-                    <li data-jstree='{"icon" : "fab fa-html5"}'>Isaac to Provide images, and secondary colors</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!-- Dashboard Ecommerce ends -->
-    
 
-    @push('scripts')
+
+@push('scripts')
     <script>
-        window.addEventListener('close-modal', event =>{
-            $('#addStudentModal').modal('hide');
-            $('#editStudentModal').modal('hide');
-            $('#deleteStudentModal').modal('hide');
-        });
 
         window.addEventListener('show-edit-shift-modal', event =>{
             $('#modals-edit-slide-in').modal('show');

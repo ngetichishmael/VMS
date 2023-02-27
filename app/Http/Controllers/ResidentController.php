@@ -43,18 +43,26 @@ class ResidentController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [
-            'rname' => 'required',
-            'block' => 'required',
-            'premise' => 'required',  
+            'name' => 'required|min:2',
+
+            'email' => 'required|email|max:255|unique:organizations,email',
+
+            'phone_number'=> 'required|numeric', 
         ]);
         
         $resident = new Resident;
-        $resident->rname = $request->rname;
-        $resident->block = $request->block;
-        $resident->premise = $request->premise;
+
+        $resident->name = $request->input('name');
+
+        $resident->email = $request->input('email');
+
+        $resident->phone_number = $request->input('phone_number');
+
+        $resident->unit_id = $request->input('unit_id');
+   
         $resident->save();
           
-        return redirect()->to('/resident/information');
+        return redirect()->to('/resident/information')->with('success','Resident Created successfully!');
     }
 
     /**

@@ -15,53 +15,46 @@
             "slug": ""
         },
         {
-            "name": "Visits",
-            "icon": "local_library",
-            "slug": "",
-            "submenu": [
-                {
-                    "url": "Visits/AllCheckIn",
-                    "name": "All Check-in",
-                    "icon": "people",
-                    "slug": "VisitAllCheckIn"
-                },
-                {
-                    "url": "Visits/DriveIn",
-                    "name": "Driver-in",
-                    "icon": "emoji_transportation",
-                    "slug": "VisitDriveIn"
-                },
-                {
-                    "url": "Visits/WalkIn",
-                    "name": "Walks Ins",
-                    "icon": "directions_walk",
-                    "slug": "VisitWalkIn"
-                },
-                {
-                    "url": "Visits/SMSCheckIn",
-                    "name": "SMS Check-in",
-                    "icon": "SMS",
-                    "slug": "VisitSMSCheckIn"
-                },
-                {
-                    "url": "Visits/IDCheckIn",
-                    "name": " ID Check-in",
-                    "icon": "badge",
-                    "slug": "VisitIDCheckIn"
-                },
-                {
-                    "url": "Visits/IPassCheckIn",
-                    "name": "IPass Check-in",
-                    "icon": "QR_CODE",
-                    "slug": "VisitIPassCheckIn"
-                }
-            ]
+            "url": "Visits/AllCheckIn",
+            "name": "All Check-ins",
+            "icon": "people",
+            "slug": "VisitAllCheckIn"
         },
         {
-            "url": "bookings",
-            "name": "Bookings",
-            "icon": "save",
-            "slug": "bookings"
+            "url": "Visits/DriveIn",
+            "name": "Driver-ins",
+            "icon": "emoji_transportation",
+            "slug": "VisitDriveIn"
+        },
+        {
+            "url": "Visits/WalkIn",
+            "name": "Walks-ins",
+            "icon": "directions_walk",
+            "slug": "VisitWalkIn"
+        },
+        {
+            "url": "Visits/SMSCheckIn",
+            "name": "SMS Check-ins",
+            "icon": "SMS",
+            "slug": "VisitSMSCheckIn"
+        },
+        {
+            "url": "Visits/IDCheckIn",
+            "name": " ID Check-ins",
+            "icon": "badge",
+            "slug": "VisitIDCheckIn"
+        },
+        {
+            "url": "Visits/IPassCheckIn",
+            "name": "IPass Check-ins",
+            "icon": "QR_CODE",
+            "slug": "VisitIPassCheckIn"
+        },
+        {
+            "url": "vehicle/information",
+            "name": "Vehicles",
+            "icon": "garage",
+            "slug": "VehicleInformation"
         },
         {
             "navheader": "User Interface",
@@ -75,7 +68,7 @@
         },
         {
             "url": "users/sentries",
-            "name": "Sentry",
+            "name": "Guards",
             "icon": "person_pin",
             "slug": "Sentry"
         },
@@ -88,12 +81,6 @@
             "name": "Organization",
             "icon": "corporate_fare",
             "slug": "OrganizationInformation"
-        },
-        {
-            "url": "organization/setting",
-            "name": "Settings",
-            "icon": "settings",
-            "slug": "Settings"
         },
         {
             "name": "Premises",
@@ -126,18 +113,6 @@
                 }
             ]
         },
-
-
-        {
-            "navheader": "Vehicles",
-            "slug": ""
-        },
-        {
-            "url": "vehicle/information",
-            "name": "Vehicles",
-            "icon": "garage",
-            "slug": "VehicleInformation"
-        },
         {
             "navheader": "Others",
             "slug": ""
@@ -153,6 +128,12 @@
             "name": "Shifts",
             "icon": "track_changes",
             "slug": "shifts"
+        },
+        {
+            "url": "organization/setting",
+            "name": "Settings",
+            "icon": "settings",
+            "slug": "Settings"
         }
     ]
 }
