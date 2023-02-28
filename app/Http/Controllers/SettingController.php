@@ -37,9 +37,10 @@ class SettingController extends Controller
         return view('settings.show', compact('setting'));
     }
 
-    public function edit(Setting $setting)
+    public function edit(Setting $organization_code)
     {
-        return view('settings.edit', compact('setting'));
+        return response()->json(['success' =>$organization_code  ]);
+        return view('settings.edit', compact('organization_code'));
     }
 
     public function update(Request $request, Setting $setting)
@@ -54,7 +55,28 @@ class SettingController extends Controller
 
         $setting->update($validatedData);
 
-        return redirect()->route('settings.index')->with('success', 'Setting updated successfully.');
+        $van_sales = $request->van_sales == null ? "NO" : "YES";
+        $new_sales = $request->new_sales == null ? "NO" : "YES";
+        $deliveries = $request->deliveries == null ? "NO" : "YES";
+        $schedule_visits = $request->schedule_visits == null ? "NO" : "YES";
+        $merchanizing = $request->merchanizing == null ? "NO" : "YES";
+        AppPermission::updateOrCreate(
+            [
+//                "organization_code" => $organization_code,
+            ],
+            [
+                "van_sales" => $van_sales,
+                "new_sales" => $new_sales,
+                "schedule_visits" => $schedule_visits,
+                "deliveries" => $deliveries,
+                "merchanizing" => $merchanizing,
+            ]
+        );
+
+        Session()->flash('success', 'User updated Successfully');
+
+        return redirect()->back();
+//        return redirect()->route('settings.index')->with('success', 'Setting updated successfully.');
     }
 
     public function destroy(Setting $setting)

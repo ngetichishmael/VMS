@@ -17,18 +17,22 @@ class Resident extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
 
-    public function premise()
+    public function premise(): BelongsTo
     {
         return $this->unit->block->premise;
     }
 
     public function unit()
     {
-        return $this->belongsTo(Unit::class, 'unit_id');
+        return $this->belongsTo(Unit::class, 'unit_id', 'id');
     }
 
     public function user_detail()
     {
         return $this->belongsTo(UserDetail::class, 'user_detail_id');
+    }
+    public function visitors()
+    {
+        return $this->hasMany(Visitor::class);
     }
 }

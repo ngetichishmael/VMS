@@ -5,11 +5,11 @@ namespace App\Models;
 use App\Models\Organization;
 use App\Models\Premise;
 use App\Models\Tag;
+use App\Models\TimeLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\VehicleInformation;
-use App\Models\TimeLog;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
@@ -28,7 +28,7 @@ class DriveIn extends Model
 //    }
     public function timeLog()
     {
-        return $this->belongsTo(TimeLog::class);
+        return $this->hasOne(TimeLog::class,'id','time_log_id')->latest();
     }
     public function organization(): BelongsTo
     {
@@ -37,19 +37,19 @@ class DriveIn extends Model
 
     public function premises()
     {
-        return $this->hasMany(Premise::class, 'id');
+        return $this->hasMany(Premise::class, );
     }
     public function user(): HasMany
     {
-        return $this->hasMany(User::class, 'id');
+        return $this->hasMany(User::class, );
     }
     public function unit()
     {
-        return $this->hasMany(Unit::class, 'id' );
+        return $this->belongsTo(Unit::class, );
     }
     public function purpose()
     {
-        return $this->hasMany(Purpose::class, 'id');
+        return $this->hasMany(Purpose::class, );
     }
     public function organization1()
     {
@@ -60,13 +60,13 @@ class DriveIn extends Model
     {
         return $this->belongsTo(VisitorType::class, 'visitor_type_id');
     }
-    public function timeLogs():BelongsTo
+    public function timeLogs()
     {
-        return $this->belongsTo(TimeLog::class, 'time_log_id');
+        return $this->hasMany(TimeLog::class,'id','time_log_id');
     }
     public function Resident():BelongsTo
     {
-        return $this->belongsTo(Resident::class, 'resident_id');
+        return $this->belongsTo(Resident::class);
     }
     public function user_details():BelongsTo
     {

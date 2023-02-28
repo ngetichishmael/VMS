@@ -57,10 +57,15 @@ class DriveInController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
         $nationality = Nationality::whereLike(['name'], (string)$request->nationality)->first();
+        if (!$nationality){
+            $nationality->nationality=$request->input('nationality');
+        }
         $timeLog = new TimeLog;
         $now = Carbon::now();
         $nairobiNow = $now->setTimezone('Africa/Nairobi');
         $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
+//        $timeLog->entry_time = now();
+        $timeLog->save();
 
         $visitor = new Visitor();
         $visitor->name = $request->input('name');
@@ -76,10 +81,9 @@ class DriveInController extends Controller
         $visitor->attachment2 = $request->input('attachment2');
         $visitor->attachment3 = $request->input('attachment3');
         $visitor->attachment4 = $request->input('attachment4');
-        $timeLog = new TimeLog;
-        $timeLog->entry_time = now();
 
-        $timeLog->save();
+
+
 
         $visitor->time_log_id = $timeLog->id;
 

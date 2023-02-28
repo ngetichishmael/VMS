@@ -21,7 +21,6 @@ class VisitorSeeder extends Seeder
             [
                 'name' => 'John Doe',
                 'type' => 'walkIn',
-                'identification_type_id' => 1,
                 'visitor_type_id' => 1,
                 'purpose_id' => 1,
                 'sentry_id' => 1,
@@ -34,7 +33,6 @@ class VisitorSeeder extends Seeder
             [
                 'name' => 'Jane Smith',
                 'type' => 'driveIn',
-                'identification_type_id' => 2,
                 'visitor_type_id' => 2,
                 'purpose_id' => 2,
                 'sentry_id' => 2,
@@ -48,7 +46,6 @@ class VisitorSeeder extends Seeder
             [
                 'name' => 'kibet tanui',
                 'type' => 'sms',
-                'identification_type_id' => 3,
                 'visitor_type_id' => 3,
                 'purpose_id' => 3,
                 'sentry_id' => 2,

@@ -2,6 +2,7 @@
 
 @section('title', 'Drive-in')
 
+
 @section('vendor-style')
     {{-- vendor css files --}}
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/charts/apexcharts.css')) }}">

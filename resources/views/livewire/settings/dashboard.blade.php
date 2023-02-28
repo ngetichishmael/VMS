@@ -106,17 +106,8 @@
                         <td style="color: {{ $setting->ipass_checkin == 1 ? 'green' : 'orange' }}">
                             {{ $setting->ipass_checkin == 1 ? 'subscribed' : 'not subscribed' }}
                         </td>
-
                         <td>
-{{--                            <div class="dropdown">--}}
-{{--                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"--}}
-{{--                                   role="button" aria-haspopup="true" aria-expanded="false">--}}
-{{--                                    <i class="fas fa-ellipsis-v"></i>--}}
-{{--                                </a>--}}
-{{--                                <div class="dropdown-menu">--}}
-                                    <a href="#"><i class="fa fa-edit"> &nbsp; Edit</i></a>
-{{--                                </div>--}}
-{{--                            </div>--}}
+                            <a href="{{ route('OrganizationSetting.edit', ['setting' => $setting->organization_code ?? '']) }}"><i class="fa fa-edit"> &nbsp Edit</i></a>
                         </td>
                     </tr>
                 @empty
