@@ -77,14 +77,22 @@ class DriveInController extends Controller
         $visitor->nationality_id = $nationality->id ?? "110";
         $visitor->resident_id = $request->input('resident_id');
         $visitor->tag = $request->input('tag');
-        $visitor->attachment1 = $request->input('attachment1');
-        $visitor->attachment2 = $request->input('attachment2');
-        $visitor->attachment3 = $request->input('attachment3');
-        $visitor->attachment4 = $request->input('attachment4');
 
+        if ($request->hasFile('attachment1')) {
+            $visitor->attachment1 = $request->attachment1->store('public/attachments');
+        }
 
+        if ($request->hasFile('attachment2')) {
+            $visitor->attachment2 = $request->attachment2->store('public/attachments');
+        }
 
+        if ($request->hasFile('attachment3')) {
+            $visitor->attachment3 = $request->attachment3->store('public/attachments');
+        }
 
+        if ($request->hasFile('attachment4')) {
+            $visitor->attachment4 = $request->attachment4->store('public/attachments');
+        }
         $visitor->time_log_id = $timeLog->id;
 
         $user_details = UserDetail::where('ID_number', $request['IDNO'])->first();
@@ -95,8 +103,10 @@ class DriveInController extends Controller
             $user_details->date_of_birth = $request->input('DOB');
             $user_details->ID_number = $request->input('IDNO');
             $user_details->gender = $request->input('gender');
-            $user_details->image = $request->input('image');
             $user_details->company = $request->input('company');
+            if ($request->hasFile('image')) {
+                $visitor->image = $request->image->store('public/id_images');
+            }
             $user_details->save();
         }
         $visitor->user_detail_id = $user_details->id;
