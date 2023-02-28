@@ -192,7 +192,7 @@
                                         <fieldset class="form-group">
                                           <label  for="user-role">Organization</label>
                                           <select  name="organization_code" class="form-control">
-                                      
+                                          <option  value="{{ $user ->organization_code }}" > Select ...</option>
                                             @foreach ($organizations as $organizat)
                                                 <option  value="{{ $organizat ->id }}"> {{ $organizat ->name }}</option>
                                             @endforeach  
@@ -205,7 +205,7 @@
                                         <fieldset class="form-group">
                                           <label  for="user-role">Role</label>
                                           <select  name="role_id" class="form-control" required>
-                                        
+                                          <option  value="{{ $user ->role_id }}" > Select ...</option>
                                             @foreach ($roles as $ros)
                                                 <option  value="{{ $ros ->id }}"> {{ $ros ->name }}</option>
                                             @endforeach  

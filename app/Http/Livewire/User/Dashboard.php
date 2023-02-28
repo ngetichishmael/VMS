@@ -38,7 +38,7 @@ class Dashboard extends Component
     
         $searchTerm = '%' . $this->search . '%';
 
-        $users = User::with('organization','role')
+        $users = User::whereIn('role_id',[1,2])->with('organization','role')
             ->when($this->organizationId, function ($query) {
                 $query->where('organization_code', $this->organizationId);
             })

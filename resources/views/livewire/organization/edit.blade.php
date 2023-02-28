@@ -24,131 +24,81 @@
 @endsection
 
 @section('content')
-    <section id="page-account-settings">
-            @if (session('status'))
-                <div class="col-md-6 col-xl-12">
-                    <div class="card bg-success text-white">
-                      <div class="card-body">
-                        <p class="card-text">    {{ session('status') }}</p>
-                      </div>
-                    </div>
-                  </div>
-            @elseif (session('error'))
-                <div class="col-md-6 col-xl-12">
-                    <div class="card bg-danger text-white">
-                      <div class="card-body">
-                        <p class="card-text"> {{ session('error') }}</p>
-                      </div>
-                    </div>
-                  </div>
-            @endif
-        <div class="row">
   
-
-            <!-- right content section -->
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="tab-content">
-
-
-                        
-
-                            <!-- change password -->
-                            <div class="tab-pane  active" id="account-vertical-password" role="tabpanel"
-                                aria-labelledby="account-pill-password" aria-expanded="false">
-
-   
-
-                                <!-- form -->
-                                <form class="validate-form mt-2" method="post" action="{{ route('OrganizationInformation.update', $organization->id) }}">
-                                @method('PATCH') 
-            @csrf   
-                                <div class="row">
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label for="account-username">Name</label>
-                                                <input type="text" class="form-control" 
-                                                    name="name" 
-                                                    value="{{ $organization ->name }}"  />
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label for="account-name">Email</label>
-                                                <input type="email" class="form-control" 
-                                                 name="email"
-                                                  value="{{ $organization ->email}}"   />
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label for="account-e-mail">Phone Number</label>
-                                                <input type="tel" class="form-control" 
-                                                    name="primary_phone" 
-                                                    value="{{ $organization ->primary_phone }}" 
-                                                />
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label for="account-e-mail">AlternativePhone Number</label>
-                                                <input type="tel" class="form-control" 
-                                                    name="secondary_phone" 
-                                                    value="{{ $organization ->secondary_phone}}" 
-                                                />
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label for="account-e-mail">Location</label>
-                                                <input type="text" class="form-control" 
-                                                    name="location" 
-                                                    value="{{ $organization ->location}}" 
-                                                />
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label for="account-e-mail">WebsiteUrl</label>
-                                                <input type="tel" class="form-control" 
-                                                    name="websiteUrl" 
-                                                    value="{{ $organization ->websiteUrl }}" 
-                                                />
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label for="account-e-mail">Description</label>
-                                                <textarea
-                                                    class="form-control"
-                                                    name="description" 
-                                                    value="{{ $organization ->description}}" 
-                                                    rows="3"
-                                               ></textarea>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-12">
-                                        <button type="submit" class="btn btn-primary mr-1 mt-1">Update</button>
-                                        <button type="reset" class="btn btn-outline-secondary mt-1">Cancel</button>
-                                    </div>
-
-                                    </div>
-                                </form>
-                                <!--/ form -->
-                            </div>
-                            <!--/ change password -->
-
-
-                        </div>
-                    </div>
-                </div>
+<section id="multiple-column-form">
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">#{{ $organization ->code }}</h4>
+      </div>
+      <div class="card-body">
+      
+      
+      
+      
+        <form class="form"  method="post" action="{{ route('OrganizationInformation.update', $organization->id) }}">
+        @method('PATCH') 
+        @csrf  
+        <div class="row">
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="first-name-column"> Organization Name</label>
+                     <input type="text" class="form-control"  name="name" value="{{ $organization ->name }}"  />
+              </div>
             </div>
-            <!--/ right content section -->
-        </div>
-    </section>
+
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="last-name-column">Email</label>
+                    <input type="email" class="form-control"  name="email" value="{{ $organization ->email}}"   />
+              </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="last-name-column">Phone Number</label>
+                    <input type="tel" class="form-control"  name="primary_phone"  value="{{ $organization ->primary_phone }}" />
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="city-column"> Alternative Phone Number</label>
+                <input type="tel" class="form-control" name="secondary_phone" value="{{ $organization ->secondary_phone}}" /> 
+             </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="country-floating">Location</label>
+                <input type="text" class="form-control" name="location" value="{{ $organization ->location}}" />
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="company-column">WebsiteUrl</label>
+                <input type="tel" class="form-control" name="websiteUrl" value="{{ $organization ->websiteUrl }}" />
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="email-id-column">Description</label>
+                <textarea class="form-control"  name="description"   rows="3" >{{ $organization ->description}}</textarea>
+              </div>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary mr-1">Update</button>
+              <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<!-- Basic Floating Label Form section end -->
+
+
 @endsection
 
 

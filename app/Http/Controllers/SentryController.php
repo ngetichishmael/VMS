@@ -64,21 +64,38 @@ class SentryController extends Controller
             'name' => $request->name,
             'phone_number' => $request->phone_number,
             'status' => 1,
-            'device_id' => $request->device_id ?? 1,
+            'device_id' => $request->device_id ?? 0,
             'user_detail_id' => $request->user_detail_id ?? null,
             'shift_id' => $request->shift_id,
-            'premise_id' => $request->premise_id
+            'premise_id' => $request->premise_id,
+         
         ]);
 
         User::create([
+            // 'name' => $request->input('name'),
+            // 'password' => Hash::make(Str::random(20)),
+            // 'email' => Str::uuid(),
+            // 'phone_number' => $request->input('phone_number'),
+            // 'status' => 1,
+            // 'organization_code' => Str::uuid(),
+            // 'role_id' => 4,
+            // 'email_verified_at' => now()
+
+
+
             'name' => $request->input('name'),
-            'password' => Hash::make(Str::random(20)),
+
             'email' => Str::uuid(),
+
             'phone_number' => $request->input('phone_number'),
-            'status' => 1,
-            'organization_code' => Str::uuid(),
-            'role_id' => 4,
-            'email_verified_at' => now()
+
+            'organization_code' => 0,
+
+            'role_id' => 0,
+
+            'email_verified_at' => now(),
+
+            'password' => Hash::make(Str::random(20)),
         ]);
 
         return redirect()->to('users/sentries')->with('success', 'Sentry added successfully.');

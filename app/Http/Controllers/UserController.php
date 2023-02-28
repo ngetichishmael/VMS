@@ -78,6 +78,8 @@ class UserController extends Controller
         $user->role_id  = $request->input('role_id');
 
         $user->password  = Hash::make($request->password);
+
+        $user->email_verified_at = now();
         
         $user->save();
 

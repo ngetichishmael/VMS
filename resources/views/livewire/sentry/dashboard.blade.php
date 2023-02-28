@@ -247,15 +247,7 @@
                             @endforeach
                         </select>
                     </fieldset>
-                    <fieldset class="form-group">
-                        <label class="form-label" for="user-role">Device</label>
-                        <select id="device_id" name="device_id" class="form-control">
-                            <option value=""> Select</option>
-                            @foreach ($devices as $device)
-                                <option value="{{ $device->id }}"> {{ $device->identifier }}</option>
-                            @endforeach
-                        </select>
-                    </fieldset>
+            
 
                     <button type="submit" class="btn btn-primary mr-1 data-submit"> {{ __('Register') }} </button>
                     <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
