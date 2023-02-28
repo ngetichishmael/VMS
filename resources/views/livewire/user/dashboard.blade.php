@@ -106,7 +106,7 @@
                                         <div class="dropdown-menu">
 
                                                 <!--update link-->
-                                        <a  wire:ignore.self href="#" class="" wire:click="edituser({{ $user->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+                                        <a  href="{{ route('OrganizationUsers.edit',$user->id)}}" class="" style="padding-right:20px"   id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
                                         <!-- delete link -->
                                         <?php if($user->status == '0'){ ?>
                                         <a wire:ignore.self href="#" wire:click="activate({{ $user->id }})"  onclick="return confirm('Are you sure to want to Activate the User?')" style="padding-right:20px; " > Activate </a>
@@ -207,7 +207,7 @@
      <!-- Modal to Edit user starts-->
      <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-edit-slide-in">
       <div class="modal-dialog">
-        <form class="add-new-user modal-content pt-0" >
+        <form class="add-new-user modal-content pt-0"  >
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
@@ -260,6 +260,10 @@
         </form>
       </div>
     </div>
+
+
+
+    
     <!-- Modal to Edit user Ends-->
 
       <!-- Dashboard Ecommerce ends -->
