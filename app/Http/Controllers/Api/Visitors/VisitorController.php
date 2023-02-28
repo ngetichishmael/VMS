@@ -49,9 +49,9 @@ class VisitorController extends Controller
     }
     public function unitOptions(Request $request)
     {
-
-        $sentry = Sentry::where('user_detail_id', $request->user()->id)->get();
-        return response()->json($sentry);
+        $detail=UserDetail::where('phone_number', $request->user()->phone_number)->first();
+        $sentry = Sentry::where('user_detail_id', $detail->id)->first();
+//        return response()->json($detail->id);
         if (!$sentry){
             return response()->json(['Error' => 'Sentry details not found'], 404);
         }

@@ -57,7 +57,9 @@ class DriveInController extends Controller
          $visitor = DriveIn::with('purpose1','sentry','timeLogs')->whereId($driveIn)->first();
         $visitorCount = Visitor::where('user_detail_id', $visitor->user_details->id)->count();
         $lastTimeLog=TimeLog::where('id', $visitor->time_log_id)->orderBy('id', 'desc')->first();
-        return view('app.visitor.drivers.visitorDetails',compact('visitor', 'visitorCount', 'lastTimeLog'));
+        $HistoryTimeLogs=DriveIn::with('timeLogs')->where('user_detail_id', $visitor->user_details->id)->orderBy('id', 'desc')->get();
+
+        return view('app.visitor.drivers.visitorDetails',compact('visitor', 'HistoryTimeLogs','visitorCount', 'lastTimeLog'));
     }
     /**
      * Show the form for editing the specified resource.

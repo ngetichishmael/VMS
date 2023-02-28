@@ -6,10 +6,7 @@ use App\Models\Sentry;
 use App\Http\Requests\StoreSentryRequest;
 use App\Http\Requests\UpdateSentryRequest;
 
-<<<<<<< HEAD
-=======
-use App\Models\User;
->>>>>>> 8c7a9faf66b96512ff6ea24d02ff15ab51b23525
+
 
 use Brian2694\Toastr\Facades\Toastr;
 
@@ -65,10 +62,6 @@ class SentryController extends Controller
 
         ]);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 8c7a9faf66b96512ff6ea24d02ff15ab51b23525
         Sentry::create([
             'name' => $request->name,
             'phone_number' => $request->phone_number,
@@ -78,21 +71,8 @@ class SentryController extends Controller
             'shift_id' => $request->shift_id,
             'premise_id' => $request->premise_id
         ]);
-<<<<<<< HEAD
-=======
 
-
-        $sentry = new Sentry;
-        $sentry->sname = $request->sname;
-        $sentry->id_number = $request->id_number;
-        $sentry->email = $request->email;
-        $sentry->zone = $request->zone;
-        $sentry->save();
-         $user =  new User;
->>>>>>> 8c7a9faf66b96512ff6ea24d02ff15ab51b23525
-
-
-        User::create([
+         User::create([
             'name' => $request->input('name'),
             'password' => Hash::make(Str::random(20)),
             'email' => Str::uuid(),
