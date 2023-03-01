@@ -54,7 +54,7 @@
                                     @endphp
                                 @endif --}}
                                 <td>
-                                    {{ $duration }}
+                                    ""
                                 </td>
                                 <td>
                                     <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}"><i
@@ -132,7 +132,7 @@
                                     @endphp --}}
                                 {{-- @endif --}}
                                 <td>
-                                    {{ $duration }}
+                                    ""
                                 </td>
                                 <td>
                                     <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}"><i
@@ -210,7 +210,7 @@
                                     @endphp
                                 @endif --}}
                                 <td>
-                                    {{ $duration }}
+                                    ""
                                 </td>
                                 <td>
                                     <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}"><i
@@ -288,7 +288,7 @@
                                     @endphp
                                 @endif --}}
                                 <td>
-                                    {{ $duration }}
+                                    ""
                                 </td>
                                 <td>
                                     <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}"><i
@@ -366,7 +366,7 @@
                                     @endphp
                                 @endif --}}
                                 <td>
-                                    {{ $duration }}
+                                    ""
                                 </td>
                                 <td>
                                     <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}"><i
@@ -444,7 +444,7 @@
                                     @endphp
                                 @endif --}}
                                 <td>
-                                    {{ $duration }}
+                                    ""
                                 </td>
                                 <td>
                                     <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}"><i
