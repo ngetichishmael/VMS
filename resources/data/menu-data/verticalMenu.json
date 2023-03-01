@@ -1,0 +1,139 @@
+{
+    "menu": [
+        {
+            "navheader": "Dashboard",
+            "slug": ""
+        },
+        {
+            "url": "dashboard",
+            "name": "Dashboard",
+            "icon": "home",
+            "slug": "dashboard"
+        },
+        {
+            "navheader": "Logs",
+            "slug": ""
+        },
+        {
+            "url": "Visits/AllCheckIn",
+            "name": "All Check-ins",
+            "icon": "people",
+            "slug": "VisitAllCheckIn"
+        },
+        {
+            "url": "Visits/DriveIn",
+            "name": "Driver-ins",
+            "icon": "emoji_transportation",
+            "slug": "VisitDriveIn"
+        },
+        {
+            "url": "Visits/WalkIn",
+            "name": "Walks-ins",
+            "icon": "directions_walk",
+            "slug": "VisitWalkIn"
+        },
+        {
+            "url": "Visits/SMSCheckIn",
+            "name": "SMS Check-ins",
+            "icon": "SMS",
+            "slug": "VisitSMSCheckIn"
+        },
+        {
+            "url": "Visits/IDCheckIn",
+            "name": " ID Check-ins",
+            "icon": "badge",
+            "slug": "VisitIDCheckIn"
+        },
+        {
+            "url": "Visits/IPassCheckIn",
+            "name": "IPass Check-ins",
+            "icon": "QR_CODE",
+            "slug": "VisitIPassCheckIn"
+        },
+        {
+            "url": "vehicle/information",
+            "name": "Vehicles",
+            "icon": "garage",
+            "slug": "VehicleInformation"
+        },
+        {
+            "navheader": "User Interface",
+            "slug": ""
+        },
+        {
+            "url": "organization/users",
+            "name": "Users",
+            "icon": "group",
+            "slug": "OrganizationUsers"
+        },
+        {
+            "url": "users/sentries",
+            "name": "Guards",
+            "icon": "person_pin",
+            "slug": "Sentry"
+        },
+        {
+            "navheader": "Hierarchical",
+            "slug": ""
+        },
+        {
+            "url": "organization/information",
+            "name": "Organization",
+            "icon": "corporate_fare",
+            "slug": "OrganizationInformation"
+        },
+        {
+            "name": "Premises",
+            "icon": "location_city",
+            "slug": "",
+            "submenu": [
+                {
+                    "url": "premise/information",
+                    "name": "Premises",
+                    "icon": "domain",
+                    "slug": "PremiseInformation"
+                },
+                {
+                    "url": "block/information",
+                    "name": "Blocks",
+                    "icon": "roofing",
+                    "slug": "BlockInformation"
+                },
+                {
+                    "url": "unit/information",
+                    "name": "Units",
+                    "icon": "room_preferences",
+                    "slug": "UnitInformation"
+                },
+                {
+                    "url": "resident/information",
+                    "name": "Residents",
+                    "icon": "location_away",
+                    "slug": "ResidentInformation"
+                }
+            ]
+        },
+        {
+            "navheader": "Others",
+            "slug": ""
+        },
+        {
+            "url": "identification/type",
+            "name": "Identification Types",
+            "icon": "fingerprint",
+            "slug": "IdentificationType"
+        },
+        {
+            "url": "shifts",
+            "name": "Shifts",
+            "icon": "track_changes",
+            "slug": "shifts"
+        },
+        {
+            "url": "organization/setting",
+            "name": "Settings",
+            "icon": "settings",
+            "slug": "Settings"
+        }
+    ]
+}
