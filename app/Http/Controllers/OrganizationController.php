@@ -53,7 +53,6 @@ class OrganizationController extends Controller
             'location' => 'required',
 
         ]);
-
         $code = Str::random(20);
         $organization = new organization;
 
@@ -103,7 +102,6 @@ class OrganizationController extends Controller
         $organization = Organization::find($id);
 
         return view('livewire.organization.edit', compact('organization'));
-
     }
 
     /**
@@ -136,7 +134,6 @@ class OrganizationController extends Controller
         $organization->save();
 
         return redirect()->to('/organization/information')->with('success','Organization Updated successfully.');
-
     }
 
     /**

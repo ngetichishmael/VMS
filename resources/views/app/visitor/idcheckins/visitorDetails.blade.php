@@ -297,6 +297,7 @@
                                 </div>
                             </div>
                         </div>
+<<<<<<< HEAD
 
 {{--                        @if(!$visitor->vehicle->registration)--}}
 {{--                            <div class="col-md-12">--}}
@@ -334,7 +335,6 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
                                     @foreach ($HistoryTimeLogs as $driveIn)
                                         @foreach ($driveIn->timeLogs as $timeLog)
                                             <tr>

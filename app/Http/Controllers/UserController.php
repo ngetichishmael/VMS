@@ -55,7 +55,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|max:255|unique:users,email',
@@ -65,7 +64,6 @@ class UserController extends Controller
 
 
         ]);
-
 
         $user = new User;
 
@@ -80,7 +78,6 @@ class UserController extends Controller
         $user->role_id  = $request->input('role_id');
 
         $user->password  = Hash::make($request->password);
-
         $user->save();
 
         return redirect()->to('/organization/users')->with('success','User added successfully.');
@@ -94,9 +91,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-
         //
-
     }
 
     /**
@@ -120,7 +115,6 @@ class UserController extends Controller
         // $this->dispatchBrowserEvent('show-edit-org-modal', compact('users'));
 
         return view('livewire.user.edit', compact('user','organizations','roles'));
-
     }
 
     /**
@@ -197,7 +191,6 @@ class UserController extends Controller
 
 
     public function search(Request $request){
-
         $output = "";
 
         $users=DB::table('users')->where('name','LIKE','%'.$request->search."%")
@@ -224,13 +217,12 @@ class UserController extends Controller
             <td>'.$users ->phone_number.'</td>
 
             <td>'.$users ->phone_number.'</td>
-
-
             </tr>
             ';
         }
 
         return response($output);
+
 
     }
 

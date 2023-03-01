@@ -6,7 +6,6 @@ use App\Models\Sentry;
 use App\Http\Requests\StoreSentryRequest;
 use App\Http\Requests\UpdateSentryRequest;
 
-
 use Brian2694\Toastr\Facades\Toastr;
 
 use App\Http\Controllers\Controller;
@@ -70,7 +69,6 @@ class SentryController extends Controller
             'shift_id' => $request->shift_id,
             'premise_id' => $request->premise_id
         ]);
-
         User::create([
             'name' => $request->input('name'),
             'password' => Hash::make(Str::random(20)),

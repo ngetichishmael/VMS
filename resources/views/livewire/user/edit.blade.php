@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 @extends('layouts.contentLayoutMaster')
 
 @section('title', 'Edit User')
@@ -242,6 +243,8 @@
     <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
 @endsection
 =======
+=======
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
 
 @extends('layouts/contentLayoutMaster')
 
@@ -301,5 +304,9 @@
 @section('page-script')
   <!-- Page js files -->
   <script src="{{ asset(mix('js/scripts/forms/form-tooltip-valid.js')) }}"></script>
+<<<<<<< HEAD
 @endsection
 >>>>>>> origin/ish
+=======
+@endsection
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f

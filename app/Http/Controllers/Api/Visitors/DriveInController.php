@@ -56,6 +56,7 @@ class DriveInController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
+<<<<<<< HEAD
 
 //        $verifyvisitor = Visitor::whereIn('user_detail_id', $users->pluck('id')->toArray())
 //            ->orderBy('id', 'desc')
@@ -68,6 +69,8 @@ class DriveInController extends Controller
 //        }
 //        else
 
+=======
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
         $nationality = Nationality::whereLike(['name'], (string)$request->nationality)->first();
         if (!$nationality){
             $nationality->nationality=$request->input('nationality');
@@ -89,6 +92,7 @@ class DriveInController extends Controller
         $visitor->nationality_id = $nationality->id ?? "110";
         $visitor->resident_id = $request->input('resident_id');
         $visitor->tag = $request->input('tag');
+<<<<<<< HEAD
 
         if ($request->hasFile('attachment1')) {
             $visitor->attachment1 = $request->attachment1->store('public/attachments');
@@ -105,6 +109,15 @@ class DriveInController extends Controller
         if ($request->hasFile('attachment4')) {
             $visitor->attachment4 = $request->attachment4->store('public/attachments');
         }
+=======
+        $visitor->attachment1 = $request->input('attachment1');
+        $visitor->attachment2 = $request->input('attachment2');
+        $visitor->attachment3 = $request->input('attachment3');
+        $visitor->attachment4 = $request->input('attachment4');
+
+
+
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
 
         $visitor->time_log_id = $timeLog->id;
 
@@ -116,10 +129,15 @@ class DriveInController extends Controller
             $user_details->date_of_birth = $request->input('DOB');
             $user_details->ID_number = $request->input('IDNO');
             $user_details->gender = $request->input('gender');
+<<<<<<< HEAD
             $user_details->company = $request->input('company');
             if ($request->hasFile('image')) {
                 $visitor->image = $request->image->store('public/id_images');
             }
+=======
+            $user_details->image = $request->input('image');
+            $user_details->company = $request->input('company');
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
             $user_details->save();
         }
         $visitor->user_detail_id = $user_details->id;

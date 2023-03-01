@@ -45,7 +45,6 @@ class AllCheckinsController extends Controller
         $HistoryTimeLogs=DriveIn::with('timeLogs')->where('user_detail_id', $visitor->user_details->id)->orderBy('id', 'desc')->get();
 
         return view('app.visitor.allcheckins.visitorDetails',compact('visitor', 'visitorCount','HistoryTimeLogs', 'lastTimeLog'));
-
     }
 
     /**

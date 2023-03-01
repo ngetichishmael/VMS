@@ -8,6 +8,7 @@ use App\Models\Sentry;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserCode;
+
 use App\Models\UserDetail;
 
 use Illuminate\Http\Request;
@@ -19,9 +20,6 @@ class AuthenticationController extends Controller
     public function Login(Request $request)
     {
         $user = User::where('phone_number', $request->phone_number)->where('status', 1)->where('role_id', 4)->first();
-//        return response()->json(['message' =>$user]);
-
-
 
         if (!$user) {
             return response()
@@ -115,7 +113,6 @@ class AuthenticationController extends Controller
             "code" => $code,
             "premises"=>$premise->name ?? ' ',
             'organization'=>$premise->organization->name ?? ' ',
-
             "response" => $responsePassanda,
         ]);
     }

@@ -138,8 +138,11 @@ class Dashboard extends Component
     public function editUserData()
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
     
 =======
+=======
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
         //on form submit validation
         $this->validate([
             'name' => 'required|min:2',
@@ -148,7 +151,10 @@ class Dashboard extends Component
            
         ]);
 
+<<<<<<< HEAD
 >>>>>>> origin/ish
+=======
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
         $user  = User::where('id', $this->user_edit_id)->first();
 
         $user ->name = $this->name;
@@ -160,11 +166,15 @@ class Dashboard extends Component
         $user->save();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       
 
 =======
         return redirect()->route('OrganizationUsers');
 >>>>>>> origin/ish
+=======
+        return redirect()->route('OrganizationUsers');
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
     }
 
     public function destroy($id)
@@ -174,10 +184,14 @@ class Dashboard extends Component
             $user ->delete();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             return redirect()->to('/organization/users')->with('success','User Updated successfully!');
 =======
             return redirect()->to('/organization/users')->with('error','User Deleted successfully!');
 >>>>>>> origin/ish
+=======
+            return redirect()->to('/organization/users')->with('error','User Deleted successfully!');
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
         }
     }
 

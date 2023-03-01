@@ -60,6 +60,7 @@ class WalkInController extends Controller
 
         return view('app.visitor.walks.visitorDetails',compact('visitor', 'visitorCount', 'HistoryTimeLogs','lastTimeLog'));
 
+
     }
 
     /**

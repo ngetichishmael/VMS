@@ -107,10 +107,14 @@
 
                                                 <!--update link-->
 <<<<<<< HEAD
+<<<<<<< HEAD
                                         <a  href="{{ route('OrganizationUsers.edit',$user->id)}}" class="" style="padding-right:20px"   id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
 =======
                                         <a  wire:ignore.self href="#" class="" wire:click="edituser({{ $user->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
 >>>>>>> origin/ish
+=======
+                                        <a  wire:ignore.self href="#" class="" wire:click="edituser({{ $user->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
                                         <!-- delete link -->
                                         <?php if($user->status == '0'){ ?>
                                         <a wire:ignore.self href="#" wire:click="activate({{ $user->id }})"  onclick="return confirm('Are you sure to want to Activate the User?')" style="padding-right:20px; " > Activate </a>
@@ -212,10 +216,14 @@
      <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-edit-slide-in">
       <div class="modal-dialog">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <form class="add-new-user modal-content pt-0"  >
 =======
         <form class="add-new-user modal-content pt-0" >
 >>>>>>> origin/ish
+=======
+        <form class="add-new-user modal-content pt-0" >
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
         {{ csrf_field() }} 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
@@ -269,12 +277,15 @@
       </div>
     </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
     
 =======
 >>>>>>> origin/ish
+=======
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
     <!-- Modal to Edit user Ends-->
 
       <!-- Dashboard Ecommerce ends -->

@@ -351,6 +351,7 @@
                     </div>
                 </div>
                 <div class="mt-2 col-12 d-flex flex-sm-row flex-column" style="gap: 20px;">
+                    <a href="{{ route('VisitSMSCheckInIn') }}" type="reset" style="margin-left: 85%;background: #54a4f3; color: #ffffff"
                        class="btn btn-btn-secondary">  Back </a>
                 </div>
             </div></div>

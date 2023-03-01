@@ -80,8 +80,8 @@
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input"
                                                id="author-read" name="automatic_checkin"
-                                               @if ($organization_code->automatic_id_checkin === 1) checked @endif
 
+                                               @if ($organization_code->automatic_id_checkin === 1) checked @endif
                                         />
                                         <label class="custom-control-label"
                                                for="author-read"></label>
@@ -94,6 +94,7 @@
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input"
                                                id="contributor-read" name="sms_checkin"
+
                                                @if ($organization_code->sms_checkin === 1) checked @endif
                                         />
                                         <label class="custom-control-label"

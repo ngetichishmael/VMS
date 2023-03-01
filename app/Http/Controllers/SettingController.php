@@ -37,7 +37,6 @@ class SettingController extends Controller
         return view('settings.show', compact('setting'));
     }
 
-
     public function edit($setting)
     {
 //        return response()->json(['success' =>$setting ]);

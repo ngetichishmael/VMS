@@ -81,8 +81,9 @@
 {{--                                        @endif--}}
 {{--                                    @endif--}}
 {{--                                </th>--}}
-                                <th>Vehicle Reg</th>
+
                                 <th>Name</th>
+                                <th>Vehicle Reg</th>
                                 <th>Site</th>
                                 <th>Section</th>
                                 <th>Organization</th>
@@ -97,8 +98,8 @@
                             @forelse($dvisitors as $key => $visitor)
                                 <tr>
 {{--                                    <td>{{ $visitor->id }}</td>--}}
-                                    <td>{!! $visitor->vehicle()->pluck('registration')->implode('') !!} </td>
                                     <td>{!! $visitor->name !!} </td>
+                                    <td>{!! $visitor->vehicle()->pluck('registration')->implode('') !!} </td>
                                     <td>{{ $visitor->Resident->unit->block->premise->name ?? ' Not Found' }}</td>
                                     <td>{!! $visitor->Resident->unit->name !!}</td>
                                     <td>{!! $visitor->Resident->unit->block->premise->organization->name ?? 'Not Found' !!}</td>

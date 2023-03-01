@@ -50,10 +50,15 @@ class VisitorController extends Controller
     public function unitOptions(Request $request)
     {
 
+<<<<<<< HEAD
         $detail=UserDetail::where('phone_number', $request->user()->phone_number)->first();
         $sentry = Sentry::where('user_detail_id', $detail->id)->first();
 //        return response()->json($detail->id);
 
+=======
+        $sentry = Sentry::where('user_detail_id', $request->user()->id)->get();
+        return response()->json($sentry);
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
         if (!$sentry){
             return response()->json(['Error' => 'Sentry details not found'], 404);
         }
@@ -112,11 +117,15 @@ class VisitorController extends Controller
             406
         );
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
     public function returningVisitorVerify(Request $request)
     {
         $number = $request->input('number');
         $stripped_number = preg_replace('/[^0-9]/', '', $number);
+<<<<<<< HEAD
 
 
         $users = UserDetail::whereRaw("REPLACE(phone_number, '-', '') LIKE '%$stripped_number%'")
@@ -132,6 +141,17 @@ class VisitorController extends Controller
             ->orderBy('id', 'desc')
             ->first();
 
+=======
+        $user = UserDetail::whereRaw("REPLACE(phone_number, '-', '') LIKE '%$stripped_number'")
+            ->orwhere('ID_number', $number)->orwhere('phone_number', $number)->first();
+        //$user = UserDetail::where('ID_number', $number)->orWhere('phone_number', $number)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'Visitor not found'], 404);
+        }
+
+        $visitor = Visitor::where('user_detail_id',  $user->id)->orderBy('id', 'desc')->first();
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
         $time_log = TimeLog::where('id', $visitor->time_log_id)
             ->whereNull('exit_time')
             ->first();
@@ -140,6 +160,7 @@ class VisitorController extends Controller
         }
         if ($visitor->type === 'DriveIn') {
             $visitor->vehicle = VehicleInformation::where('visitor_id', $visitor->id)->first();
+<<<<<<< HEAD
 
             return response()->json(['message' => 'Visitor exists and has Vehicle details', 'visitor' => $visitor], 200);
         }
@@ -176,6 +197,13 @@ class VisitorController extends Controller
 //        return response()->json(['Message' => 'Visitor exists', 'visitor' => $visitor], 200);
 //    }
 
+=======
+            return response()->json(['Message' => 'Visitor exists and has a Vehicle details', 'visitor' => $visitor], 200);
+        }
+
+        return response()->json(['Message' => 'Visitor exists', 'visitor' => $visitor], 200);
+    }
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
     /**
      * Store a newly created resource in storage.
      *
