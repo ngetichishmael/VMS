@@ -39,8 +39,8 @@
                                 <td>{!! $visitor->name !!} </td>
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Null' !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
+                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
                                 @if ($visitor->timeLog->exit_time === null)
                                     @php
                                         $duration = 'Visitor Still Within the Premise';
@@ -117,8 +117,8 @@
                                 <td>{!! $visitor->name !!} </td>
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? ('' ?? 'Null') !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
+                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
                                 @if ($visitor->timeLog->exit_time === null)
                                     @php
                                         $duration = 'Visitor Still Within the Premise';
@@ -195,8 +195,8 @@
                                 <td>{!! $visitor->name !!} </td>
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Null' !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
+                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
                                 @if ($visitor->timeLog->exit_time === null)
                                     @php
                                         $duration = 'Visitor Still Within the Premise';
@@ -273,8 +273,8 @@
                                 <td>{!! $visitor->name !!} </td>
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Null' !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
+                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
                                 @if ($visitor->timeLog->exit_time === null)
                                     @php
                                         $duration = 'Visitor Still Within the Premise';
@@ -351,8 +351,8 @@
                                 <td>{!! $visitor->name !!} </td>
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Null' !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
+                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
                                 @if ($visitor->timeLog->entry_time === null)
                                     @php
                                         $duration = 'Visitor Still Within the Premise';
@@ -429,8 +429,8 @@
                                 <td>{!! $visitor->name !!} </td>
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Null' !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
+                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
                                 @if ($visitor->timeLog->exit_time === null)
                                     @php
                                         $duration = 'Visitor Still Within the Premise';
