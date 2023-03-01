@@ -83,8 +83,9 @@ class SmsCheckInController extends Controller
         $nairobiNow = $now->setTimezone('Africa/Nairobi');
         $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
 
+        $image_path = $request->file('image')->store('image', 'public');
+
         $visitor = new Visitor();
-        $visitor->name = $request->input('phone1');
         $visitor->type = $request->input('type');
         $visitor->identification_type_id = $request->input('identification_type_id');
         $visitor->visitor_type_id = $request->input('visitor_type_id');

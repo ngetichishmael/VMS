@@ -22,7 +22,7 @@ class CreateUserDetailsTable extends Migration
             $table->string('company')->nullable();
             $table->string('ID_number')->nullable();
             $table->binary('image')->nullable();
-            $table->string('KRA_pin')->nullable();
+//            $table->string('KRA_pin')->nullable();
             $table->enum('gender', ['male', 'female', 'Others']);
             $table->string('physical_address')->nullable();
             $table->timestamps();

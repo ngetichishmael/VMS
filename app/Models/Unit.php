@@ -15,10 +15,4 @@ class Unit extends Model
     {
         return $this->belongsTo(Block::class, 'block_id');
     }
-
-    public function premises()
-    {
-        return $this->block->premise();
-
-    }
 }
