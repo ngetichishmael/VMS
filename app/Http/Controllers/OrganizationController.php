@@ -53,7 +53,6 @@ class OrganizationController extends Controller
             'location' => 'required',
 
         ]);
-  
         $code = Str::random(20);
         $organization = new organization;
 
@@ -99,7 +98,6 @@ class OrganizationController extends Controller
      */
     public function edit($id)
     {
-     
         $organization = Organization::find($id);
 
         return view('livewire.organization.edit', compact('organization'));
@@ -112,9 +110,10 @@ class OrganizationController extends Controller
      * @param  \App\Models\Organization  $organization
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $id)
     {
-      
+
         $organization = Organization::find($id);
 
         $organization ->name = $request->input('name');

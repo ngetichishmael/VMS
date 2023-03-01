@@ -15,8 +15,8 @@ use Illuminate\Support\Str;
 class Dashboard extends Component
 {
     use WithPagination;
-    
-    
+
+
     protected $paginationTheme = 'bootstrap';
     public $perPage = 10;
     public $sortField = 'id';
@@ -35,7 +35,7 @@ class Dashboard extends Component
 
     public function render()
     {
-    
+
         $searchTerm = '%' . $this->search . '%';
 
         $users = User::whereIn('role_id',[1,2])->with('organization','role')
@@ -54,8 +54,8 @@ class Dashboard extends Component
         $roles = Role::all();
 
 
-        return view('livewire.user.dashboard', [ 
-            'users' => $users, 
+        return view('livewire.user.dashboard', [
+            'users' => $users,
              'organizations' => $organizations,
              'roles' => $roles,
         ]);
@@ -105,7 +105,7 @@ class Dashboard extends Component
 
 
         $user->save();
-  
+
         $this-> resetInput();
 
         session()->flash('message', 'User added successfully.');
@@ -115,7 +115,7 @@ class Dashboard extends Component
 
     public function edituser($id)
     {
-        
+
         $user  = User::where('id', $id)->first();
 
         $this->user_edit_id = $id;
@@ -130,14 +130,20 @@ class Dashboard extends Component
 
         $this->role_id = $user->role_id;
 
-  
+
 
         $this->dispatchBrowserEvent('show-edit-org-modal');
     }
 
     public function editUserData()
     {
-    
+        //on form submit validation
+        $this->validate([
+            'name' => 'required|min:2',
+            'email' => 'required|email|max:255|unique:organizations,email',
+            'phone_number'=> 'required|numeric',
+
+        ]);
         $user  = User::where('id', $this->user_edit_id)->first();
 
         $user ->name = $this->name;
@@ -148,7 +154,8 @@ class Dashboard extends Component
 
         $user->save();
 
-      
+
+        return redirect()->route('OrganizationUsers');
 
     }
 
@@ -158,13 +165,14 @@ class Dashboard extends Component
             $user = User::where('id', $id);
             $user ->delete();
 
-            return redirect()->to('/organization/users')->with('success','User Updated successfully!');
+
+            return redirect()->to('/organization/users')->with('error','User Deleted successfully!');
         }
     }
 
     public function activate($id)
     {
-       
+
        User::whereId($id)->update(
           ['status' => "1"]
        );
@@ -174,7 +182,7 @@ class Dashboard extends Component
 
     public function deactivate($id)
     {
-       
+
        User::whereId($id)->update(
           ['status' => "0"]
        );

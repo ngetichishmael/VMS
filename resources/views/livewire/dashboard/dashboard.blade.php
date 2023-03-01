@@ -47,7 +47,6 @@
                                     @endphp
                                 @else
                                     @php
-                                        
                                         $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
                                         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
                                         $duration = $to->longAbsoluteDiffForHumans($from);
@@ -125,7 +124,6 @@
                                     @endphp
                                 @else
                                     @php
-                                        
                                         $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
                                         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
                                         $duration = $to->longAbsoluteDiffForHumans($from);
@@ -203,7 +201,6 @@
                                     @endphp
                                 @else
                                     @php
-                                        
                                         $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
                                         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
                                         $duration = $to->longAbsoluteDiffForHumans($from);
@@ -281,7 +278,6 @@
                                     @endphp
                                 @else
                                     @php
-                                        
                                         $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
                                         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
                                         $duration = $to->longAbsoluteDiffForHumans($from);
@@ -359,7 +355,7 @@
                                     @endphp
                                 @else
                                     @php
-                                        
+
                                         $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
                                         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
                                         $duration = $to->longAbsoluteDiffForHumans($from);
@@ -437,7 +433,6 @@
                                     @endphp
                                 @else
                                     @php
-                                        
                                         $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
                                         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
                                         $duration = $to->longAbsoluteDiffForHumans($from);

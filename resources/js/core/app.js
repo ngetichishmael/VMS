@@ -8,8 +8,15 @@
 ==========================================================================================*/
 window.colors = {
   solid: {
+<<<<<<< HEAD
+    // primary: '#7367F0',
+    primary: '#1a3258',
+    secondary: '#bc5e3a',
+    // secondary: '#82868b',
+=======
     primary: '#7367F0',
     secondary: '#82868b',
+>>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
     success: '#28C76F',
     info: '#00cfe8',
     warning: '#FF9F43',

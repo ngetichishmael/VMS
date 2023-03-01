@@ -77,13 +77,27 @@ class SmsCheckInController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        $nationality = Nationality::find($request->nationality);
-        $timeLog = new TimeLog;
-        $now = Carbon::now();
-        $nairobiNow = $now->setTimezone('Africa/Nairobi');
-        $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
+        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
+            ->orWhere('phone_number', $request->input('phone1'))
+            ->first();
+        if ($user_details) {
+            $visitor = Visitor::where('user_detail_id', $user_details->id)->latest('id')->first();
 
-        $image_path = $request->file('image')->store('image', 'public');
+            if ($visitor && $visitor->time_log_id) {
+                $timeLog = TimeLog::find($visitor->time_log_id);
+
+                if ($timeLog && $timeLog->exit_time === null) {
+                    return response()->json(['error' => 'User already signed in, If its by mistake, Sign the user out first to sign back in']);
+                }
+            }
+        }
+        $nationality = Nationality::find($request->nationality);
+
+        if (!$nationality){
+            $nationality = new Nationality();
+            $nationality->name = $request->input('nationality') ?? '101';
+            $nationality->save();
+        }
 
         $visitor = new Visitor();
         $visitor->type = $request->input('type');
@@ -100,11 +114,16 @@ class SmsCheckInController extends Controller
         $visitor->tag = $request->input('tag');
 
 
+         $timeLog = new TimeLog;
+        $now = Carbon::now();
+        $nairobiNow = $now->setTimezone('Africa/Nairobi');
+        $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
         $timeLog->save();
-
         $visitor->time_log_id = $timeLog->id;
 
-        $user_details = UserDetail::find($request->IDNO);
+        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
+            ->orWhere('phone_number', $request->input('phone1'))
+            ->first();
         if (!$user_details) {
             $user_details = new UserDetail();
             $user_details->phone_number = $request->input('phone1');

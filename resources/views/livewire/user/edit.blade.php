@@ -1,5 +1,5 @@
-@extends('layouts.contentLayoutMaster')
 
+@extends('layouts.contentLayoutMaster')
 @section('title', 'User Settings')
 
 @section('vendor-style')
@@ -46,7 +46,7 @@
             <!-- left menu section -->
             <div class="col-md-3 mb-2 mb-md-0">
                 <ul class="nav nav-pills flex-column nav-left">
-             
+
                     <!-- change password -->
                     <li class="nav-item">
                         <a class="nav-link active" id="account-pill-password" data-toggle="pill" href="#account-vertical-password"
@@ -56,7 +56,7 @@
                         </a>
                     </li>
 
-                    
+
                                     <li class="nav-item">
                         <a class="nav-link" id="account-pill-general" data-toggle="pill"
                             href="#account-vertical-general" aria-expanded="true">
@@ -76,7 +76,7 @@
                         <div class="tab-content">
 
 
-                        
+
                             <!-- general tab -->
                             <div role="tabpanel" class="tab-pane fade" id="account-vertical-general"
                                 aria-labelledby="account-pill-general" aria-expanded="true">
@@ -154,25 +154,25 @@
                             <div class="tab-pane  active" id="account-vertical-password" role="tabpanel"
                                 aria-labelledby="account-pill-password" aria-expanded="false">
 
-   
+
 
                                 <!-- form -->
                                 <form class="validate-form mt-2" method="post" action="{{ route('OrganizationUsers.update', $user->id) }}">
-                                @method('PATCH') 
-            @csrf   
+                                @method('PATCH')
+            @csrf
                                 <div class="row">
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="account-username">Full Names</label>
-                                                <input type="text" class="form-control" 
-                                                    name="name" 
+                                                <input type="text" class="form-control"
+                                                    name="name"
                                                     value="{{ $user ->name }}"  />
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="account-name">Email</label>
-                                                <input type="email" class="form-control" 
+                                                <input type="email" class="form-control"
                                                  name="email"
                                                   value="{{ $user ->email}}"   />
                                             </div>
@@ -180,13 +180,13 @@
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="account-e-mail">Phone Number</label>
-                                                <input type="tel" class="form-control" 
-                                                    name="phone_number" 
-                                                    value="{{ $user ->phone_number }}" 
+                                                <input type="tel" class="form-control"
+                                                    name="phone_number"
+                                                    value="{{ $user ->phone_number }}"
                                                 />
                                             </div>
                                         </div>
-                                  
+
 
                                         <div class="col-12 col-sm-6">
                                         <fieldset class="form-group">
@@ -195,7 +195,7 @@
                                           <option  value="{{ $user ->organization_code }}" > Select ...</option>
                                             @foreach ($organizations as $organizat)
                                                 <option  value="{{ $organizat ->id }}"> {{ $organizat ->name }}</option>
-                                            @endforeach  
+                                            @endforeach
                                           </select>
                                         </fieldset>
                                         </div>
@@ -208,7 +208,7 @@
                                           <option  value="{{ $user ->role_id }}" > Select ...</option>
                                             @foreach ($roles as $ros)
                                                 <option  value="{{ $ros ->id }}"> {{ $ros ->name }}</option>
-                                            @endforeach  
+                                            @endforeach
                                           </select>
                                         </fieldset>
                                         </div>
@@ -236,6 +236,8 @@
 
 
 @section('page-script')
+  <!-- Page js files -->
+  <script src="{{ asset(mix('js/scripts/forms/form-tooltip-valid.js')) }}"></script>
     {{-- Page js files --}}
     <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script>
     <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>

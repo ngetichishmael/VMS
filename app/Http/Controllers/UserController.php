@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Organization;
 use App\Models\Role;
+
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 
@@ -53,7 +54,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-       
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|max:255|unique:users,email',
@@ -64,7 +64,6 @@ class UserController extends Controller
 
         ]);
 
-     
         $user = new User;
 
         $user->name = $request->input('name');
@@ -79,8 +78,9 @@ class UserController extends Controller
 
         $user->password  = Hash::make($request->password);
 
+
         $user->email_verified_at = now();
-        
+
         $user->save();
 
         return redirect()->to('/organization/users')->with('success','User added successfully.');
@@ -94,7 +94,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-  
+
     }
 
     /**
@@ -117,8 +117,17 @@ class UserController extends Controller
 
         // $this->dispatchBrowserEvent('show-edit-org-modal', compact('users'));
 
-        return view('livewire.user.edit', compact('user','organizations','roles')); 
+        return view('livewire.user.edit', compact('user','organizations','roles'));
 
+        $user = User::find($id);
+
+        $organizations = Organization::where('status', 1) ->get();
+
+        $roles = Role::all();
+
+        // $this->dispatchBrowserEvent('show-edit-org-modal', compact('users'));
+
+        return view('livewire.user.edit', compact('user','organizations','roles'));
     }
 
     /**
@@ -194,7 +203,6 @@ class UserController extends Controller
 
 
     public function search(Request $request){
-        
         $output = "";
 
         $users=DB::table('users')->where('name','LIKE','%'.$request->search."%")
@@ -206,10 +214,10 @@ class UserController extends Controller
 
 
         ->get();
-        
+
         foreach($users as $users)
         {
-            $output.= 
+            $output.=
             '
             <tr>
             <td>'.$users ->id.'</td>
@@ -217,20 +225,17 @@ class UserController extends Controller
 
             <td>'.$users ->email.'</td>
             <td>'.$users ->phone_number.'</td>
-         
+
             <td>'.$users ->phone_number.'</td>
-    
+
             <td>'.$users ->phone_number.'</td>
-        
-       
             </tr>
             ';
         }
 
         return response($output);
-     
+
+
     }
-
-
 
 }

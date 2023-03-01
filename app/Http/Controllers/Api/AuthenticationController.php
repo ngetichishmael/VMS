@@ -8,6 +8,9 @@ use App\Models\Sentry;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserCode;
+
+use App\Models\UserDetail;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +19,7 @@ class AuthenticationController extends Controller
 {
     public function Login(Request $request)
     {
-        $user = User::with('premise', 'organization.name')->where('phone_number', $request->phone_number)->where('status', 1)->first();
+        $user = User::where('phone_number', $request->phone_number)->where('status', 1)->where('role_id', 4)->first();
 
         if (!$user) {
             return response()
@@ -96,6 +99,8 @@ class AuthenticationController extends Controller
                 'Authorization: Bearer ' . $token->access_token
             ),
         ));
+        $detail=Sentry::where('phone_number', $user->phone_number ?? '')->first();
+        $premise=Premise::where('id', $detail->premise_id ?? 'premises')->first();
 
         $responsePassanda = curl_exec($curl);
         curl_close($curl);
@@ -106,6 +111,8 @@ class AuthenticationController extends Controller
             "access_token" => $tokenUser,
             "user" => $user,
             "code" => $code,
+            "premises"=>$premise->name ?? ' ',
+            'organization'=>$premise->organization->name ?? ' ',
             "response" => $responsePassanda,
         ]);
     }

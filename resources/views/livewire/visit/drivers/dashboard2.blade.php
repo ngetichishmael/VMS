@@ -71,19 +71,9 @@
                 <div class="card-datatable table-responsive">
                     <table class="table">
                         <thead style="color: #070707">
-                            <tr>
-{{--                                <th wire:click="sortBy('id')">ID--}}
-{{--                                    @if ($sortField === 'id')--}}
-{{--                                        @if ($sortAsc)--}}
-{{--                                            <i class="fas fa-sort-up"></i>--}}
-{{--                                        @else--}}
-{{--                                            <i class="fas fa-sort-down"></i>--}}
-{{--                                        @endif--}}
-{{--                                    @endif--}}
-{{--                                </th>--}}
-
-                                <th>Name</th>
-                                <th>Vehicle Reg</th>
+                                <tr>
+                                <th >Name</th>
+                                    <th>Vehicle Reg</th>
                                 <th>Site</th>
                                 <th>Section</th>
                                 <th>Organization</th>

@@ -26,7 +26,6 @@
                         <div class="form-group">
                             <label for="selectSmall">Sort</label>
                             <select wire:click.prevent="sortBy('name')" class="form-control form-control-sm" id="selectSmall">
-                          
                             <option value="asc">Ascending</option>
                                 <option value="desc">Descending</option>
                             </select>
@@ -34,10 +33,9 @@
                     </div>
 
                     <div class="col-md-3">
-                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2; color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
+                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2; color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in"
                             data-placement="top" title="New User">
                           + Add Organization
-                               
                         </button>
                     </div>
                 </div>
@@ -63,29 +61,24 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-
-                         
-
                             <tbody>
                             @forelse ($organization as $org)
                                 <tr>
-                                  
                                     <td>{{ $org ->name }}</td>
-                                    <td>{{ $org ->email }}</td>   
-                                    <td>{{ $org ->primary_phone }}</td>  
-                                    <td>{{ $org ->location }}</td>  
-                                    <td>{{ $org ->user->count() }}</td>  
+                                    <td>{{ $org ->email }}</td>
+                                    <td>{{ $org ->primary_phone }}</td>
+                                    <td>{{ $org ->location }}</td>
+                                    <td>{{ $org ->user->count() }}</td>
                                     <td>
-                                     <?php if($org->status == '1'){ ?> 
+                                     <?php if($org->status == '1'){ ?>
                                              <span class="badge badge-pill badge-light-success mr-1">Active</span>
-                                    
-                                     <?php }else{ ?> 
+
+                                     <?php }else{ ?>
                                              <span class="badge badge-pill badge-light-warning mr-1">Disabled</span>
 
                                       <?php } ?>
-                                    
+
                                     </td>
-                              
                                     <td>
                                         <div class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -94,7 +87,8 @@
                                         <div class="dropdown-menu">
 
                                                 <!--update link-->
-                                                <a  href="{{ route('OrganizationInformation.edit',$org->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > Edit </a>                                        <!-- delete link -->
+
+                                        <a  wire:ignore.self href="#" class="" wire:click="editOrganization({{ $org->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
                                         <?php if($org->status == '0'){ ?>
                                         <a wire:ignore.self href="#" wire:click="activate({{ $org->id }})"  onclick="return confirm('Are you sure to want to Activate the organization?')" style="padding-right:20px; " > Activate </a>
                                         <?php }else{ ?>
@@ -113,24 +107,19 @@
                                 <td colspan="6" style="text-align: center;"> No Record Found </td>
                                 </tr>
                             @endforelse
-                       
                             </tbody>
-                          
+
                         </table>
-             
                         <div style="margin-left: 80%" class="mt-1">{{ $organization->links() }}
                         </div>
                     </div>
                 </div>
-   
         </div>
-
-    
               <!-- Modal to add new organzation starts-->
     <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
         <form class="add-new-user modal-content pt-0" method="POST" action="{!! route('OrganizationInformation.store') !!}">
-        {{ csrf_field() }} 
+        {{ csrf_field() }}
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
             <h5 class="modal-title" id="exampleModalLabel">New Organization</h5>
@@ -141,7 +130,6 @@
               <input  type="text" name="name"  class="form-control" required />
 
             </div>
-   
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-email">Email</label>
               <input  type="email" name="email"  class="form-control" required />
@@ -187,7 +175,7 @@
     <!-- <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
         <form class="add-new-user modal-content pt-0" >
-        {{ csrf_field() }} 
+        {{ csrf_field() }}
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
             <h5 class="modal-title" id="exampleModalLabel">New Organization</h5>
@@ -198,7 +186,6 @@
               <input  type="text" wire:model="name"  class="form-control" required />
 
             </div>
-   
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-email">Email</label>
               <input  type="email" wire:model="email"  class="form-control" required />
@@ -245,7 +232,7 @@
      <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-edit-slide-in">
       <div class="modal-dialog">
         <form class="add-new-user modal-content pt-0" >
-        {{ csrf_field() }} 
+        {{ csrf_field() }}
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
             <h5 class="modal-title" id="exampleModalLabel">Edit Organization</h5>
@@ -256,7 +243,6 @@
               <input  type="text" wire:model="name"  class="form-control" required />
 
             </div>
-   
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-email">Email</label>
               <input  type="email" wire:model="email"  class="form-control" required />
@@ -290,9 +276,6 @@
 
             </div>
 
-
-     
-            
             <button wire:click="editOrganizationData" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Update') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
@@ -309,8 +292,6 @@
         window.addEventListener('show-edit-org-modal', event =>{
             $('#modals-edit-slide-in').modal('show');
         });
-
-    
     </script>
 @endpush
 
