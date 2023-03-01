@@ -186,13 +186,21 @@ class VisitorController extends Controller
         $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
 
         $nationality = Nationality::find($request->nationality);
+        if (!$nationality){
+            $nationality = new Nationality();
+            $nationality->name = $request->input('nationality') ?? '101';
+            $nationality->save();
+        }
+
+        $detail=Sentry::where('phone_number', $request->user()->phone_number ?? '')->first();
+
         $visitor = new Visitor();
         $visitor->name = $request->input('name');
         $visitor->type = $request->input('type');
 //        $visitor->identification_type_id = $request->input('identification_type_id');
         $visitor->visitor_type_id = $request->input('visitor_type_id');
         $visitor->purpose_id = $request->input('purpose_id');
-        $visitor->sentry_id = $request->user()->id;
+        $visitor->sentry_id = $detail->id;
         $visitor->nationality_id = $nationality->id ?? "101";
         $visitor->resident_id = $request->input('resident_id');
         $visitor->attachment1 = $request->input('attachment1');

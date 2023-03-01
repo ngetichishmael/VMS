@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Visitors;
 
 use App\Http\Controllers\Controller;
 use App\Models\Nationality;
+use App\Models\Premise;
+use App\Models\Sentry;
 use App\Models\TimeLog;
 use App\Models\UserDetail;
 use App\Models\VehicleInformation;
@@ -71,7 +73,6 @@ class DriveInController extends Controller
             }
         }
         $nationality = Nationality::find($request->nationality);
-
         if (!$nationality){
             $nationality = new Nationality();
             $nationality->name = $request->input('nationality') ?? '101';
@@ -85,13 +86,15 @@ class DriveInController extends Controller
 //        $timeLog->entry_time = now();
         $timeLog->save();
 
+        $detail=Sentry::where('phone_number', $request->user()->phone_number ?? '')->first();
+
         $visitor = new Visitor();
         $visitor->name = $request->input('name');
         $visitor->type = $request->input('type');
         $visitor->identification_type_id = $request->input('identification_type_id');
         $visitor->visitor_type_id = $request->input('visitor_type_id');
         $visitor->purpose_id = $request->input('purpose_id');
-        $visitor->sentry_id = $request->user()->id;
+        $visitor->sentry_id = $detail->id;
         $visitor->nationality_id = $nationality->id ?? "110";
         $visitor->resident_id = $request->input('resident_id');
         $visitor->tag = $request->input('tag');

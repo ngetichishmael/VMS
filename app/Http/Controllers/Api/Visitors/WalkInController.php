@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Visitors;
 
 use App\Http\Controllers\Controller;
 use App\Models\Nationality;
+use App\Models\Sentry;
 use App\Models\TimeLog;
 use App\Models\UserDetail;
 use App\Models\VehicleInformation;
@@ -70,16 +71,22 @@ class WalkInController extends Controller
             $nationality->name = $request->input('nationality') ?? '101';
             $nationality->save();
         }
+        $detail=Sentry::where('phone_number', $request->user()->phone_number ?? '')->first();
         $visitor = new Visitor();
         $visitor->name = $request->input('name');
         $visitor->type = $request->input('type');
         $visitor->identification_type_id = $request->input('identification_type_id');
         $visitor->visitor_type_id = $request->input('visitor_type_id');
         $visitor->purpose_id = $request->input('purpose_id');
-        $visitor->sentry_id = $request->user()->id;
+        $visitor->sentry_id = $detail->id;
         $visitor->nationality_id = $nationality->id ?? "101";
         $visitor->resident_id = $request->input('resident_id');
         $visitor->tag = $request->input('tag');
+        $visitor->resident_id = $request->input('resident_id');
+        $visitor->attachment1 = $request->input('attachment1');
+        $visitor->attachment2 = $request->input('attachment2');
+        $visitor->attachment3 = $request->input('attachment3');
+        $visitor->attachment4 = $request->input('attachment4');
         $timeLog = new TimeLog;
         $timeLog->entry_time = now();
         $timeLog->save();

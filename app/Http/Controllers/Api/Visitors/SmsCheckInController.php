@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Visitors;
 
 use App\Http\Controllers\Controller;
 use App\Models\Nationality;
+use App\Models\Sentry;
 use App\Models\TimeLog;
 use App\Models\UserDetail;
 use App\Models\VehicleInformation;
@@ -99,12 +100,14 @@ class SmsCheckInController extends Controller
             $nationality->save();
         }
 
+        $detail=Sentry::where('phone_number', $request->user()->phone_number ?? '')->first();
+
         $visitor = new Visitor();
         $visitor->type = $request->input('type');
         $visitor->identification_type_id = $request->input('identification_type_id');
         $visitor->visitor_type_id = $request->input('visitor_type_id');
         $visitor->purpose_id = $request->input('purpose_id');
-        $visitor->sentry_id = $request->user()->id;
+        $visitor->sentry_id = $detail->id;
         $visitor->nationality_id = $nationality->id ?? "101";
         $visitor->resident_id = $request->input('resident_id');
          $visitor->attachment1=$request->input('attachment1');
