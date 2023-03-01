@@ -7,6 +7,8 @@ use App\Http\Requests\StoreSentryRequest;
 use App\Http\Requests\UpdateSentryRequest;
 
 use App\Models\User;
+use App\Models\Premise;
+use App\Models\Shift;
 
 use Brian2694\Toastr\Facades\Toastr;
 
@@ -63,36 +65,22 @@ class SentryController extends Controller
 
         Sentry::create([
             'name' => $request->name,
+
             'phone_number' => $request->phone_number,
+
             'status' => 1,
+
             'device_id' => $request->device_id ?? 0,
+
             'user_detail_id' => $request->user_detail_id ?? null,
+
             'shift_id' => $request->shift_id,
+            
             'premise_id' => $request->premise_id,
          
         ]);
 
-
-        $sentry = new Sentry;
-        $sentry->sname = $request->sname;
-        $sentry->id_number = $request->id_number;
-        $sentry->email = $request->email;
-        $sentry->zone = $request->zone;
-        $sentry->save();
-         $user =  new User;
-
-
         User::create([
-            // 'name' => $request->input('name'),
-            // 'password' => Hash::make(Str::random(20)),
-            // 'email' => Str::uuid(),
-            // 'phone_number' => $request->input('phone_number'),
-            // 'status' => 1,
-            // 'organization_code' => Str::uuid(),
-            // 'role_id' => 4,
-            // 'email_verified_at' => now()
-
-
 
             'name' => $request->input('name'),
 
@@ -129,9 +117,18 @@ class SentryController extends Controller
      * @param  \App\Models\Sentry  $sentry
      * @return \Illuminate\Http\Response
      */
-    public function edit(Sentry $sentry)
+    public function edit($id)
     {
-        //
+        $sentry = Sentry::find($id);
+
+        $premises = Premise::where('status', 1) ->get();
+
+        $shifts = Shift::where('status', 1) ->get();
+
+        return view('livewire.sentry.edit', compact('sentry','premises','shifts')); 
+
+
+        // return view('livewire.sentry.edit'); 
     }
 
     /**
@@ -141,9 +138,23 @@ class SentryController extends Controller
      * @param  \App\Models\Sentry  $sentry
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSentryRequest $request, Sentry $sentry)
+    public function update(Request $request, $id)
     {
-        //
+        $sentry = Sentry::find($id);
+
+        $sentry->name = $request->input('name');
+
+        $sentry->phone_number = $request->input('phone_number');
+
+        $sentry->premise_id  = $request->input('premise_id');
+
+        $sentry->shift_id  = $request->input('shift_id');
+
+        $sentry->device_id  = $request->input('device_id')?? 0;
+
+        $sentry->save();
+
+        return redirect()->to('/users/sentries')->with('success','Sentry Updated successfully.');
     }
 
     /**
