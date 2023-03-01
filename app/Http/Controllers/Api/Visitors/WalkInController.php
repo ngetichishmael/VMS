@@ -51,13 +51,15 @@ class WalkInController extends Controller
         $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
             ->orWhere('phone_number', $request->input('phone1'))
             ->first();
-        $visitor = Visitor::where('user_detail_id', $user_details->id)->latest('id')->first();
+        if ($user_details) {
+            $visitor = Visitor::where('user_detail_id', $user_details->id)->latest('id')->first();
 
-        if ($visitor && $visitor->time_log_id) {
-            $timeLog = TimeLog::find($visitor->time_log_id);
+            if ($visitor && $visitor->time_log_id) {
+                $timeLog = TimeLog::find($visitor->time_log_id);
 
-            if ($timeLog && $timeLog->exit_time === null) {
-                return response()->json(['error' => 'User already signed in, If its by mistake, Sign the user out first to sign back in']);
+                if ($timeLog && $timeLog->exit_time === null) {
+                    return response()->json(['error' => 'User already signed in, If its by mistake, Sign the user out first to sign back in']);
+                }
             }
         }
 
