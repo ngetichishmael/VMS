@@ -16,7 +16,7 @@ class AuthenticationController extends Controller
 {
     public function Login(Request $request)
     {
-        $user = User::with('premise', 'organization.name')->where('phone_number', $request->phone_number)->where('status', 1)->first();
+        $user = User::with('premise', 'organization')->where('phone_number', $request->phone_number)->where('status', 1)->first();
 
         if (!$user) {
             return response()
