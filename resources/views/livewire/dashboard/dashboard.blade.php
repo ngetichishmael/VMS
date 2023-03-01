@@ -119,13 +119,13 @@
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
                                 <td>{!! $visitor->timeLog->exit_time ?? ('' ?? 'Null') !!} </td>
                                 <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
-                                @if ($visitor->timeLog->entry_time === null)
+                                @if ($visitor->timeLog->exit_time === null)
                                     @php
                                         $duration = 'Visitor Still Within the Premise';
                                     @endphp
                                 @else
                                     @php
-                                        
+                                        // 2023-02-28 21:59:11
                                         $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
                                         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
                                         $duration = $to->longAbsoluteDiffForHumans($from);
