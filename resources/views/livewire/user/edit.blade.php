@@ -1,8 +1,6 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-@extends('layouts.contentLayoutMaster')
 
-@section('title', 'Edit User')
+@extends('layouts.contentLayoutMaster')
+@section('title', 'User Settings')
 
 @section('vendor-style')
   <!-- vendor css files -->
@@ -48,7 +46,7 @@
             <!-- left menu section -->
             <div class="col-md-3 mb-2 mb-md-0">
                 <ul class="nav nav-pills flex-column nav-left">
-             
+
                     <!-- change password -->
                     <li class="nav-item">
                         <a class="nav-link active" id="account-pill-password" data-toggle="pill" href="#account-vertical-password"
@@ -58,7 +56,7 @@
                         </a>
                     </li>
 
-                    
+
                                     <li class="nav-item">
                         <a class="nav-link" id="account-pill-general" data-toggle="pill"
                             href="#account-vertical-general" aria-expanded="true">
@@ -78,7 +76,7 @@
                         <div class="tab-content">
 
 
-                        
+
                             <!-- general tab -->
                             <div role="tabpanel" class="tab-pane fade" id="account-vertical-general"
                                 aria-labelledby="account-pill-general" aria-expanded="true">
@@ -156,25 +154,25 @@
                             <div class="tab-pane  active" id="account-vertical-password" role="tabpanel"
                                 aria-labelledby="account-pill-password" aria-expanded="false">
 
-   
+
 
                                 <!-- form -->
                                 <form class="validate-form mt-2" method="post" action="{{ route('OrganizationUsers.update', $user->id) }}">
-                                @method('PATCH') 
-            @csrf   
+                                @method('PATCH')
+            @csrf
                                 <div class="row">
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="account-username">Full Names</label>
-                                                <input type="text" class="form-control" 
-                                                    name="name" 
+                                                <input type="text" class="form-control"
+                                                    name="name"
                                                     value="{{ $user ->name }}"  />
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="account-name">Email</label>
-                                                <input type="email" class="form-control" 
+                                                <input type="email" class="form-control"
                                                  name="email"
                                                   value="{{ $user ->email}}"   />
                                             </div>
@@ -182,22 +180,22 @@
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="account-e-mail">Phone Number</label>
-                                                <input type="tel" class="form-control" 
-                                                    name="phone_number" 
-                                                    value="{{ $user ->phone_number }}" 
+                                                <input type="tel" class="form-control"
+                                                    name="phone_number"
+                                                    value="{{ $user ->phone_number }}"
                                                 />
                                             </div>
                                         </div>
-                                  
+
 
                                         <div class="col-12 col-sm-6">
                                         <fieldset class="form-group">
                                           <label  for="user-role">Organization</label>
                                           <select  name="organization_code" class="form-control">
-                                      
+                                          <option  value="{{ $user ->organization_code }}" > Select ...</option>
                                             @foreach ($organizations as $organizat)
                                                 <option  value="{{ $organizat ->id }}"> {{ $organizat ->name }}</option>
-                                            @endforeach  
+                                            @endforeach
                                           </select>
                                         </fieldset>
                                         </div>
@@ -207,10 +205,10 @@
                                         <fieldset class="form-group">
                                           <label  for="user-role">Role</label>
                                           <select  name="role_id" class="form-control" required>
-                                        
+                                          <option  value="{{ $user ->role_id }}" > Select ...</option>
                                             @foreach ($roles as $ros)
                                                 <option  value="{{ $ros ->id }}"> {{ $ros ->name }}</option>
-                                            @endforeach  
+                                            @endforeach
                                           </select>
                                         </fieldset>
                                         </div>
@@ -238,75 +236,9 @@
 
 
 @section('page-script')
+  <!-- Page js files -->
+  <script src="{{ asset(mix('js/scripts/forms/form-tooltip-valid.js')) }}"></script>
     {{-- Page js files --}}
     <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script>
     <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
 @endsection
-=======
-=======
->>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
-
-@extends('layouts/contentLayoutMaster')
-
-@section('content')
-
-<!-- Tooltip validations start -->
-<section class="tooltip-validations" id="tooltip-validation">
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          <h4 class="card-title">Edit User</h4>
-        </div>
-        <div class="card-body">
-   
-          <form class="needs-validation" novalidate>
-            <div class="form-row">
-              <div class="col-md-4 col-12 mb-3">
-                <label for="validationTooltip01">Full Names</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="validationTooltip01"
-                  placeholder=""
-                  value="{{ $data[0]->name }}"
-                  required
-                />
-              
-              </div>
-              <div class="col-md-4 col-12 mb-3">
-                <label for="validationTooltip02">Email</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="validationTooltip02"
-                  value="{{ $data[0]->email }}"
-                  required
-                />
-              
-              </div>
-              <div class="col-md-4 col-12 mb-3">
-                <label for="validationTooltip03">Phone Number</label>
-                <input type="text" class="form-control" id="validationTooltip03" value="{{ $data[0]->phone_number }}" required />
-
-              </div>
-            </div>
-            <button class="btn btn-primary" type="submit">Submit</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- Tooltip validations end -->
-@endsection
-
-@section('page-script')
-  <!-- Page js files -->
-  <script src="{{ asset(mix('js/scripts/forms/form-tooltip-valid.js')) }}"></script>
-<<<<<<< HEAD
-@endsection
->>>>>>> origin/ish
-=======
-@endsection
->>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f

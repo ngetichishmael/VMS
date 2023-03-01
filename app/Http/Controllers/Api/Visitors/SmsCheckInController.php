@@ -78,7 +78,6 @@ class SmsCheckInController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
         $nationality = Nationality::find($request->nationality);
-<<<<<<< HEAD
 
         if (!$nationality){
             $nationality->name=$request->input('nationality') ?? '101';
@@ -96,17 +95,6 @@ class SmsCheckInController extends Controller
 
 
         $visitor = new Visitor();
-
-=======
-        $timeLog = new TimeLog;
-        $now = Carbon::now();
-        $nairobiNow = $now->setTimezone('Africa/Nairobi');
-        $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
-
-        $image_path = $request->file('image')->store('image', 'public');
-
-        $visitor = new Visitor();
->>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
         $visitor->type = $request->input('type');
         $visitor->identification_type_id = $request->input('identification_type_id');
         $visitor->visitor_type_id = $request->input('visitor_type_id');
@@ -121,16 +109,11 @@ class SmsCheckInController extends Controller
         $visitor->tag = $request->input('tag');
 
 
-<<<<<<< HEAD
          $timeLog = new TimeLog;
         $now = Carbon::now();
         $nairobiNow = $now->setTimezone('Africa/Nairobi');
         $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
         $timeLog->save();
-=======
-        $timeLog->save();
-
->>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
         $visitor->time_log_id = $timeLog->id;
 
         $user_details = UserDetail::find($request->IDNO);

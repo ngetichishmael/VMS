@@ -69,16 +69,14 @@
                                     
                                     <td>{{ $shift ->created_at }}</td>  
                                     <td>
-                                    <?php if($shift->status == '1'){ ?>
+                                     <?php if($shift->status == '1'){ ?> 
+                                             <span class="badge badge-pill badge-light-success mr-1">Active</span>
+                                    
+                                     <?php }else{ ?> 
+                                             <span class="badge badge-pill badge-light-warning mr-1">Disabled</span>
 
-                                    <a href="#" class="Active" style="color:#73A561;">Active</a>
-
-                                    <?php }else{ ?>
-
-                                    <a href="#" class="inactive" style="color:#8B0000;">Disabled</a>
-
-                                    <?php } ?>
-
+                                      <?php } ?>
+                                    
                                     </td>
                                 
                                     <td>

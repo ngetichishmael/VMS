@@ -60,7 +60,6 @@
                             <th>Phone Number</th>
                             <th>Premise</th>
                             <th>Shift</th>
-                            <th>Device</th>
                             <th>Last Login</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -75,20 +74,17 @@
                                 <!-- <td>{!! $sentry->user_detail()->pluck('ID_number')->implode('') !!} </td> -->
                                 <td>{!! $sentry->premise()->pluck('name')->implode('') !!} </td>
                                 <td>{!! $sentry->shift()->pluck('name')->implode('') !!} </td>
-                                <td>{!! $sentry->device()->pluck('identifier')->implode('') !!} </td>
                                 <td>{{ $sentry->updated_at }}</td>
                                 <td>
-                                    <?php if($sentry->status == '1'){ ?>
+                                     <?php if($sentry->status == '1'){ ?> 
+                                             <span class="badge badge-pill badge-light-success mr-1">Active</span>
+                                    
+                                     <?php }else{ ?> 
+                                             <span class="badge badge-pill badge-light-warning mr-1">Disabled</span>
 
-                                    <a href="#" class="Active" style="color:#73A561;">Active</a>
-
-                                    <?php }else{ ?>
-
-                                    <a href="#" class="inactive" style="color:#8B0000;">Disabled</a>
-
-                                    <?php } ?>
-
-                                </td>
+                                      <?php } ?>
+                                    
+                                    </td>
 
                                 <td>
                                     <div class="dropdown">
@@ -99,10 +95,7 @@
                                         <div class="dropdown-menu">
 
                                             <!--update link-->
-                                            <a wire:ignore.self href="#" class=""
-                                                wire:click="editSentry({{ $sentry->id }})" style="padding-right:20px"
-                                                data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"
-                                                data-placement="top"> Edit </a>
+                                            <a  href="{{ route('Sentry.edit',$sentry->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > Edit </a>
                                             <!-- delete link -->
                                             <?php if($sentry->status == '0'){ ?>
                                             <a wire:ignore.self href="#"
@@ -115,6 +108,11 @@
                                                 onclick="return confirm('Are you sure to want to suspend the sentry?')"
                                                 style="padding-right:20px; "> Suspend</i> </a>
                                             <?php } ?>
+                                            <a wire:ignore.self href="#" class=""
+                                             style="padding-right:20px"
+                                                data-toggle="modal" id="smallButton" 
+                                                data-placement="top"> View </a>
+                                            <!-- delete link -->
 
                                             <a wire:ignore.self href="#" wire:click="destroy({{ $sentry->id }})"
                                                 onclick="return confirm('Are you sure to want to delete the sentry?')">
@@ -244,15 +242,7 @@
                             @endforeach
                         </select>
                     </fieldset>
-                    <fieldset class="form-group">
-                        <label class="form-label" for="user-role">Device</label>
-                        <select id="device_id" name="device_id" class="form-control">
-                            <option value=""> Select</option>
-                            @foreach ($devices as $device)
-                                <option value="{{ $device->id }}"> {{ $device->identifier }}</option>
-                            @endforeach
-                        </select>
-                    </fieldset>
+            
 
                     <button type="submit" class="btn btn-primary mr-1 data-submit"> {{ __('Register') }} </button>
                     <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>

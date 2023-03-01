@@ -98,7 +98,6 @@ class OrganizationController extends Controller
      */
     public function edit($id)
     {
-
         $organization = Organization::find($id);
 
         return view('livewire.organization.edit', compact('organization'));

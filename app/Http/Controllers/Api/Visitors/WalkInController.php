@@ -51,14 +51,10 @@ class WalkInController extends Controller
         }
         // check if nationality already exists
         $nationality = Nationality::find($request->nationality);
-<<<<<<< HEAD
 
         if (!$nationality){
             $nationality->name=$request->input('nationality');
         }
-
-=======
->>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
         $visitor = new Visitor();
         $visitor->name = $request->input('name');
         $visitor->type = $request->input('type');

@@ -15,8 +15,8 @@ use Illuminate\Support\Str;
 class Dashboard extends Component
 {
     use WithPagination;
-    
-    
+
+
     protected $paginationTheme = 'bootstrap';
     public $perPage = 10;
     public $sortField = 'id';
@@ -35,10 +35,10 @@ class Dashboard extends Component
 
     public function render()
     {
-    
+
         $searchTerm = '%' . $this->search . '%';
 
-        $users = User::with('organization','role')
+        $users = User::whereIn('role_id',[1,2])->with('organization','role')
             ->when($this->organizationId, function ($query) {
                 $query->where('organization_code', $this->organizationId);
             })
@@ -54,8 +54,8 @@ class Dashboard extends Component
         $roles = Role::all();
 
 
-        return view('livewire.user.dashboard', [ 
-            'users' => $users, 
+        return view('livewire.user.dashboard', [
+            'users' => $users,
              'organizations' => $organizations,
              'roles' => $roles,
         ]);
@@ -105,7 +105,7 @@ class Dashboard extends Component
 
 
         $user->save();
-  
+
         $this-> resetInput();
 
         session()->flash('message', 'User added successfully.');
@@ -115,7 +115,7 @@ class Dashboard extends Component
 
     public function edituser($id)
     {
-        
+
         $user  = User::where('id', $id)->first();
 
         $this->user_edit_id = $id;
@@ -130,31 +130,20 @@ class Dashboard extends Component
 
         $this->role_id = $user->role_id;
 
-  
+
 
         $this->dispatchBrowserEvent('show-edit-org-modal');
     }
 
     public function editUserData()
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    
-=======
-=======
->>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
         //on form submit validation
         $this->validate([
             'name' => 'required|min:2',
             'email' => 'required|email|max:255|unique:organizations,email',
             'phone_number'=> 'required|numeric',
-           
-        ]);
 
-<<<<<<< HEAD
->>>>>>> origin/ish
-=======
->>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
+        ]);
         $user  = User::where('id', $this->user_edit_id)->first();
 
         $user ->name = $this->name;
@@ -165,16 +154,9 @@ class Dashboard extends Component
 
         $user->save();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-      
 
-=======
         return redirect()->route('OrganizationUsers');
->>>>>>> origin/ish
-=======
-        return redirect()->route('OrganizationUsers');
->>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
+
     }
 
     public function destroy($id)
@@ -183,21 +165,14 @@ class Dashboard extends Component
             $user = User::where('id', $id);
             $user ->delete();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-            return redirect()->to('/organization/users')->with('success','User Updated successfully!');
-=======
+
             return redirect()->to('/organization/users')->with('error','User Deleted successfully!');
->>>>>>> origin/ish
-=======
-            return redirect()->to('/organization/users')->with('error','User Deleted successfully!');
->>>>>>> 8a70a8dd6f8f90eb1771b0a45d6ad58a6731ca6f
         }
     }
 
     public function activate($id)
     {
-       
+
        User::whereId($id)->update(
           ['status' => "1"]
        );
@@ -207,7 +182,7 @@ class Dashboard extends Component
 
     public function deactivate($id)
     {
-       
+
        User::whereId($id)->update(
           ['status' => "0"]
        );

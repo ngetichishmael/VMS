@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
-
 use App\Models\Organization;
 use App\Models\Role;
 
@@ -78,6 +77,10 @@ class UserController extends Controller
         $user->role_id  = $request->input('role_id');
 
         $user->password  = Hash::make($request->password);
+
+
+        $user->email_verified_at = now();
+
         $user->save();
 
         return redirect()->to('/organization/users')->with('success','User added successfully.');
@@ -91,7 +94,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -105,6 +108,16 @@ class UserController extends Controller
     {
         // $data = DB::table('users')->where('id',$id)->get();
         // return view('livewire.user.edit',compact('data'));
+
+        $user = User::find($id);
+
+        $organizations = Organization::where('status', 1) ->get();
+
+        $roles = Role::all();
+
+        // $this->dispatchBrowserEvent('show-edit-org-modal', compact('users'));
+
+        return view('livewire.user.edit', compact('user','organizations','roles'));
 
         $user = User::find($id);
 
@@ -141,7 +154,6 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->to('/organization/users')->with('success','User Updated successfully.');
-
     }
 
     /**
