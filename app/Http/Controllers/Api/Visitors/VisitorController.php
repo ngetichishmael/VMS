@@ -133,7 +133,7 @@ class VisitorController extends Controller
             ->whereNull('exit_time')
             ->first();
         if ($time_log) {
-            return response()->json(['message' => 'User has already checked in'], 400);
+            return response()->json(['message' => 'User has already checked in'], 409);
         }
         if ($visitor->type === 'DriveIn') {
             $visitor->vehicle = VehicleInformation::where('visitor_id', $visitor->id)->first();
