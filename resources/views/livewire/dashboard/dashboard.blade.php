@@ -130,20 +130,20 @@
                                         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
                                         $duration = $to->longAbsoluteDiffForHumans($from);
                                     @endphp --}}
-                        @endif
-                        <td>
-                            {{ $duration }}
-                        </td>
-                        <td>
-                            <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}"><i
-                                    class="fa fa-eye">&nbsp;Details</i></a>
-                        </td>
+                                {{-- @endif --}}
+                                <td>
+                                    {{ $duration }}
+                                </td>
+                                <td>
+                                    <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}"><i
+                                            class="fa fa-eye">&nbsp;Details</i></a>
+                                </td>
 
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
-                        </tr>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>
