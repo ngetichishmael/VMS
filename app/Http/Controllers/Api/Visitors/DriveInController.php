@@ -44,7 +44,6 @@ class DriveInController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'type' => 'required|string',
-            'identification_type_id' => 'required|integer',
             'visitor_type_id' => 'required|integer',
             'purpose_id' => 'required|integer',
             'nationality' => 'required|string',
@@ -57,21 +56,27 @@ class DriveInController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
 
-//        $verifyvisitor = Visitor::whereIn('user_detail_id', $users->pluck('id')->toArray())
-//            ->orderBy('id', 'desc')
-//            ->first();
-//        $time_log = TimeLog::where('id', $verifyvisitor->time_log_id)
-//            ->whereNull('exit_time')
-//            ->first();
-//        if ($time_log) {
-//            return response()->json(['message' => 'User has already checked in'], 400);
-//        }
-//        else
+        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
+            ->orWhere('phone_number', $request->input('phone1'))
+            ->first();
+        $visitor = Visitor::where('user_detail_id', $user_details->id)->latest('id')->first();
 
-        $nationality = Nationality::whereLike(['name'], (string)$request->nationality)->first();
-        if (!$nationality){
-            $nationality->nationality=$request->input('nationality');
+        if ($visitor && $visitor->time_log_id) {
+            $timeLog = TimeLog::find($visitor->time_log_id);
+
+            if ($timeLog && $timeLog->exit_time === null) {
+                return response()->json(['error' => 'User already signed in, If its by mistake, Sign the user out first to sign back in']);
+            }
         }
+
+        $nationality = Nationality::find($request->nationality);
+
+        if (!$nationality){
+            $nationality = new Nationality();
+            $nationality->name = $request->input('nationality') ?? '101';
+            $nationality->save();
+        }
+
         $timeLog = new TimeLog;
         $now = Carbon::now();
         $nairobiNow = $now->setTimezone('Africa/Nairobi');
@@ -108,7 +113,9 @@ class DriveInController extends Controller
 
         $visitor->time_log_id = $timeLog->id;
 
-        $user_details = UserDetail::where('ID_number', $request['IDNO'])->first();
+        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
+            ->orWhere('phone_number', $request->input('phone1'))
+            ->first();
         if (!$user_details) {
             $user_details = new UserDetail();
             $user_details->phone_number = $request->input('phone1');

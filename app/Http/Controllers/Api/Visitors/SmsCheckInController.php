@@ -77,22 +77,24 @@ class SmsCheckInController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
+        $user_details = UserDetail::where('phone_number', $request->phone1)->first();
+        $visitor = Visitor::where('user_detail_id', $user_details->id)->latest('id')->first();
+
+        if ($visitor && $visitor->time_log_id) {
+            $timeLog = TimeLog::find($visitor->time_log_id);
+
+            if ($timeLog && $timeLog->exit_time === null) {
+                return response()->json(['error' => 'User already signed in, If its by mistake, Sign the user out first to sign back in']);
+            }
+        }
+
         $nationality = Nationality::find($request->nationality);
 
         if (!$nationality){
-            $nationality->name=$request->input('nationality') ?? '101';
+            $nationality = new Nationality();
+            $nationality->name = $request->input('nationality') ?? '101';
+            $nationality->save();
         }
-
-
-        $image_path = $request->file('image')->store('image', 'public');
-
-//        $visitor = new Visitor()->whereHas('timeLogs', function ($query) {
-//        $query->whereNull('exit_time');
-//    })
-//        ->orderBy('time_log_id', 'desc');
-
-
-
 
         $visitor = new Visitor();
         $visitor->type = $request->input('type');
@@ -116,7 +118,9 @@ class SmsCheckInController extends Controller
         $timeLog->save();
         $visitor->time_log_id = $timeLog->id;
 
-        $user_details = UserDetail::find($request->IDNO);
+        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
+            ->orWhere('phone_number', $request->input('phone1'))
+            ->first();
         if (!$user_details) {
             $user_details = new UserDetail();
             $user_details->phone_number = $request->input('phone1');
