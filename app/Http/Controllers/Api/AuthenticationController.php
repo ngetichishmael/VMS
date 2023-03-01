@@ -20,9 +20,7 @@ class AuthenticationController extends Controller
     {
         $user = User::where('phone_number', $request->phone_number)->where('status', 1)->where('role_id', 4)->first();
 //        return response()->json(['message' =>$user]);
-        $detail=Sentry::where('phone_number', $user->phone_number)->first();
-//        $sentryid = Sentry::where('user_detail_id', $detail->id)->first();
-        $premise=Premise::where('id', $detail->premise_id)->first();
+
 
 
         if (!$user) {
@@ -103,6 +101,8 @@ class AuthenticationController extends Controller
                 'Authorization: Bearer ' . $token->access_token
             ),
         ));
+        $detail=Sentry::where('phone_number', $user->phone_number ?? '')->first();
+        $premise=Premise::where('id', $detail->premise_id ?? 'premises')->first();
 
         $responsePassanda = curl_exec($curl);
         curl_close($curl);
