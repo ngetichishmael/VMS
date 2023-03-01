@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Edit Organization')
+@section('title', 'Organization Settings')
 
 @section('vendor-style')
   <!-- vendor css files -->

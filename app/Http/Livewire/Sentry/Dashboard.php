@@ -145,7 +145,7 @@ class Dashboard extends Component
     {
         if ($id) {
             $sentry = Sentry::where('id', $id);
-            $senry ->delete();
+            $sentry ->delete();
 
             return redirect()->to('/users/sentries')->with('error','Sentry Deleted successfully!');
         }

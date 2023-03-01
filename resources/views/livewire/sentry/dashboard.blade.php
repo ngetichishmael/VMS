@@ -76,17 +76,15 @@
                                 <td>{!! $sentry->shift()->pluck('name')->implode('') !!} </td>
                                 <td>{{ $sentry->updated_at }}</td>
                                 <td>
-                                    <?php if($sentry->status == '1'){ ?>
+                                     <?php if($sentry->status == '1'){ ?> 
+                                             <span class="badge badge-pill badge-light-success mr-1">Active</span>
+                                    
+                                     <?php }else{ ?> 
+                                             <span class="badge badge-pill badge-light-warning mr-1">Disabled</span>
 
-                                    <a href="#" class="Active" style="color:#73A561;">Active</a>
-
-                                    <?php }else{ ?>
-
-                                    <a href="#" class="inactive" style="color:#8B0000;">Disabled</a>
-
-                                    <?php } ?>
-
-                                </td>
+                                      <?php } ?>
+                                    
+                                    </td>
 
                                 <td>
                                     <div class="dropdown">
@@ -97,10 +95,7 @@
                                         <div class="dropdown-menu">
 
                                             <!--update link-->
-                                            <a wire:ignore.self href="#" class=""
-                                                wire:click="editSentry({{ $sentry->id }})" style="padding-right:20px"
-                                                data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"
-                                                data-placement="top"> Edit </a>
+                                            <a  href="{{ route('Sentry.edit',$sentry->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > Edit </a>
                                             <!-- delete link -->
                                             <?php if($sentry->status == '0'){ ?>
                                             <a wire:ignore.self href="#"
