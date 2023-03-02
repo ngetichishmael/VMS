@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Block;
-use App\Http\Requests\StoreBlockRequest;
 use App\Http\Requests\UpdateBlockRequest;
 use App\Models\Activity;
 use App\Models\Premise;
-use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
-use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -74,7 +71,7 @@ class BlockController extends Controller
         $premise = Premise::whereId($request->premise_id)->first();
         Activity::create([
             'name' => $request->user()->name,
-            'target' => "Block Creation",
+            'target' => "Block created by " . $request->user()->name,
             'organization' => $request->user()->organization_code,
             'activity' => "Created a new block name" . $request->name .
                 " for premise " . $premise->name . "."

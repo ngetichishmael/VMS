@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Visitors;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Nationality;
 use App\Models\TimeLog;
 use App\Models\UserDetail;
@@ -21,10 +22,9 @@ class WalkInController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json(Visitor::with(['resident2','sentry', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
-        ->where('type', 'walkin')
-        ->get());
-
+        return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
+            ->where('type', 'walkin')
+            ->get());
     }
 
     /**
@@ -65,7 +65,7 @@ class WalkInController extends Controller
 
         $nationality = Nationality::find($request->nationality);
 
-        if (!$nationality){
+        if (!$nationality) {
             $nationality = new Nationality();
             $nationality->name = $request->input('nationality') ?? '101';
             $nationality->save();
@@ -103,6 +103,14 @@ class WalkInController extends Controller
         }
         $visitor->user_detail_id = $user_details->id;
         $visitor->save();
+
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "New Walk In created by " . $request->user()->name,
+            'organization' => 'Visitor by' . $visitor->name,
+            'activity' => "Created a new visitor with " . $visitor .
+                'with details: ' . $user_details  . '.'
+        ]);
         return response()->json(['success' => 'Visitor Walkin information added successfully.'], 201);
     }
 

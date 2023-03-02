@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Premise;
-use App\Http\Requests\StorePremiseRequest;
 use App\Http\Requests\UpdatePremiseRequest;
-
-use DB;
+use App\Models\Activity;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
-use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class PremiseController extends Controller
@@ -44,13 +42,13 @@ class PremiseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'location' => 'required',
-            'address'=> 'required',
+            'address' => 'required',
             'organization_code' => 'required',
-            
+
 
 
         ]);
@@ -68,8 +66,14 @@ class PremiseController extends Controller
         $premise->description  = $request->input('description');
 
         $premise->save();
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "Premise created by " . $request->user()->name,
+            'organization' => $premise->name,
+            'activity' => "Created a new premise with " . $premise
+        ]);
 
-        return redirect()->to('/premise/information')->with('success','Premise added successfully.');
+        return redirect()->to('/premise/information')->with('success', 'Premise added successfully.');
     }
 
     /**
@@ -116,30 +120,31 @@ class PremiseController extends Controller
     {
         $delete = Premise::find($id);
         $delete->delete();
-        Toastr::success('Data deleted successfully :)','Success');
+        Toastr::success('Data deleted successfully :)', 'Success');
         return redirect()->route('PremiseInformation');
     }
 
-    function status_update($id){
+    function status_update($id)
+    {
 
         //get premise status with the help of  ID
         $premises = DB::table('premises')
-                    ->select('status')
-                    ->where('id','=',$id)
-                    ->first();
+            ->select('status')
+            ->where('id', '=', $id)
+            ->first();
 
         //Check user status
-        if($premises->status == '1'){
+        if ($premises->status == '1') {
             $status = '0';
-        }else{
+        } else {
             $status = '1';
         }
 
         //update premise status
-        $values = array('status' => $status );
-        DB::table('premises')->where('id',$id)->update($values);
+        $values = array('status' => $status);
+        DB::table('premises')->where('id', $id)->update($values);
 
-        session()->flash('msg','Premise status has been updated successfully.');
+        session()->flash('msg', 'Premise status has been updated successfully.');
         return redirect()->route('PremiseInformation');
     }
 }

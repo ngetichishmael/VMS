@@ -11,13 +11,12 @@ class SMSCheckingController extends Controller
     public function SMSChecking(Request $request, $phone_number)
     {
         $user_id = $request->user()->id;
-        $user_code = rand(10, 99);
-        $sentry_code = rand(10, 99);
+        $user_code = rand(1000, 9999);
         UserCode::create([
             'user_id' => $user_id,
-            'code' => $user_code . $sentry_code
+            'code' => $user_code
         ]);
-        $this->sendUserSMS($user_code . $sentry_code, $phone_number);
+        $this->sendUserSMS($user_code, $phone_number);
         return response()->json([
             "success" => true,
             'status' => 200,
