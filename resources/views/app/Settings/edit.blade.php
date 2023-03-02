@@ -23,9 +23,9 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-body">
-                    <form method="POST" action="{{ route('OrganizationSetting.update',[
-                     'setting' =>$organization_code ]) }}" style="gap: 20px;">
+                    <form method="POST" action="{{ route('OrganizationSetting.update', ['setting' => $organization_code->id]) }}">
                         @csrf
+                        @method('PUT')
                         <div class="row">
                             <div class="col-12">
 <div class="tab-content">
@@ -37,7 +37,7 @@
                     <div class="mt-1 border rounded table-responsive">
                         <h6 class="py-1 mx-1 mb-0 font-medium-2">
                             <i data-feather="lock" class="font-medium-3 mr-25"></i>
-                            <span class="align-middle">Setting on  subscriptions </span>
+                            <span class="align-middle">Setting on <strong>{!! $organization_code->organization->name !!} </strong>  subscriptions </span>
                         </h6>
                         <table class="table table-striped table-borderless">
                             <thead class="thead-light">
@@ -53,7 +53,7 @@
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input"
                                                id="admin-read" name="id_checkin"
-{{--                                               @if ($permissions->van_sales === 'YES') checked @endif--}}
+                                               @if ($organization_code->id_checkin === 1) checked @endif
  />
                                         <label class="custom-control-label"
                                                for="admin-read"></label>
@@ -66,7 +66,8 @@
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input"
                                                id="staff-read" name="ipass_checkin"
-{{--                                               @if ($permissions->new_sales === 'YES') checked @endif --}}
+                                               @if ($organization_code->ipass_checkin === 1) checked @endif
+
                                         />
                                         <label class="custom-control-label"
                                                for="staff-read"></label>
@@ -79,7 +80,8 @@
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input"
                                                id="author-read" name="automatic_checkin"
-{{--                                               @if ($permissions->deliveries === 'YES') checked @endif --}}
+
+                                               @if ($organization_code->automatic_id_checkin === 1) checked @endif
                                         />
                                         <label class="custom-control-label"
                                                for="author-read"></label>
@@ -92,7 +94,8 @@
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input"
                                                id="contributor-read" name="sms_checkin"
-{{--                                               @if ($permissions->schedule_visits === 'YES') checked @endif--}}
+
+                                               @if ($organization_code->sms_checkin === 1) checked @endif
                                         />
                                         <label class="custom-control-label"
                                                for="contributor-read"></label>
@@ -113,7 +116,7 @@
         <!-- users edit account form ends -->
     </div>
     <!-- Account Tab ends -->
-</div>
+</div></div></div>
                     </form>
                 </div>
             </div>

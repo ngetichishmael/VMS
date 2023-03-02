@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Resident;
 use App\Models\Unit;
-use App\Http\Requests\StoreResidentRequest;
 use App\Http\Requests\UpdateResidentRequest;
-
-use DB;
+use App\Models\Activity;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
-use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\DB;
 
 class ResidentController extends Controller
 {
@@ -48,9 +46,9 @@ class ResidentController extends Controller
 
             'email' => 'required|email|max:255|unique:organizations,email',
 
-            'phone_number'=> 'required|numeric', 
+            'phone_number' => 'required|numeric',
         ]);
-        
+
         $resident = new Resident;
 
         $resident->name = $request->input('name');
@@ -60,10 +58,17 @@ class ResidentController extends Controller
         $resident->phone_number = $request->input('phone_number');
 
         $resident->unit_id = $request->input('unit_id');
-   
+
         $resident->save();
-          
-        return redirect()->to('/resident/information')->with('success','Resident Created successfully!');
+
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "Resident created by " . $request->user()->name,
+            'organization' => $resident->name,
+            'activity' => "Created a new resident with " . $resident
+        ]);
+
+        return redirect()->to('/resident/information')->with('success', 'Resident Created successfully!');
     }
 
     /**
@@ -130,32 +135,32 @@ class ResidentController extends Controller
 
         $delete->delete();
 
-        Toastr::success('Data deleted successfully :)','Success');
+        Toastr::success('Data deleted successfully :)', 'Success');
 
         return redirect()->route('ResidentInformation');
     }
 
-    public function status_update($id){
+    public function status_update($id)
+    {
 
         //get resident status with the help of  ID
         $residents = DB::table('residents')
-                    ->select('status')
-                    ->where('id','=',$id)
-                    ->first();
+            ->select('status')
+            ->where('id', '=', $id)
+            ->first();
 
         //Check unit status
-        if($residents->status == '1'){
+        if ($residents->status == '1') {
             $status = '0';
-        }else{
+        } else {
             $status = '1';
         }
 
         //update unit status
-        $values = array('status' => $status );
-        DB::table('residents')->where('id',$id)->update($values);
+        $values = array('status' => $status);
+        DB::table('residents')->where('id', $id)->update($values);
 
-        session()->flash('msg','User status has been updated successfully.');
+        session()->flash('msg', 'User status has been updated successfully.');
         return redirect()->route('ResidentInformation');
     }
-
 }

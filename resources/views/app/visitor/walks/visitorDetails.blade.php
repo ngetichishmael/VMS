@@ -317,16 +317,16 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
-                                    @foreach ($visitor->timeLogs as $timeLog)
-
-                                        <tr>
-                                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}</td>
-                                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}</td>
-                                            <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}</td>
-                                            <td>{!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds');
-                                                        !!}</td>
-                                        </tr>
+                                    @foreach ($HistoryTimeLogs as $driveIn)
+                                        @foreach ($driveIn->timeLogs as $timeLog)
+                                            <tr>
+                                            <tr>
+                                                <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}</td>
+                                                <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}</td>
+                                                <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}</td>
+                                                <td>{!! Carbon::parse($timeLog->entry_time ?? now())->diff(Carbon::parse($timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds') !!}</td>
+                                            </tr>
+                                        @endforeach
                                     @endforeach
                                     </tbody>
                                 </table>
@@ -335,7 +335,7 @@
                     </div>
                 </div>
                 <div class="mt-2 col-12 d-flex flex-sm-row flex-column" style="gap: 20px;">
-                    <a href="{{ route('VisitDriveIn') }}" type="reset" style="margin-left: 85%;background: #54a4f3; color: #ffffff"
+                    <a href="{{ route('VisitWalkIn') }}" type="reset" style="margin-left: 85%;background: #54a4f3; color: #ffffff"
                        class="btn btn-btn-secondary">  Back </a>
                 </div>
             </div></div>

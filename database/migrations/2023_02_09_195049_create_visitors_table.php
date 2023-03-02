@@ -27,7 +27,7 @@ class CreateVisitorsTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->enum('type', ["WalkIn", "DriveIn", "SMS", "ID", 'iPass']);
-            $table->foreignIdFor(IdentificationType::class)->nullable();;
+            $table->foreignIdFor(IdentificationType::class)->nullable();
             $table->foreignIdFor(VisitorType::class)->nullable();;
             $table->foreignIdFor(Purpose::class)->nullable();;
             $table->foreignIdFor(Sentry::class)->nullable();;

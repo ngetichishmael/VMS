@@ -42,7 +42,9 @@ class iPassCheckinsController extends Controller
         $visitor = WalkIn::with('purpose1','sentry','timeLogs')->whereId($id)->first();
         $visitorCount = Visitor::where('user_detail_id', $visitor->user_details->id)->count();
         $lastTimeLog=TimeLog::where('id', $visitor->time_log_id)->orderBy('id', 'desc')->first();
-        return view('app.visitor.ipasscheckins.visitorDetails',compact('visitor', 'visitorCount', 'lastTimeLog'));
+        $HistoryTimeLogs=WalkIn::with('timeLogs')->where('user_detail_id', $visitor->user_details->id)->orderBy('id', 'desc')->get();
+
+        return view('app.visitor.ipasscheckins.visitorDetails',compact('visitor', 'visitorCount', 'HistoryTimeLogs','lastTimeLog'));
 
     }
 

@@ -7,13 +7,14 @@ use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Organization;
 use App\Models\Role;
+
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-
+use App\Models\Activity;
 use Brian2694\Toastr\Facades\Toastr;
 
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -53,18 +54,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-       
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|max:255|unique:users,email',
-            'phone_number'=> 'required|numeric',
+            'phone_number' => 'required|numeric',
             'organization_code' => 'required',
             'role_id' => 'required',
 
 
         ]);
 
-     
         $user = new User;
 
         $user->name = $request->input('name');
@@ -79,11 +78,18 @@ class UserController extends Controller
 
         $user->password  = Hash::make($request->password);
 
+
         $user->email_verified_at = now();
-        
+
         $user->save();
 
-        return redirect()->to('/organization/users')->with('success','User added successfully.');
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "User created by " . $request->user()->name,
+            'organization' => "User " . $user->name,
+            'activity' => "Created a new user with " . $user
+        ]);
+        return redirect()->to('/organization/users')->with('success', 'User added successfully.');
     }
 
     /**
@@ -94,7 +100,6 @@ class UserController extends Controller
      */
     public function show($id)
     {
-  
     }
 
     /**
@@ -164,73 +169,67 @@ class UserController extends Controller
 
         $delete = user::find($id);
         $delete->delete();
-        Toastr::success('Data deleted successfully :)','Success');
+        Toastr::success('Data deleted successfully :)', 'Success');
         return redirect()->route('OrganizationUsers');
     }
 
-    public function status_update($id){
+    public function status_update($id)
+    {
 
         //get user status with the help of  ID
         $users = DB::table('users')
-                    ->select('status')
-                    ->where('id','=',$id)
-                    ->first();
+            ->select('status')
+            ->where('id', '=', $id)
+            ->first();
 
         //Check user status
-        if($users->status == '1'){
+        if ($users->status == '1') {
             $status = '0';
-        }else{
+        } else {
             $status = '1';
         }
 
         //update user status
-        $values = array('status' => $status );
-        DB::table('users')->where('id',$id)->update($values);
+        $values = array('status' => $status);
+        DB::table('users')->where('id', $id)->update($values);
 
-        session()->flash('msg','User status has been updated successfully.');
+        session()->flash('msg', 'User status has been updated successfully.');
         return redirect()->route('OrganizationUsers');
     }
 
 
 
-    public function search(Request $request){
-        
+    public function search(Request $request)
+    {
         $output = "";
 
-        $users=DB::table('users')->where('name','LIKE','%'.$request->search."%")
+        $users = DB::table('users')->where('name', 'LIKE', '%' . $request->search . "%")
 
-        ->orWhere('email','LIKE','%'.$request->search."%")
-
-
-        ->orWhere('phone_number','LIKE','%'.$request->search."%")
+            ->orWhere('email', 'LIKE', '%' . $request->search . "%")
 
 
-        ->get();
-        
-        foreach($users as $users)
-        {
-            $output.= 
-            '
+            ->orWhere('phone_number', 'LIKE', '%' . $request->search . "%")
+
+
+            ->get();
+
+        foreach ($users as $users) {
+            $output .=
+                '
             <tr>
-            <td>'.$users ->id.'</td>
-            <td>'.$users->name.'</td>
+            <td>' . $users->id . '</td>
+            <td>' . $users->name . '</td>
 
-            <td>'.$users ->email.'</td>
-            <td>'.$users ->phone_number.'</td>
-         
-            <td>'.$users ->phone_number.'</td>
-    
-            <td>'.$users ->phone_number.'</td>
-        
-       
+            <td>' . $users->email . '</td>
+            <td>' . $users->phone_number . '</td>
+
+            <td>' . $users->phone_number . '</td>
+
+            <td>' . $users->phone_number . '</td>
             </tr>
             ';
         }
 
         return response($output);
-     
     }
-
-
-
 }

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreShiftRequest;
 use App\Http\Requests\UpdateShiftRequest;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Providers\RouteServiceProvider;
 
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -51,13 +52,18 @@ class ShiftController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-    
-        ]);     
+
+        ]);
         $shift = new Shift;
         $shift->name = $request->input('name');
         $shift->save();
-        
-        return redirect()->to('/shifts')->with('success','Shift created successfully.');
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "Shift created by " . $request->user()->name,
+            'organization' => 'New Shift ' . $shift->name,
+            'activity' => "Created a new shift with " . $shift
+        ]);
+        return redirect()->to('/shifts')->with('success', 'Shift created successfully.');
     }
 
     /**

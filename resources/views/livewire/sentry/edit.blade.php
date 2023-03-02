@@ -67,31 +67,7 @@
               aria-labelledby="account-pill-general"
               aria-expanded="true"
             >
-              <!-- header media -->
-              <div class="media">
-                <a href="javascript:void(0);" class="mr-25">
-                  <img
-                    src="{{asset('images/portrait/small/avatar-s-11.jpg')}}"
-                    id="account-upload-img"
-                    class="rounded mr-50"
-                    alt="profile image"
-                    height="80"
-                    width="80"
-                  />
-                </a>
-                <!-- upload and reset button -->
-                <!-- <div class="media-body mt-75 ml-1">
-                  <label for="account-upload" class="btn btn-sm btn-primary mb-75 mr-75">Upload</label>
-                  <input type="file" id="account-upload" hidden accept="image/*" />
-                  <button class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
-                  <p>Allowed JPG, GIF or PNG. Max size of 800kB</p>
-                </div> -->
-                <!--/ upload and reset button -->
-
-
-                
-              </div>
-              <!--/ header media -->
+         
 
               <!-- form -->
               <form class="validate-form mt-2" method="post" action="{{ route('Sentry.update', $sentry->id) }}">
@@ -139,7 +115,6 @@
                     <div class="form-group">
                       <label for="account-e-mail">E-mail</label>
                       <input type="text" class="form-control"  name="email" >
-
                     </div>
                   </div> -->
                   <!-- <div class="col-12 col-sm-6">

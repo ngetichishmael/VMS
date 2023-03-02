@@ -297,21 +297,22 @@
                                 </div>
                             </div>
                         </div>
-                        @if(!$visitor->vehicle->registration)
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title" style="color: #1f8af5">Vehicle Information</h5>
-                                        <div class="col-md-6 mb-1 pl-1">
-                                            <div class="form-group">
-                                                <label >Registration</label>
-                                                <input type="text" class="form-control" value="{{ $visitor->vehicle->registration ?? 'Not Available' }}" readonly />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
+{{--                        @if(!$visitor->vehicle->registration)--}}
+{{--                            <div class="col-md-12">--}}
+{{--                                <div class="card">--}}
+{{--                                    <div class="card-body">--}}
+{{--                                        <h5 class="card-title" style="color: #1f8af5">Vehicle Information</h5>--}}
+{{--                                        <div class="col-md-6 mb-1 pl-1">--}}
+{{--                                            <div class="form-group">--}}
+{{--                                                <label >Registration</label>--}}
+{{--                                                <input type="text" class="form-control" value="{{ $visitor->vehicle->registration ?? 'Not Available' }}" readonly />--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        @endif--}}
+
                     </div>
                 </div>
             </div>
@@ -350,7 +351,7 @@
                     </div>
                 </div>
                 <div class="mt-2 col-12 d-flex flex-sm-row flex-column" style="gap: 20px;">
-                    <a href="{{ route('VisitDriveIn') }}" type="reset" style="margin-left: 85%;background: #54a4f3; color: #ffffff"
+                 <a href="{{ route('VisitIPassCheckIn') }}" type="reset" style="margin-left: 85%;background: #54a4f3; color: #ffffff"
                        class="btn btn-btn-secondary">  Back </a>
                 </div>
             </div></div>

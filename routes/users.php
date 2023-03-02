@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\BlockController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DriveInController;
@@ -84,7 +85,7 @@ Route::middleware('auth')->group(function () {
         'create' => 'shifts.create',
         'store' => 'shifts.store',
     ]);
-    
+
     Route::resource('identification/type', IdentificationTypeController::class)->names([
         'index' => 'IdentificationType',
         'show' => 'IdentificationType.show',
@@ -211,5 +212,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('Visits/AllCheckIn', AllCheckinsController::class)->names([
         'index' => 'VisitAllCheckIn',
         'show' => 'VisitAllCheckIn.show',
+    ]);
+    Route::resource('logs/activities', ActivityController::class)->names([
+        'index' => 'activity',
+        'show' => 'activity.show',
     ]);
 });

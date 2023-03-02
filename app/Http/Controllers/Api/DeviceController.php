@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Device;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +19,6 @@ class DeviceController extends Controller
     {
         $devices = Device::all();
         return response()->json(['data' => $devices], 200);
-
     }
 
     /**
@@ -38,19 +38,26 @@ class DeviceController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-//        $sentry = $request->user()->sentry;
-//        $premiseId = $sentry->premise_id;
+        //        $sentry = $request->user()->sentry;
+        //        $premiseId = $sentry->premise_id;
 
-       $device= new Device();
-       $device ->identifier= $request->input('identifier');
-       $device ->description= $request->input('description');
-       $device ->device_code= $request->input('device_code');
-       $device ->latitude= $request->input('latitude');
-       $device ->longitude= $request->input('longitude');
-       $device ->name_of_address= $request->input('name_of_address');
-       $device ->premise_id= $request->input('premise_id');
-       $device ->sentry_id= $request->user()->id;
-       $device->save();
+        $device = new Device();
+        $device->identifier = $request->input('identifier');
+        $device->description = $request->input('description');
+        $device->device_code = $request->input('device_code');
+        $device->latitude = $request->input('latitude');
+        $device->longitude = $request->input('longitude');
+        $device->name_of_address = $request->input('name_of_address');
+        $device->premise_id = $request->input('premise_id');
+        $device->sentry_id = $request->user()->id;
+        $device->save();
+
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "New device added by " . $request->user()->name,
+            'organization' => 'Device' . $device,
+            'activity' => "Created a new device with " . $device . '.'
+        ]);
         return response()->json(['message' => 'Device created successful'], 201);
     }
 

@@ -3,22 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sentry;
-use App\Http\Requests\StoreSentryRequest;
-use App\Http\Requests\UpdateSentryRequest;
-
-use App\Models\User;
-use App\Models\Premise;
-use App\Models\Shift;
 
 use Brian2694\Toastr\Facades\Toastr;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+use App\Models\Activity;
+use App\Models\Premise;
+use App\Models\Shift;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class SentryController extends Controller
@@ -75,18 +70,13 @@ class SentryController extends Controller
             'user_detail_id' => $request->user_detail_id ?? null,
 
             'shift_id' => $request->shift_id,
-            
-            'premise_id' => $request->premise_id,
-         
-        ]);
 
+            'premise_id' => $request->premise_id,
+
+        ]);
         User::create([
 
             'name' => $request->input('name'),
-
-            'email' => Str::uuid(),
-
-            'phone_number' => $request->input('phone_number'),
 
             'organization_code' => 0,
 
@@ -96,7 +86,13 @@ class SentryController extends Controller
 
             'password' => Hash::make(Str::random(20)),
         ]);
-
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "Guard creation",
+            'organization' => $request->user()->organization_code,
+            'activity' => "Created a new guard with name" . $request->name .
+                " and phone number " . $request->phone_number . "."
+        ]);
         return redirect()->to('users/sentries')->with('success', 'Sentry added successfully.');
     }
 
@@ -121,14 +117,14 @@ class SentryController extends Controller
     {
         $sentry = Sentry::find($id);
 
-        $premises = Premise::where('status', 1) ->get();
+        $premises = Premise::where('status', 1)->get();
 
-        $shifts = Shift::where('status', 1) ->get();
+        $shifts = Shift::where('status', 1)->get();
 
-        return view('livewire.sentry.edit', compact('sentry','premises','shifts')); 
+        return view('livewire.sentry.edit', compact('sentry', 'premises', 'shifts'));
 
 
-        // return view('livewire.sentry.edit'); 
+        // return view('livewire.sentry.edit');
     }
 
     /**
@@ -150,11 +146,11 @@ class SentryController extends Controller
 
         $sentry->shift_id  = $request->input('shift_id');
 
-        $sentry->device_id  = $request->input('device_id')?? 0;
+        $sentry->device_id  = $request->input('device_id') ?? 0;
 
         $sentry->save();
 
-        return redirect()->to('/users/sentries')->with('success','Sentry Updated successfully.');
+        return redirect()->to('/users/sentries')->with('success', 'Sentry Updated successfully.');
     }
 
     /**

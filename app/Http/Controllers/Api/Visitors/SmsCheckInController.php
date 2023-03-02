@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Visitors;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Nationality;
 use App\Models\TimeLog;
 use App\Models\UserDetail;
@@ -73,17 +74,31 @@ class SmsCheckInController extends Controller
             'phone1' => 'required',
 
         ]);
-
+        $vehicle = null;
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        $nationality = Nationality::find($request->nationality);
-        $timeLog = new TimeLog;
-        $now = Carbon::now();
-        $nairobiNow = $now->setTimezone('Africa/Nairobi');
-        $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
+        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
+            ->orWhere('phone_number', $request->input('phone1'))
+            ->first();
+        if ($user_details) {
+            $visitor = Visitor::where('user_detail_id', $user_details->id)->latest('id')->first();
 
-        $image_path = $request->file('image')->store('image', 'public');
+            if ($visitor && $visitor->time_log_id) {
+                $timeLog = TimeLog::find($visitor->time_log_id);
+
+                if ($timeLog && $timeLog->exit_time === null) {
+                    return response()->json(['error' => 'User already signed in, If its by mistake, Sign the user out first to sign back in']);
+                }
+            }
+        }
+        $nationality = Nationality::find($request->nationality);
+
+        if (!$nationality) {
+            $nationality = new Nationality();
+            $nationality->name = $request->input('nationality') ?? '101';
+            $nationality->save();
+        }
 
         $visitor = new Visitor();
         $visitor->type = $request->input('type');
@@ -93,18 +108,23 @@ class SmsCheckInController extends Controller
         $visitor->sentry_id = $request->user()->id;
         $visitor->nationality_id = $nationality->id ?? "101";
         $visitor->resident_id = $request->input('resident_id');
-         $visitor->attachment1=$request->input('attachment1');
-         $visitor->attachment2=$request->input('attachment2');
-         $visitor->attachment3=$request->input('attachment3');
-         $visitor->attachment4=$request->input('attachment4');
+        $visitor->attachment1 = $request->input('attachment1');
+        $visitor->attachment2 = $request->input('attachment2');
+        $visitor->attachment3 = $request->input('attachment3');
+        $visitor->attachment4 = $request->input('attachment4');
         $visitor->tag = $request->input('tag');
 
 
+        $timeLog = new TimeLog;
+        $now = Carbon::now();
+        $nairobiNow = $now->setTimezone('Africa/Nairobi');
+        $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
         $timeLog->save();
-
         $visitor->time_log_id = $timeLog->id;
 
-        $user_details = UserDetail::find($request->IDNO);
+        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
+            ->orWhere('phone_number', $request->input('phone1'))
+            ->first();
         if (!$user_details) {
             $user_details = new UserDetail();
             $user_details->phone_number = $request->input('phone1');
@@ -125,6 +145,14 @@ class SmsCheckInController extends Controller
             $vehicle->save();
         }
 
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "new sms checking created by " . $request->user()->name,
+            'organization' => 'Visitor by name' . $visitor->name,
+            'activity' => "Created a new visitor with " . $visitor .
+                'with details: ' . $user_details  . ' and vehicle ' . $vehicle
+
+        ]);
         return response()->json(['success' => 'Visitor verified by sms information added successfully.'], 201);
     }
     /**

@@ -39,15 +39,14 @@
                                 <td>{!! $visitor->name !!} </td>
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Null' !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
+                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
                                 @if ($visitor->timeLog->exit_time === null)
                                     @php
                                         $duration = 'Visitor Still Within the Premise';
                                     @endphp
                                 @else
                                     @php
-                                        
                                         $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
                                         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
                                         $duration = $to->longAbsoluteDiffForHumans($from);
@@ -117,15 +116,14 @@
                                 <td>{!! $visitor->name !!} </td>
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? ('' ?? 'Null') !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
+                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
                                 @if ($visitor->timeLog->exit_time === null)
                                     @php
                                         $duration = 'Visitor Still Within the Premise';
                                     @endphp
                                 @else
                                     @php
-                                        
                                         $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
                                         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
                                         $duration = $to->longAbsoluteDiffForHumans($from);
@@ -195,15 +193,14 @@
                                 <td>{!! $visitor->name !!} </td>
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Null' !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
+                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
                                 @if ($visitor->timeLog->exit_time === null)
                                     @php
                                         $duration = 'Visitor Still Within the Premise';
                                     @endphp
                                 @else
                                     @php
-                                        
                                         $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
                                         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
                                         $duration = $to->longAbsoluteDiffForHumans($from);
@@ -273,15 +270,14 @@
                                 <td>{!! $visitor->name !!} </td>
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Null' !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
+                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
                                 @if ($visitor->timeLog->exit_time === null)
                                     @php
                                         $duration = 'Visitor Still Within the Premise';
                                     @endphp
                                 @else
                                     @php
-                                        
                                         $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
                                         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
                                         $duration = $to->longAbsoluteDiffForHumans($from);
@@ -351,15 +347,15 @@
                                 <td>{!! $visitor->name !!} </td>
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Null' !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
+                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
                                 @if ($visitor->timeLog->entry_time === null)
                                     @php
                                         $duration = 'Visitor Still Within the Premise';
                                     @endphp
                                 @else
                                     @php
-                                        
+
                                         $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
                                         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
                                         $duration = $to->longAbsoluteDiffForHumans($from);
@@ -429,15 +425,14 @@
                                 <td>{!! $visitor->name !!} </td>
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Null' !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? 'Still Within' !!} </td>
+                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
                                 @if ($visitor->timeLog->exit_time === null)
                                     @php
                                         $duration = 'Visitor Still Within the Premise';
                                     @endphp
                                 @else
                                     @php
-                                        
                                         $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
                                         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
                                         $duration = $to->longAbsoluteDiffForHumans($from);

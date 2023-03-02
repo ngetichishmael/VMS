@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Visitors;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Nationality;
 use App\Models\TimeLog;
 use App\Models\UserDetail;
@@ -44,7 +45,6 @@ class DriveInController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'type' => 'required|string',
-            'identification_type_id' => 'required|integer',
             'visitor_type_id' => 'required|integer',
             'purpose_id' => 'required|integer',
             'nationality' => 'required|string',
@@ -56,15 +56,34 @@ class DriveInController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        $nationality = Nationality::whereLike(['name'], (string)$request->nationality)->first();
-        if (!$nationality){
-            $nationality->nationality=$request->input('nationality');
+
+        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
+            ->orWhere('phone_number', $request->input('phone1'))
+            ->first();
+        if ($user_details) {
+            $visitor = Visitor::where('user_detail_id', $user_details->id)->latest('id')->first();
+
+            if ($visitor && $visitor->time_log_id) {
+                $timeLog = TimeLog::find($visitor->time_log_id);
+
+                if ($timeLog && $timeLog->exit_time === null) {
+                    return response()->json(['error' => 'User already signed in, If its by mistake, Sign the user out first to sign back in']);
+                }
+            }
         }
+        $nationality = Nationality::find($request->nationality);
+
+        if (!$nationality) {
+            $nationality = new Nationality();
+            $nationality->name = $request->input('nationality') ?? '101';
+            $nationality->save();
+        }
+
         $timeLog = new TimeLog;
         $now = Carbon::now();
         $nairobiNow = $now->setTimezone('Africa/Nairobi');
         $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
-//        $timeLog->entry_time = now();
+        //        $timeLog->entry_time = now();
         $timeLog->save();
 
         $visitor = new Visitor();
@@ -77,17 +96,28 @@ class DriveInController extends Controller
         $visitor->nationality_id = $nationality->id ?? "110";
         $visitor->resident_id = $request->input('resident_id');
         $visitor->tag = $request->input('tag');
-        $visitor->attachment1 = $request->input('attachment1');
-        $visitor->attachment2 = $request->input('attachment2');
-        $visitor->attachment3 = $request->input('attachment3');
-        $visitor->attachment4 = $request->input('attachment4');
 
+        if ($request->hasFile('attachment1')) {
+            $visitor->attachment1 = $request->attachment1->store('public/attachments');
+        }
 
+        if ($request->hasFile('attachment2')) {
+            $visitor->attachment2 = $request->attachment2->store('public/attachments');
+        }
 
+        if ($request->hasFile('attachment3')) {
+            $visitor->attachment3 = $request->attachment3->store('public/attachments');
+        }
+
+        if ($request->hasFile('attachment4')) {
+            $visitor->attachment4 = $request->attachment4->store('public/attachments');
+        }
 
         $visitor->time_log_id = $timeLog->id;
 
-        $user_details = UserDetail::where('ID_number', $request['IDNO'])->first();
+        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
+            ->orWhere('phone_number', $request->input('phone1'))
+            ->first();
         if (!$user_details) {
             $user_details = new UserDetail();
             $user_details->phone_number = $request->input('phone1');
@@ -95,8 +125,10 @@ class DriveInController extends Controller
             $user_details->date_of_birth = $request->input('DOB');
             $user_details->ID_number = $request->input('IDNO');
             $user_details->gender = $request->input('gender');
-            $user_details->image = $request->input('image');
             $user_details->company = $request->input('company');
+            if ($request->hasFile('image')) {
+                $visitor->image = $request->image->store('public/id_images');
+            }
             $user_details->save();
         }
         $visitor->user_detail_id = $user_details->id;
@@ -107,6 +139,14 @@ class DriveInController extends Controller
         $vehicle->visitor_id = $visitor->id;
         $vehicle->save();
 
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "new Drive In created by " . $request->user()->name,
+            'organization' => 'Visitor by' . $visitor->name,
+            'activity' => "Created a new visitor with " . $visitor .
+                'with details: ' . $user_details  . ' and vehicle ' . $vehicle
+
+        ]);
         return response()->json(['success' => 'Visitor and vehicle information added successfully.'], 201);
     }
 

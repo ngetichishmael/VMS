@@ -69,7 +69,7 @@
                                           <select  name="organization_code" class="form-control">
                                           <option  value="{{ $premise ->organization_code }}" > Select ...</option>
                                             @foreach ($organization as $org)
-                                                <option  value="{{ $org ->id }}"> {{ $org ->name }}</option>
+                                                <option  value="{{ $org ->code }}"> {{ $org ->name }}</option>
                                             @endforeach  
                                           </select>
                                         </fieldset>

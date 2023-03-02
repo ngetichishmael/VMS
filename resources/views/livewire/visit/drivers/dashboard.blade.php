@@ -97,16 +97,9 @@
 {{--                                        @endif--}}
 {{--                                    @endif--}}
 {{--                                </th>--}}
+
+                                <th>Name</th>
                                 <th>Vehicle Reg</th>
-                                <th wire:click="sortBy('name')">Name
-                                    @if ($sortField === 'name')
-                                        @if ($sortAsc)
-                                            <i class="fas fa-sort-up"></i>
-                                        @else
-                                            <i class="fas fa-sort-down"></i>
-                                        @endif
-                                    @endif
-                                </th>
                                 <th>Site</th>
                                 <th>Section</th>
                                 <th>Organization</th>
@@ -124,8 +117,8 @@
                             @forelse($dvisitors as $key => $visitor)
                                 <tr>
 {{--                                    <td>{{ $visitor->id }}</td>--}}
-                                    <td>{!! $visitor->vehicle()->pluck('registration')->implode('') !!} </td>
                                     <td>{!! $visitor->name !!} </td>
+                                    <td>{!! $visitor->vehicle()->pluck('registration')->implode('') !!} </td>
                                     <td>{{ $visitor->Resident->unit->block->premise->name ?? ' Not Found' }}</td>
                                     <td>{!! $visitor->Resident->unit->name !!}</td>
                                     <td>{!! $visitor->Resident->unit->block->premise->organization->name ?? 'Not Found' !!}</td>

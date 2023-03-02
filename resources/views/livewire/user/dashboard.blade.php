@@ -267,12 +267,9 @@
       <!-- Dashboard Ecommerce ends -->
       @push('scripts')
     <script>
-
-
         window.addEventListener('show-edit-org-modal', event =>{
             $('#modals-edit-slide-in').modal('show');
         });
-
     
     </script>
 @endpush
@@ -343,4 +340,3 @@
                 </div>
               </div> -->
               <!-- Modal to add new user Ends-->
-          
