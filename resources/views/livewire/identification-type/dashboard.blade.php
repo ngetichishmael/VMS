@@ -83,7 +83,7 @@
                                         <div class="dropdown-menu">
 
                                                 <!--update link-->
-                                        <a  wire:ignore.self href="#" class="" wire:click="editIdentityType({{ $type->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit   </a>
+                                                <a  href="{{ route('IdentificationType.edit',$type->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > Edit </a>  
                                         <!-- delete link -->
                                         <?php if($type->status == '0'){ ?>
                                         <a wire:ignore.self href="#" wire:click="activate({{ $type->id }})"  onclick="return confirm('Are you sure to want to Activate the Identification Type?')" style="padding-right:20px; " > Activate </a>

@@ -30,51 +30,57 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">#{{ $resident ->name }}</h4>
+        <h4 class="card-title">#{{ $premise ->name }}</h4>
       </div>
       <div class="card-body">
       
       
       
       
-        <form class="form"  method="post" action="{{ route('ResidentInformation.update', $resident->id) }}">
+        <form class="form"  method="post" action="{{ route('PremiseInformation.update', $premise->id) }}">
         @method('PATCH') 
         @csrf  
         <div class="row">
 
             <div class="col-md-6 col-12">
               <div class="form-group">
-                <label for="last-name-column">Resident Name</label>
-                    <input type="name" class="form-control"  name="name" value="{{ $resident ->name}}"   />
+                <label for="last-name-column">Premise Name</label>
+                    <input type="name" class="form-control"  name="name" value="{{ $premise ->name}}"   />
               </div>
             </div>
 
             <div class="col-md-6 col-12">
               <div class="form-group">
-                <label for="city-column">Email Address</label>
-                <input type="email" class="form-control" name="email" value="{{ $resident ->email}}" /> 
+                <label for="last-name-column">Location</label>
+                    <input type="text" class="form-control"  name="location"  value="{{ $premise ->location }}" />
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="city-column"> Address</label>
+                <input type="text" class="form-control" name="address" value="{{ $premise ->address}}" /> 
              </div>
             </div>
 
-            <div class="col-md-6 col-12">
-              <div class="form-group">
-                <label for="last-name-column">Phone Number</label>
-                    <input type="tel" class="form-control"  name="phone_number"  value="{{ $resident ->phone_number }}" />
-              </div>
-            </div>
 
             <div class="col-12 col-sm-6">
                                         <fieldset class="form-group">
-                                          <label  for="user-role">Unit Name</label>
-                                          <select  name="unit_id" class="form-control">
-                                          <option  value="{{ $resident ->unit_id }}" > Select ...</option>
-                                            @foreach ($unit as $uni)
-                                                <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
+                                          <label  for="user-role">Organization Name</label>
+                                          <select  name="organization_code" class="form-control">
+                                          <option  value="{{ $premise ->organization_code }}" > Select ...</option>
+                                            @foreach ($organization as $org)
+                                                <option  value="{{ $org ->id }}"> {{ $org ->name }}</option>
                                             @endforeach  
                                           </select>
                                         </fieldset>
                                         </div>
-      
+        
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="email-id-column">Description</label>
+                <textarea class="form-control"  name="description"   rows="3" >{{ $premise ->description}}</textarea>
+              </div>
+            </div>
             <div class="col-12">
               <button type="submit" class="btn btn-primary mr-1">Update</button>
               <button type="reset" class="btn btn-outline-secondary">Cancel</button>

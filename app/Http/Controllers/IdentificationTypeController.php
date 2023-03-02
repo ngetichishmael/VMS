@@ -46,7 +46,9 @@ class IdentificationTypeController extends Controller
     
         ]);     
         $identity = new IdentificationType;
+
         $identity->name = $request->input('name');
+
         $identity->save();
         
         return redirect()->to('/identification/type')->with('success','Indentity Type created successfully.');
@@ -69,9 +71,13 @@ class IdentificationTypeController extends Controller
      * @param  \App\Models\IdentificationType  $identificationType
      * @return \Illuminate\Http\Response
      */
-    public function edit(IdentificationType $identificationType)
+    public function edit($id)
     {
-        //
+
+        $type = IdentificationType::find($id);
+
+        return view('livewire.identification-type.edit', compact('type'));
+
     }
 
     /**
@@ -81,9 +87,16 @@ class IdentificationTypeController extends Controller
      * @param  \App\Models\IdentificationType  $identificationType
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateIdentificationTypeRequest $request, IdentificationType $identificationType)
-    {
-        //
+    public function update(Request $request, $id)
+    {   
+          
+        $type = IdentificationType::find($id);
+
+        $type->name = $request->input('name');
+
+        $type->save();
+
+        return redirect()->to('/identification/type')->with('success','Identification Type Updated successfully.');
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Unit;
+use App\Models\Block;
 use App\Http\Requests\StoreUnitRequest;
 use App\Http\Requests\UpdateUnitRequest;
 
@@ -97,9 +98,15 @@ class UnitController extends Controller
      * @param  \App\Models\Unit  $unit
      * @return \Illuminate\Http\Response
      */
-    public function edit(Unit $unit)
+    public function edit($id)
     {
-        //
+
+        $unit = Unit::find($id);
+
+        $block = Block::where('status', 1) ->get();
+
+        return view('livewire.premises.unit.edit', compact('unit','block'));
+
     }
 
     /**
@@ -109,9 +116,19 @@ class UnitController extends Controller
      * @param  \App\Models\Unit  $unit
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUnitRequest $request, Unit $unit)
-    {
-        //
+    public function update(Request $request, $id)
+    {   
+          
+        $unit = Unit::find($id);
+
+    
+        $unit->name = $request->input('name');
+        
+        $unit->block_id  = $request->input('block_id');
+
+        $unit->save();
+
+        return redirect()->to('/unit/information')->with('success','Unit Updated successfully.');
     }
 
     /**

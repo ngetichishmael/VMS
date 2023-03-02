@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Block;
+use App\Models\Premise;
 use App\Http\Requests\StoreBlockRequest;
 use App\Http\Requests\UpdateBlockRequest;
 use Brian2694\Toastr\Facades\Toastr;
@@ -89,9 +90,15 @@ class BlockController extends Controller
      * @param  \App\Models\Block  $block
      * @return \Illuminate\Http\Response
      */
-    public function edit(Block $block)
+    public function edit($id)
     {
-        //
+
+        $block = Block::find($id);
+
+        $premise = Premise::where('status', 1) ->get();
+
+        return view('livewire.premises.block.edit', compact('premise','block'));
+
     }
 
     /**
@@ -101,9 +108,18 @@ class BlockController extends Controller
      * @param  \App\Models\Block  $block
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBlockRequest $request, Block $block)
-    {
-        //
+    public function update(Request $request, $id)
+    {   
+          
+        $block = Block::find($id);
+
+        $block->name = $request->input('name');
+
+        $block->premise_id  = $request->input('premise_id'); 
+
+        $block->save();
+
+        return redirect()->to('/block/information')->with('success','Block Updated successfully.');
     }
 
     /**

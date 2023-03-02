@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Premise;
+use App\Models\Organization;
 use App\Http\Requests\StorePremiseRequest;
 use App\Http\Requests\UpdatePremiseRequest;
 
@@ -89,9 +90,15 @@ class PremiseController extends Controller
      * @param  \App\Models\Premise  $premise
      * @return \Illuminate\Http\Response
      */
-    public function edit(Premise $premise)
+    public function edit($id)
     {
-        //
+
+        $premise = Premise::find($id);
+
+        $organization = Organization::where('status', 1) ->get();
+
+        return view('livewire.premises.premise.edit', compact('premise','organization'));
+
     }
 
     /**
@@ -101,9 +108,24 @@ class PremiseController extends Controller
      * @param  \App\Models\Premise  $premise
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePremiseRequest $request, Premise $premise)
-    {
-        //
+    public function update(Request $request, $id)
+    {   
+          
+        $premise = Premise::find($id);
+
+        $premise->name = $request->input('name');
+
+        $premise->location = $request->input('location');
+
+        $premise->address  = $request->input('address');
+
+        $premise->organization_code  = $request->input('organization_code');
+
+        $premise->description  = $request->input('description');
+
+        $premise->save();
+
+        return redirect()->to('/premise/information')->with('success','Premise Updated successfully.');
     }
 
     /**

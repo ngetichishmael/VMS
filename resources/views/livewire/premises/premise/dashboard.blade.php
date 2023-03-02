@@ -84,26 +84,26 @@
                                     </td>
                                 
                                     <td>
-<div class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-    <i class="fas fa-ellipsis-v"></i>
-</a>
-<div class="dropdown-menu">
+                                        <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu">
 
-        <!--update link-->
-<a  wire:ignore.self href="#" class="" wire:click="editPremise({{ $prem->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit   </a>
-<!-- delete link -->
-<?php if($prem->status == '0'){ ?>
-<a wire:ignore.self href="#" wire:click="activate({{ $prem->id }})"  onclick="return confirm('Are you sure to want to Activate the premise?')" style="padding-right:20px; " > Activate </a>
-<?php }else{ ?>
-<a wire:ignore.self href="#" wire:click="deactivate({{ $prem->id }})"  onclick="return confirm('Are you sure to want to suspend the premise?')" style="padding-right:20px; " > Suspend</i> </a>
-<?php } ?>
+                                                <!--update link-->
+                                                <a  href="{{ route('PremiseInformation.edit',$prem->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > Edit </a>  
+                                        <!-- delete link -->
+                                        <?php if($prem->status == '0'){ ?>
+                                        <a wire:ignore.self href="#" wire:click="activate({{ $prem->id }})"  onclick="return confirm('Are you sure to want to Activate the premise?')" style="padding-right:20px; " > Activate </a>
+                                        <?php }else{ ?>
+                                        <a wire:ignore.self href="#" wire:click="deactivate({{ $prem->id }})"  onclick="return confirm('Are you sure to want to suspend the premise?')" style="padding-right:20px; " > Suspend</i> </a>
+                                        <?php } ?>
 
-<a wire:ignore.self href="#" wire:click="destroy({{ $prem->id }})" onclick="return confirm('Are you sure to want to delete the premise?')" > Delete </a>
+                                        <a wire:ignore.self href="#" wire:click="destroy({{ $prem->id }})" onclick="return confirm('Are you sure to want to delete the premise?')" > Delete </a>
 
-</div>
-</div>
-</td>
+                                        </div>
+                                        </div>
+                                        </td>
                                 </tr>
 
                                 @empty
