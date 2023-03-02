@@ -9,7 +9,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i data-feather="search"></i></span>
                         </div>
-                        <input type="text" id="fname-icon" class="form-control" name="fname-icon"
+                        <input wire:model="search" type="text" id="fname-icon" class="form-control" name="fname-icon"
                             placeholder="Search" />
                     </div>
                 </div>
