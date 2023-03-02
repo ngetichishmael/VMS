@@ -134,6 +134,12 @@
             "name": "Settings",
             "icon": "settings",
             "slug": "Settings"
+        },
+        {
+            "url": "logs/activities",
+            "name": "Logs",
+            "icon": "spatial_tracking",
+            "slug": "activity"
         }
     ]
 }

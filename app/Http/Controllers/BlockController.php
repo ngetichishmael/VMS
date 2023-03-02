@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Block;
 use App\Http\Requests\StoreBlockRequest;
 use App\Http\Requests\UpdateBlockRequest;
+use App\Models\Activity;
+use App\Models\Premise;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -53,7 +55,7 @@ class BlockController extends Controller
      */
     public function store(Request $request)
     {
-          
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'premise_id' => 'required',
@@ -65,11 +67,20 @@ class BlockController extends Controller
 
         $block->name = $request->input('name');
 
-        $block->premise_id  = $request->input('premise_id'); 
+        $block->premise_id  = $request->input('premise_id');
 
         $block->save();
 
-        return redirect()->to('/block/information')->with('success','Block added successfully.');
+        $premise = Premise::whereId($request->premise_id)->first();
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "Block Creation",
+            'organization' => $request->user()->organization_code,
+            'activity' => "Created a new block name" . $request->name .
+                " for premise " . $premise->name . "."
+        ]);
+
+        return redirect()->to('/block/information')->with('success', 'Block added successfully.');
     }
 
     /**
