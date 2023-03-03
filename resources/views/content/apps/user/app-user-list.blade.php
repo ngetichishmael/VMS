@@ -35,14 +35,11 @@
         <thead class="thead-light">
         <tr>
             <th></th>
-            <th >Name</th>
-            <th>Vehicle Reg</th>
-            <th>Site</th>
-            <th>Section</th>
-            <th>Organization</th>
-            <th>Time In</th>
-            <th>Time Out</th>
-            <th>Duration</th>
+            <th>full_name</th>
+            <th>email</th>
+            <th>role</th>
+            <th>current_plan</th>
+            <th>status</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -70,5 +67,5 @@
 
 @section('page-script')
   {{-- Page js files --}}
-  <script src="{{ asset(mix('js/scripts/pages/app-drive-in-list.js')) }}"></script>
+  <script src="{{ asset(mix('js/scripts/pages/app-user-list.js')) }}"></script>
 @endsection

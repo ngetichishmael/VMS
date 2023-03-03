@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Organization;
 use App\Models\Sentry;
 
 use Brian2694\Toastr\Facades\Toastr;
@@ -42,7 +43,7 @@ class SentryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreSentryRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -57,7 +58,8 @@ class SentryController extends Controller
             'phone_number' => 'required',
 
         ]);
-
+        $org_code=Premise::where('id',  $request->input('premise_id'))->first();
+        $organization=Organization::where('code', $org_code->organization_code)->first();
         Sentry::create([
             'name' => $request->name,
 
@@ -74,15 +76,17 @@ class SentryController extends Controller
             'premise_id' => $request->premise_id,
 
         ]);
+
+
         User::create([
 
             'name' => $request->input('name'),
 
-            'email' => $request->input('name'),
+            'email' => $organization->email ?? $request->input('name'),
 
             'phone_number' => $request->phone_number,
 
-            'organization_code' => 0,
+            'organization_code' =>$org_code->organization_code,
 
             'role_id' => 4,
 

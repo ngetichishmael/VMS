@@ -106,9 +106,35 @@ class Dashboard extends Component
 
             $visitor->duration = $duration->format('%H Hours %I Minutes %S Seconds');
         }
+
         return view('livewire.visit.drivers.dashboard', [
             'dvisitors' => $this->dvisitors,
             'visitorTypes' => $visitorTypes,
         ]);
     }
+    public function toJson(): \Illuminate\Support\Collection
+    {
+        $data = $this->dvisitors->map(function ($visitor) {
+            $entryTime = Carbon::parse($visitor->timeLog->entry_time ?? now());
+            $exitTime = Carbon::parse($visitor->timeLog->exit_time ?? now());
+            $duration = $entryTime->diff($exitTime);
+
+            return [
+                'data' => [
+                    'name' => $visitor->name,
+                    'vehicle.name' => $visitor->vehicle->name,
+                    'site' => $visitor->site,
+                    'section' => $visitor->section,
+                    'organization' => $visitor->organization,
+                    'time in' => $visitor->timeLog->entry_time ?? '',
+                    'time out' => $visitor->timeLog->exit_time ?? '',
+                    'duration' => $duration->format('%H Hours %I Minutes %S Seconds'),
+                    'action' => '',
+                ],
+            ];
+        });
+
+        return collect(['data' => $data]);
+    }
+
 }
