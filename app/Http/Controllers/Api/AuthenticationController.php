@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Field;
 use App\Models\Premise;
 use App\Models\Sentry;
 use App\Models\Setting;
@@ -108,11 +109,11 @@ class AuthenticationController extends Controller
             "success" => true,
             "token_type" => 'Bearer',
             "message" => "User Logged in",
+               "premises"=>$premise->name ?? ' ',
+               'organization'=>$premise->organization->name ?? ' ',
             "access_token" => $tokenUser,
             "user" => $user,
             "code" => $code,
-            "premises"=>$premise->name ?? ' ',
-            'organization'=>$premise->organization->name ?? ' ',
             "response" => $responsePassanda,
         ]);
     }
@@ -142,7 +143,19 @@ class AuthenticationController extends Controller
     }
     public function settings(){
         $user = auth()->user();
-        $settings = Setting::where('organization_code', $user->organization->code ?? 'not found')->first();
+        $detail=Sentry::where('phone_number', $user->phone_number ?? '')->first();
+        $premise=Premise::where('id', $detail->premise_id ?? 'premises')->first();
+        $settings = Setting::where('organization_code', $premise->organization->code ?? 'not found')->first();
             return response()->json(['settings'=>$settings ?? 'No Subscription settings found or user not logged in'], 200);
+    }
+    public function fields(){
+        $user = auth()->user();
+        $detail=Sentry::where('phone_number', $user->phone_number ?? '')->first();
+        $premise=Premise::where('id', $detail->premise_id ?? 'premises')->first();
+        $settings = Setting::where('organization_code', $premise->organization->code ?? 'not found')->first();
+
+        $fields = Field::where('id', $settings->field_id ?? 'not found')->first();
+
+            return response()->json(['fields'=>$fields ?? 'No Fields found or user not logged in'], 200);
     }
 }

@@ -183,7 +183,7 @@ Route::middleware('auth')->group(function () {
         'store' => 'VisitWalkIn.store',
     ]);
     Route::resource('Visits/SMSCheckIn', SmsCheckinsController::class)->names([
-        'index' => 'VisitSMSCheckInIn',
+        'index' => 'VisitSMSCheckIn',
         'show' => 'VisitSMSCheckIn.show',
         'edit' => 'VisitSMSCheckIn.edit',
         'update' => 'VisitSMSCheckIn.update',

@@ -122,14 +122,15 @@
                                     <td>{{ $visitor->Resident->unit->block->premise->name ?? ' Not Found' }}</td>
                                     <td>{!! $visitor->Resident->unit->name !!}</td>
                                     <td>{!! $visitor->Resident->unit->block->premise->organization->name ?? 'Not Found' !!}</td>
-                                    <td>{!! $visitor->timeLog->entry_time ?? null !!}</td>
+                                    <td>{!! $visitor->timeLog->entry_time ?? '-' !!}</td>
                                     @if (!isset($visitor->timeLog->exit_time))
                                         <td>...</td>
                                         <td style="color: orange;"> Visitor Still in</td>
                                     @else
                                         <td>{!! $visitor->timeLog->exit_time!!}</td>
                                         <td style="color: #70ce52;">
-                                            {!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds'); !!}
+                                            {!! $visitor->duration !!}
+{{--                                            {!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds'); !!}--}}
 
                                         </td>
                                     @endif

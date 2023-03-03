@@ -27,6 +27,7 @@ Route::group(['namespace' => 'Api'], function () {
 
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('verify/settings', [AuthenticationController::class, 'settings']);
+        Route::get('verify/fields', [AuthenticationController::class, 'fields']);
         Route::post('phone-number/{phone_number}', [SMSCheckingController::class, 'SMSChecking']);
         Route::post('verify/otp/{otp}', [SMSCheckingController::class, 'verifyOTP']);
         Route::get('visitors/my_all', [VisitorController::class, 'index']);

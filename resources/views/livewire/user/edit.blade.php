@@ -62,7 +62,7 @@
                             href="#account-vertical-general" aria-expanded="true">
 
                             <i data-feather="lock" class="font-medium-3 mr-1"></i>
-                            <span class="font-weight-bold">Change Password</span>
+                            <span class="font-weight-bold">Reset Password</span>
                         </a>
                     </li>
                 </ul>
@@ -87,25 +87,7 @@
                                 <!-- form -->
                                 <form class="validate-form" action="" method="POST">
                                     @csrf
-                                    <div class="row">
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label for="account-old-password">Old Password</label>
-                                                <div class="input-group form-password-toggle input-group-merge">
-                                                    <input type="password" class="form-control" id="account-old-password"
-                                                    name="old_password"  placeholder="Old Password" />
-                                                    <div class="input-group-append">
-                                                        <div class="input-group-text cursor-pointer">
-                                                            <i data-feather="eye"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @error('old_password')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
+                                 
                                     <div class="row">
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
@@ -124,22 +106,7 @@
                                             @enderror
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group">
-                                                <label for="account-retype-new-password">Retype New Password</label>
-                                                <div class="input-group form-password-toggle input-group-merge">
-                                                    <input type="password" class="form-control"
-                                                        id="account-retype-new-password" name="new_password_confirmation"/>
-                                                    <div class="input-group-append">
-                                                        <div class="input-group-text cursor-pointer"><i
-                                                                data-feather="eye"></i></div>
-                                                    </div>
-                                                </div>
-                                                @error('new_password_confirmation')
-                                                    <p class="text-danger">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-                                        </div>
+
                                         <div class="col-12">
                                             <button type="submit" class="btn btn-primary mr-1 mt-1">Save changes</button>
                                             <button type="reset" class="btn btn-outline-secondary mt-1">Cancel</button>
@@ -215,7 +182,8 @@
 
                                         <div class="col-12">
                                         <button type="submit" class="btn btn-primary mr-1 mt-1">Update</button>
-                                        <button type="reset" class="btn btn-outline-secondary mt-1">Cancel</button>
+                     
+                                        <a href="{{ route('OrganizationUsers') }}" type="reset" class="btn btn-outline-secondary mt-1">Cancel</a>
                                     </div>
 
                                     </div>

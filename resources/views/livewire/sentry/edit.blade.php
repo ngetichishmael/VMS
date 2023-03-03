@@ -131,7 +131,9 @@
                   </div>
                   <div class="col-12">
                     <button type="submit" class="btn btn-primary mt-2 mr-1">Update</button>
-                    <button type="reset" class="btn btn-outline-secondary mt-2">Cancel</button>
+      
+                                         
+                    <a href="{{ route('Sentry') }}" type="reset" class="btn btn-outline-secondary mt-2">Cancel</a>
                   </div>
                 </div>
               </form>

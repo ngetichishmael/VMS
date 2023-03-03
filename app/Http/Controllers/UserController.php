@@ -114,16 +114,7 @@ class UserController extends Controller
         // $data = DB::table('users')->where('id',$id)->get();
         // return view('livewire.user.edit',compact('data'));
 
-        $user = User::find($id);
-
-        $organizations = Organization::where('status', 1)->get();
-
-        $roles = Role::all();
-
-        // $this->dispatchBrowserEvent('show-edit-org-modal', compact('users'));
-
-        return view('livewire.user.edit', compact('user', 'organizations', 'roles'));
-
+    
         $user = User::find($id);
 
         $organizations = Organization::where('status', 1)->get();

@@ -54,7 +54,8 @@
 
             <div class="col-12">
               <button type="submit" class="btn btn-primary mr-1">Update</button>
-              <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+
+              <a href="{{ route('IdentificationType') }}" type="reset" class="btn btn-outline-secondary">Cancel</a>
             </div>
           </div>
         </form>
