@@ -58,7 +58,7 @@ class SentryController extends Controller
 
         ]);
 
-        Sentry::create([
+               Sentry::create([
             'name' => $request->name,
 
             'phone_number' => $request->phone_number,
@@ -78,16 +78,19 @@ class SentryController extends Controller
 
             'name' => $request->input('name'),
 
+            'email' => $request->input('name'),
+
+            'phone_number' => $request->phone_number,
+
             'organization_code' => 0,
 
-            'role_id' => 0,
-            'email' => Str::random(20),
-            'phone_number' => $request->phone_number,
+            'role_id' => 4,
 
             'email_verified_at' => now(),
 
             'password' => Hash::make(Str::random(20)),
         ]);
+
         Activity::create([
             'name' => $request->user()->name,
             'target' => "Guard creation",
