@@ -52,35 +52,88 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i data-feather="search"></i></span>
                         </div>
-                        <input wire:model="search" type="text" id="fname-icon" class="form-control" name="fname-icon"
-                            placeholder="Search" />
                     </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label for="selectSmall">Select Per Page</label>
-                        <select class="form-control form-control-sm form-select" id="selectSmall" wire:model="perPage">
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="selectSmall"> Check-In Type  </label>
+                            <select  wire:model="visitorTypeId" class="form-control form-control-sm" >
+                                <option value="">  All  </option>
+                                @foreach ($checkInTypes as $type)
+                                       <option value="{{ $type->id }}">{{ $type->type }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group col-md-3 ">
-                    <label for="sortTimeAsc">Sort By Time:</label>
-                    <select wire:model="sortTimeAsc" class="form-control form-select">
-                        <option value="1">Ascending</option>
-                        <option value="0">Descending</option>
-                    </select>
+
+
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="selectSmall">Time</label>
+                            <select wire:model="timeFilter" wire:change="applyTimeFilter" class="form-control form-control-sm" >
+                              <option value="all">Select Time Duration </option>
+                              <option value="daily">Daily</option>
+                              <option value="weekly">Weekly</option>
+                              <option value="monthly">Monthly</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 user_role">
+                        <div class="input-group input-group-merge">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i data-feather="search"></i></span>
+                            </div>
+                            <input wire:model.debounce.300ms="search"  type="search" id="search" class="form-control" name="search"
+                              placeholder="Search" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="selectSmall">Select Per Page</label>
+                            <select wire:model="perPage" class="form-control form-control-sm" id="selectSmall" id="table1">
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="selectSmall">Sort By Time</label>
+                            <select wire:model="sortTimeAsc" class="form-control form-control-sm" id="selectSmall">
+                                    <option value="1">Ascending</option>
+                                    <option value="0">Descending</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+
                 </div>
             </div>
-        </div>
-        <div class="card">
-            <div class="pt-0 card-datatable table-responsive">
-                <div class="card-datatable table-responsive">
+            <!-- users filter end -->
+            <!-- users filter end -->
+            {{-- @include('partials.loaderstyle') --}}
+
+
+            @include('livewire.Notification.flash-message')
+
+            <!-- list section start -->
+            <div class="card">
+
+                <div class="pt-0 card-datatable table-responsive">
+                    <div class="card-datatable table-responsive">
+
+
+
                     <table class="table">
-                        <thead style="color: #070707">
+                        <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Site</th>
@@ -94,7 +147,7 @@
                             </tr>
                         </thead>
 
-                        <tbody style="font-size: small">
+                        <tbody>
                             @forelse($visitors as $key => $visitor)
                                 <td>{!! $visitor->name !!} </td>
                                 <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}
@@ -125,10 +178,13 @@
                             @endforelse
                         </tbody>
                     </table>
-                    <div class="mt-1">{{ $visitors->links() }}
+
+                        <div style="margin-left: 80%"  class="mt-1">{{ $visitors->links() }}
+                        </div>
+
                     </div>
                 </div>
-            </div>
+
         </div>
     </div>
 </div>

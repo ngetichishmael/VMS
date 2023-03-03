@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Organization Settings')
+@section('title', 'Premise Setting')
 
 @section('vendor-style')
   <!-- vendor css files -->
@@ -30,59 +30,55 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">#{{ $organization ->code }}</h4>
+        <h4 class="card-title">#{{ $premise ->name }}</h4>
       </div>
       <div class="card-body">
       
       
       
       
-        <form class="form"  method="post" action="{{ route('OrganizationInformation.update', $organization->id) }}">
+        <form class="form"  method="post" action="{{ route('PremiseInformation.update', $premise->id) }}">
         @method('PATCH') 
         @csrf  
         <div class="row">
+
             <div class="col-md-6 col-12">
               <div class="form-group">
-                <label for="first-name-column"> Organization Name</label>
-                     <input type="text" class="form-control"  name="name" value="{{ $organization ->name }}"  />
+                <label for="last-name-column">Premise Name</label>
+                    <input type="name" class="form-control"  name="name" value="{{ $premise ->name}}"   />
               </div>
             </div>
 
             <div class="col-md-6 col-12">
               <div class="form-group">
-                <label for="last-name-column">Email</label>
-                    <input type="email" class="form-control"  name="email" value="{{ $organization ->email}}"   />
-              </div>
-            </div>
-
-            <div class="col-md-6 col-12">
-              <div class="form-group">
-                <label for="last-name-column">Phone Number</label>
-                    <input type="tel" class="form-control"  name="primary_phone"  value="{{ $organization ->primary_phone }}" />
+                <label for="last-name-column">Location</label>
+                    <input type="text" class="form-control"  name="location"  value="{{ $premise ->location }}" />
               </div>
             </div>
             <div class="col-md-6 col-12">
               <div class="form-group">
-                <label for="city-column"> Alternative Phone Number</label>
-                <input type="tel" class="form-control" name="secondary_phone" value="{{ $organization ->secondary_phone}}" /> 
+                <label for="city-column"> Address</label>
+                <input type="text" class="form-control" name="address" value="{{ $premise ->address}}" /> 
              </div>
             </div>
-            <div class="col-md-6 col-12">
-              <div class="form-group">
-                <label for="country-floating">Location</label>
-                <input type="text" class="form-control" name="location" value="{{ $organization ->location}}" />
-              </div>
-            </div>
-            <div class="col-md-6 col-12">
-              <div class="form-group">
-                <label for="company-column">WebsiteUrl</label>
-                <input type="tel" class="form-control" name="websiteUrl" value="{{ $organization ->websiteUrl }}" />
-              </div>
-            </div>
+
+
+            <div class="col-12 col-sm-6">
+                                        <fieldset class="form-group">
+                                          <label  for="user-role">Organization Name</label>
+                                          <select  name="organization_code" class="form-control">
+                                          <option  value="{{ $premise ->organization_code }}" > Select ...</option>
+                                            @foreach ($organization as $org)
+                                                <option  value="{{ $org ->code }}"> {{ $org ->name }}</option>
+                                            @endforeach  
+                                          </select>
+                                        </fieldset>
+                                        </div>
+        
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="email-id-column">Description</label>
-                <textarea class="form-control"  name="description"   rows="3" >{{ $organization ->description}}</textarea>
+                <textarea class="form-control"  name="description"   rows="3" >{{ $premise ->description}}</textarea>
               </div>
             </div>
             <div class="col-12">
