@@ -20,6 +20,7 @@ class SettingSeeder extends Seeder
             'automatic_id_checkin' => true,
             'sms_checkin' => true,
             'ipass_checkin' => true,
+            'field_id' =>1,
         ]);
 
         Setting::create([
@@ -28,6 +29,7 @@ class SettingSeeder extends Seeder
             'automatic_id_checkin' => true,
             'sms_checkin' => false,
             'ipass_checkin' => true,
+            'field_id' =>2,
         ]);
 
         Setting::create([
@@ -36,6 +38,7 @@ class SettingSeeder extends Seeder
             'automatic_id_checkin' => false,
             'sms_checkin' => true,
             'ipass_checkin' => false,
+            'field_id' =>3,
         ]);
 
         Setting::create([
@@ -44,6 +47,7 @@ class SettingSeeder extends Seeder
             'automatic_id_checkin' => false,
             'sms_checkin' => false,
             'ipass_checkin' => false,
+            'field_id' =>4,
         ]);
 
         Setting::create([
@@ -52,6 +56,7 @@ class SettingSeeder extends Seeder
             'automatic_id_checkin' => true,
             'sms_checkin' => false,
             'ipass_checkin' => false,
+            'field_id' =>5,
         ]);
     }
 }

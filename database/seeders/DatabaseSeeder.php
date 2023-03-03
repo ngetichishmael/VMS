@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             UserDetailSeeder::class,
             TimeLogSeeder::class,
             SettingSeeder::class,
+            FieldsSeeder::class,
         ]);
     }
 }

@@ -1,12 +1,15 @@
 @php
     use Carbon\Carbon;
 @endphp
+<div>
 <div class="row">
-
-    <label style="color: #070707" ><h3>Filter By:</h3></label>
+    <label style="color: #070707">
+        <h3>Filter By:</h3>
+    </label>
     <div class="col-md-3">
-        <label  style="color: #070707"><h5> Visitor Type </h5></label>
-
+        <label style="color: #070707">
+            <h5> Visitor Type </h5>
+        </label>
         <select class="form-control form-select" wire:model="visitorTypeId">
             <option value="">All </option>
             @foreach ($visitorTypes as $type)
@@ -185,3 +188,4 @@
     }
 
 </style>
+</div>

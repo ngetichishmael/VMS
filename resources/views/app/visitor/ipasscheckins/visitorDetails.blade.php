@@ -23,7 +23,6 @@
         .card {
             display: flex;
             flex-wrap: wrap;
-            margin-bottom: 20px;
             background-color: #fff;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
             /*border-radius: 4px;*/
@@ -63,20 +62,15 @@
         .card-right .details span {
             width: 100%;
             flex: 0 0 100%;
-            font-size: 16px;
             color: #555;
-            margin-bottom: 10px;
+
         }
 
-        .card-right .details span strong {
-            font-weight: 600;
-            color: #333;
-        }
 
         .destination-card {
             display: flex;
             flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             background-color: #fff;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
             border-radius: 4px;
@@ -98,26 +92,20 @@
         .destination-card-right .visitor-info {
             display: flex;
             flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .destination-card-right .visitor-info span {
             width: 50%;
             flex: 0 0 50%;
-            font-size: 16px;
             color: #555;
             margin-bottom: 10px;
-        }
-
-        .destination-card-right .visitor-info span strong {
-            font-weight: 600;
-            color: #333;
         }
 
         table {
             border-collapse: collapse;
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         table th, table td {
@@ -131,11 +119,21 @@
             font-weight: 600;
             color: #333;
         }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 20px;
+            align-items: stretch;
+
+        }
+        .grid >img {
+            max-width: 100%;
+        }
     </style>
     @php
         use Carbon\Carbon;
     @endphp
-    <div class="container">
+    <div class="container" style="font-size: small">
         <div class="row pl-3">
             <div class="destination-card">
                 <div class="destination-card-left">
@@ -147,9 +145,9 @@
                         {{--                    <div class="card-left">--}}
                         {{--                        <img src="image-placeholder.jpg" alt="Visitor Image" width="100px" height="150px" style="background: #2e3750">--}}
                         {{--                    </div>--}}
-                        <div class="image-container pl-2" style="width: 100px; height: 150px">
+                        <div class="image-container pl-3" style="width: 200px;height: 150px">
                             @if($visitor->user_details->image)
-                                <img src="{{ asset('storage/images/' . $visitor->image) }}" alt="{{ $visitor->user_details->name }}'s ID picture"/>
+                                <img src="{{ asset('storage/attachments/'.$visitor->user_details->image) }}" alt="{{ $visitor->name }}'s ID picture" class="img-fluid"/>
                             @else
                                 <div class="image-placeholder">
                                     <i class="fas fa-user"></i>
@@ -161,11 +159,12 @@
                                 <span><strong>Name:</strong> {{ $visitor->name }}</span>
                                 <br>
                                 <span><strong>Gender:</strong> {{ ucwords($visitor->user_details->gender) }}</span>
-                                <span>
-                    <ul class="list-group list-group-flush" >
-                        <li class="list-group-item" style="background: #95ce8e; border-radius: 4px"><strong>Number of Visits: {{ $visitorCount ?? '0' }}</strong></li>
-                    </ul>
-</span>
+                                <span><strong>Checked-in By:</strong> {{ $visitor->sentry->name ?? 'Unknown' }}</span>
+
+                                <ul class="list-group list-group-flush" style="color: #78be6f" >
+                                    <li class="list-group-item" ><strong>No. of Visits: {{ $visitorCount ?? '0' }}</strong></li>
+                                </ul>
+
                             </div>
                         </div>
                     </div>
@@ -219,7 +218,7 @@
                         <div class="col-md-12 mb-1">
                             <h5 class="card-title" style="color: #1f8af5;">
                                 <i data-feather="lock" class="font-medium-3 mr-25 "></i>
-                                &nbsp;Other Information
+                                &nbsp;Other Visitor Details
                             </h5>
                         </div>
                         <div class="col-md-4 mb-1">
@@ -271,7 +270,6 @@
                                 <input type="text" class="form-control" value="{{ $visitor->user_details->secondary_phone_number ?? 'Not Available' }}" readonly />
                             </div>
                         </div>
-
                         <div class="col-md-6  mb-1 pl-1">
                             <div class="form-group">
                                 <label >Last Check-in</label>
@@ -287,7 +285,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="col-md-6 mb-1 pl-1">
+                                    <div class="col-md-12 mb-1 pl-1">
                                         <div class="form-group">
                                             <label >Duration</label>
                                             <input type="text" class="form-control" value="{!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds'); !!} " readonly />
@@ -297,65 +295,100 @@
                                 </div>
                             </div>
                         </div>
-{{--                        @if(!$visitor->vehicle->registration)--}}
-{{--                            <div class="col-md-12">--}}
-{{--                                <div class="card">--}}
-{{--                                    <div class="card-body">--}}
-{{--                                        <h5 class="card-title" style="color: #1f8af5">Vehicle Information</h5>--}}
-{{--                                        <div class="col-md-6 mb-1 pl-1">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <label >Registration</label>--}}
-{{--                                                <input type="text" class="form-control" value="{{ $visitor->vehicle->registration ?? 'Not Available' }}" readonly />--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        @endif--}}
-
+                        @if($visitor->vehicle!=null)
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="color: #1f8af5">Vehicle Information</h5>
+                                        <div class="col-md-6 mb-1 pl-1">
+                                            <div class="form-group">
+                                                <label >Registration</label>
+                                                <input type="text" class="form-control" value="{{ $visitor->vehicle->registration?? 'Not Available' }}" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
+
             </div>
-            <div class="row col-12" style="padding-left: 5%">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title" style="color: #1f8af5">Visitor History</h5>
-                            <div class="table-responsive">
-
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Time In</th>
-                                        <th>Time Out</th>
-                                        <th>Duration</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    @foreach ($visitor->timeLogs as $timeLog)
-
-                                        <tr>
-                                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}</td>
-                                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}</td>
-                                            <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}</td>
-                                            <td>{!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds');
-                                                        !!}</td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+            @if(($visitor->attachment1)!=null || ($visitor->attachment2)!=null || ($visitor->attachment3)!=null || ($visitor->attachment4)!=null)
+                <div class="card col-12">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: #1f8af5">Image Attachments</h5>
+                        <div class="row">
+                            <div class="col-md-3 col-6">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <a href="{{ asset('storage/attachments/'.$visitor->attachment1) }}" data-fancybox>
+                                        <img src="{{ asset('storage/attachments/'.$visitor->attachment1) }}" class="img-fluid" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <a href="{{ asset('storage/attachments/'.$visitor->attachment2) }}" data-fancybox>
+                                        <img src="{{ asset('storage/attachments/'.$visitor->attachment2) }}" class="img-fluid" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <a href="{{ asset('storage/attachments/'.$visitor->attachment3) }}" data-fancybox>
+                                        <img src="{{ asset('storage/attachments/'.$visitor->attachment3) }}" class="img-fluid" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <a href="{{ asset('storage/attachments/'.$visitor->attachment4) }}" data-fancybox>
+                                        <img src="{{ asset('storage/attachments/'.$visitor->attachment4) }}" class="img-fluid" alt="">
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="mt-2 col-12 d-flex flex-sm-row flex-column" style="gap: 20px;">
-                 <a href="{{ route('VisitIPassCheckIn') }}" type="reset" style="margin-left: 85%;background: #54a4f3; color: #ffffff"
-                       class="btn btn-btn-secondary">  Back </a>
-                </div>
-            </div></div>
 
+
+            @endif
+            <div class="card col-12">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: #1f8af5">Visitor History</h5>
+                    <div class="row col-12">
+                        <div class="table-responsive">
+
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Time In</th>
+                                    <th>Time Out</th>
+                                    <th>Duration</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($HistoryTimeLogs as $driveIn)
+                                    @foreach ($driveIn->timeLogs as $timeLog)
+                                        <tr>
+                                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}</td>
+                                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}</td>
+                                            <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}</td>
+                                            <td>{!! Carbon::parse($timeLog->entry_time ?? now())->diff(Carbon::parse($timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds') !!}</td>
+                                        </tr>
+                                    @endforeach
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2 col-12 d-flex flex-sm-row flex-column" style="gap: 20px;">
+                <a href="{{ route('VisitIPassCheckIn') }}" type="reset" style="margin-left: 85%;background: #54a4f3; color: #ffffff"
+                   class="btn btn-btn-secondary">  <i class="fa fa-backspace"> Back </i> </a>
+            </div></div>
     </div>
         @endsection
 

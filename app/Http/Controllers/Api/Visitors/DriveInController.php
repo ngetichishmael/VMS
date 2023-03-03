@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Visitors;
 use App\Http\Controllers\Controller;
 use App\Models\Nationality;
 use App\Models\Premise;
+use App\Models\Resident;
 use App\Models\Sentry;
 use App\Models\TimeLog;
 use App\Models\UserDetail;
@@ -45,11 +46,6 @@ class DriveInController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
-            'type' => 'required|string',
-            'visitor_type_id' => 'required|integer',
-            'purpose_id' => 'required|integer',
-            'nationality' => 'required|string',
-            'resident_id' => 'required|integer',
             'IDNO' => 'required|numeric',
             'registration' => 'required|string',
         ]);
@@ -80,11 +76,12 @@ class DriveInController extends Controller
         }
 
         $timeLog = new TimeLog;
-        $now = Carbon::now();
-        $nairobiNow = $now->setTimezone('Africa/Nairobi');
-        $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
-//        $timeLog->entry_time = now();
+//        $now = Carbon::now();
+//        $nairobiNow = $now->setTimezone('Africa/Nairobi');
+//        $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
+        $timeLog->entry_time = now();
         $timeLog->save();
+        $time=$timeLog->entry_time;
 
         $detail=Sentry::where('phone_number', $request->user()->phone_number ?? '')->first();
 
@@ -98,23 +95,25 @@ class DriveInController extends Controller
         $visitor->nationality_id = $nationality->id ?? "110";
         $visitor->resident_id = $request->input('resident_id');
         $visitor->tag = $request->input('tag');
-
         if ($request->hasFile('attachment1')) {
-            $visitor->attachment1 = $request->attachment1->store('public/attachments');
+            $path = $request->file('attachment1')->store('public/attachments');
+            $visitor->attachment1 = basename($path);
         }
 
         if ($request->hasFile('attachment2')) {
-            $visitor->attachment2 = $request->attachment2->store('public/attachments');
+            $path = $request->file('attachment2')->store('public/attachments');
+            $visitor->attachment2 = basename($path);
         }
 
         if ($request->hasFile('attachment3')) {
-            $visitor->attachment3 = $request->attachment3->store('public/attachments');
+            $path = $request->file('attachment3')->store('public/attachments');
+            $visitor->attachment3 = basename($path);
         }
 
         if ($request->hasFile('attachment4')) {
-            $visitor->attachment4 = $request->attachment4->store('public/attachments');
+            $path = $request->file('attachment4')->store('public/attachments');
+            $visitor->attachment4 = basename($path);
         }
-
         $visitor->time_log_id = $timeLog->id;
 
         $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
@@ -129,7 +128,8 @@ class DriveInController extends Controller
             $user_details->gender = $request->input('gender');
             $user_details->company = $request->input('company');
             if ($request->hasFile('image')) {
-                $visitor->image = $request->image->store('public/id_images');
+                $path = $request->file('image')->store('public/attachments');
+                $user_details->image= basename($path);
             }
             $user_details->save();
         }
@@ -141,7 +141,88 @@ class DriveInController extends Controller
         $vehicle->visitor_id = $visitor->id;
         $vehicle->save();
 
+        $visitor_name=$request->input('name');
+
+        if (($request->input('notify')!==null) && ($request->input('notify')==1 || $request->input('notify')=='true')) {
+            $resident =Resident::where('id', $request->resident_id)->where('status', 1)->first();
+            if ($resident!=null || $resident!='') {
+
+                $phone_number=$resident->phone_number;
+                $resident_name=$resident->name;
+                $premise=Premise::where('id',$detail->premise_id)->first();
+                $place=$premise->name;
+                   $this->sendUserSMS($visitor_name, $time, $resident_name, $phone_number, $place);
+                return response()->json(['success' => 'Visitor and vehicle information added successfully and '.$resident_name .' notified' ], 201);
+
+            }
+        }
+
         return response()->json(['success' => 'Visitor and vehicle information added successfully.'], 201);
+    }
+
+    public function sendUserSMS($visitor_name, $time, $resident_name, $phone_number, $place)
+    {
+        $curl = curl_init();
+        $url = 'https://accounts.jambopay.com/auth/token';
+        curl_setopt($curl, CURLOPT_URL, $url);
+
+        curl_setopt(
+            $curl,
+            CURLOPT_HTTPHEADER,
+            array(
+                'Content-Type: application/x-www-form-urlencoded',
+            )
+        );
+
+        curl_setopt(
+            $curl,
+            CURLOPT_POSTFIELDS,
+            http_build_query(
+                array(
+                    'grant_type' => 'client_credentials',
+                    'client_id' => "qzuRm3UxXShEGUm2OHyFgHzkN1vTkG3kIVGN2z9TEBQ=",
+                    'client_secret' => "36f74f2b-0911-47a5-a61b-20bae94dd3f1gK2G2cWfmWFsjuF5oL8+woPUyD2AbJWx24YGjRi0Jm8="
+                )
+            )
+        );
+
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $curl_response = curl_exec($curl);
+
+        $token = json_decode($curl_response);
+        curl_close($curl);
+
+        $message ='Hello ' . $resident_name . ', a visitor by the name '. $visitor_name .', has arrived at '. $place .' Main Gate at ' .$time .'.';
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://swift.jambopay.co.ke/api/public/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode(
+                array(
+                    "sender_name" => "PASANDA",
+                    "contact" => $phone_number,
+                    "message" => $message,
+                    "callback" => "https://pasanda.com/sms/callback"
+                )
+            ),
+
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Authorization: Bearer ' . $token->access_token
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+//        return '$response';
     }
 
     public function show(Visitor $visitor): Visitor

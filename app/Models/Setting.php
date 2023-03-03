@@ -13,4 +13,8 @@ class Setting extends Model
     {
         return $this->belongsTo(Organization::class, 'organization_code', 'code');
     }
+    public function fields()
+    {
+        return $this->hasOne(Field::class, 'field_id', 'id');
+    }
 }
