@@ -176,7 +176,7 @@ $(function () {
       // Buttons with Dropdown
       buttons: [
         {
-          text: 'Add New User',
+          text: 'Add New Sentry',
           className: 'add-new btn btn-primary mt-50',
           attr: {
             'data-toggle': 'modal',

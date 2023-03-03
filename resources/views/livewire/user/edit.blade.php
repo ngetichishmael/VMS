@@ -194,7 +194,7 @@
                                           <select  name="organization_code" class="form-control">
                                           <option  value="{{ $user ->organization_code }}" > Select ...</option>
                                             @foreach ($organizations as $organizat)
-                                                <option  value="{{ $organizat ->id }}"> {{ $organizat ->name }}</option>
+                                                <option  value="{{ $organizat ->code }}"> {{ $organizat ->name }}</option>
                                             @endforeach
                                           </select>
                                         </fieldset>

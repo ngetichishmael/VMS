@@ -18,7 +18,7 @@
                                 <option value="">  All  </option>
                                 @foreach ($organizations as $org)
                                     <option  value="{{ $org ->id }}"> {{ $org ->name }}</option>
-                                @endforeach  
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -29,15 +29,15 @@
                                 <option value="">All</option>
                                 @foreach ($roles as $rol)
                                     <option  value="{{ $rol ->id }}"> {{ $rol ->name }}</option>
-                                @endforeach  
+                                @endforeach
                               </select>
                         </div>
                     </div>
                     <div class="col-md-3">
-                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2; color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
+                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2; color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in"
                             data-placement="top" title="New User">
                           + Add New User
-                               
+
                         </button>
                     </div>
                 </div>
@@ -50,13 +50,13 @@
 
             <!-- list section start -->
             <div class="card">
-  
+
                 <div class="pt-0 card-datatable table-responsive">
                     <div class="card-datatable table-responsive">
                         <table class="table" >
                             <thead>
                                 <tr>
-                                     <th>#</th>
+                               
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>PhoneNumber</th>
@@ -64,47 +64,45 @@
                                     <th>Role</th>
                                     <th>Status</th>
                                     <th>Last Login</th>
-                                    <th>Check Out</th>
+                                  
                                     <th>Actions</th>
                                 </tr>
                             </thead>
 
-                         
+
 
                             <tbody>
                             @forelse ($users as $key => $user)
                                 <tr>
-                                    <td>{!! $key + 1 !!}</td>
+                                  
 
                                     <td> {{ $user ->name }} </td>
 
                                     <td>{{ $user ->email }}</td>
                                     <td> {{ $user ->phone_number }} </td>
-                                 
+
                                     <td>{!! $user->organization()->pluck("name")->implode('')!!} </td>
                                     <td>{!! $user->role()->pluck("name")->implode('')!!} </td>
-                                  
+
                                      <td>
-                                     <?php if($user->status == '1'){ ?> 
+                                     <?php if($user->status == '1'){ ?>
                                              <span class="badge badge-pill badge-light-success mr-1">Active</span>
-                                    
-                                     <?php }else{ ?> 
+
+                                     <?php }else{ ?>
                                              <span class="badge badge-pill badge-light-warning mr-1">Disabled</span>
 
                                       <?php } ?>
-                                    
+
                                     </td>
                                     <td>{{ now() }}</td>
-                                    <td>{{ now() }}</td>
+                                
                                     <td>
                                         <div class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu">
-
-                                                <!--update link-->
-                                        <a  href="{{ route('OrganizationUsers.edit',$user->id)}}" class="" style="padding-right:20px"   id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+                                        <a  href="{{ route('OrganizationUsers.edit',$user->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > Edit </a>   
                                         <!-- delete link -->
                                         <?php if($user->status == '0'){ ?>
                                         <a wire:ignore.self href="#" wire:click="activate({{ $user->id }})"  onclick="return confirm('Are you sure to want to Activate the User?')" style="padding-right:20px; " > Activate </a>
@@ -118,31 +116,31 @@
                                         </div>
                                         </td>
                                 </tr>
-                              
-                         
+
+
                                 @empty
                                 <tr>
                                     <td colspan="8" style="text-align: center; ">No Record Found</td>
                                 </tr>
                             @endforelse
-                       
+
                             </tbody>
-                          
+
                         </table>
-             
+
                         <div style="margin-left: 80%"  class="mt-1">{{ $users->links() }}
                         </div>
                     </div>
                 </div>
-   
+
         </div>
 
-    
+
               <!-- Modal to add new user starts-->
     <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
         <form class="add-new-user modal-content pt-0" method="POST" action="{!! route('OrganizationUsers.store') !!}">
-        {{ csrf_field() }} 
+        {{ csrf_field() }}
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
             <h5 class="modal-title" id="exampleModalLabel">New User</h5>
@@ -153,7 +151,7 @@
               <input  type="text" name="name"  class="form-control" required />
 
             </div>
-   
+
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-email">Email</label>
               <input  type="email" name="email"  class="form-control" required />
@@ -172,8 +170,8 @@
               <select id="organization_code" name="organization_code" class="form-control">
                <option  value="#"> Select</option>
                 @foreach ($organizations as $organizat)
-                    <option  value="{{ $organizat ->id }}"> {{ $organizat ->name }}</option>
-                @endforeach  
+                    <option  value="{{ $organizat ->code }}"> {{ $organizat ->name }}</option>
+                @endforeach
               </select>
             </fieldset>
 
@@ -183,7 +181,7 @@
               <option  value="#"> Select</option>
                 @foreach ($roles as $ros)
                     <option  value="{{ $ros ->id }}"> {{ $ros ->name }}</option>
-                @endforeach  
+                @endforeach
               </select>
             </fieldset>
 
@@ -193,7 +191,7 @@
               <label class="form-label" for="basic-icon-default-fullname">Password</label>
               <input  type="password" name="password"  class="form-control" required />
             </div>
-            
+
             <button  type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
@@ -205,8 +203,9 @@
      <!-- Modal to Edit user starts-->
      <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-edit-slide-in">
       <div class="modal-dialog">
-        <form class="add-new-user modal-content pt-0"  >
-        {{ csrf_field() }} 
+        <form class="add-new-user modal-content pt-0" >
+
+        {{ csrf_field() }}
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
             <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
@@ -217,7 +216,7 @@
               <input  type="text" wire:model="name"  class="form-control" required />
 
             </div>
-   
+
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-email">Email</label>
               <input  type="email" wire:model="email"  class="form-control" required />
@@ -237,7 +236,7 @@
                <option  value="#"> Select</option>
                 @foreach ($organizations as $organ)
                     <option  value="{{ $organ ->id }}"> {{ $organ ->name }}</option>
-                @endforeach  
+                @endforeach
               </select>
             </fieldset>
 
@@ -247,30 +246,29 @@
               <option  value="#"> Select</option>
                 @foreach ($roles as $roll)
                     <option  value="{{ $roll ->id }}"> {{ $roll ->name }}</option>
-                @endforeach  
+                @endforeach
               </select>
             </fieldset>
 
-            
+
             <button wire:click="editUserData" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Update') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </form>
       </div>
     </div>
-
-
-
-    
     <!-- Modal to Edit user Ends-->
 
       <!-- Dashboard Ecommerce ends -->
       @push('scripts')
     <script>
+
+
         window.addEventListener('show-edit-org-modal', event =>{
             $('#modals-edit-slide-in').modal('show');
         });
-    
+
+
     </script>
 @endpush
 
@@ -281,7 +279,7 @@
               <!-- <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
                 <div class="modal-dialog">
                   <form class="add-new-user modal-content pt-0" >
-                  {{ csrf_field() }} 
+                  {{ csrf_field() }}
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
                     <div class="modal-header mb-1">
                       <h5 class="modal-title" id="exampleModalLabel">New User</h5>
@@ -290,49 +288,49 @@
                       <div class="form-group">
                         <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
                         <input  type="text" wire:model="name"  class="form-control" required />
-          
+
                       </div>
-             
+
                       <div class="form-group">
                         <label class="form-label" for="basic-icon-default-email">Email</label>
                         <input  type="email" wire:model="email"  class="form-control" required />
-          
+
                         <small class="form-text text-muted"> You can use letters, numbers & periods </small>
                       </div>
                       <div class="form-group">
                         <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
                         <input  type="tel" wire:model="phone_number"  class="form-control" required />
-          
+
                       </div>
-          
-          
+
+
                       <fieldset class="form-group">
                         <label class="form-label" for="user-role">Organization</label>
                         <select id="organization_code" wire:model="organization_code" class="form-control">
                          <option  value="#"> Select</option>
                           @foreach ($organizations as $organizat)
                               <option  value="{{ $organizat ->id }}"> {{ $organizat ->name }}</option>
-                          @endforeach  
+                          @endforeach
                         </select>
                       </fieldset>
-          
+
                       <fieldset class="form-group">
                         <label class="form-label" for="user-role">Role</label>
                         <select id="role_id" wire:model="role_id" class="form-control" required>
                         <option  value="#"> Select</option>
                           @foreach ($roles as $ros)
                               <option  value="{{ $ros ->id }}"> {{ $ros ->name }}</option>
-                          @endforeach  
+                          @endforeach
                         </select>
                       </fieldset>
-          
-          
-          
+
+
+
                       <div class="form-group">
                         <label class="form-label" for="basic-icon-default-fullname">Password</label>
                         <input  type="password" wire:model="password"  class="form-control" required />
                       </div>
-                      
+
                       <button wire:click="store" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
                       <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
                     </div>

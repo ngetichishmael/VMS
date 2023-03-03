@@ -116,14 +116,23 @@ class UserController extends Controller
 
         $user = User::find($id);
 
-        $organizations = Organization::where('status', 1) ->get();
+        $organizations = Organization::where('status', 1)->get();
 
         $roles = Role::all();
 
         // $this->dispatchBrowserEvent('show-edit-org-modal', compact('users'));
 
-        return view('livewire.user.edit', compact('user','organizations','roles')); 
+        return view('livewire.user.edit', compact('user', 'organizations', 'roles'));
 
+        $user = User::find($id);
+
+        $organizations = Organization::where('status', 1)->get();
+
+        $roles = Role::all();
+
+        // $this->dispatchBrowserEvent('show-edit-org-modal', compact('users'));
+
+        return view('livewire.user.edit', compact('user', 'organizations', 'roles'));
     }
 
     /**
@@ -149,7 +158,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->to('/organization/users')->with('success','User Updated successfully.');
+        return redirect()->to('/organization/users')->with('success', 'User Updated successfully.');
     }
 
     /**
