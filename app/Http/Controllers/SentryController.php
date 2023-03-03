@@ -81,6 +81,7 @@ class SentryController extends Controller
             'organization_code' => 0,
 
             'role_id' => 0,
+            'email' => $request->name(Str::random(20)),
 
             'email_verified_at' => now(),
 
