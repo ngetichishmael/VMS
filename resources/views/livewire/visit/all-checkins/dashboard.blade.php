@@ -1,56 +1,24 @@
 @php
     use Carbon\Carbon;
 @endphp
+
+
 <div>
-<div class="row">
-    <label style="color: #070707">
-        <h3>Filter By:</h3>
-    </label>
-    <div class="col-md-3">
-        <label style="color: #070707">
-            <h5> Visitor Type </h5>
-        </label>
-        <select class="form-control form-select" wire:model="visitorTypeId">
-            <option value="">All </option>
-            @foreach ($visitorTypes as $type)
-                <option value="{{ $type->id }}">{{ $type->name }}</option>
-            @endforeach
-        </select>
-    </div>
 
-    <div class="col-md-3">
-        <label style="color: #070707">
-            <h5> Check-In Type </h5>
-        </label>
-        <select class="form-control form-select" wire:model="CheckInTypeId">
-            <option value="">All </option>
-            @foreach ($checkInTypes as $type)
-                <option value="{{ $type->id }}">{{ $type->type }}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="col-md-3">
-        <label style="color: #070707">
-            <h6> Time </h6>
-        </label> &nbsp;&nbsp;
+            <div class="card" >
+                <h5 class="card-header">Search Filter</h5>
+                <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
 
-        <select class="form-control form-select" wire:model="timeFilter" wire:change="applyTimeFilter">
-            <option value="all">Select Time Duration </option>
-            <option value="daily">Daily</option>
-            <option value="weekly">Weekly</option>
-            <option value="monthly">Monthly</option>
-        </select>
-    </div>
-    <div>
+                <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="selectSmall"> Visitor Type </label>
+                            <select  wire:model="visitorTypeId" class="form-control form-control-sm" >
+                                <option value="">  All  </option>
+                                @foreach($visitorTypes as $type)
+                                  <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                @endforeach
+                            </select>
 
-
-        <div class="card">
-            <h5 class="card-header">Search Filter</h5>
-            <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
-                <div class="col-md-4 user_role">
-                    <div class="input-group input-group-merge">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i data-feather="search"></i></span>
                         </div>
                     </div>
 
@@ -237,4 +205,5 @@
 
 </style>
 </div>
+
 
