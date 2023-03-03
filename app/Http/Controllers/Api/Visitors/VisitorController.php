@@ -134,7 +134,7 @@ class VisitorController extends Controller
             ->whereNull('exit_time')
             ->first();
         if ($time_log) {
-            return response()->json(['message' => 'User has already checked in'], 400);
+            return response()->json(['message' => 'User has already checked in'], 409);
         }
         if ($visitor->type === 'DriveIn') {
             $visitor->vehicle = VehicleInformation::where('visitor_id', $visitor->id)->first();
@@ -181,28 +181,53 @@ class VisitorController extends Controller
      */
     public function store(Request $request)
     {
-        $timeLog = new TimeLog;
-        $now = Carbon::now();
-        $nairobiNow = $now->setTimezone('Africa/Nairobi');
-        $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
-        $vehicle = null;
+
+//        $now = Carbon::now();
+//        $nairobiNow = $now->setTimezone('Africa/Nairobi');
+//        $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
+
         $nationality = Nationality::find($request->nationality);
+        if (!$nationality){
+            $nationality = new Nationality();
+            $nationality->name = $request->input('nationality') ?? '101';
+            $nationality->save();
+        }
+
+        $detail=Sentry::where('phone_number', $request->user()->phone_number ?? '')->first();
+
         $visitor = new Visitor();
         $visitor->name = $request->input('name');
         $visitor->type = $request->input('type');
         //        $visitor->identification_type_id = $request->input('identification_type_id');
         $visitor->visitor_type_id = $request->input('visitor_type_id');
         $visitor->purpose_id = $request->input('purpose_id');
-        $visitor->sentry_id = $request->user()->id;
+        $visitor->sentry_id = $detail->id;
         $visitor->nationality_id = $nationality->id ?? "101";
-        $visitor->resident_id = $request->input('resident_id');
-        $visitor->attachment1 = $request->input('attachment1');
-        $visitor->attachment2 = $request->input('attachment2');
-        $visitor->attachment3 = $request->input('attachment3');
-        $visitor->attachment4 = $request->input('attachment4');
-        $visitor->tag = $request->input('tag');
-        $timeLog->save();
+        if ($request->hasFile('attachment1')) {
+            $path = $request->file('attachment1')->store('public/attachments');
+            $visitor->attachment1 = basename($path);
+        }
 
+        if ($request->hasFile('attachment2')) {
+            $path = $request->file('attachment2')->store('public/attachments');
+            $visitor->attachment2 = basename($path);
+        }
+
+        if ($request->hasFile('attachment3')) {
+            $path = $request->file('attachment3')->store('public/attachments');
+            $visitor->attachment3 = basename($path);
+        }
+
+        if ($request->hasFile('attachment4')) {
+            $path = $request->file('attachment4')->store('public/attachments');
+            $visitor->attachment4 = basename($path);
+        }
+        $visitor->tag = $request->input('tag');
+
+        $timeLog = new TimeLog;
+        $timeLog->entry_time = now();
+        $timeLog->save();
+        $time=$timeLog->entry_time;
         $visitor->time_log_id = $timeLog->id;
         $visitor->user_detail_id = $request->input('user_detail_id');
         $visitor->save();
@@ -212,13 +237,95 @@ class VisitorController extends Controller
             $vehicle->visitor_id = $visitor->id;
             $vehicle->save();
         }
+        $visitor_name=$request->input('name');
         Activity::create([
             'name' => $request->user()->name,
             'target' => "new Drive In created by " . $request->user()->name,
             'organization' => '' . $visitor->name,
             'activity' => "Created a new visitor with " . $visitor . ' with vehicle ' . $vehicle ?? "Visit did not come with vehicle"
         ]);
-        return response()->json(['success' => 'Returning visitor checked in successful'], 201);
+
+        if (($request->input('notify')!==null) && ($request->input('notify')==1 || $request->input('notify')=='true')) {
+            $resident =Resident::where('id', $request->resident_id)->where('status', 1)->first();
+            if ($resident!=null || $resident!='') {
+
+                $phone_number=$resident->phone_number ?? ' ';
+                $resident_name=$resident->name ?? ' ';
+                $premise=Premise::where('id',$detail->premise_id)->first();
+                $place=$premise->name ?? ' ';
+                $this->sendUserSMS($visitor_name, $time, $resident_name, $phone_number, $place);
+                return response()->json(['success' => 'Returning visitor checked in successful and '.$resident_name .' notified' ], 201);
+
+            }
+        }
+
+        return response()->json(['success' => 'Returning visitor checked in successful.'], 201);
+    }
+
+    public function sendUserSMS($visitor_name, $time, $resident_name, $phone_number, $place)
+    {
+        $curl = curl_init();
+        $url = 'https://accounts.jambopay.com/auth/token';
+        curl_setopt($curl, CURLOPT_URL, $url);
+
+        curl_setopt(
+            $curl,
+            CURLOPT_HTTPHEADER,
+            array(
+                'Content-Type: application/x-www-form-urlencoded',
+            )
+        );
+
+        curl_setopt(
+            $curl,
+            CURLOPT_POSTFIELDS,
+            http_build_query(
+                array(
+                    'grant_type' => 'client_credentials',
+                    'client_id' => "qzuRm3UxXShEGUm2OHyFgHzkN1vTkG3kIVGN2z9TEBQ=",
+                    'client_secret' => "36f74f2b-0911-47a5-a61b-20bae94dd3f1gK2G2cWfmWFsjuF5oL8+woPUyD2AbJWx24YGjRi0Jm8="
+                )
+            )
+        );
+
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $curl_response = curl_exec($curl);
+
+        $token = json_decode($curl_response);
+        curl_close($curl);
+
+        $message ='Hello ' . $resident_name . ', a visitor by the name '. $visitor_name .', has arrived at '. $place .' Main Gate at ' .$time .'.';
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://swift.jambopay.co.ke/api/public/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode(
+                array(
+                    "sender_name" => "PASANDA",
+                    "contact" => $phone_number,
+                    "message" => $message,
+                    "callback" => "https://pasanda.com/sms/callback"
+                )
+            ),
+
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Authorization: Bearer ' . $token->access_token
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+//        return '$response';
+
     }
 
     /**

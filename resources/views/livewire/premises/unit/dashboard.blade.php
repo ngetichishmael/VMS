@@ -87,7 +87,7 @@
 <div class="dropdown-menu">
 
         <!--update link-->
-<a  wire:ignore.self href="#" class="" wire:click="editUnit({{ $unit->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+        <a  href="{{ route('UnitInformation.edit',$unit->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > Edit </a> 
 <!-- delete link -->
 <?php if($unit->status == '0'){ ?>
 <a wire:ignore.self href="#" wire:click="activate({{ $unit->id }})"  onclick="return confirm('Are you sure to want to Activate the unit?')" style="padding-right:20px; " > Activate </a>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Field;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +21,8 @@ class CreateSettingsTable extends Migration
             $table->boolean('automatic_id_checkin')->default(false);
             $table->boolean('sms_checkin')->default(false);
             $table->boolean('ipass_checkin')->default(false);
+            $table->foreignIdFor(Field::class)->nullable();;
+
             $table->timestamps();
         });
     }

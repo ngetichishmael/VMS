@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Visitors;
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\Nationality;
+use App\Models\Sentry;
 use App\Models\TimeLog;
 use App\Models\UserDetail;
 use App\Models\VehicleInformation;
@@ -88,7 +89,7 @@ class SmsCheckInController extends Controller
                 $timeLog = TimeLog::find($visitor->time_log_id);
 
                 if ($timeLog && $timeLog->exit_time === null) {
-                    return response()->json(['error' => 'User already signed in, If its by mistake, Sign the user out first to sign back in']);
+                    return response()->json(['error' => 'User already signed in, If its by mistake, Sign the user out first to sign back in'],409);
                 }
             }
         }
@@ -100,25 +101,40 @@ class SmsCheckInController extends Controller
             $nationality->save();
         }
 
+        $detail=Sentry::where('phone_number', $request->user()->phone_number ?? '')->first();
+
         $visitor = new Visitor();
         $visitor->type = $request->input('type');
         $visitor->identification_type_id = $request->input('identification_type_id');
         $visitor->visitor_type_id = $request->input('visitor_type_id');
         $visitor->purpose_id = $request->input('purpose_id');
-        $visitor->sentry_id = $request->user()->id;
+        $visitor->sentry_id = $detail->id;
         $visitor->nationality_id = $nationality->id ?? "101";
         $visitor->resident_id = $request->input('resident_id');
-        $visitor->attachment1 = $request->input('attachment1');
-        $visitor->attachment2 = $request->input('attachment2');
-        $visitor->attachment3 = $request->input('attachment3');
-        $visitor->attachment4 = $request->input('attachment4');
+        if ($request->hasFile('attachment1')) {
+            $path = $request->file('attachment1')->store('public/attachments');
+            $visitor->attachment1 = basename($path);
+        }
+
+        if ($request->hasFile('attachment2')) {
+            $path = $request->file('attachment2')->store('public/attachments');
+            $visitor->attachment2 = basename($path);
+        }
+
+        if ($request->hasFile('attachment3')) {
+            $path = $request->file('attachment3')->store('public/attachments');
+            $visitor->attachment3 = basename($path);
+        }
+
+        if ($request->hasFile('attachment4')) {
+            $path = $request->file('attachment4')->store('public/attachments');
+            $visitor->attachment4 = basename($path);
+        }
         $visitor->tag = $request->input('tag');
 
 
-        $timeLog = new TimeLog;
-        $now = Carbon::now();
-        $nairobiNow = $now->setTimezone('Africa/Nairobi');
-        $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
+         $timeLog = new TimeLog;
+        $timeLog->entry_time = now();
         $timeLog->save();
         $visitor->time_log_id = $timeLog->id;
 
@@ -132,7 +148,10 @@ class SmsCheckInController extends Controller
             $user_details->date_of_birth = $request->input('DOB') ?? "NULL";
             $user_details->ID_number = $request->input('IDNO') ?? "NULL";
             $user_details->gender = $request->input('gender');
-            $user_details->image = $request->input('image');
+            if ($request->hasFile('image')) {
+                $path = $request->file('image')->store('public/attachments');
+                $user_details->image= basename($path);
+            }
             $user_details->company = $request->input('company');
             $user_details->save();
         }

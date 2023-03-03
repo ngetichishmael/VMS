@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Premise Setting')
+@section('title', 'Unit Setting')
 
 @section('vendor-style')
   <!-- vendor css files -->
@@ -30,51 +30,38 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">#{{ $resident ->name }}</h4>
+        <h4 class="card-title">#{{ $unit ->name }}</h4>
       </div>
       <div class="card-body">
       
       
       
       
-        <form class="form"  method="post" action="{{ route('ResidentInformation.update', $resident->id) }}">
+        <form class="form"  method="post" action="{{ route('UnitInformation.update', $unit->id) }}">
         @method('PATCH') 
         @csrf  
         <div class="row">
 
             <div class="col-md-6 col-12">
               <div class="form-group">
-                <label for="last-name-column">Resident Name</label>
-                    <input type="name" class="form-control"  name="name" value="{{ $resident ->name}}"   />
-              </div>
-            </div>
-
-            <div class="col-md-6 col-12">
-              <div class="form-group">
-                <label for="city-column">Email Address</label>
-                <input type="email" class="form-control" name="email" value="{{ $resident ->email}}" /> 
-             </div>
-            </div>
-
-            <div class="col-md-6 col-12">
-              <div class="form-group">
-                <label for="last-name-column">Phone Number</label>
-                    <input type="tel" class="form-control"  name="phone_number"  value="{{ $resident ->phone_number }}" />
+                <label for="last-name-column">Unit Name</label>
+                    <input type="name" class="form-control"  name="name" value="{{ $unit ->name}}"   />
               </div>
             </div>
 
             <div class="col-12 col-sm-6">
                                         <fieldset class="form-group">
-                                          <label  for="user-role">Unit Name</label>
-                                          <select  name="unit_id" class="form-control">
-                                          <option  value="{{ $resident ->unit_id }}" > Select ...</option>
-                                            @foreach ($unit as $uni)
-                                                <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
+                                          <label  for="user-role">Block Name</label>
+                                          <select  name="block_id" class="form-control">
+                                          <option  value="{{ $unit ->block_id }}" > Select ...</option>
+                                            @foreach ($block as $bro)
+                                                <option  value="{{ $bro ->id }}"> {{ $bro ->name }}</option>
                                             @endforeach  
                                           </select>
                                         </fieldset>
                                         </div>
-      
+                                        
+
             <div class="col-12">
               <button type="submit" class="btn btn-primary mr-1">Update</button>
               <button type="reset" class="btn btn-outline-secondary">Cancel</button>

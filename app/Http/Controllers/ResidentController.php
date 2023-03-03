@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Resident;
+use App\Models\Unit;
 use App\Http\Requests\UpdateResidentRequest;
 use App\Models\Activity;
 use Brian2694\Toastr\Facades\Toastr;
@@ -87,11 +88,16 @@ class ResidentController extends Controller
      * @param  \App\Models\Resident  $resident
      * @return \Illuminate\Http\Response
      */
-    public function edit(Resident $resident)
+    public function edit($id)
     {
-        //
-    }
 
+        $resident = Resident::find($id);
+
+        $unit = Unit::where('status', 1) ->get();
+
+        return view('livewire.premises.resident.edit', compact('unit','resident'));
+
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -99,9 +105,22 @@ class ResidentController extends Controller
      * @param  \App\Models\Resident  $resident
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateResidentRequest $request, Resident $resident)
-    {
-        //
+    public function update(Request $request, $id)
+    {   
+          
+        $resident = Resident::find($id);
+
+        $resident->name = $request->input('name');
+
+        $resident->email = $request->input('email');
+
+        $resident->phone_number = $request->input('phone_number');
+
+        $resident->unit_id = $request->input('unit_id');
+   
+        $resident->save();
+
+        return redirect()->to('/resident/information')->with('success','Resident Updated successfully.');
     }
 
     /**

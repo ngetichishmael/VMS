@@ -87,8 +87,8 @@
                                         <div class="dropdown-menu">
 
                                                 <!--update link-->
-
-                                        <a  wire:ignore.self href="#" class="" wire:click="editOrganization({{ $org->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+                                                <a  href="{{ route('OrganizationInformation.edit',$org->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > Edit </a>                     
+                                                                   <!-- delete link -->
                                         <?php if($org->status == '0'){ ?>
                                         <a wire:ignore.self href="#" wire:click="activate({{ $org->id }})"  onclick="return confirm('Are you sure to want to Activate the organization?')" style="padding-right:20px; " > Activate </a>
                                         <?php }else{ ?>

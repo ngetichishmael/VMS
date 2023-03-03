@@ -99,7 +99,7 @@
                                         <div class="dropdown-menu">
 
                                                 <!--update link-->
-                                        <a  wire:ignore.self href="#" class="" wire:click="editresident({{ $resident->id }})" style="padding-right:20px"  data-toggle="modal" id="smallButton" data-target="#modals-edit-slide-in"  data-placement="top" > Edit </a>
+                                                <a  href="{{ route('ResidentInformation.edit',$resident->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > Edit </a>
                                         <!-- delete link -->
                                         <?php if($resident->status == '0'){ ?>
                                         <a wire:ignore.self href="#" wire:click="activate({{ $resident->id }})"  onclick="return confirm('Are you sure to want to Activate the resident?')" style="padding-right:20px; " > Activate </a>

@@ -99,13 +99,13 @@ class Dashboard extends Component
         $this->applyTimeFilter();
         $visitorTypes = VisitorType::all();
 
-//        foreach ($this->dvisitors as $visitor) {
-//            $entryTime = Carbon::parse($visitor->timeLog->entry_time ?? now());
-//            $exitTime = Carbon::parse($visitor->timeLog->exit_time ?? now());
-//            $duration = $entryTime->diff($exitTime);
-//
-//            $visitor->duration = $duration->format('%H Hours %I Minutes %S Seconds');
-//        }
+        foreach ($this->dvisitors as $visitor) {
+            $entryTime = Carbon::parse($visitor->timeLog->entry_time ?? now());
+            $exitTime = Carbon::parse($visitor->timeLog->exit_time ?? now());
+            $duration = $entryTime->diff($exitTime);
+
+            $visitor->duration = $duration->format('%H Hours %I Minutes %S Seconds');
+        }
         return view('livewire.visit.drivers.dashboard', [
             'dvisitors' => $this->dvisitors,
             'visitorTypes' => $visitorTypes,

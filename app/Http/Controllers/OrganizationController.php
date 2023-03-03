@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Field;
 use App\Models\Organization;
 use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
+use App\Models\Setting;
 use App\Models\Activity;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -74,6 +76,27 @@ class OrganizationController extends Controller
         $organization->description = $request->input('description');
 
         $organization->save();
+        $fields = new Field();
+        $fields->visitor_type = $request->input('visitor_type', 1);
+        $fields->destination = $request->input('destination', 1);
+        $fields->tag = $request->input('tag', 1);
+        $fields->host = $request->input('host', 1);
+        $fields->purpose_of_visit = $request->input('purpose_of_visit', 1);
+        $fields->attachments = $request->input('attachments', 1);
+        $fields->gender = $request->input('gender', 1);
+        $fields->company = $request->input('company', 1);
+        $fields->save();
+
+        // Add data to settings table
+        $settings = new Setting();
+        $settings->fields_id = $fields->id;
+        $settings->organization_code = $organization->code;
+        $settings->id_checkin = $request->input('id_checkin', 0);
+        $settings->automatic_id_checkin = $request->input('automatic_id_checkin', 0);
+        $settings->sms_checkin = $request->input('sms_checkin', 0);
+        $settings->ipass_checkin = $request->input('ipass_checkin', 0);
+        $settings->save();
+
         Activity::create([
             'name' => $request->user()->name,
             'target' => "Organization created by " . $request->user()->name,

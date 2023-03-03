@@ -83,9 +83,13 @@ class ShiftController extends Controller
      * @param  \App\Models\Shift  $shift
      * @return \Illuminate\Http\Response
      */
-    public function edit(Shift $shift)
+    public function edit($id)
     {
-        //
+
+        $shift = Shift::find($id);
+
+        return view('livewire.shift.edit', compact('shift'));
+
     }
 
     /**
@@ -95,9 +99,16 @@ class ShiftController extends Controller
      * @param  \App\Models\Shift  $shift
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateShiftRequest $request, Shift $shift)
-    {
-        //
+    public function update(Request $request, $id)
+    {   
+          
+        $shift = Shift::find($id);
+
+        $shift->name = $request->input('name');
+
+        $shift->save();
+
+        return redirect()->to('/shifts')->with('success','Shift Updated successfully.');
     }
 
     /**
