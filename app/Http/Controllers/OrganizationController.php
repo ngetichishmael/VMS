@@ -89,7 +89,7 @@ class OrganizationController extends Controller
 
         // Add data to settings table
         $settings = new Setting();
-        $settings->fields_id = $fields->id;
+        $settings->field_id = $fields->id;
         $settings->organization_code = $organization->code;
         $settings->id_checkin = $request->input('id_checkin', 0);
         $settings->automatic_id_checkin = $request->input('automatic_id_checkin', 0);
