@@ -19,16 +19,20 @@
     </div>
 
     <div class="col-md-3">
-        <label  style="color: #070707"><h5> Check-In Type </h5></label>
+        <label style="color: #070707">
+            <h5> Check-In Type </h5>
+        </label>
         <select class="form-control form-select" wire:model="CheckInTypeId">
-            <option value="">All          </option>
-            @foreach($checkInTypes as $type)
+            <option value="">All </option>
+            @foreach ($checkInTypes as $type)
                 <option value="{{ $type->id }}">{{ $type->type }}</option>
             @endforeach
         </select>
     </div>
     <div class="col-md-3">
-        <label  style="color: #070707"><h6> Time </h6></label> &nbsp;&nbsp;
+        <label style="color: #070707">
+            <h6> Time </h6>
+        </label> &nbsp;&nbsp;
 
         <select class="form-control form-select" wire:model="timeFilter" wire:change="applyTimeFilter">
             <option value="all">Select Time Duration </option>
@@ -72,45 +76,32 @@
                 </div>
             </div>
         </div>
-        <!-- users filter end -->
-        {{-- @include('partials.loaderstyle') --}}
-        <!-- list section start -->
         <div class="card">
             <div class="pt-0 card-datatable table-responsive">
                 <div class="card-datatable table-responsive">
                     <table class="table">
                         <thead style="color: #070707">
                             <tr>
-                                {{--                            <th wire:click="sortBy('id')">ID --}}
-                                {{--                                @if ($sortField === 'id') --}}
-                                {{--                                    @if ($sortAsc) --}}
-                                {{--                                        <i class="fas fa-sort-up"></i> --}}
-                                {{--                                    @else --}}
-                                {{--                                        <i class="fas fa-sort-down"></i> --}}
-                                {{--                                    @endif --}}
-                                {{--                                @endif --}}
-                                {{--                            </th> --}}
                                 <th>Name</th>
-                            <th>Site</th>
-                            <th>Section</th>
-                            <th>Organization</th>
-                            <th>Check-in type</th>
-                            <th>Time In</th>
-                            <th>Time Out</th>
-                            <th>Duration</th>
-                            <th>Action</th>
-                        </tr>
+                                <th>Site</th>
+                                <th>Section</th>
+                                <th>Organization</th>
+                                <th>Check-in type</th>
+                                <th>Time In</th>
+                                <th>Time Out</th>
+                                <th>Duration</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
 
                         <tbody style="font-size: small">
-                        @forelse($visitors as $key => $visitor)
-                            <tr>
-{{--                                <td>{{ $visitor->id }}</td>--}}
-                                <td>{!! $visitor->name!!} </td>
-                                <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}</td>
+                            @forelse($visitors as $key => $visitor)
+                                <td>{!! $visitor->name !!} </td>
+                                <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}
+                                </td>
                                 <td>{!! $visitor->resident->unit->name !!}</td>
-                                <td>{!! $visitor->resident->unit->block->premise->organization()->pluck("name")->implode('') !!}</td>
-                                <td>{!! $visitor->type!!} </td>
+                                <td>{!! $visitor->resident->unit->block->premise->organization()->pluck('name')->implode('') !!}</td>
+                                <td>{!! $visitor->type !!} </td>
                                 <td>{!! $visitor->timeLog->entry_time ?? null !!}</td>
                                 @if (!isset($visitor->timeLog->exit_time))
                                     <td>...</td>
@@ -118,19 +109,20 @@
                                 @else
                                     <td>{!! $visitor->timeLog->exit_time ?? null !!}</td>
                                     <td style="color: #70ce52;">
-                                        {!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds'); !!}
+                                        {!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds') !!}
 
                                     </td>
                                 @endif
-                                <td >
-                                    <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}"><i class="fa fa-eye">&nbsp;Details</i></a>
+                                <td>
+                                    <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}"><i
+                                            class="fa fa-eye">&nbsp;Details</i></a>
                                 </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
-                            </tr>
-                        @endforelse
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                     <div class="mt-1">{{ $visitors->links() }}
@@ -189,3 +181,4 @@
 
 </style>
 </div>
+

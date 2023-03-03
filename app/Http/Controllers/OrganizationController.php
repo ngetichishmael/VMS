@@ -7,6 +7,7 @@ use App\Models\Organization;
 use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
 use App\Models\Setting;
+use App\Models\Activity;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -50,7 +51,7 @@ class OrganizationController extends Controller
 
             'email' => 'required|email|max:255|unique:organizations,email',
 
-            'primary_phone'=> 'required|numeric',
+            'primary_phone' => 'required|numeric',
 
             'location' => 'required',
 
@@ -96,6 +97,12 @@ class OrganizationController extends Controller
         $settings->ipass_checkin = $request->input('ipass_checkin', 0);
         $settings->save();
 
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "Organization created by " . $request->user()->name,
+            'organization' => $organization->name,
+            'activity' => "Created a new organization with " . $organization
+        ]);
 
         return redirect()->to('/organization/information')->with('success', 'Organization created successfully.');
     }
@@ -138,7 +145,7 @@ class OrganizationController extends Controller
 
         $organization = Organization::find($id);
 
-        $organization ->name = $request->input('name');
+        $organization->name = $request->input('name');
 
         $organization->location = $request->input('location');
 
@@ -154,7 +161,7 @@ class OrganizationController extends Controller
 
         $organization->save();
 
-        return redirect()->to('/organization/information')->with('success','Organization Updated successfully.');
+        return redirect()->to('/organization/information')->with('success', 'Organization Updated successfully.');
     }
 
     /**

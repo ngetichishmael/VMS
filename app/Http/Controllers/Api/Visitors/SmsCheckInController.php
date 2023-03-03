@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Visitors;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Nationality;
 use App\Models\Sentry;
 use App\Models\TimeLog;
@@ -74,7 +75,7 @@ class SmsCheckInController extends Controller
             'phone1' => 'required',
 
         ]);
-
+        $vehicle = null;
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
@@ -94,7 +95,7 @@ class SmsCheckInController extends Controller
         }
         $nationality = Nationality::find($request->nationality);
 
-        if (!$nationality){
+        if (!$nationality) {
             $nationality = new Nationality();
             $nationality->name = $request->input('nationality') ?? '101';
             $nationality->save();
@@ -133,9 +134,6 @@ class SmsCheckInController extends Controller
 
 
          $timeLog = new TimeLog;
-//        $now = Carbon::now();
-//        $nairobiNow = $now->setTimezone('Africa/Nairobi');
-//        $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
         $timeLog->entry_time = now();
         $timeLog->save();
         $visitor->time_log_id = $timeLog->id;
@@ -166,6 +164,14 @@ class SmsCheckInController extends Controller
             $vehicle->save();
         }
 
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "new sms checking created by " . $request->user()->name,
+            'organization' => 'Visitor by name' . $visitor->name,
+            'activity' => "Created a new visitor with " . $visitor .
+                'with details: ' . $user_details  . ' and vehicle ' . $vehicle
+
+        ]);
         return response()->json(['success' => 'Visitor verified by sms information added successfully.'], 201);
     }
     /**

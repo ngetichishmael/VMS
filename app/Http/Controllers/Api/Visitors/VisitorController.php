@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Visitors;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\IdentificationType;
 use App\Models\Nationality;
 use App\Models\Purpose;
@@ -49,10 +50,10 @@ class VisitorController extends Controller
     }
     public function unitOptions(Request $request)
     {
-        $detail=UserDetail::where('phone_number', $request->user()->phone_number)->first();
+        $detail = UserDetail::where('phone_number', $request->user()->phone_number)->first();
         $sentry = Sentry::where('user_detail_id', $detail->id)->first();
-//        return response()->json($detail->id);
-        if (!$sentry){
+        //        return response()->json($detail->id);
+        if (!$sentry) {
             return response()->json(['Error' => 'Sentry details not found'], 404);
         }
         $units = Premise::with('blocks.units')->where('id', $sentry->premise_id)->get();
@@ -137,7 +138,7 @@ class VisitorController extends Controller
         }
         if ($visitor->type === 'DriveIn') {
             $visitor->vehicle = VehicleInformation::where('visitor_id', $visitor->id)->first();
-          return response()->json(['message' => 'Visitor exists and has Vehicle details', 'visitor' => $visitor], 200);
+            return response()->json(['message' => 'Visitor exists and has Vehicle details', 'visitor' => $visitor], 200);
         }
 
         return response()->json(['message' => 'Visitor exists', 'visitor' => $visitor], 200);
@@ -145,32 +146,32 @@ class VisitorController extends Controller
 
 
 
-//    public function returningVisitorVerify(Request $request)
-//    {
-//        $number = $request->input('number');
-//        $stripped_number = preg_replace('/[^0-9]/', '', $number);
-//        $user = UserDetail::whereRaw("REPLACE(phone_number, '-', '') LIKE '%$stripped_number'")
-//            ->orwhere('ID_number', $number)->orwhere('phone_number', $number)->first();
-//        //$user = UserDetail::where('ID_number', $number)->orWhere('phone_number', $number)->first();
-//
-//        if (!$user) {
-//            return response()->json(['message' => 'Visitor not found'], 404);
-//        }
-//
-//        $visitor = Visitor::where('user_detail_id',  $user->id)->orderBy('id', 'desc')->first();
-//        $time_log = TimeLog::where('id', $visitor->time_log_id)
-//            ->whereNull('exit_time')
-//            ->first();
-//        if ($time_log) {
-//            return response()->json(['message' => 'User has already checked in'], 400);
-//        }
-//        if ($visitor->type === 'DriveIn') {
-//            $visitor->vehicle = VehicleInformation::where('visitor_id', $visitor->id)->first();
-//            return response()->json(['Message' => 'Visitor exists and has a Vehicle details', 'visitor' => $visitor], 200);
-//        }
-//
-//        return response()->json(['Message' => 'Visitor exists', 'visitor' => $visitor], 200);
-//    }
+    //    public function returningVisitorVerify(Request $request)
+    //    {
+    //        $number = $request->input('number');
+    //        $stripped_number = preg_replace('/[^0-9]/', '', $number);
+    //        $user = UserDetail::whereRaw("REPLACE(phone_number, '-', '') LIKE '%$stripped_number'")
+    //            ->orwhere('ID_number', $number)->orwhere('phone_number', $number)->first();
+    //        //$user = UserDetail::where('ID_number', $number)->orWhere('phone_number', $number)->first();
+    //
+    //        if (!$user) {
+    //            return response()->json(['message' => 'Visitor not found'], 404);
+    //        }
+    //
+    //        $visitor = Visitor::where('user_detail_id',  $user->id)->orderBy('id', 'desc')->first();
+    //        $time_log = TimeLog::where('id', $visitor->time_log_id)
+    //            ->whereNull('exit_time')
+    //            ->first();
+    //        if ($time_log) {
+    //            return response()->json(['message' => 'User has already checked in'], 400);
+    //        }
+    //        if ($visitor->type === 'DriveIn') {
+    //            $visitor->vehicle = VehicleInformation::where('visitor_id', $visitor->id)->first();
+    //            return response()->json(['Message' => 'Visitor exists and has a Vehicle details', 'visitor' => $visitor], 200);
+    //        }
+    //
+    //        return response()->json(['Message' => 'Visitor exists', 'visitor' => $visitor], 200);
+    //    }
 
     /**
      * Store a newly created resource in storage.
@@ -197,7 +198,7 @@ class VisitorController extends Controller
         $visitor = new Visitor();
         $visitor->name = $request->input('name');
         $visitor->type = $request->input('type');
-//        $visitor->identification_type_id = $request->input('identification_type_id');
+        //        $visitor->identification_type_id = $request->input('identification_type_id');
         $visitor->visitor_type_id = $request->input('visitor_type_id');
         $visitor->purpose_id = $request->input('purpose_id');
         $visitor->sentry_id = $detail->id;
@@ -237,6 +238,12 @@ class VisitorController extends Controller
             $vehicle->save();
         }
         $visitor_name=$request->input('name');
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "new Drive In created by " . $request->user()->name,
+            'organization' => '' . $visitor->name,
+            'activity' => "Created a new visitor with " . $visitor . ' with vehicle ' . $vehicle ?? "Visit did not come with vehicle"
+        ]);
 
         if (($request->input('notify')!==null) && ($request->input('notify')==1 || $request->input('notify')=='true')) {
             $resident =Resident::where('id', $request->resident_id)->where('status', 1)->first();
@@ -247,12 +254,12 @@ class VisitorController extends Controller
                 $premise=Premise::where('id',$detail->premise_id)->first();
                 $place=$premise->name ?? ' ';
                 $this->sendUserSMS($visitor_name, $time, $resident_name, $phone_number, $place);
-                return response()->json(['success' => 'Visitor information added successfully and '.$resident_name .' notified' ], 201);
+                return response()->json(['success' => 'Returning visitor checked in successful and '.$resident_name .' notified' ], 201);
 
             }
         }
 
-        return response()->json(['success' => 'Visitor information added successfully.'], 201);
+        return response()->json(['success' => 'Returning visitor checked in successful.'], 201);
     }
 
     public function sendUserSMS($visitor_name, $time, $resident_name, $phone_number, $place)
@@ -318,6 +325,7 @@ class VisitorController extends Controller
         $response = curl_exec($curl);
         curl_close($curl);
 //        return '$response';
+
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Visitors;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Nationality;
 use App\Models\Premise;
 use App\Models\Resident;
@@ -80,6 +81,7 @@ class DriveInController extends Controller
 //        $nairobiNow = $now->setTimezone('Africa/Nairobi');
 //        $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
         $timeLog->entry_time = now();
+
         $timeLog->save();
         $time=$timeLog->entry_time;
 
@@ -141,6 +143,7 @@ class DriveInController extends Controller
         $vehicle->visitor_id = $visitor->id;
         $vehicle->save();
 
+
         $visitor_name=$request->input('name');
 
         if (($request->input('notify')!==null) && ($request->input('notify')==1 || $request->input('notify')=='true')) {
@@ -156,7 +159,14 @@ class DriveInController extends Controller
 
             }
         }
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "new Drive In created by " . $request->user()->name,
+            'organization' => 'Visitor by' . $visitor->name,
+            'activity' => "Created a new visitor with " . $visitor .
+                'with details: ' . $user_details  . ' and vehicle ' . $vehicle
 
+        ]);
         return response()->json(['success' => 'Visitor and vehicle information added successfully.'], 201);
     }
 

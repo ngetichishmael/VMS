@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Unit;
-use App\Http\Requests\StoreUnitRequest;
 use App\Http\Requests\UpdateUnitRequest;
-
-use DB;
+use App\Models\Activity;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
-use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\DB;
 
 class UnitController extends Controller
 {
@@ -20,27 +18,6 @@ class UnitController extends Controller
      */
     public function index()
     {
-        // $units = DB::table('units')
-
-        // ->get();
-
-        // $units = DB::table('units')
-
-        // ->join('premises', 'units.premise', '=', 'premises.id')
-
-        // ->join('blocks', 'units.block', '=', 'blocks.id')
-      
-        // ->select('units.*', 'premises.name', 'blocks.blockname')
-
-        // ->get();
-
-        // $premises = DB::table('premises')
-
-        // ->get();
-
-        // $blocks = DB::table('blocks')
-
-        // ->get();
 
         return view('livewire.premises.unit.layout');
     }
@@ -66,18 +43,23 @@ class UnitController extends Controller
         $this->validate(request(), [
             'name' => 'required',
             'block_id' => 'required',
-      
+
         ]);
-        
+
         $unit = new Unit();
-    
+
         $unit->name = $request->input('name');
-        
+
         $unit->block_id  = $request->input('block_id');
 
         $unit->save();
-          
-        return redirect()->to('/unit/information')->with('success','Unit added successfully.');
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "Unit created by " . $request->user()->name,
+            'organization' => 'Unit' . $unit->name,
+            'activity' => "Created a new resident with " . $unit
+        ]);
+        return redirect()->to('/unit/information')->with('success', 'Unit added successfully.');
     }
 
     /**
@@ -126,32 +108,32 @@ class UnitController extends Controller
 
         $delete->delete();
 
-        Toastr::success('Data deleted successfully :)','Success');
+        Toastr::success('Data deleted successfully :)', 'Success');
 
         return redirect()->route('BlockInformation');
     }
 
-    public function status_update($id){
+    public function status_update($id)
+    {
 
         //get unit status with the help of  ID
         $units = DB::table('units')
-                    ->select('status')
-                    ->where('id','=',$id)
-                    ->first();
+            ->select('status')
+            ->where('id', '=', $id)
+            ->first();
 
         //Check unit status
-        if($units->status == '1'){
+        if ($units->status == '1') {
             $status = '0';
-        }else{
+        } else {
             $status = '1';
         }
 
         //update unit status
-        $values = array('status' => $status );
-        DB::table('units')->where('id',$id)->update($values);
+        $values = array('status' => $status);
+        DB::table('units')->where('id', $id)->update($values);
 
-        session()->flash('msg','User status has been updated successfully.');
+        session()->flash('msg', 'User status has been updated successfully.');
         return redirect()->route('UnitInformation');
     }
-
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Visitors;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Nationality;
 use App\Models\Premise;
 use App\Models\Resident;
@@ -24,10 +25,9 @@ class WalkInController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json(Visitor::with(['resident2','sentry', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
-        ->where('type', 'walkin')
-        ->get());
-
+        return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
+            ->where('type', 'walkin')
+            ->get());
     }
 
     /**
@@ -63,7 +63,7 @@ class WalkInController extends Controller
 
         $nationality = Nationality::find($request->nationality);
 
-        if (!$nationality){
+        if (!$nationality) {
             $nationality = new Nationality();
             $nationality->name = $request->input('nationality') ?? '101';
             $nationality->save();
@@ -141,6 +141,16 @@ class WalkInController extends Controller
         }
 
         return response()->json(['success' => 'Visitor information added successfully.'], 201);
+
+
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "New Walk In created by " . $request->user()->name,
+            'organization' => 'Visitor by' . $visitor->name,
+            'activity' => "Created a new visitor with " . $visitor .
+                'with details: ' . $user_details  . '.'
+        ]);
+        return response()->json(['success' => 'Visitor Walkin information added successfully.'], 201);
     }
 
     public function sendUserSMS($visitor_name, $time, $resident_name, $phone_number, $place)
