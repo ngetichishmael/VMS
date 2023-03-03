@@ -122,7 +122,7 @@ class UserController extends Controller
 
         // $this->dispatchBrowserEvent('show-edit-org-modal', compact('users'));
 
-        return view('livewire.user.edit', compact('user','organizations','roles')); 
+        return view('livewire.user.edit', compact('user','organizations','roles'));
 
     }
 

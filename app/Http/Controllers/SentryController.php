@@ -83,7 +83,6 @@ class SentryController extends Controller
             'name' => $request->input('name'),
 
             'email' => $organization->email ?? $request->input('name'),
-
             'phone_number' => $request->phone_number,
 
             'organization_code' =>$org_code->organization_code,
