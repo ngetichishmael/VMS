@@ -20,7 +20,7 @@
 
 @section('content')
     <style>
-        .card-container {
+           .card-container {
             padding-top: 20px;
             width: 100%;
             display: flex;
@@ -31,12 +31,16 @@
         .card-left {
             padding: 10px;
             width: 55%;
-            background-color:#F2F3F5;
+            height: 25%;
+            background-color:#E5E4E2;
+           
         }
 
         .card-right {
             padding: 10px;
             width: 42%;
+ 
+            background-color:#E5E4E2;
         
         }
     </style>
@@ -104,7 +108,7 @@
                                 <td>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input"
-                                               id="author-read" name="automatic_checkin"
+                                               id="author-read" name="automatic_id_checkin"
 
                                                @if ($organization_code->automatic_id_checkin === 1) checked @endif
                                         />

@@ -26,6 +26,9 @@
 </div>
 
 <!-- users filter end -->
+
+@include('livewire.Notification.flash-message')
+
 {{-- @include('partials.loaderstyle') --}}
 <!-- list section start -->
 <div class="card">
