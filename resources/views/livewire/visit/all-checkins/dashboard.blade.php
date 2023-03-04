@@ -34,8 +34,7 @@
                         </div>
                     </div>
 
-
-
+    
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="selectSmall">Time</label>
@@ -47,6 +46,20 @@
                             </select>
                         </div>
                     </div>
+
+</div>
+                    </div>
+            <!-- users filter end -->
+            <!-- users filter end -->
+            {{-- @include('partials.loaderstyle') --}}
+
+
+            @include('livewire.Notification.flash-message')
+
+            <!-- list section start -->
+            <div class="card">
+            <div class="pt-0 pb-2 d-flex justify-content-between align-items-center mx-50 row">
+
 
                     <div class="col-md-4 user_role">
                         <div class="input-group input-group-merge">
@@ -84,16 +97,7 @@
 
 
                 </div>
-            </div>
-            <!-- users filter end -->
-            <!-- users filter end -->
-            {{-- @include('partials.loaderstyle') --}}
-
-
-            @include('livewire.Notification.flash-message')
-
-            <!-- list section start -->
-            <div class="card">
+       
 
                 <div class="pt-0 card-datatable table-responsive">
                     <div class="card-datatable table-responsive">
@@ -126,17 +130,19 @@
                                 <td>{!! $visitor->timeLog->entry_time ?? null !!}</td>
                                 @if (!isset($visitor->timeLog->exit_time))
                                     <td>...</td>
-                                    <td style="color: orange;"> Visitor Still in</td>
+                                    <td> <span class="badge badge-pill badge-light-primary mr-1">Visit Active</span> </td>
                                 @else
                                     <td>{!! $visitor->timeLog->exit_time ?? null !!}</td>
-                                    <td style="color: #70ce52;">
-                                        {!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds') !!}
 
+                                    <td >
+                                       <span class="badge badge-pill badge-light-dark mr-1">
+                                           {!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hrs %I Mins '); !!}
+                                        </span>
                                     </td>
                                 @endif
                                 <td>
-                                    <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}"><i
-                                            class="fa fa-eye">&nbsp;Details</i></a>
+                                    <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
+                                    <i class="fa fa-eye" style="color:#808080">  </i></a>
                                 </td>
                                 </tr>
                             @empty
