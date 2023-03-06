@@ -125,7 +125,6 @@
                                     @endif
                                 @endif
 
-                                @endif
                             </th>
                             <th>Site</th>
                             <th>Section</th>
@@ -179,55 +178,52 @@
         </div>
 
     </div>
-</div>
-</div>
-<style>
-    .option {
-        color: #0c0c0c;
-    }
+    <style>
+        .option {
+            color: #0c0c0c;
+        }
 
-    .dropdown {
-        display: inline-block;
-        position: relative;
-    }
+        .dropdown {
+            display: inline-block;
+            position: relative;
+        }
 
-    .dropdown-toggle {
-        cursor: pointer;
-        color: darkgray;
-    }
+        .dropdown-toggle {
+            cursor: pointer;
+            color: darkgray;
+        }
 
-    .dropdown-menu {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        display: none;
-        background-color: #fff;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-    }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            display: none;
+            background-color: #fff;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
 
-    .dropdown-menu a {
-        color: #333;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
+        .dropdown-menu a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
 
-    .dropdown-menu a:hover {
-        background-color: #f1f1f1;
-    }
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
 
-    .dropdown:hover .dropdown-menu {
-        display: block;
-    }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
 
-    th,
-    td {
-        text-align: left;
-    }
+        th,
+        td {
+            text-align: left;
+        }
 
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-</style>
-</div>
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>

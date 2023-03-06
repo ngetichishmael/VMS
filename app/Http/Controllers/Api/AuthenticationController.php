@@ -9,7 +9,6 @@ use App\Models\Sentry;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserCode;
-use App\Models\UserDetail;
 
 use App\Models\UserDetail;
 

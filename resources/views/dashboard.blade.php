@@ -20,6 +20,7 @@
 
 @section('content')
     <!-- Dashboard Ecommerce Starts -->
+    @livewire('dashboard.statistics')
     <section id="dashboard-ecommerce">
         <div class="row match-height">
             <!-- Medal Card -->
@@ -29,23 +30,23 @@
                     style=" background: linear-gradient(to right, #15807A, rgb(111,178,190))">
                     <div class="card-body">
 
-                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">Visits</p>
+                        <p class="mx-1 card-text font-small-3"style="color: #fbfcfd">Visits</p>
                         <div class="media">
-                            <div class="avatar bg-light-primary mr-2">
+                            <div class="mr-2 avatar bg-light-primary">
                                 <div class="avatar-content" style="background: whitesmoke">
                                     <i data-feather="sunset" class="avatar-icon"></i>
                                 </div>
                             </div>
                             <hr />
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalVisitorsToday }}</h4>
+                            <div class="my-auto media-body">
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalVisitorsToday }}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Today</p>
+                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Today</p>
                             </div>
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $yesterdayVisitor }}</h4>
+                            <div class="my-auto media-body">
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $yesterdayVisitor }}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Yesterday</p>
+                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Yesterday</p>
                             </div>
                         </div>
                     </div>
@@ -55,23 +56,23 @@
                 <div class="card card-congratulation-medal"
                     style=" background: linear-gradient(to right, #e75f04, #fdc39b)">
                     <div class="card-body">
-                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">Weekly Visits</p>
+                        <p class="mx-1 card-text font-small-3"style="color: #fbfcfd">Weekly Visits</p>
                         <div class="media">
-                            <div class="avatar bg-light-primary mr-2">
+                            <div class="mr-2 avatar bg-light-primary">
                                 <div class="avatar-content" style="background: whitesmoke">
                                     <i data-feather="sunset" class="avatar-icon"></i>
                                 </div>
                             </div>
                             <hr />
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalThisWeek }}</h4>
+                            <div class="my-auto media-body">
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalThisWeek }}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">This Week</p>
+                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">This Week</p>
                             </div>
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalLastWeekVisit }}</h4>
+                            <div class="my-auto media-body">
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalLastWeekVisit }}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Last Week</p>
+                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Last Week</p>
                             </div>
                         </div>
                     </div>
@@ -81,24 +82,24 @@
                 <div class="card card-congratulation-medal"
                     style=" background: linear-gradient(to right, #043331, #08dad1)">
                     <div class="card-body">
-                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">Motor Vehicle Count</p>
+                        <p class="mx-1 card-text font-small-3"style="color: #fbfcfd">Motor Vehicle Count</p>
                         <div class="media">
-                            <div class="avatar bg-light-primary mr-2">
+                            <div class="mr-2 avatar bg-light-primary">
                                 <div class="avatar-content" style="background: whitesmoke">
                                     <i data-feather="building" class="avatar-icon"></i>
                                 </div>
                             </div>
                             <hr />
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalVehicleWeek }}</h4>
+                            <div class="my-auto media-body">
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalVehicleWeek }}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">This Week</p>
+                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">This Week</p>
                             </div>
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalLastVehicleVisit }}
+                            <div class="my-auto media-body">
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalLastVehicleVisit }}
                                 </h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Last Week</p>
+                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Last Week</p>
                             </div>
                         </div>
                     </div>
@@ -108,25 +109,25 @@
                 <div class="card card-congratulation-medal"
                     style=" background: linear-gradient(to right, #792e07, #ff8b4e)">
                     <div class="card-body">
-                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">Gender Comparison Last Week</p>
+                        <p class="mx-1 card-text font-small-3"style="color: #fbfcfd">Gender Comparison Last Week</p>
                         <div class="media">
-                            <div class="avatar bg-light-primary mr-2">
+                            <div class="mr-2 avatar bg-light-primary">
                                 <div class="avatar-content" style="background: whitesmoke">
                                     <i data-feather="sunset" class="avatar-icon"></i>
                                 </div>
                             </div>
                             <hr />
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalMaleLastWeek }}
+                            <div class="my-auto media-body">
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalMaleLastWeek }}
                                 </h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Male</p>
+                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Male</p>
                             </div>
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalFemaleLastWeek }}
+                            <div class="my-auto media-body">
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalFemaleLastWeek }}
                                 </h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Female</p>
+                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Female</p>
                             </div>
                         </div>
                     </div>
