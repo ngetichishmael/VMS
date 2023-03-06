@@ -8,8 +8,10 @@
 ==========================================================================================*/
 window.colors = {
     solid: {
+        // primary: '#7367F0',
         primary: "#1a3258",
         secondary: "#bc5e3a",
+        // secondary: '#82868b',
         success: "#28C76F",
         info: "#00cfe8",
         warning: "#FF9F43",
@@ -1035,13 +1037,11 @@ window.colors = {
         } else if (formPasswordToggleInput.attr("type") === "password") {
             formPasswordToggleInput.attr("type", "text");
             if (feather) {
-                formPasswordToggleIcon
-                    .find("svg")
-                    .replaceWith(
-                        feather.icons["eye-off"].toSvg({
-                            class: "font-small-4",
-                        })
-                    );
+                formPasswordToggleIcon.find("svg").replaceWith(
+                    feather.icons["eye-off"].toSvg({
+                        class: "font-small-4",
+                    })
+                );
             }
         }
     });

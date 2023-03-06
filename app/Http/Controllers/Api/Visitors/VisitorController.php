@@ -111,11 +111,11 @@ class VisitorController extends Controller
             406
         );
     }
+
     public function returningVisitorVerify(Request $request)
     {
         $number = $request->input('number');
         $stripped_number = preg_replace('/[^0-9]/', '', $number);
-
 
         $users = UserDetail::whereRaw("REPLACE(phone_number, '-', '') LIKE '%$stripped_number%'")
             ->orWhere('ID_number', 'LIKE', "%$number%")
@@ -129,7 +129,6 @@ class VisitorController extends Controller
         $visitor = Visitor::whereIn('user_detail_id', $users->pluck('id')->toArray())
             ->orderBy('id', 'desc')
             ->first();
-
         $time_log = TimeLog::where('id', $visitor->time_log_id)
             ->whereNull('exit_time')
             ->first();

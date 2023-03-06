@@ -50,17 +50,12 @@ class WalkInController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
 
-    public function show( $walkIn)
+    public function show($walkIn)
     {
-        $visitor = WalkIn::with('purpose1','sentry','timeLogs')->whereId($walkIn)->first();
+        $visitor = WalkIn::with('purpose1', 'sentry', 'timeLogs')->whereId($walkIn)->first();
         $visitorCount = Visitor::where('user_detail_id', $visitor->user_details->id)->count();
-        $lastTimeLog=TimeLog::where('id', $visitor->time_log_id)->orderBy('id', 'desc')->first();
-
-        $HistoryTimeLogs=WalkIn::with('timeLogs')->where('user_detail_id', $visitor->user_details->id)->orderBy('id', 'desc')->get();
-
-        return view('app.visitor.walks.visitorDetails',compact('visitor', 'visitorCount', 'HistoryTimeLogs','lastTimeLog'));
-
-
+        $lastTimeLog = TimeLog::where('id', $visitor->time_log_id)->orderBy('id', 'desc')->first();
+        return view('app.visitor.walks.visitorDetails', compact('visitor', 'visitorCount', 'lastTimeLog'));
     }
 
     /**

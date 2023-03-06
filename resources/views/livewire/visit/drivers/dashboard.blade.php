@@ -68,7 +68,7 @@
                     </div>
 
 
-               
+
                 </div>
             </div>
             <!-- users filter end -->
@@ -79,12 +79,12 @@
 
             <!-- list section start -->
             <div class="card">
-  
+
                 <div class="pt-0 card-datatable table-responsive">
                     <div class="card-datatable table-responsive">
-                       
-                    
-                    
+
+
+
                     <table class="table">
                     <thead>
                             <tr>
@@ -110,9 +110,9 @@
                             </tr>
                         </thead>
 
-                         
 
-                           
+
+
                         <tbody style="font-size: small">
                             @forelse($dvisitors as $key => $visitor)
                                 <tr>
@@ -125,11 +125,11 @@
                                     <td>{!! $visitor->timeLog->entry_time ?? '-' !!}</td>
                                     @if (!isset($visitor->timeLog->exit_time))
                                         <td>...</td>
-                                        <td> <span class="badge badge-pill badge-light-primary mr-1">Visit Active</span> </td>
+                                        <td> <span class="mr-1 badge badge-pill badge-light-primary">Visit Active</span> </td>
                                     @else
                                         <td>{!! $visitor->timeLog->exit_time!!}</td>
                                         <td >
-                                        <span class="badge badge-pill badge-light-dark mr-1">
+                                        <span class="mr-1 badge badge-pill badge-light-dark">
                                         {!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hrs %I Mins '); !!}
                                         </span>
                                     </td>
@@ -155,16 +155,16 @@
                             @endforelse
                         </tbody>
                     </table>
-             
+
                         <div style="margin-left: 80%"  class="mt-1">{{ $dvisitors->links() }}
                         </div>
-                        
+
                     </div>
                 </div>
-   
+
         </div>
 
-    
+
 
 
 
