@@ -163,7 +163,7 @@ class DashboardController extends Controller
                 ]
             ]
         ];
-        $users = Visitor::select(DB::raw("COUNT(*) as count"), DB::raw("MONTH(created_at) as month_name"))
+        $users = Visitor::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
             ->orderBy('id', 'ASC')
             ->get();
 
@@ -171,7 +171,6 @@ class DashboardController extends Controller
         $vdata = $users->values();
 
         $yearlyData = UserDetail::select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as count'))
-            ->whereYear('created_at', Carbon::now()->year)
             ->get()
             ->toArray();
 
