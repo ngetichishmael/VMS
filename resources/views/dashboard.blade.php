@@ -34,72 +34,21 @@
                         <div class="media">
                             <div class="mr-2 avatar bg-light-primary">
                                 <div class="avatar-content" style="background: whitesmoke">
-                                    <i data-feather="sunset" class="avatar-icon"></i>
+                                    <i data-feather="users" class="avatar-icon"></i>
                                 </div>
                             </div>
                             <hr />
                             <div class="my-auto media-body">
-                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalVisitorsToday }}</h4>
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $maleCount }}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Today</p>
+                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Male &nbsp;
+                                    {!! $percentage_male !!}%</p>
                             </div>
                             <div class="my-auto media-body">
-                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $yesterdayVisitor }}</h4>
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $maleCount }}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Yesterday</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-12">
-                <div class="card card-congratulation-medal"
-                    style=" background: linear-gradient(to right, #e75f04, #fdc39b)">
-                    <div class="card-body">
-                        <p class="mx-1 card-text font-small-3"style="color: #fbfcfd">Weekly Visits</p>
-                        <div class="media">
-                            <div class="mr-2 avatar bg-light-primary">
-                                <div class="avatar-content" style="background: whitesmoke">
-                                    <i data-feather="sunset" class="avatar-icon"></i>
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="my-auto media-body">
-                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalThisWeek }}</h4>
-                                <hr style="color: #bebbbb" />
-                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">This Week</p>
-                            </div>
-                            <div class="my-auto media-body">
-                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalLastWeekVisit }}</h4>
-                                <hr style="color: #bebbbb" />
-                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Last Week</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-12">
-                <div class="card card-congratulation-medal"
-                    style=" background: linear-gradient(to right, #043331, #08dad1)">
-                    <div class="card-body">
-                        <p class="mx-1 card-text font-small-3"style="color: #fbfcfd">Motor Vehicle Count</p>
-                        <div class="media">
-                            <div class="mr-2 avatar bg-light-primary">
-                                <div class="avatar-content" style="background: whitesmoke">
-                                    <i data-feather="building" class="avatar-icon"></i>
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="my-auto media-body">
-                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalVehicleWeek }}</h4>
-                                <hr style="color: #bebbbb" />
-                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">This Week</p>
-                            </div>
-                            <div class="my-auto media-body">
-                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalLastVehicleVisit }}
-                                </h4>
-                                <hr style="color: #bebbbb" />
-                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Last Week</p>
+                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Female &nbsp;
+                                    {!! $percentage_female !!}%</p>
                             </div>
                         </div>
                     </div>
@@ -133,8 +82,292 @@
                     </div>
                 </div>
             </div>
+            {{--            <div class="col-xl-4 col-md-6 col-12"> --}}
+            {{--                <div class="card card-congratulation-medal" --}}
+            {{--                     style=" background: linear-gradient(to right, #043331, #08dad1)"> --}}
+            {{--                    <div class="card-body"> --}}
+            {{--                        <p class="mx-1 card-text font-small-3"style="color: #fbfcfd">Motor Vehicle Count</p> --}}
+            {{--                        <div class="media"> --}}
+            {{--                            <div class="mr-2 avatar bg-light-primary"> --}}
+            {{--                                <div class="avatar-content" style="background: whitesmoke"> --}}
+            {{--                                    <i data-feather="building" class="avatar-icon"></i> --}}
+            {{--                                </div> --}}
+            {{--                            </div> --}}
+            {{--                            <hr /> --}}
+            {{--                            <div class="my-auto media-body"> --}}
+            {{--                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalVehicleWeek }}</h4> --}}
+            {{--                                <hr style="color: #bebbbb" /> --}}
+            {{--                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">This Week</p> --}}
+            {{--                            </div> --}}
+            {{--                            <div class="my-auto media-body"> --}}
+            {{--                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalLastVehicleVisit }} --}}
+            {{--                                </h4> --}}
+            {{--                                <hr style="color: #bebbbb" /> --}}
+            {{--                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Last Week</p> --}}
+            {{--                            </div> --}}
+            {{--                        </div> --}}
+            {{--                    </div> --}}
+            {{--                </div> --}}
+            {{--            </div> --}}
+            <div class="col-xl-4 col-md-6 col-12">
+                <div class="card card-congratulation-medal"
+                    style=" background: linear-gradient(to right, #e75f04, #fdc39b)">
+                    <div class="card-body">
+                        <p class="mx-1 card-text font-small-3"style="color: #fbfcfd">Weekly Visits</p>
+                        <div class="media">
+                            <div class="mr-2 avatar bg-light-primary">
+                                <div class="avatar-content" style="background: whitesmoke">
+                                    <i data-feather="calendar" class="avatar-icon"></i>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="my-auto media-body">
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalThisWeek }}</h4>
+                                <hr style="color: #bebbbb" />
+                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">This Week</p>
+                            </div>
+                            <div class="my-auto media-body">
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalLastWeekVisit }}</h4>
+                                <hr style="color: #bebbbb" />
+                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Last Week</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 col-12">
+                <div class="card card-congratulation-medal"
+                    style=" background: linear-gradient(to right, #0b5777, #69adcb)">
+                    <div class="card-body">
+                        <p class="mx-1 card-text font-small-3"style="color: #fbfcfd">CHECK-IN THIS WEEK</p>
+                        <div class="media">
+                            <div class="mr-2 avatar bg-light-primary">
+                                <div class="avatar-content" style="background: whitesmoke">
+                                    <i data-feather="badge" class="avatar-icon"></i>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="my-auto media-body">
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $ipass }}</h4>
+                                <hr style="color: #bebbbb" />
+                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">IPass check-in</p>
+                            </div>
+                            <div class="my-auto media-body">
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $sms }}</h4>
+                                <hr style="color: #bebbbb" />
+                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">SMS Check-in</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 col-12">
+                <div class="card card-congratulation-medal"
+                    style=" background: linear-gradient(to right, #295922, #94ee88)">
+                    <div class="card-body">
+                        <p class="mx-1 card-text font-small-3"style="color: #fbfcfd">AUTOMATIC CHECK-IN THIS WEEK</p>
+                        <div class="media">
+                            <div class="mr-2 avatar bg-light-primary">
+                                <div class="avatar-content" style="background: whitesmoke">
+                                    <i data-feather="QR_CODE" class="avatar-icon"></i>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="my-auto media-body">
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $drivein }}</h4>
+                                <hr style="color: #bebbbb" />
+                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Drive-in</p>
+                            </div>
+                            <div class="my-auto media-body">
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $walkin }}</h4>
+                                <hr style="color: #bebbbb" />
+                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Walk-in</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
+
+    <section id="chartjs-chart">
+        <div class="row">
+            <!-- Horizontal Bar Chart Start -->
+            <div class="col-xl-6 col-12">
+                <div class="card">
+                    <div
+                        class="card-header d-flex justify-content-between align-items-sm-center align-items-start flex-sm-row flex-column">
+                        <div class="header-left">
+                            <p class="card-subtitle text-muted mb-25">{!! ucwords('Monthly Visits by Gender') !!}</p>
+                            <h4 class="card-title">{!! ucwords('Monthly Visits by Gender') !!}</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="monthly-visits" class="chartjs" data-height="400"></canvas>
+                    </div>
+                    <div class="pl-2 header-right d-flex align-items-center">
+                        <div class="d-flex align-items-center">
+                            <span class="bullet bullet-primary"></span>
+                            <h6 class="mb-0 ml-50">{{ $maleMonthlyVisitorCount }} MALE</h6>
+                        </div>
+                        <div class="d-flex align-items-center ml-75">
+                            <span class="bullet bullet-danger"></span>
+                            <h6 class="mb-0 ml-50">{{ $femaleMonthlyVisitorCount }} FEMALE</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    var BarChart = {!! $BarChart !!};
+                    var ctx = document.getElementById('monthly-visits').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: BarChart,
+                        options: {
+                            responsive: true,
+                            title: 'MONTHLY VISITS',
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                });
+            </script>
+            <!-- Horizontal Bar Chart End -->
+            <div class="col-xl-6 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <p class="card-subtitle text-muted mb-25">{!! ucwords('Monthly Visits by Age') !!}</p>
+                        <h4 class="card-title">{!! ucwords('Monthly Visits by AGE') !!}</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="monthly-visitors-by-age1" height="274"></canvas>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    var monthlyData = {
+                        labels: {!! json_encode($labelschart) !!},
+                        datasets: [{
+                            data: {!! json_encode($datachart) !!},
+                            backgroundColor: [
+                                "#FF6384",
+                                "#36A2EB",
+                                "#FFCE56",
+                                "#1ABC9C",
+                                "#F1C40F",
+                                "#9B59B6",
+                                "#E74C3C",
+                                "#2ECC71",
+                                "#34495E",
+                                "#3498DB"
+                            ]
+                        }]
+                    };
+
+                    var ctx = document.getElementById('monthly-visitors-by-age1').getContext('2d');
+                    var myPieChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: monthlyData,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                        }
+                    });
+                });
+            </script>
+
+        </div>
+        <div>
+            <div class="card">
+                <canvas id="myChart" height="300px"></canvas>
+                <div class="pl-2 header-right d-flex align-items-center">
+                    <div>
+                        <p class="pb-5 pl-4 mb-0 card-text">TOTAL VISITORS : {{ $totalVisitors }}</p>
+                    </div>
+                </div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script type="text/javascript">
+                    var labels = {!! $vlabels !!};
+                    var users = {!! $vdata !!};
+
+                    const data = {
+                        labels: labels,
+                        datasets: [{
+                            label: 'VISITORS MONTHLY GRAPH LINE',
+                            backgroundColor: 'rgb(82,179,220)',
+                            borderColor: 'rgb(133,210,243)',
+                            data: users,
+                        }]
+                    };
+
+                    const config = {
+                        type: 'line',
+                        data: data,
+                        options: {}
+                    };
+
+                    const myChart = new Chart(
+                        document.getElementById('myChart'),
+                        config
+                    );
+                </script>
+            </div>
+        </div>
+        <div class="card">
+            <div class="col-xl-6 col-12">
+                <div class="card">
+                    <div
+                        class="card-header d-flex justify-content-between align-items-sm-center align-items-start flex-sm-row flex-column">
+                        <div class="header-left">
+                            <p class="card-subtitle text-muted mb-25">Yearly Visitors</p>
+                            <h4 class="card-title">Visits</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="yearly-visitors" class="chartjs" data-height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                $(document).ready(function() {
+                    var yearlyData = {!! $yearlyData !!};
+                    var ctx = document.getElementById('yearly-visitors').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: yearlyData.labels,
+                            datasets: [{
+                                label: 'Visitors',
+                                data: yearlyData.data,
+                                fill: false,
+                                borderColor: '#007bff',
+                                tension: 0.1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                });
+            </script>
+        </div>
+    </section>
+
     @livewire('dashboard.dashboard')
 
     <!-- Dashboard Ecommerce ends -->
@@ -146,7 +379,15 @@
     <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/extensions/jstree.min.js')) }}"></script>
 @endsection
+@section('vendor-script')
+    <!-- vendor files -->
+    <script src="{{ asset(mix('vendors/js/charts/chart.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/pickers/flatpickr/flatpickr.min.js')) }}"></script>
+@endsection
+
 @section('page-script')
-    {{-- Page js files --}}
+    Page js files
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
 @endsection

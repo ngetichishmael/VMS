@@ -22,6 +22,8 @@ class Dashboard extends Component
         $DriveIn = Visitor::where('type', 'DriveIn')->orderBy('id', 'desc')->paginate($this->perPageDriveInAll);
         $Sms = Visitor::where('type', 'Sms')->orderBy('id', 'desc')->paginate($this->perPageSmsAll);
         $Id = Visitor::where('type', 'ID')->orderBy('id', 'desc')->paginate($this->perPageSmsAll);
+//        $female = Visitor::where('user_details.gender', 'female')->count();
+//        $male = Visitor::where('user_details.gender', 'male')->count();
         return view('livewire.dashboard.dashboard', [
             'allTypes' => $allTypes,
             "WalkIn" => $WalkIn,

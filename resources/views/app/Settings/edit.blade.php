@@ -40,8 +40,6 @@
             padding: 10px;
             width: 42%;
 
-            background-color: #E5E4E2;
-
         }
     </style>
     <div class="row">
