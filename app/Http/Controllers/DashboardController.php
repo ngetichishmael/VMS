@@ -173,10 +173,14 @@ class DashboardController extends Controller
         // $vlabels = $users->keys();
         // $vdata = $users->values();
 
-        $yearlyData = UserDetail::select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as count'))
-            ->whereYear('created_at', Carbon::now()->year)
-            ->get()
-            ->toArray();
+        // $yearlyData = UserDetail::select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as count'))
+        //     ->whereYear('created_at', Carbon::now()->year)
+        //     ->get()
+        //     ->toArray();
+
+        $yearlyMonth = UserDetail::whereYear('created_at', Carbon::now()->year)->select(DB::raw('MONTH(created_at) as month'))->get();
+        $yearlyCount = UserDetail::whereYear('created_at', Carbon::now()->year)->select(DB::raw('COUNT(*) as count'))->get();
+        // $yearlyData = UserDetail::whereYear('created_at', Carbon::now()->year)->select(DB::raw('COUNT(*) as count'))->get();
 
         $data = [
             'labels' => [],
@@ -184,12 +188,15 @@ class DashboardController extends Controller
         ];
 
         for ($i = 1; $i <= 12; $i++) {
-            $monthData = array_values(array_filter($yearlyData, function ($item) use ($i) {
+            $monthData = array_values(array_filter($yearlyMonth, function ($item) use ($i) {
+                return $item['month'] == $i;
+            }));
+            $count = array_values(array_filter($yearlyCount, function ($item) use ($i) {
                 return $item['month'] == $i;
             }));
 
             if (!empty($monthData)) {
-                $data['data'][] = $monthData[0]['count'];
+                $data['data'][] = $count[0]['count'];
             } else {
                 $data['data'][] = 0;
             }
