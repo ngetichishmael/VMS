@@ -197,7 +197,7 @@ class DashboardController extends Controller
                 return $item['count'] == $i;
             }));
 
-            if (!empty($monthData)) {
+            if (!empty($count)) {
                 $data['data'][] = $count['count'];
             } else {
                 $data['data'][] = 0;
