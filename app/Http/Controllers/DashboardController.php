@@ -34,27 +34,27 @@ class DashboardController extends Controller
         $weekStartDate = Carbon::now()->startOfWeek();
         $weekEndDate = Carbon::now()->endOfWeek();
 
-        $drivein = DB::table('visitors')->where('type' , '=','DriveIn')
+        $drivein = DB::table('visitors')->where('type', '=', 'DriveIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
-        $sms = DB::table('visitors')->where('type' , '=','SMS')
+        $sms = DB::table('visitors')->where('type', '=', 'SMS')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
-        $walkin = DB::table('visitors')->where('type' , '=','WalkIn')
+        $walkin = DB::table('visitors')->where('type', '=', 'WalkIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
-        $ipass = DB::table('visitors')->where('type' , '=','iPass')
+        $ipass = DB::table('visitors')->where('type', '=', 'iPass')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
-        $id = DB::table('visitors')->where('type' , '=','ID')
+        $id = DB::table('visitors')->where('type', '=', 'ID')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
@@ -77,7 +77,7 @@ class DashboardController extends Controller
             $percentage_male = ($maleCount / $totalCount) * 100;
             $percentage_female  = ($femaleCount / $totalCount) * 100;
         } else {
-            $percentage_male= 0;
+            $percentage_male = 0;
             $percentage_female  = 0;
         }
 
@@ -106,8 +106,8 @@ class DashboardController extends Controller
         $maleData = [];
         $femaleData = [];
 
-        foreach($BarChart as $mdata) {
-            if($mdata->gender == 'male') {
+        foreach ($BarChart as $mdata) {
+            if ($mdata->gender == 'male') {
                 $maleData[] = $mdata->count;
                 $femaleData[] = 0;
             } else {
@@ -116,7 +116,7 @@ class DashboardController extends Controller
             }
         }
 
-        $labels = $BarChart->map(function($item) {
+        $labels = $BarChart->map(function ($item) {
             return date("M Y", strtotime($item->year . '-' . $item->month . '-01'));
         });
 
@@ -163,10 +163,10 @@ class DashboardController extends Controller
                 ]
             ]
         ];
-        $users = Visitor::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
+        $users = Visitor::select(DB::raw("COUNT(*) as count"), "id", DB::raw("MONTHNAME(created_at) as month_name"))
             ->whereYear('created_at', date('Y'))
             ->groupBy(DB::raw("month_name"))
-            ->orderBy('id','ASC')
+            ->orderBy('id', 'ASC')
             ->pluck('count', 'month_name');
 
         $vlabels = $users->keys();
@@ -229,24 +229,24 @@ class DashboardController extends Controller
                 'totalMaleLastWeek' => $totalMaleLastWeek,
                 'totalFemaleLastWeek' => $totalFemaleLastWeek,
                 'BarChart' => json_encode($mdata),
-                'femaleCount'=>$femaleCount,
-                'maleCount'=>$maleCount,
+                'femaleCount' => $femaleCount,
+                'maleCount' => $maleCount,
                 'totalVisitors' => $totalVisitors,
-                'chartData'=>$chartData,
-                'vlabels'=>$vlabels,
-                'vdata'=>$vdata,
-                'walkin'=>$walkin,
-                'drivein'=>$drivein,
-                'ipass'=>$ipass,
-                'id'=>$id,
-                'sms'=>$sms,
-                'yearlyData'=>$yearlyData,
-                'percentage_male'=>$percentage_male,
-                'percentage_female'=>$percentage_female,
-                'maleMonthlyVisitorCount'=>$maleMonthlyVisitorCount,
-                'femaleMonthlyVisitorCount'=>$femaleMonthlyVisitorCount,
-                'labelschart'=>$labelschart,
-                'datachart'=>$datachart
+                'chartData' => $chartData,
+                'vlabels' => $vlabels,
+                'vdata' => $vdata,
+                'walkin' => $walkin,
+                'drivein' => $drivein,
+                'ipass' => $ipass,
+                'id' => $id,
+                'sms' => $sms,
+                'yearlyData' => $yearlyData,
+                'percentage_male' => $percentage_male,
+                'percentage_female' => $percentage_female,
+                'maleMonthlyVisitorCount' => $maleMonthlyVisitorCount,
+                'femaleMonthlyVisitorCount' => $femaleMonthlyVisitorCount,
+                'labelschart' => $labelschart,
+                'datachart' => $datachart
             ]
         );
     }
