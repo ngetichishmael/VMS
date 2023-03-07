@@ -173,7 +173,6 @@ class DashboardController extends Controller
 
         $yearlyData = UserDetail::select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as count'))
             ->whereYear('created_at', Carbon::now()->year)
-            ->groupBy(DB::raw('MONTH(created_at)'))
             ->get()
             ->toArray();
 
