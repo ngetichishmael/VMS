@@ -82,33 +82,6 @@
                     </div>
                 </div>
             </div>
-            {{--            <div class="col-xl-4 col-md-6 col-12"> --}}
-            {{--                <div class="card card-congratulation-medal" --}}
-            {{--                     style=" background: linear-gradient(to right, #043331, #08dad1)"> --}}
-            {{--                    <div class="card-body"> --}}
-            {{--                        <p class="mx-1 card-text font-small-3"style="color: #fbfcfd">Motor Vehicle Count</p> --}}
-            {{--                        <div class="media"> --}}
-            {{--                            <div class="mr-2 avatar bg-light-primary"> --}}
-            {{--                                <div class="avatar-content" style="background: whitesmoke"> --}}
-            {{--                                    <i data-feather="building" class="avatar-icon"></i> --}}
-            {{--                                </div> --}}
-            {{--                            </div> --}}
-            {{--                            <hr /> --}}
-            {{--                            <div class="my-auto media-body"> --}}
-            {{--                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalVehicleWeek }}</h4> --}}
-            {{--                                <hr style="color: #bebbbb" /> --}}
-            {{--                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">This Week</p> --}}
-            {{--                            </div> --}}
-            {{--                            <div class="my-auto media-body"> --}}
-            {{--                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalLastVehicleVisit }} --}}
-            {{--                                </h4> --}}
-            {{--                                <hr style="color: #bebbbb" /> --}}
-            {{--                                <p class="mb-0 card-text font-small-3"style="color: #fbfcfd">Last Week</p> --}}
-            {{--                            </div> --}}
-            {{--                        </div> --}}
-            {{--                    </div> --}}
-            {{--                </div> --}}
-            {{--            </div> --}}
             <div class="col-xl-4 col-md-6 col-12">
                 <div class="card card-congratulation-medal"
                     style=" background: linear-gradient(to right, #e75f04, #fdc39b)">
@@ -386,7 +359,6 @@
 @endsection
 
 @section('page-script')
-    Page js files
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
