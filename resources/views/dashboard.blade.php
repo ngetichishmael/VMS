@@ -239,8 +239,8 @@
                 <div class="col-xl-6 col-12">
                     <div class="card">
                         <div class="card-header">
-                            <p class="card-subtitle text-muted mb-25">{!! ucwords("Monthly Visits by Gender") !!}</p>
-                            <h4 class="card-title">{!! ucwords("Monthly Visits by Gender") !!}</h4>
+                            <p class="card-subtitle text-muted mb-25">{!! ucwords("Monthly Visits by Age") !!}</p>
+                            <h4 class="card-title">{!! ucwords("Monthly Visits by AGE") !!}</h4>
                         </div>
                         <div class="card-body">
                             <canvas id="monthly-visitors-by-age1" height="274"></canvas>
