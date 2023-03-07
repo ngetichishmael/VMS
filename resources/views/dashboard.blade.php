@@ -30,7 +30,7 @@
                     <div class="card-body">
 
                         <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">VISITS TODAY</p>
-                        <div class="media">
+                        <div class="media" style="text-align: center">
                             <div class="avatar bg-light-primary mr-2">
                                 <div class="avatar-content" style="background: whitesmoke">
                                     <i data-feather="users" class="avatar-icon"></i>
@@ -38,80 +38,34 @@
                             </div>
                             <hr />
                             <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $maleCount}}</h4>
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalVisitorsToday}}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Male &nbsp; {!! $percentage_male !!}%</p>
+                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">TODAY
+                                    @php
+                                    $percentChange = $yesterdayVisitor > 0 ? ($totalVisitorsToday - $yesterdayVisitor) / $yesterdayVisitor * 100 : 100;
+                                    $percentChange = number_format($percentChange, 1);
+                                    $color = $percentChange > 0 ? 'green' : 'orange';
+                                    $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
+                                @endphp
+                                <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>
+
+                                </p>
                             </div>
                             <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $maleCount }}</h4>
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $yesterdayVisitor}}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Female &nbsp; {!! $percentage_female !!}%</p>
+                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">YESTERDAY&nbsp;</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 col-md-6 col-12">
-                <div class="card card-congratulation-medal"
-                    style=" background: linear-gradient(to right, #792e07, #ff8b4e)">
-                    <div class="card-body">
-                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">Gender Comparison Last Week</p>
-                        <div class="media">
-                            <div class="avatar bg-light-primary mr-2">
-                                <div class="avatar-content" style="background: whitesmoke">
-                                    <i data-feather="sunset" class="avatar-icon"></i>
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalMaleLastWeek }}
-                                </h4>
-                                <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Male</p>
-                            </div>
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalFemaleLastWeek }}
-                                </h4>
-                                <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Female</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-{{--            <div class="col-xl-4 col-md-6 col-12">--}}
-{{--                <div class="card card-congratulation-medal"--}}
-{{--                     style=" background: linear-gradient(to right, #043331, #08dad1)">--}}
-{{--                    <div class="card-body">--}}
-{{--                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">Motor Vehicle Count</p>--}}
-{{--                        <div class="media">--}}
-{{--                            <div class="avatar bg-light-primary mr-2">--}}
-{{--                                <div class="avatar-content" style="background: whitesmoke">--}}
-{{--                                    <i data-feather="building" class="avatar-icon"></i>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <hr />--}}
-{{--                            <div class="media-body my-auto">--}}
-{{--                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalVehicleWeek }}</h4>--}}
-{{--                                <hr style="color: #bebbbb" />--}}
-{{--                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">This Week</p>--}}
-{{--                            </div>--}}
-{{--                            <div class="media-body my-auto">--}}
-{{--                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalLastVehicleVisit }}--}}
-{{--                                </h4>--}}
-{{--                                <hr style="color: #bebbbb" />--}}
-{{--                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Last Week</p>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
             <div class="col-xl-4 col-md-6 col-12">
                 <div class="card card-congratulation-medal"
                      style=" background: linear-gradient(to right, #e75f04, #fdc39b)">
                     <div class="card-body">
-                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">Weekly Visits</p>
-                        <div class="media">
+                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">WEEKLY VISITS</p>
+                        <div class="media" style="text-align: center">
                             <div class="avatar bg-light-primary mr-2">
                                 <div class="avatar-content" style="background: whitesmoke">
                                     <i data-feather="calendar" class="avatar-icon"></i>
@@ -121,12 +75,57 @@
                             <div class="media-body my-auto">
                                 <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalThisWeek }}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">This Week</p>
+                                <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
+                                    @php
+                                        $percentChange = $totalLastWeekVisit > 0 ? ($totalThisWeek - $totalLastWeekVisit) / $totalLastWeekVisit * 100: 100;
+                                        $percentChange = number_format($percentChange, 1);
+                                        $color = $percentChange > 0 ? 'green' : 'orange';
+                                        $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
+                                    @endphp
+                                    <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>
+
+                                </p>
                             </div>
                             <div class="media-body my-auto">
                                 <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalLastWeekVisit }}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Last Week</p>
+                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd"> LAST WEEK</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 col-12" >
+                <div class="card card-congratulation-medal"
+                     style=" background: linear-gradient(to right, #792e07, #ff8b4e)">
+                    <div class="card-body" >
+                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">ID CHECK-IN THIS WEEK</p>
+                        <div class="media" style="text-align: center">
+                            <div class="avatar bg-light-primary mr-2">
+                                <div class="avatar-content" style="background: whitesmoke">
+                                    <i data-feather="" class="avatar-icon fa fa-id-card-alt"></i>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="media-body my-auto" >
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $idThisWeek }}
+                                </h4>
+                                <hr style="color: #bebbbb" />
+                                <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
+                                    @php
+                                        $percentChange = $yesterdayVisitor > 0 ? ($totalVisitorsToday - $yesterdayVisitor) / $yesterdayVisitor * 100 : 100;
+                                       $percentChange = number_format($percentChange, 1);
+                                        $color = $percentChange > 0 ? 'green' : 'orange';
+                                        $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
+                                    @endphp
+                                    <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>
+                                </p>
+                            </div>
+                            <div class="media-body my-auto">
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $idLastWeek }}
+                                </h4>
+                                <hr style="color: #bebbbb" />
+                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
                             </div>
                         </div>
                     </div>
@@ -136,23 +135,32 @@
                 <div class="card card-congratulation-medal"
                      style=" background: linear-gradient(to right, #0b5777, #69adcb)">
                     <div class="card-body">
-                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">CHECK-IN THIS WEEK</p>
-                        <div class="media">
+                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">WALK CHECK-IN THIS WEEK</p>
+                        <div class="media" style="text-align: center">
                             <div class="avatar bg-light-primary mr-2">
                                 <div class="avatar-content" style="background: whitesmoke">
-                                    <i data-feather="badge" class="avatar-icon"></i>
+                                    <i data-feather="walk-direction" class="avatar-icon fa fa-walking"></i>
                                 </div>
                             </div>
                             <hr />
                             <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $ipass }}</h4>
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $walkinThisWeek }}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">IPass check-in</p>
+                                <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
+
+                                    @php
+                                        $percentChange = $walkinLastWeek > 0 ? ($walkinThisWeek - $walkinLastWeek) / $walkinLastWeek * 100 : 100;
+                                       $percentChange = number_format($percentChange, 1);
+                                        $color = $percentChange > 0 ? 'green' : 'orange';
+                                        $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
+                                    @endphp
+                                    <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>
+                                </p>
                             </div>
                             <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $sms }}</h4>
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $walkinLastWeek}}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">SMS Check-in</p>
+                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
                             </div>
                         </div>
                     </div>
@@ -162,29 +170,135 @@
                 <div class="card card-congratulation-medal"
                      style=" background: linear-gradient(to right, #295922, #94ee88)">
                     <div class="card-body">
-                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">AUTOMATIC CHECK-IN THIS WEEK</p>
-                        <div class="media">
+                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">DRIVE CHECK-IN THIS WEEK</p>
+                        <div class="media" style="text-align: center">
                             <div class="avatar bg-light-primary mr-2">
                                 <div class="avatar-content" style="background: whitesmoke">
-                                    <i data-feather="QR_CODE" class="avatar-icon"></i>
+                                    <i data-feather="car" class="avatar-icon fa fa-car-alt"></i>
                                 </div>
                             </div>
                             <hr />
                             <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $drivein }}</h4>
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $driveinThisWeek }}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Drive-in</p>
+                                <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
+                                    @php
+                                        $percentChange = $driveinLastWeek > 0 ? ($driveinThisWeek - $driveinLastWeek) / $driveinLastWeek * 100 : 100;
+                                       $percentChange = number_format($percentChange, 1);
+                                        $color = $percentChange > 0 ? 'green' : 'orange';
+                                        $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
+                                    @endphp
+                                    <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>
+                                </p>
                             </div>
                             <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $walkin }}</h4>
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $driveinLastWeek }}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Walk-in</p>
+                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 col-12">
+                <div class="card card-congratulation-medal"
+                     style=" background: linear-gradient(to right, #1f4983, #668cbd)">
+                    <div class="card-body">
+                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">iPass CHECK-IN THIS WEEK</p>
+                        <div class="media" style="text-align: center">
+                            <div class="avatar bg-light-primary mr-2">
+                                <div class="avatar-content" style="background: whitesmoke">
+                                    <i data-feather="badge" class="avatar-icon fa fa-id-badge"></i>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="media-body my-auto">
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $ipassThisWeek }}</h4>
+                                <hr style="color: #bebbbb" />
+                                <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
+                                    @php
+                                        $percentChange = $ipassLastWeek > 0 ? ($ipassThisWeek - $ipassLastWeek) / $ipassLastWeek * 100 : 100;
+                                       $percentChange = number_format($percentChange, 1);
+                                        $color = $percentChange > 0 ? 'green' : 'orange';
+                                        $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
+                                    @endphp
+                                    <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>
+                                </p>
+                            </div>
+                            <div class="media-body my-auto">
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $ipassLastWeek }}</h4>
+                                <hr style="color: #bebbbb" />
+                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 col-12">
+                <div class="card card-congratulation-medal"
+                     style=" background: linear-gradient(to right, rgba(124,17,17,0.7), rgba(180,112,112,0.7))">
+                    <div class="card-body">
+                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">SMS CHECK-IN THIS WEEK</p>
+                        <div class="media" style="text-align: center">
+                            <div class="avatar bg-light-primary mr-2">
+                                <div class="avatar-content" style="background: whitesmoke">
+                                    <i data-feather="sms" class="avatar-icon fa fa-sms"></i>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="media-body my-auto">
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $smsThisWeek }}</h4>
+                                <hr style="color: #bebbbb" />
+                                <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
+                                    @php
+                                        $percentChange = $smsLastWeek > 0 ? ($smsThisWeek - $smsLastWeek) / $smsLastWeek * 100 : 100;
+                                       $percentChange = number_format($percentChange, 1);
+                                        $color = $percentChange > 0 ? 'green' : 'orange';
+                                        $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
+                                    @endphp
+                                    <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>
+                                </p>
+                            </div>
+                            <div class="media-body my-auto">
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $smsLastWeek }}</h4>
+                                <hr style="color: #bebbbb" />
+                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
+    <section>
+    <div class="row">
+
+        <div class="col-xl-6 col-12"  >
+            <div class="card">
+                        <div class="card-header font-small-3">
+                            <h5>Units with highest number of visitors this month</h5>
+                        <div class="card-text font-small-3 col-12" >
+                            @foreach($units as $unit)
+                                <h6>{{ $unit->name }} ({{ $unit->visitors_count }} visitors)</h6>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: {{ $unit->visitors_count }}%;" aria-valuenow="{{ $unit->visitors_count }}" aria-valuemin="0" aria-valuemax="{{ $units->max('visitors_count') }}"></div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+            </div>
+        </div>
+            <div class="col-xl-6 col-12">
+                        <div class="card col-8">
+                        <div class="card-header font-small-3">
+                            <h6>{!! ucwords("Organization with the Highest Monthly Visits") !!}</h6>
+                        <div class="card-text font-small-3">
+                           <i class="fa fa-shield"><span>{!! $organization->name !!}</span><span> Visits: {!! $organization->visitor_count !!}</span></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div></div>
     </section>
 
     <section id="chartjs-chart">
@@ -364,6 +478,7 @@
                }); });
            </script>
        </div>
+
     </section>
 
     @livewire('dashboard.dashboard')

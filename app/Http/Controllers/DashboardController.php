@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TimeLog;
+use App\Models\Unit;
 use App\Models\UserDetail;
 use App\Models\VehicleInformation;
 use App\Models\Visitor;
@@ -34,30 +35,61 @@ class DashboardController extends Controller
         $weekStartDate = Carbon::now()->startOfWeek();
         $weekEndDate = Carbon::now()->endOfWeek();
 
-        $drivein = DB::table('visitors')->where('type' , '=','DriveIn')
+
+        $driveinThisWeek = DB::table('visitors')->where('type' , '=','DriveIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
-        $sms = DB::table('visitors')->where('type' , '=','SMS')
+        $driveinLastWeek = DB::table('visitors')
+            ->where('type', '=', 'DriveIn')
+            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
+            ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
+            ->count();
+        $smsThisWeek = DB::table('visitors')->where('type' , '=','SMS')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
-        $walkin = DB::table('visitors')->where('type' , '=','WalkIn')
+        $smsLastWeek = DB::table('visitors')
+            ->where('type', '=', 'SMS')
+            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
+            ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
+            ->count();
+        $walkinThisWeek = DB::table('visitors')->where('type' , '=','WalkIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
-        $ipass = DB::table('visitors')->where('type' , '=','iPass')
+        $walkinLastWeek = DB::table('visitors')
+            ->where('type', '=', 'WalkIn')
+            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
+            ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
+            ->count();
+        $ipassThisWeek = DB::table('visitors')->where('type' , '=','iPass')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
-        $id = DB::table('visitors')->where('type' , '=','ID')
+        $ipassLastWeek = DB::table('visitors')
+            ->where('type', '=', 'iPass')
+            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
+            ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
+            ->count();
+        $idThisWeek = DB::table('visitors')->where('type' , '=','ID')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
+            ->count();
+        $idLastWeek = DB::table('visitors')
+            ->where('type', '=', 'ID')
+            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
+            ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->count();
         $today = Carbon::today();
         $maleCount = DB::table('visitors')
@@ -72,14 +104,6 @@ class DashboardController extends Controller
             ->where('user_details.gender', '=', 'female')
             ->whereDate('time_logs.entry_time', '=', $today)
             ->count();
-        $totalCount = $maleCount + $femaleCount;
-        if ($totalCount > 0) {
-            $percentage_male = ($maleCount / $totalCount) * 100;
-            $percentage_female  = ($femaleCount / $totalCount) * 100;
-        } else {
-            $percentage_male= 0;
-            $percentage_female  = 0;
-        }
 
         $femaleMonthlyVisitorCount = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
@@ -100,25 +124,26 @@ class DashboardController extends Controller
             DB::raw("COUNT(*) as count"),
             DB::raw("gender")
         )
+            ->whereRaw("updated_at >= DATE_SUB(CURRENT_DATE, INTERVAL 2 MONTH)") // filter data for past two months and current month
             ->groupBy('year', 'month', 'gender')
             ->get();
 
         $maleData = [];
         $femaleData = [];
 
-        foreach($BarChart as $mdata) {
-            if($mdata->gender == 'male') {
-                $maleData[] = $mdata->count;
-                $femaleData[] = 0;
-            } else {
-                $femaleData[] = $mdata->count;
-                $maleData[] = 0;
-            }
+        $months = [];
+
+        for($i=2; $i>=0; $i--) {
+            $month = date('m', strtotime("-$i month")); // get the month number
+            $year = date('Y', strtotime("-$i month")); // get the year
+            $months[] = date("M Y", strtotime($year . '-' . $month . '-01')); // format the date as "M Y"
+            $maleCount = $BarChart->where('gender', 'male')->where('month', $month)->where('year', $year)->sum('count');
+            $femaleCount = $BarChart->where('gender', 'female')->where('month', $month)->where('year', $year)->sum('count');
+            $maleData[] = $maleCount;
+            $femaleData[] = $femaleCount;
         }
 
-        $labels = $BarChart->map(function($item) {
-            return date("M Y", strtotime($item->year . '-' . $item->month . '-01'));
-        });
+        $labels = collect($months);
 
         $mdata = [
             'labels' => $labels,
@@ -138,7 +163,7 @@ class DashboardController extends Controller
         $monthlyData = DB::table('user_details')
             ->selectRaw('COUNT(*) as count, FLOOR(DATEDIFF(NOW(), date_of_birth)/365.25) - 18 as age')
             ->whereRaw('date_of_birth IS NOT NULL')
-            ->whereRaw('created_at >= DATE_SUB(NOW(), INTERVAL 10 YEAR)')
+            ->whereRaw('created_at >= DATE_SUB(NOW(), INTERVAL 7 YEAR)')
             ->groupBy('age')
             ->orderBy('age')
             ->get();
@@ -215,8 +240,36 @@ class DashboardController extends Controller
             $labelschart[] = $item->age . ' - ' . ($item->age + 9);
             $datachart[] = $item->total;
         }
-
         $totalVisitors = DB::table('visitors')->count();
+        $units = Unit::select('units.id', 'units.name', DB::raw('COUNT(*) as visitors_count'))
+            ->join('residents', 'residents.unit_id', '=', 'units.id')
+            ->join('visitors', 'visitors.resident_id', '=', 'residents.id')
+            ->join('time_logs', 'time_logs.id', '=', 'visitors.time_log_id')
+            ->whereMonth('time_logs.entry_time', '=', now()->month)
+            ->groupBy('units.id', 'units.name')
+            ->orderByDesc('visitors_count')
+            ->limit(2)
+            ->get();
+        $organization = DB::table('organizations')
+            ->select('organizations.name', DB::raw('COUNT(visitors.id) as visitor_count'))
+            ->join('premises', 'organizations.code', '=', 'premises.organization_code')
+            ->join('blocks', 'premises.id', '=', 'blocks.premise_id')
+            ->join('units', 'blocks.id', '=', 'units.block_id')
+            ->join('residents', 'units.id', '=', 'residents.unit_id')
+            ->join('visitors', 'residents.id', '=', 'visitors.resident_id')
+            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->whereMonth('time_logs.entry_time', Carbon::now()->month)
+            ->groupBy('organizations.name')
+            ->orderByDesc('visitor_count')
+            ->first();
+
+        if ($organization) {
+            echo $organization->name . ' had the highest number of visitors this month: ' . $organization->visitor_count;
+        } else {
+            echo 'No organizations had visitors this month.';
+        }
+
+
         return view(
             'dashboard',
             [
@@ -235,18 +288,23 @@ class DashboardController extends Controller
                 'chartData'=>$chartData,
                 'vlabels'=>$vlabels,
                 'vdata'=>$vdata,
-                'walkin'=>$walkin,
-                'drivein'=>$drivein,
-                'ipass'=>$ipass,
-                'id'=>$id,
-                'sms'=>$sms,
+                'walkinThisWeek'=>$walkinThisWeek,
+                'walkinLastWeek'=>$walkinLastWeek,
+                'driveinLastWeek'=>$driveinLastWeek,
+                'driveinThisWeek'=>$driveinThisWeek,
+                'ipassLastWeek'=>$ipassLastWeek,
+                'ipassThisWeek'=>$ipassThisWeek,
+                'idThisWeek'=>$idThisWeek,
+                'idLastWeek'=>$idLastWeek,
+                'smsThisWeek'=>$smsThisWeek,
+                'smsLastWeek'=>$smsLastWeek,
                 'yearlyData'=>$yearlyData,
-                'percentage_male'=>$percentage_male,
-                'percentage_female'=>$percentage_female,
                 'maleMonthlyVisitorCount'=>$maleMonthlyVisitorCount,
                 'femaleMonthlyVisitorCount'=>$femaleMonthlyVisitorCount,
                 'labelschart'=>$labelschart,
-                'datachart'=>$datachart
+                'datachart'=>$datachart,
+                'units'=>$units,
+                'organization'=>$organization,
             ]
         );
     }
