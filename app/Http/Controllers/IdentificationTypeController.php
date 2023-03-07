@@ -42,9 +42,14 @@ class IdentificationTypeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|unique:identification_types,name',
     
-        ]);     
+        ]);   
+        
+        if ($validator->fails()) {
+            throw new \Illuminate\Validation\ValidationException($validator);
+        }
+
         $identity = new IdentificationType;
 
         $identity->name = $request->input('name');

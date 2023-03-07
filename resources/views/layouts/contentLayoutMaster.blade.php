@@ -64,8 +64,13 @@
     </style>
 
     {{-- Include core + vendor Styles --}}
+
     @include('panels.styles')
+
     @livewireStyles
+
+  
+
 </head>
 
 
@@ -73,3 +78,5 @@
 @isset($configData['mainLayoutType'])
     @extends($configData['mainLayoutType'] === 'horizontal' ? 'layouts.horizontalLayoutMaster' : 'layouts.verticalLayoutMaster')
 @endisset
+
+@livewireScripts

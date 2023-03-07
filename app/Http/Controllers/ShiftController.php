@@ -51,12 +51,20 @@ class ShiftController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|unique:shifts,name',
 
         ]);
+
+        if ($validator->fails()) {
+            throw new \Illuminate\Validation\ValidationException($validator);
+        }
+
         $shift = new Shift;
+
         $shift->name = $request->input('name');
+
         $shift->save();
+
         Activity::create([
             'name' => $request->user()->name,
             'target' => "Shift created by " . $request->user()->name,

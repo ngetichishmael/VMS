@@ -108,10 +108,8 @@
                                                 onclick="return confirm('Are you sure to want to suspend the sentry?')"
                                                 style="padding-right:20px; "> Suspend</i> </a>
                                             <?php } ?>
-                                            <a wire:ignore.self href="#" class=""
-                                             style="padding-right:20px"
-                                                data-toggle="modal" id="smallButton" 
-                                                data-placement="top"> View </a>
+                                            
+                                          <a  href="{{ route('Sentry.show',$sentry->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > View </a>
                                             <!-- delete link -->
 
                                             <a wire:ignore.self href="#" wire:click="destroy({{ $sentry->id }})"

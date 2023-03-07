@@ -9,6 +9,7 @@ use App\Models\Activity;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ResidentController extends Controller
 {
@@ -41,13 +42,19 @@ class ResidentController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate(request(), [
+        $validator = Validator::make($request->all(), [
             'name' => 'required|min:2',
 
-            'email' => 'required|email|max:255|unique:organizations,email',
+            'email' => 'required|email|max:255|unique:residents,email',
 
-            'phone_number' => 'required|numeric',
+            'phone_number' => 'required|numeric|unique:residents,phone_number',
+
+            'unit_id' => 'required|unique:residents,unit_id',
         ]);
+
+        if ($validator->fails()) {
+            throw new \Illuminate\Validation\ValidationException($validator);
+        }
 
         $resident = new Resident;
 

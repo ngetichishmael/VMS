@@ -19,7 +19,7 @@
     "laravel/sanctum": "*",
     "laravel/tinker": "^2.5",
     "laravel/ui": "^3.3",
-    "livewire/livewire": "^2.11",
+    "livewire/livewire": "^2.12",
     "nesbot/carbon": "^2.66"
   },
   "require-dev": {
