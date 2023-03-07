@@ -163,9 +163,8 @@ class DashboardController extends Controller
                 ]
             ]
         ];
-        $users = Visitor::select(DB::raw("COUNT(*) as count"), "id", DB::raw("MONTH(created_at) as month_name"))
+        $users = Visitor::select(DB::raw("COUNT(*) as count"), DB::raw("MONTH(created_at) as month_name"))
             ->whereYear('created_at', date('Y'))
-            ->groupBy(DB::raw("month_name"))
             ->orderBy('id', 'ASC')
             ->pluck('count', 'month_name');
 
