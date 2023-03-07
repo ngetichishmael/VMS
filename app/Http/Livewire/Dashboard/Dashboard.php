@@ -18,12 +18,12 @@ class Dashboard extends Component
     public function render()
     {
         $allTypes = Visitor::orderBy('id', 'desc')->paginate($this->perPageAll);
-        $WalkIn = Visitor::where('type', 'WalkIn')->orderBy('id', 'desc')->paginate($this->perPageWalkInAll);
-        $DriveIn = Visitor::where('type', 'DriveIn')->orderBy('id', 'desc')->paginate($this->perPageDriveInAll);
-        $Sms = Visitor::where('type', 'Sms')->orderBy('id', 'desc')->paginate($this->perPageSmsAll);
-        $Id = Visitor::where('type', 'ID')->orderBy('id', 'desc')->paginate($this->perPageSmsAll);
-//        $female = Visitor::where('user_details.gender', 'female')->count();
-//        $male = Visitor::where('user_details.gender', 'male')->count();
+        $WalkIn = Visitor::select("*")->where('type', 'WalkIn')->orderBy('id', 'desc')->paginate($this->perPageWalkInAll);
+        $DriveIn = Visitor::select("*")->where('type', 'DriveIn')->orderBy('id', 'desc')->paginate($this->perPageDriveInAll);
+        $Sms = Visitor::select("*")->where('type', 'Sms')->orderBy('id', 'desc')->paginate($this->perPageSmsAll);
+        $Id = Visitor::select("*")->where('type', 'ID')->orderBy('id', 'desc')->paginate($this->perPageSmsAll);
+        //        $female = Visitor::where('user_details.gender', 'female')->count();
+        //        $male = Visitor::where('user_details.gender', 'male')->count();
         return view('livewire.dashboard.dashboard', [
             'allTypes' => $allTypes,
             "WalkIn" => $WalkIn,
