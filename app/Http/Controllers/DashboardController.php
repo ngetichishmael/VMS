@@ -178,8 +178,10 @@ class DashboardController extends Controller
         //     ->get()
         //     ->toArray();
 
-        $yearlyMonth = UserDetail::whereYear('created_at', Carbon::now()->year)->select(DB::raw('MONTH(created_at) as month'))->get();
-        $yearlyCount = UserDetail::whereYear('created_at', Carbon::now()->year)->select(DB::raw('COUNT(*) as count'))->get();
+        $yearlyMonth = UserDetail::whereYear('created_at', Carbon::now()->year)
+            ->select(DB::raw('MONTH(created_at) as month'))->get()->toArray();
+        $yearlyCount = UserDetail::whereYear('created_at', Carbon::now()->year)
+            ->select(DB::raw('COUNT(*) as count'))->get()->toArray();
         // $yearlyData = UserDetail::whereYear('created_at', Carbon::now()->year)->select(DB::raw('COUNT(*) as count'))->get();
 
         $data = [
