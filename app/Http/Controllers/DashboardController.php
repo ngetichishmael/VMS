@@ -163,14 +163,18 @@ class DashboardController extends Controller
                 ]
             ]
         ];
-        $users = Visitor::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
-            ->orderBy('id', 'ASC')
-            ->get();
+        $vlabels = Visitor::whereYear('created_at', date('Y'))->select(DB::raw("MONTH(created_at) as month_name"))->get();
+        $vdata = Visitor::whereYear('created_at', date('Y'))->select(DB::raw("COUNT(*) as count"))->get();
+        // $users = Visitor::select(DB::raw("COUNT(*) as count"), DB::raw("MONTH(created_at) as month_name"))
+        //     ->whereYear('created_at', date('Y'))
+        //     ->orderBy('id', 'ASC')
+        //     ->pluck('count', 'month_name');
 
-        $vlabels = $users->keys();
-        $vdata = $users->values();
+        // $vlabels = $users->keys();
+        // $vdata = $users->values();
 
         $yearlyData = UserDetail::select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as count'))
+            ->whereYear('created_at', Carbon::now()->year)
             ->get()
             ->toArray();
 
