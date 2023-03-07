@@ -198,7 +198,7 @@ class DashboardController extends Controller
             }));
 
             if (!empty($monthData)) {
-                $data['data'][] = $count[0]['count'];
+                $data['data'][] = $count['count'];
             } else {
                 $data['data'][] = 0;
             }
