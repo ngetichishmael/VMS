@@ -194,7 +194,7 @@ class DashboardController extends Controller
                 return $item['month'] == $i;
             }));
             $count = array_values(array_filter($yearlyCount, function ($item) use ($i) {
-                return $item['month'] == $i;
+                return $item['count'] == $i;
             }));
 
             if (!empty($monthData)) {
