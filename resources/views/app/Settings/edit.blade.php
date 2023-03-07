@@ -37,7 +37,7 @@
         .card-right {
             padding: 10px;
             width: 42%;
-        
+
         }
     </style>
     <div class="row">
