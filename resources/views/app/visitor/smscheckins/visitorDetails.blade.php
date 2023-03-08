@@ -381,6 +381,8 @@
                     </div>
                 </div>
             @endif
+
+            
             <div class="card col-12">
                 <div class="card-body">
                     <h5 class="card-title" style="color: #1f8af5">Visitor History</h5>
