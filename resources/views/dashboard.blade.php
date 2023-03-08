@@ -33,21 +33,29 @@
                         <div class="media" style="text-align: center">
                             <div class="avatar bg-light-primary mr-2">
               <div class="avatar-content" style="background: whitesmoke">
-
                                     <i data-feather="users" class="avatar-icon"></i>
                                 </div>
                             </div>
                             <hr />
                             <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $maleCount }}</h4>
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalVisitorsToday }}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Male &nbsp;
-                                    {!! $percentage_male !!}%</p>
+                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Today &nbsp;
+                                    @php
+                                        $percentChange = $yesterdayVisitor > 0 ? (($totalVisitorsToday - $yesterdayVisitor) / $yesterdayVisitor) * 100 : 100;
+                                        $percentChange = number_format($percentChange, 1);
+                                        $color = $percentChange > 0 ? 'green' : 'orange';
+                                        $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
+                                    @endphp
+                                    <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}"
+                                                                          class="{{ $arrow }}"></i>
+                                </p>
                             </div>
                             <div class="media-body my-auto">
                                 <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $yesterdayVisitor}}</h4>
                                 <hr style="color: #bebbbb" />
                                 <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">YESTERDAY&nbsp;</p>
+
                             </div>
                         </div>
                     </div>
@@ -55,7 +63,6 @@
             </div>
             <div class="col-xl-4 col-md-6 col-12">
                 <div class="card card-congratulation-medal"
-
                      style=" background: linear-gradient(to right, #e75f04, #fdc39b)">
                     <div class="card-body">
                         <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">WEEKLY VISITS</p>
@@ -469,6 +476,34 @@
         </div>
     </div>
 
+           <script>
+               $(document).ready(function() {
+               var yearlyData = {!! $yearlyData !!};
+               var ctx = document.getElementById('yearly-visitors').getContext('2d');
+               var myChart = new Chart(ctx, {
+                   type: 'line',
+                   data: {
+                       labels: yearlyData.labels,
+                       datasets: [{
+                           label: 'Visitors',
+                           data: yearlyData.data,
+                           fill: false,
+                           borderColor: '#007bff',
+                           tension: 0.1
+                       }]
+                   },
+                   options: {
+                       scales: {
+                           yAxes: [{
+                               ticks: {
+                                   beginAtZero: true
+                               }
+                           }]
+                       }
+                   }
+               }); });
+           </script>
+       </div>
     </section>
 
     @livewire('dashboard.dashboard')
