@@ -20,6 +20,7 @@
 
 @section('content')
     <!-- Dashboard Ecommerce Starts -->
+    @livewire('dashboard.statistics')
     <section id="dashboard-ecommerce">
         <div class="row match-height">
             <!-- Medal Card -->
@@ -28,11 +29,10 @@
                 <div class="card card-congratulation-medal"
                     style=" background: linear-gradient(to right, #15807A, rgb(111,178,190))">
                     <div class="card-body">
-
                         <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">VISITS TODAY</p>
                         <div class="media" style="text-align: center">
                             <div class="avatar bg-light-primary mr-2">
-                                <div class="avatar-content" style="background: whitesmoke">
+              <div class="avatar-content" style="background: whitesmoke">
                                     <i data-feather="users" class="avatar-icon"></i>
                                 </div>
                             </div>
@@ -72,8 +72,8 @@
                                 </div>
                             </div>
                             <hr />
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalThisWeek }}</h4>
+                            <div class="my-auto media-body">
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalThisWeek }}</h4>
                                 <hr style="color: #bebbbb" />
                                 <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
                                     @php
@@ -86,8 +86,8 @@
 
                                 </p>
                             </div>
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalLastWeekVisit }}</h4>
+                            <div class="my-auto media-body">
+                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalLastWeekVisit }}</h4>
                                 <hr style="color: #bebbbb" />
                                 <p class="card-text font-small-3 mb-0"style="color: #fbfcfd"> LAST WEEK</p>
                             </div>
@@ -133,7 +133,7 @@
             </div>
             <div class="col-xl-4 col-md-6 col-12">
                 <div class="card card-congratulation-medal"
-                     style=" background: linear-gradient(to right, #0b5777, #69adcb)">
+                    style=" background: linear-gradient(to right, #0b5777, #69adcb)">
                     <div class="card-body">
                         <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">WALK CHECK-IN THIS WEEK</p>
                         <div class="media" style="text-align: center">
@@ -168,7 +168,7 @@
             </div>
             <div class="col-xl-4 col-md-6 col-12">
                 <div class="card card-congratulation-medal"
-                     style=" background: linear-gradient(to right, #295922, #94ee88)">
+                    style=" background: linear-gradient(to right, #295922, #94ee88)">
                     <div class="card-body">
                         <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">DRIVE CHECK-IN THIS WEEK</p>
                         <div class="media" style="text-align: center">
@@ -306,16 +306,17 @@
             <!-- Horizontal Bar Chart Start -->
             <div class="col-xl-6 col-12">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-sm-center align-items-start flex-sm-row flex-column">
+                    <div
+                        class="card-header d-flex justify-content-between align-items-sm-center align-items-start flex-sm-row flex-column">
                         <div class="header-left">
-                            <p class="card-subtitle text-muted mb-25">{!! ucwords("Monthly Visits by Gender") !!}</p>
-                            <h4 class="card-title">{!! ucwords("Monthly Visits by Gender") !!}</h4>
+                            <p class="card-subtitle text-muted mb-25">{!! ucwords('Monthly Visits by Gender') !!}</p>
+                            <h4 class="card-title">{!! ucwords('Monthly Visits by Gender') !!}</h4>
                         </div>
                     </div>
                     <div class="card-body">
                         <canvas id="monthly-visits" class="chartjs" data-height="400"></canvas>
                     </div>
-                    <div class="header-right d-flex align-items-center pl-2">
+                    <div class="pl-2 header-right d-flex align-items-center">
                         <div class="d-flex align-items-center">
                             <span class="bullet bullet-primary"></span>
                             <h6 class="mb-0 ml-50">{{ $maleMonthlyVisitorCount }} MALE</h6>
@@ -335,8 +336,8 @@
                         type: 'bar',
                         data: BarChart,
                         options: {
-                            responsive:true,
-                            title:'MONTHLY VISITS',
+                            responsive: true,
+                            title: 'MONTHLY VISITS',
                             scales: {
                                 yAxes: [{
                                     ticks: {
@@ -347,91 +348,133 @@
                         }
                     });
                 });
-
             </script>
             <!-- Horizontal Bar Chart End -->
-                <div class="col-xl-6 col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <p class="card-subtitle text-muted mb-25">{!! ucwords("Monthly Visits by Age") !!}</p>
-                            <h4 class="card-title">{!! ucwords("Monthly Visits by AGE") !!}</h4>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="monthly-visitors-by-age1" height="274"></canvas>
-                        </div>
+            <div class="col-xl-6 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <p class="card-subtitle text-muted mb-25">{!! ucwords('Monthly Visits by Age') !!}</p>
+                        <h4 class="card-title">{!! ucwords('Monthly Visits by AGE') !!}</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="monthly-visitors-by-age1" height="274"></canvas>
                     </div>
                 </div>
-                <script>
-                    $(document).ready(function() {
-                        var monthlyData = {
-                            labels: {!! json_encode($labelschart) !!},
-                            datasets: [
-                                {
-                                    data: {!! json_encode($datachart) !!},
-                                    backgroundColor: [
-                                        "#FF6384",
-                                        "#36A2EB",
-                                        "#FFCE56",
-                                        "#1ABC9C",
-                                        "#F1C40F",
-                                        "#9B59B6",
-                                        "#E74C3C",
-                                        "#2ECC71",
-                                        "#34495E",
-                                        "#3498DB"
-                                    ]
-                                }]
-                        };
-
-                        var ctx = document.getElementById('monthly-visitors-by-age1').getContext('2d');
-                        var myPieChart = new Chart(ctx, {
-                            type: 'pie',
-                            data: monthlyData,
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                            }
-                        });
-                    });
-                </script>
-
             </div>
+            <script>
+                $(document).ready(function() {
+                    var monthlyData = {
+                        labels: {!! json_encode($labelschart) !!},
+                        datasets: [{
+                            data: {!! json_encode($datachart) !!},
+                            backgroundColor: [
+                                "#FF6384",
+                                "#36A2EB",
+                                "#FFCE56",
+                                "#1ABC9C",
+                                "#F1C40F",
+                                "#9B59B6",
+                                "#E74C3C",
+                                "#2ECC71",
+                                "#34495E",
+                                "#3498DB"
+                            ]
+                        }]
+                    };
+
+                    var ctx = document.getElementById('monthly-visitors-by-age1').getContext('2d');
+                    var myPieChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: monthlyData,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                        }
+                    });
+                });
+            </script>
+
+        </div>
         <div>
             <div class="card">
-            <canvas id="myChart" height="300px"></canvas>
-            <div class="header-right d-flex align-items-center pl-2">
-                <div>
-                    <p class="card-text mb-0 pl-4 pb-5">TOTAL VISITORS : {{ $totalVisitors}}</p>
+                <canvas id="myChart" height="300px"></canvas>
+                <div class="pl-2 header-right d-flex align-items-center">
+                    <div>
+                        <p class="pb-5 pl-4 mb-0 card-text">TOTAL VISITORS : {{ $totalVisitors }}</p>
+                    </div>
+                </div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script type="text/javascript">
+                    var labels = {!! $vlabels !!};
+                    var users = {!! $vdata !!};
+
+                    const data = {
+                        labels: labels,
+                        datasets: [{
+                            label: 'VISITORS MONTHLY GRAPH LINE',
+                            backgroundColor: 'rgb(82,179,220)',
+                            borderColor: 'rgb(133,210,243)',
+                            data: users,
+                        }]
+                    };
+
+                    const config = {
+                        type: 'line',
+                        data: data,
+                        options: {}
+                    };
+
+                    const myChart = new Chart(
+                        document.getElementById('myChart'),
+                        config
+                    );
+                </script>
+            </div>
+        </div>
+        <div class="card">
+            <div class="col-xl-6 col-12">
+                <div class="card">
+                    <div
+                        class="card-header d-flex justify-content-between align-items-sm-center align-items-start flex-sm-row flex-column">
+                        <div class="header-left">
+                            <p class="card-subtitle text-muted mb-25">Yearly Visitors</p>
+                            <h4 class="card-title">Visits</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="yearly-visitors" class="chartjs" data-height="400"></canvas>
+                    </div>
                 </div>
             </div>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <script type="text/javascript">
 
-                var labels =  {!! $vlabels !!};
-                var users =  {!! $vdata !!};
-
-                const data = {
-                    labels: labels,
-                    datasets: [{
-                        label: 'VISITORS MONTHLY GRAPH LINE',
-                        backgroundColor: 'rgb(82,179,220)',
-                        borderColor: 'rgb(133,210,243)',
-                        data: users,
-                    }]
-                };
-
-                const config = {
-                    type: 'line',
-                    data: data,
-                    options: {}
-                };
-
-                const myChart = new Chart(
-                    document.getElementById('myChart'),
-                    config
-                );
-
+            <script>
+                $(document).ready(function() {
+                    var yearlyData = {!! $yearlyData !!};
+                    var ctx = document.getElementById('yearly-visitors').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: yearlyData.labels,
+                            datasets: [{
+                                label: 'Visitors',
+                                data: yearlyData.data,
+                                fill: false,
+                                borderColor: '#007bff',
+                                tension: 0.1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                });
             </script>
         </div>
     </div>
@@ -499,8 +542,7 @@
 @endsection
 
 @section('page-script')
-     Page js files
-     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-     <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
+    <script src="{{ asset(mix('js/scripts/extensions/ext-component-tree.js')) }}"></script>
 @endsection

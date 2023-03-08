@@ -71,9 +71,18 @@
                 <div class="card-datatable table-responsive">
                     <table class="table">
                         <thead style="color: #070707">
-                                <tr>
-                                <th >Name</th>
-                                    <th>Vehicle Reg</th>
+                            <tr>
+{{--                                <th wire:click="sortBy('id')">ID--}}
+{{--                                    @if ($sortField === 'id')--}}
+{{--                                        @if ($sortAsc)--}}
+{{--                                            <i class="fas fa-sort-up"></i>--}}
+{{--                                        @else--}}
+{{--                                            <i class="fas fa-sort-down"></i>--}}
+{{--                                        @endif--}}
+{{--                                    @endif--}}
+{{--                                </th>--}}
+                                <th>Vehicle Reg</th>
+                                <th>Name</th>
                                 <th>Site</th>
                                 <th>Section</th>
                                 <th>Organization</th>
@@ -88,23 +97,21 @@
                             @forelse($dvisitors as $key => $visitor)
                                 <tr>
 {{--                                    <td>{{ $visitor->id }}</td>--}}
-                                    <td>{!! $visitor->name !!} </td>
                                     <td>{!! $visitor->vehicle()->pluck('registration')->implode('') !!} </td>
+                                    <td>{!! $visitor->name !!} </td>
                                     <td>{{ $visitor->Resident->unit->block->premise->name ?? ' Not Found' }}</td>
                                     <td>{!! $visitor->Resident->unit->name !!}</td>
                                     <td>{!! $visitor->Resident->unit->block->premise->organization->name ?? 'Not Found' !!}</td>
                                     <td>{!! $visitor->timeLog->entry_time ?? null !!}</td>
                                     @if (!isset($visitor->timeLog->exit_time))
                                         <td>...</td>
-                                        <td> <span class="badge badge-pill badge-light-primary mr-1">Visit Active</span> </td>
+                                        <td style="color: orange;"> Visitor Still in</td>
                                     @else
                                         <td>{!! $visitor->timeLog->exit_time!!}</td>
-                                        <td >
-                                        <span class="badge badge-pill badge-light-dark mr-1">
-                                        {!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hrs %I Mins '); !!}
-                                        </span>
-                                    </td>
+                                        <td style="color: #70ce52;">
+                                            {!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds'); !!}
 
+                                        </td>
                                     @endif
                                     <td>
 {{--                                        <div class="dropdown">--}}
@@ -113,8 +120,7 @@
 {{--                                                <i class="fas fa-ellipsis-v"></i>--}}
 {{--                                            </a>--}}
 {{--                                            <div class="dropdown-menu">--}}
-                                                <a href="{{ route('VisitDriveIn.show', ['DriveIn' => $visitor->id ?? '']) }}">
-                                                <i class="fa fa-eye" style="color:#808080">  </i></a>
+                                                <a href="{{ route('VisitDriveIn.show', ['DriveIn' => $visitor->id ?? '']) }}"><i class="fa fa-eye">&nbsp;Details</i></a>
 {{--                                                <a href="#">View History</a>--}}
 {{--                                            </div>--}}
 {{--                                        </div>--}}

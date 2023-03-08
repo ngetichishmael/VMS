@@ -18,7 +18,8 @@ Route::get('/', function () {
     $pageConfigs = ['blankPage' => true];
     return view('welcome', ['pageConfigs' => $pageConfigs]);
 });
-
+Route::get('/dashboard/otp', [DashboardController::class, 'OTP'])->name('dashboard.otp')->middleware(['auth']);
+Route::post('otp/login', [DashboardController::class, 'store'])->name('otp.login')->middleware(['auth']);;
 //Route::get('/dashboard', function () {
 ////    return view('dashboard');
 //    Route::get('dashboard', [DashboardController::class, 'dashboard']);

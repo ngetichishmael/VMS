@@ -123,16 +123,18 @@
                                 <td>{!! $visitor->timeLog->entry_time ?? null !!}</td>
                                 @if (!isset($visitor->timeLog->exit_time))
                                     <td>...</td>
-                                    <td style="color: orange;"> Visitor Still in</td>
+                                    <td> <span class="badge badge-pill badge-light-primary mr-1">Visit Active</span> </td>
                                 @else
                                     <td>{!! $visitor->timeLog->exit_time ?? null !!}</td>
-                                    <td style="color: #70ce52;">
-                                        {!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds'); !!}
-
+                                    <td >
+                                    <span class="badge badge-pill badge-light-dark mr-1">
+                                        {!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hrs %I Mins '); !!}
+                                        </span>
                                     </td>
                                 @endif
                                 <td >
-                                    <a href="{{ route('VisitIPassCheckIn.show', $visitor->id) }}"><i class="fa fa-eye">&nbsp;Details</i></a>
+                                    <a href="{{ route('VisitIPassCheckIn.show', $visitor->id) }}">
+                                    <i class="fa fa-eye" style="color:#808080">  </i></a>
                                 </td>
                             </tr>
                         @empty

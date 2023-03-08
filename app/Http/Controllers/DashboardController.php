@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\TimeLog;
+
 use App\Models\Unit;
+use App\Models\UserCode;
 use App\Models\UserDetail;
 use App\Models\VehicleInformation;
 use App\Models\Visitor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class DashboardController extends Controller
 {
@@ -19,6 +22,12 @@ class DashboardController extends Controller
         $pageConfigs = ['pageHeader' => false];
 
         return view('content.dashboard.dashboard-analytics', ['pageConfigs' => $pageConfigs]);
+    }
+    public function OTP()
+    {
+        $pageConfigs = ['pageHeader' => false];
+
+        return view('OTP', ['pageConfigs' => $pageConfigs]);
     }
     public function dashboard()
     {
@@ -41,6 +50,7 @@ class DashboardController extends Controller
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
+
         $driveinLastWeek = DB::table('visitors')
             ->where('type', '=', 'DriveIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
@@ -59,10 +69,12 @@ class DashboardController extends Controller
             ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->count();
         $walkinThisWeek = DB::table('visitors')->where('type' , '=','WalkIn')
+
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
+
         $walkinLastWeek = DB::table('visitors')
             ->where('type', '=', 'WalkIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
@@ -104,6 +116,14 @@ class DashboardController extends Controller
             ->where('user_details.gender', '=', 'female')
             ->whereDate('time_logs.entry_time', '=', $today)
             ->count();
+        $totalCount = $maleCount + $femaleCount;
+        if ($totalCount > 0) {
+            $percentage_male = ($maleCount / $totalCount) * 100;
+            $percentage_female  = ($femaleCount / $totalCount) * 100;
+        } else {
+            $percentage_male = 0;
+            $percentage_female  = 0;
+        }
 
         $femaleMonthlyVisitorCount = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
@@ -144,6 +164,20 @@ class DashboardController extends Controller
         }
 
         $labels = collect($months);
+
+        foreach ($BarChart as $mdata) {
+            if ($mdata->gender == 'male') {
+                $maleData[] = $mdata->count;
+                $femaleData[] = 0;
+            } else {
+                $femaleData[] = $mdata->count;
+                $maleData[] = 0;
+            }
+        }
+
+        $labels = $BarChart->map(function ($item) {
+            return date("M Y", strtotime($item->year . '-' . $item->month . '-01'));
+        });
 
         $mdata = [
             'labels' => $labels,
@@ -188,20 +222,26 @@ class DashboardController extends Controller
                 ]
             ]
         ];
-        $users = Visitor::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
-            ->whereYear('created_at', date('Y'))
-            ->groupBy(DB::raw("month_name"))
-            ->orderBy('id','ASC')
-            ->pluck('count', 'month_name');
+        $vlabels = Visitor::whereYear('created_at', date('Y'))->select(DB::raw("MONTH(created_at) as month_name"))->get();
+        $vdata = Visitor::whereYear('created_at', date('Y'))->select(DB::raw("COUNT(*) as count"))->get();
+        // $users = Visitor::select(DB::raw("COUNT(*) as count"), DB::raw("MONTH(created_at) as month_name"))
+        //     ->whereYear('created_at', date('Y'))
+        //     ->orderBy('id', 'ASC')
+        //     ->pluck('count', 'month_name');
 
-        $vlabels = $users->keys();
-        $vdata = $users->values();
+        // $vlabels = $users->keys();
+        // $vdata = $users->values();
 
-        $yearlyData = UserDetail::select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as count'))
-            ->whereYear('created_at', Carbon::now()->year)
-            ->groupBy(DB::raw('MONTH(created_at)'))
-            ->get()
-            ->toArray();
+        // $yearlyData = UserDetail::select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as count'))
+        //     ->whereYear('created_at', Carbon::now()->year)
+        //     ->get()
+        //     ->toArray();
+
+        $yearlyMonth = UserDetail::whereYear('created_at', Carbon::now()->year)
+            ->select(DB::raw('MONTH(created_at) as month'))->get()->toArray();
+        $yearlyCount = UserDetail::whereYear('created_at', Carbon::now()->year)
+            ->select(DB::raw('COUNT(*) as count'))->get()->toArray();
+        // $yearlyData = UserDetail::whereYear('created_at', Carbon::now()->year)->select(DB::raw('COUNT(*) as count'))->get();
 
         $data = [
             'labels' => [],
@@ -209,12 +249,14 @@ class DashboardController extends Controller
         ];
 
         for ($i = 1; $i <= 12; $i++) {
-            $monthData = array_values(array_filter($yearlyData, function ($item) use ($i) {
+            $monthData = array_values(array_filter($yearlyMonth, function ($item) use ($i) {
                 return $item['month'] == $i;
             }));
-
+            $count = array_values(array_filter($yearlyCount, function ($item) use ($i) {
+                return $item['count'] == $i;
+            }));
             if (!empty($monthData)) {
-                $data['data'][] = $monthData[0]['count'];
+                $data['data'][] = $monthData[0]['month'];
             } else {
                 $data['data'][] = 0;
             }
@@ -282,8 +324,8 @@ class DashboardController extends Controller
                 'totalMaleLastWeek' => $totalMaleLastWeek,
                 'totalFemaleLastWeek' => $totalFemaleLastWeek,
                 'BarChart' => json_encode($mdata),
-                'femaleCount'=>$femaleCount,
-                'maleCount'=>$maleCount,
+                'femaleCount' => $femaleCount,
+                'maleCount' => $maleCount,
                 'totalVisitors' => $totalVisitors,
                 'chartData'=>$chartData,
                 'vlabels'=>$vlabels,
@@ -305,6 +347,7 @@ class DashboardController extends Controller
                 'datachart'=>$datachart,
                 'units'=>$units,
                 'organization'=>$organization,
+
             ]
         );
     }
@@ -315,5 +358,20 @@ class DashboardController extends Controller
         $pageConfigs = ['pageHeader' => false];
 
         return view('content.dashboard.dashboard-ecommerce', ['pageConfigs' => $pageConfigs]);
+    }
+    public function store(Request $request)
+    {
+        $user = DB::table('users')->where('phone_number', $request->user()->phone_number)->first();
+        $exists = UserCode::where('user_id', $request->user()->id)
+            ->where('code', $request->otp)
+            ->where('updated_at', '>=', now()->subMinutes(5))
+            ->latest('updated_at')
+            ->exists();
+        if ($exists) {
+            return redirect()->to('/dashboard');
+        }
+        throw ValidationException::withMessages([
+            'otp' => "Invalid OTP",
+        ]);
     }
 }

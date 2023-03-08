@@ -1,3 +1,4 @@
+
 <div>
 <div class="card">
     <h5 class="card-header">Search Filter</h5>
@@ -26,6 +27,9 @@
 </div>
 
 <!-- users filter end -->
+
+@include('livewire.Notification.flash-message')
+
 {{-- @include('partials.loaderstyle') --}}
 <!-- list section start -->
 <div class="card">

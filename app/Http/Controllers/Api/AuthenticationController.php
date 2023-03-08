@@ -20,8 +20,11 @@ class AuthenticationController extends Controller
 {
     public function Login(Request $request)
     {
-        $user = User::where('phone_number', $request->phone_number)->where('status', 1)->where('role_id', 4)->first();
+        $user = User::with('premise', 'organization')->where('phone_number', $request->phone_number)->where('status', 1)->first();
 
+        $detail = UserDetail::where('phone_number', $user->phone_number)->first();
+        $sentryid = Sentry::where('user_detail_id', $detail->id)->first();
+        $premise = Premise::where('id', $sentryid->premise_id)->first();
         if (!$user) {
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
@@ -100,20 +103,22 @@ class AuthenticationController extends Controller
                 'Authorization: Bearer ' . $token->access_token
             ),
         ));
-        $detail=Sentry::where('phone_number', $user->phone_number ?? '')->first();
-        $premise=Premise::where('id', $detail->premise_id ?? 'premises')->first();
+        $detail = Sentry::where('phone_number', $user->phone_number ?? '')->first();
+        $premise = Premise::where('id', $detail->premise_id ?? 'premises')->first();
 
         $responsePassanda = curl_exec($curl);
         curl_close($curl);
-           return response()->json([
+        return response()->json([
             "success" => true,
             "token_type" => 'Bearer',
             "message" => "User Logged in",
-               "premises"=>$premise->name ?? ' ',
-               'organization'=>$premise->organization->name ?? ' ',
+            "premises" => $premise->name ?? ' ',
+            'organization' => $premise->organization->name ?? ' ',
             "access_token" => $tokenUser,
             "user" => $user,
             "code" => $code,
+            "premises" => $premise->name ?? ' ',
+            'organization' => $premise->organization->name ?? ' ',
             "response" => $responsePassanda,
         ]);
     }
@@ -137,25 +142,29 @@ class AuthenticationController extends Controller
             return response()->json(
                 [
                     'message' => 'Valid OTP entered'
-                ], 200);
+                ],
+                200
+            );
         }
         return response()->json(['message' => 'Invalid OTP entered'], 406);
     }
-    public function settings(){
+    public function settings()
+    {
         $user = auth()->user();
-        $detail=Sentry::where('phone_number', $user->phone_number ?? '')->first();
-        $premise=Premise::where('id', $detail->premise_id ?? 'premises')->first();
+        $detail = Sentry::where('phone_number', $user->phone_number ?? '')->first();
+        $premise = Premise::where('id', $detail->premise_id ?? 'premises')->first();
         $settings = Setting::where('organization_code', $premise->organization->code ?? 'not found')->first();
-            return response()->json(['settings'=>$settings ?? 'No Subscription settings found or user not logged in'], 200);
+        return response()->json(['settings' => $settings ?? 'No Subscription settings found or user not logged in'], 200);
     }
-    public function fields(){
+    public function fields()
+    {
         $user = auth()->user();
-        $detail=Sentry::where('phone_number', $user->phone_number ?? '')->first();
-        $premise=Premise::where('id', $detail->premise_id ?? 'premises')->first();
+        $detail = Sentry::where('phone_number', $user->phone_number ?? '')->first();
+        $premise = Premise::where('id', $detail->premise_id ?? 'premises')->first();
         $settings = Setting::where('organization_code', $premise->organization->code ?? 'not found')->first();
 
         $fields = Field::where('id', $settings->field_id ?? 'not found')->first();
 
-            return response()->json(['fields'=>$fields ?? 'No Fields found or user not logged in'], 200);
+        return response()->json(['fields' => $fields ?? 'No Fields found or user not logged in'], 200);
     }
 }
