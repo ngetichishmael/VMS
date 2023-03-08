@@ -20,7 +20,7 @@ class AuthenticationController extends Controller
 {
     public function Login(Request $request)
     {
-        $user = User::with('premise', 'organization.name')->where('phone_number', $request->phone_number)->where('status', 1)->first();
+        $user = User::with('premise', 'organization')->where('phone_number', $request->phone_number)->where('status', 1)->first();
 
         $detail = UserDetail::where('phone_number', $user->phone_number)->first();
         $sentryid = Sentry::where('user_detail_id', $detail->id)->first();
