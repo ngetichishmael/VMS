@@ -25,7 +25,7 @@ class DashboardController extends Controller
     {
         $pageConfigs = ['pageHeader' => false];
 
-        return view('OTP', ['pageConfigs' => $pageConfigs]);
+        return view('otp', ['pageConfigs' => $pageConfigs]);
     }
     public function dashboard()
     {
