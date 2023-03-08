@@ -83,7 +83,7 @@
                                 aria-describedby="login-email" autofocus="" tabindex="1" />
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-block" tabindex="4">Sign in</button>
+                        <button type="submit" class="btn btn-primary btn-block" tabindex="4">Verify</button>
                     </form>
 
                 </div>

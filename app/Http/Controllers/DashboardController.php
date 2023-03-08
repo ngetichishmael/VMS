@@ -375,7 +375,6 @@ class DashboardController extends Controller
     }
     public function store(Request $request)
     {
-        $user = DB::table('users')->where('phone_number', $request->user()->phone_number)->first();
         $exists = UserCode::where('user_id', $request->user()->id)
             ->where('code', $request->otp)
             ->where('updated_at', '>=', now()->subMinutes(5))
