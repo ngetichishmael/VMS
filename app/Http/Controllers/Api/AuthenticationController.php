@@ -103,11 +103,11 @@ class AuthenticationController extends Controller
                 'Authorization: Bearer ' . $token->access_token
             ),
         ));
-        $detail = Sentry::where('phone_number', $user->phone_number ?? '')->first();
-        $premise = Premise::where('id', $detail->premise_id ?? 'premises')->first();
-
         $responsePassanda = curl_exec($curl);
         curl_close($curl);
+
+        $detail = Sentry::where('phone_number', $user->phone_number ?? '')->first();
+        $premise = Premise::where('id', $detail->premise_id ?? 'premises')->first();
         return response()->json([
             "success" => true,
             "token_type" => 'Bearer',
