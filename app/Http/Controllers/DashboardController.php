@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TimeLog;
+use App\Models\UserCode;
 use App\Models\Unit;
 use App\Models\UserDetail;
 use App\Models\VehicleInformation;
@@ -42,48 +43,57 @@ class DashboardController extends Controller
         $weekStartDate = Carbon::now()->startOfWeek();
         $weekEndDate = Carbon::now()->endOfWeek();
 
-        $drivein = DB::table('visitors')->where('type', '=', 'DriveIn')
+        $drivein = DB::table('visitors')->where('type', '=', 'DriveIn')->get();
+
+        $driveinThisWeek = DB::table('visitors')->where('type', '=', 'DriveIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
-        $sms = DB::table('visitors')->where('type', '=', 'SMS')
+        $sms = DB::table('visitors')->where('type', '=', 'SMS')->get();
         $driveinLastWeek = DB::table('visitors')
             ->where('type', '=', 'DriveIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->count();
-        $smsThisWeek = DB::table('visitors')->where('type' , '=','SMS')
+        $smsThisWeek = DB::table('visitors')->where('type', '=', 'SMS')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
-        $walkin = DB::table('visitors')->where('type', '=', 'WalkIn')
+        $walkin = DB::table('visitors')->where('type', '=', 'WalkIn')->get();
+        $smsLastWeek = DB::table('visitors')
+            ->where('type', '=', 'SMS')
+            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
+            ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
+            ->count();
+        $walkinThisWeek = DB::table('visitors')->where('type', '=', 'WalkIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
-        $ipass = DB::table('visitors')->where('type', '=', 'iPass')
+        $ipass = DB::table('visitors')->where('type', '=', 'iPass')->get();
         $walkinLastWeek = DB::table('visitors')
             ->where('type', '=', 'WalkIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->count();
-        $ipassThisWeek = DB::table('visitors')->where('type' , '=','iPass')
+        $ipassThisWeek = DB::table('visitors')->where('type', '=', 'iPass')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
-        $id = DB::table('visitors')->where('type', '=', 'ID')
+        $id = DB::table('visitors')->where('type', '=', 'ID')->get();
         $ipassLastWeek = DB::table('visitors')
             ->where('type', '=', 'iPass')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->count();
-        $idThisWeek = DB::table('visitors')->where('type' , '=','ID')
+        $idThisWeek = DB::table('visitors')->where('type', '=', 'ID')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
@@ -155,6 +165,19 @@ class DashboardController extends Controller
         $labels = $BarChart->map(function ($item) {
             return date("M Y", strtotime($item->year . '-' . $item->month . '-01'));
         });
+        $months = [];
+
+        for ($i = 2; $i >= 0; $i--) {
+            $month = date('m', strtotime("-$i month")); // get the month number
+            $year = date('Y', strtotime("-$i month")); // get the year
+            $months[] = date("M Y", strtotime($year . '-' . $month . '-01')); // format the date as "M Y"
+            $maleCount = $BarChart->where('gender', 'male')->where('month', $month)->where('year', $year)->sum('count');
+            $femaleCount = $BarChart->where('gender', 'female')->where('month', $month)->where('year', $year)->sum('count');
+            $maleData[] = $maleCount;
+            $femaleData[] = $femaleCount;
+        }
+
+        $labels = collect($months);
 
         $mdata = [
             'labels' => $labels,
@@ -318,7 +341,27 @@ class DashboardController extends Controller
                 'maleMonthlyVisitorCount' => $maleMonthlyVisitorCount,
                 'femaleMonthlyVisitorCount' => $femaleMonthlyVisitorCount,
                 'labelschart' => $labelschart,
-                'datachart' => $datachart
+                'datachart' => $datachart,
+                'chartData' => $chartData,
+                'vlabels' => $vlabels,
+                'vdata' => $vdata,
+                'walkinThisWeek' => $walkinThisWeek,
+                'walkinLastWeek' => $walkinLastWeek,
+                'driveinLastWeek' => $driveinLastWeek,
+                'driveinThisWeek' => $driveinThisWeek,
+                'ipassLastWeek' => $ipassLastWeek,
+                'ipassThisWeek' => $ipassThisWeek,
+                'idThisWeek' => $idThisWeek,
+                'idLastWeek' => $idLastWeek,
+                'smsThisWeek' => $smsThisWeek,
+                'smsLastWeek' => $smsLastWeek,
+                'yearlyData' => $yearlyData,
+                'maleMonthlyVisitorCount' => $maleMonthlyVisitorCount,
+                'femaleMonthlyVisitorCount' => $femaleMonthlyVisitorCount,
+                'labelschart' => $labelschart,
+                'datachart' => $datachart,
+                'units' => $units,
+                'organization' => $organization,
             ]
         );
     }
