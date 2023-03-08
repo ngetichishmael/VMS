@@ -57,12 +57,16 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|max:255|unique:users,email',
-            'phone_number' => 'required|numeric',
+            'phone_number' => 'required|numeric|unique:users,phone_number',
             'organization_code' => 'required',
             'role_id' => 'required',
 
 
         ]);
+
+        if ($validator->fails()) {
+            throw new \Illuminate\Validation\ValidationException($validator);
+        }
 
         $user = new User;
 
@@ -77,7 +81,6 @@ class UserController extends Controller
         $user->role_id  = $request->input('role_id');
 
         $user->password  = Hash::make($request->password);
-
 
         $user->email_verified_at = now();
 

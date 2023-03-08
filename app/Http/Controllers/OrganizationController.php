@@ -47,16 +47,22 @@ class OrganizationController extends Controller
     {
         $validator = Validator::make($request->all(), [
 
-            'name' => 'required|min:2',
+            'name' => 'required|min:2|unique:organizations,name',
 
             'email' => 'required|email|max:255|unique:organizations,email',
 
-            'primary_phone' => 'required|numeric',
+            'primary_phone' => 'required|numeric|unique:organizations,primary_phone',
 
             'location' => 'required',
 
         ]);
+
+        if ($validator->fails()) {
+            throw new \Illuminate\Validation\ValidationException($validator);
+        }
+
         $code = Str::random(20);
+
         $organization = new organization;
 
         $organization->code = $code;
@@ -76,25 +82,42 @@ class OrganizationController extends Controller
         $organization->description = $request->input('description');
 
         $organization->save();
+
         $fields = new Field();
+
         $fields->visitor_type = $request->input('visitor_type', 1);
+
         $fields->destination = $request->input('destination', 1);
+
         $fields->tag = $request->input('tag', 1);
+
         $fields->host = $request->input('host', 1);
+
         $fields->purpose_of_visit = $request->input('purpose_of_visit', 1);
+
         $fields->attachments = $request->input('attachments', 1);
+
         $fields->gender = $request->input('gender', 1);
+
         $fields->company = $request->input('company', 1);
+
         $fields->save();
 
         // Add data to settings table
         $settings = new Setting();
+
         $settings->field_id = $fields->id;
+
         $settings->organization_code = $organization->code;
+
         $settings->id_checkin = $request->input('id_checkin', 0);
+
         $settings->automatic_id_checkin = $request->input('automatic_id_checkin', 0);
+
         $settings->sms_checkin = $request->input('sms_checkin', 0);
+
         $settings->ipass_checkin = $request->input('ipass_checkin', 0);
+
         $settings->save();
 
         Activity::create([

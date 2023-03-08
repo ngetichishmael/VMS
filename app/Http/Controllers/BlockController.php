@@ -54,11 +54,15 @@ class BlockController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|unique:blocks,name',
             'premise_id' => 'required',
 
 
         ]);
+
+        if ($validator->fails()) {
+            throw new \Illuminate\Validation\ValidationException($validator);
+        }
 
         $block = new Block;
 

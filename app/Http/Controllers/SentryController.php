@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Organization;
 use App\Models\Sentry;
-
 use Brian2694\Toastr\Facades\Toastr;
-
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\Premise;
@@ -16,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class SentryController extends Controller
 {
@@ -47,19 +46,26 @@ class SentryController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate(request(), [
+        $validator = Validator::make($request->all(), [
 
-            'name' => 'required|min:2',
+            'name' => 'required|min:2|unique:sentries,name',
 
             'premise_id' => 'required',
 
             'shift_id' => 'required',
 
-            'phone_number' => 'required',
+            'phone_number' => 'required|numeric|unique:sentries,phone_number',
 
         ]);
+
+        if ($validator->fails()) {
+            throw new \Illuminate\Validation\ValidationException($validator);
+        }
+
         $org_code=Premise::where('id',  $request->input('premise_id'))->first();
+
         $organization=Organization::where('code', $org_code->organization_code)->first();
+
         Sentry::create([
             'name' => $request->name,
 
@@ -110,9 +116,15 @@ class SentryController extends Controller
      * @param  \App\Models\Sentry  $sentry
      * @return \Illuminate\Http\Response
      */
-    public function show(Sentry $sentry)
+    public function show($id)
     {
-        //
+        $sentry = Sentry::find($id);
+
+        $premises = Premise::where('status', 1)->get();
+
+        $shifts = Shift::where('status', 1)->get();
+
+        return view('livewire.sentry.show', compact('sentry'));
     }
 
     /**

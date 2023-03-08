@@ -45,14 +45,15 @@ class PremiseController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|min:2|unique:premises,name',
             'location' => 'required',
             'address' => 'required',
             'organization_code' => 'required',
-
-
-
         ]);
+
+        if ($validator->fails()) {
+            throw new \Illuminate\Validation\ValidationException($validator);
+        }
 
         $premise = new Premise;
 

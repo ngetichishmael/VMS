@@ -165,7 +165,7 @@
             <fieldset class="form-group">
               <label class="form-label" for="resident-role">Unit</label>
               <select id="unit_id" name="unit_id" class="form-control">
-               <option  value="#"> Select</option>
+               <option  value="0"> Select</option>
                 @foreach ($units as $uni)
                     <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
                 @endforeach  

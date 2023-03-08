@@ -54,6 +54,12 @@
                     </div>
                   </div>
                 </section>
+
+
+
+
+
+                
                 <!--Closable Alerts end -->
 @endif
    
@@ -126,7 +132,11 @@
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                               <div class="alert-body">
                               <i data-feather="star"></i>
-                              {{ $message }}
+                              
+                                  @foreach ($errors->all() as $error)
+                                      {{ $error }}
+                                  @endforeach
+                            
                               </div>
                               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -138,5 +148,7 @@
                     </div>
                   </div>
                 </section>
+
+
                 <!--Closable Alerts end -->
 @endif

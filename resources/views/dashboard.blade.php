@@ -395,43 +395,6 @@
             </script>
 
         </div>
-        <div>
-            <div class="card">
-                <canvas id="myChart" height="300px"></canvas>
-                <div class="pl-2 header-right d-flex align-items-center">
-                    <div>
-                        <p class="pb-5 pl-4 mb-0 card-text">TOTAL VISITORS : {{ $totalVisitors }}</p>
-                    </div>
-                </div>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                <script type="text/javascript">
-                    var labels = {!! $vlabels !!};
-                    var users = {!! $vdata !!};
-
-                    const data = {
-                        labels: labels,
-                        datasets: [{
-                            label: 'VISITORS MONTHLY GRAPH LINE',
-                            backgroundColor: 'rgb(82,179,220)',
-                            borderColor: 'rgb(133,210,243)',
-                            data: users,
-                        }]
-                    };
-
-                    const config = {
-                        type: 'line',
-                        data: data,
-                        options: {}
-                    };
-
-                    const myChart = new Chart(
-                        document.getElementById('myChart'),
-                        config
-                    );
-                </script>
-            </div>
-        </div>
         <div class="card">
             <div class="col-xl-6 col-12">
                 <div class="card">
@@ -478,50 +441,6 @@
             </script>
         </div>
     </div>
-       <div class="card">
-           <div class="col-xl-6 col-12">
-               <div class="card">
-                   <div class="card-header d-flex justify-content-between align-items-sm-center align-items-start flex-sm-row flex-column">
-                       <div class="header-left">
-                           <p class="card-subtitle text-muted mb-25">Yearly Visitors</p>
-                           <h4 class="card-title">Visits</h4>
-                       </div>
-                   </div>
-                   <div class="card-body">
-                       <canvas id="yearly-visitors" class="chartjs" data-height="400"></canvas>
-                   </div>
-               </div>
-           </div>
-
-           <script>
-               $(document).ready(function() {
-               var yearlyData = {!! $yearlyData !!};
-               var ctx = document.getElementById('yearly-visitors').getContext('2d');
-               var myChart = new Chart(ctx, {
-                   type: 'line',
-                   data: {
-                       labels: yearlyData.labels,
-                       datasets: [{
-                           label: 'Visitors',
-                           data: yearlyData.data,
-                           fill: false,
-                           borderColor: '#007bff',
-                           tension: 0.1
-                       }]
-                   },
-                   options: {
-                       scales: {
-                           yAxes: [{
-                               ticks: {
-                                   beginAtZero: true
-                               }
-                           }]
-                       }
-                   }
-               }); });
-           </script>
-       </div>
-
     </section>
 
     @livewire('dashboard.dashboard')
