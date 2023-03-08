@@ -33,23 +33,16 @@
                         <div class="media" style="text-align: center">
                             <div class="avatar bg-light-primary mr-2">
               <div class="avatar-content" style="background: whitesmoke">
+
                                     <i data-feather="users" class="avatar-icon"></i>
                                 </div>
                             </div>
                             <hr />
                             <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalVisitorsToday}}</h4>
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $maleCount }}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">TODAY
-                                    @php
-                                    $percentChange = $yesterdayVisitor > 0 ? ($totalVisitorsToday - $yesterdayVisitor) / $yesterdayVisitor * 100 : 100;
-                                    $percentChange = number_format($percentChange, 1);
-                                    $color = $percentChange > 0 ? 'green' : 'orange';
-                                    $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
-                                @endphp
-                                <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>
-
-                                </p>
+                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Male &nbsp;
+                                    {!! $percentage_male !!}%</p>
                             </div>
                             <div class="media-body my-auto">
                                 <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $yesterdayVisitor}}</h4>
@@ -62,6 +55,7 @@
             </div>
             <div class="col-xl-4 col-md-6 col-12">
                 <div class="card card-congratulation-medal"
+
                      style=" background: linear-gradient(to right, #e75f04, #fdc39b)">
                     <div class="card-body">
                         <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">WEEKLY VISITS</p>
@@ -72,22 +66,23 @@
                                 </div>
                             </div>
                             <hr />
-                            <div class="my-auto media-body">
-                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalThisWeek }}</h4>
+                            <div class="media-body my-auto">
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalThisWeek }}</h4>
                                 <hr style="color: #bebbbb" />
                                 <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
                                     @php
-                                        $percentChange = $totalLastWeekVisit > 0 ? ($totalThisWeek - $totalLastWeekVisit) / $totalLastWeekVisit * 100: 100;
+                                        $percentChange = $totalLastWeekVisit > 0 ? (($totalThisWeek - $totalLastWeekVisit) / $totalLastWeekVisit) * 100 : 100;
                                         $percentChange = number_format($percentChange, 1);
                                         $color = $percentChange > 0 ? 'green' : 'orange';
                                         $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
                                     @endphp
-                                    <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>
+                                    <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}"
+                                        class="{{ $arrow }}"></i>
 
                                 </p>
                             </div>
-                            <div class="my-auto media-body">
-                                <h4 class="mb-0 font-weight-bolder" style="color: #ffffff">{{ $totalLastWeekVisit }}</h4>
+                            <div class="media-body my-auto">
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalLastWeekVisit }}</h4>
                                 <hr style="color: #bebbbb" />
                                 <p class="card-text font-small-3 mb-0"style="color: #fbfcfd"> LAST WEEK</p>
                             </div>
@@ -95,30 +90,58 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 col-md-6 col-12" >
+            {{--            <div class="col-xl-4 col-md-6 col-12"> --}}
+            {{--                <div class="card card-congratulation-medal" --}}
+            {{--                     style=" background: linear-gradient(to right, #043331, #08dad1)"> --}}
+            {{--                    <div class="card-body"> --}}
+            {{--                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">Motor Vehicle Count</p> --}}
+            {{--                        <div class="media"> --}}
+            {{--                            <div class="avatar bg-light-primary mr-2"> --}}
+            {{--                                <div class="avatar-content" style="background: whitesmoke"> --}}
+            {{--                                    <i data-feather="building" class="avatar-icon"></i> --}}
+            {{--                                </div> --}}
+            {{--                            </div> --}}
+            {{--                            <hr /> --}}
+            {{--                            <div class="media-body my-auto"> --}}
+            {{--                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalVehicleWeek }}</h4> --}}
+            {{--                                <hr style="color: #bebbbb" /> --}}
+            {{--                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">This Week</p> --}}
+            {{--                            </div> --}}
+            {{--                            <div class="media-body my-auto"> --}}
+            {{--                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalLastVehicleVisit }} --}}
+            {{--                                </h4> --}}
+            {{--                                <hr style="color: #bebbbb" /> --}}
+            {{--                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Last Week</p> --}}
+            {{--                            </div> --}}
+            {{--                        </div> --}}
+            {{--                    </div> --}}
+            {{--                </div> --}}
+            {{--            </div> --}}
+            <div class="col-xl-4 col-md-6 col-12">
                 <div class="card card-congratulation-medal"
-                     style=" background: linear-gradient(to right, #792e07, #ff8b4e)">
-                    <div class="card-body" >
-                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">ID CHECK-IN THIS WEEK</p>
-                        <div class="media" style="text-align: center">
+                    style=" background: linear-gradient(to right, #e75f04, #fdc39b)">
+                    <div class="card-body">
+                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">Weekly Visits</p>
+                        <div class="media">
                             <div class="avatar bg-light-primary mr-2">
                                 <div class="avatar-content" style="background: whitesmoke">
                                     <i data-feather="" class="avatar-icon fa fa-id-card-alt"></i>
                                 </div>
                             </div>
                             <hr />
-                            <div class="media-body my-auto" >
+                            <div class="media-body my-auto">
                                 <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $idThisWeek }}
                                 </h4>
                                 <hr style="color: #bebbbb" />
                                 <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
                                     @php
-                                        $percentChange = $yesterdayVisitor > 0 ? ($totalVisitorsToday - $yesterdayVisitor) / $yesterdayVisitor * 100 : 100;
-                                       $percentChange = number_format($percentChange, 1);
+                                        $percentChange = $yesterdayVisitor > 0 ? (($totalVisitorsToday - $yesterdayVisitor) / $yesterdayVisitor) * 100 : 100;
+                                        $percentChange = number_format($percentChange, 1);
                                         $color = $percentChange > 0 ? 'green' : 'orange';
                                         $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
                                     @endphp
-                                    <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>
+                                    <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}"
+                                        class="{{ $arrow }}"></i>
                                 </p>
                             </div>
                             <div class="media-body my-auto">
@@ -271,34 +294,38 @@
         </div>
     </section>
     <section>
-    <div class="row">
+        <div class="row">
 
-        <div class="col-xl-6 col-12"  >
-            <div class="card">
-                        <div class="card-header font-small-3">
-                            <h5>Units with highest number of visitors this month</h5>
-                        <div class="card-text font-small-3 col-12" >
-                            @foreach($units as $unit)
+            <div class="col-xl-6 col-12">
+                <div class="card">
+                    <div class="card-header font-small-3">
+                        <h5>Units with highest number of visitors this month</h5>
+                        <div class="card-text font-small-3 col-12">
+                            @foreach ($units as $unit)
                                 <h6>{{ $unit->name }} ({{ $unit->visitors_count }} visitors)</h6>
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: {{ $unit->visitors_count }}%;" aria-valuenow="{{ $unit->visitors_count }}" aria-valuemin="0" aria-valuemax="{{ $units->max('visitors_count') }}"></div>
+                                    <div class="progress-bar" role="progressbar"
+                                        style="width: {{ $unit->visitors_count }}%;"
+                                        aria-valuenow="{{ $unit->visitors_count }}" aria-valuemin="0"
+                                        aria-valuemax="{{ $units->max('visitors_count') }}"></div>
                                 </div>
                             @endforeach
                         </div>
                     </div>
+                </div>
             </div>
-        </div>
             <div class="col-xl-6 col-12">
-                        <div class="card col-8">
-                        <div class="card-header font-small-3">
-                            <h6>{!! ucwords("Organization with the Highest Monthly Visits") !!}</h6>
+                <div class="card col-8">
+                    <div class="card-header font-small-3">
+                        <h6>{!! ucwords('Organization with the Highest Monthly Visits') !!}</h6>
                         <div class="card-text font-small-3">
-                           <span>{!! $organization->name !!}</span><span> Visits: {!! $organization->visitor_count !!}</span>
+                            <span>{!! $organization->name !!}</span><span> Visits: {!! $organization->visitor_count !!}</span>
                         </div>
                     </div>
                 </div>
             </div>
-            </div></div>
+        </div>
+        </div>
     </section>
 
     <section id="chartjs-chart">
@@ -441,6 +468,7 @@
             </script>
         </div>
     </div>
+
     </section>
 
     @livewire('dashboard.dashboard')

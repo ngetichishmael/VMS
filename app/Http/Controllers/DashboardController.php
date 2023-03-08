@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TimeLog;
 
+
 use App\Models\Unit;
 use App\Models\UserCode;
 use App\Models\UserDetail;
@@ -27,7 +28,7 @@ class DashboardController extends Controller
     {
         $pageConfigs = ['pageHeader' => false];
 
-        return view('OTP', ['pageConfigs' => $pageConfigs]);
+        return view('otp', ['pageConfigs' => $pageConfigs]);
     }
     public function dashboard()
     {
@@ -44,20 +45,19 @@ class DashboardController extends Controller
         $weekStartDate = Carbon::now()->startOfWeek();
         $weekEndDate = Carbon::now()->endOfWeek();
 
-
         $driveinThisWeek = DB::table('visitors')->where('type' , '=','DriveIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
-
         $driveinLastWeek = DB::table('visitors')
             ->where('type', '=', 'DriveIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->count();
-        $smsThisWeek = DB::table('visitors')->where('type' , '=','SMS')
+
+        $smsThisWeek = DB::table('visitors')->where('type', '=', 'SMS')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
@@ -68,20 +68,18 @@ class DashboardController extends Controller
             ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->count();
-        $walkinThisWeek = DB::table('visitors')->where('type' , '=','WalkIn')
-
+        $walkinThisWeek = DB::table('visitors')->where('type', '=', 'WalkIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
-
         $walkinLastWeek = DB::table('visitors')
             ->where('type', '=', 'WalkIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->count();
-        $ipassThisWeek = DB::table('visitors')->where('type' , '=','iPass')
+        $ipassThisWeek = DB::table('visitors')->where('type', '=', 'iPass')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
@@ -92,7 +90,8 @@ class DashboardController extends Controller
             ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->count();
-        $idThisWeek = DB::table('visitors')->where('type' , '=','ID')
+
+        $idThisWeek = DB::table('visitors')->where('type', '=', 'ID')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
@@ -151,9 +150,23 @@ class DashboardController extends Controller
         $maleData = [];
         $femaleData = [];
 
+        foreach ($BarChart as $mdata) {
+            if ($mdata->gender == 'male') {
+                $maleData[] = $mdata->count;
+                $femaleData[] = 0;
+            } else {
+                $femaleData[] = $mdata->count;
+                $maleData[] = 0;
+            }
+        }
+
+        $labels = $BarChart->map(function ($item) {
+            return date("M Y", strtotime($item->year . '-' . $item->month . '-01'));
+        });
+
         $months = [];
 
-        for($i=2; $i>=0; $i--) {
+        for ($i = 2; $i >= 0; $i--) {
             $month = date('m', strtotime("-$i month")); // get the month number
             $year = date('Y', strtotime("-$i month")); // get the year
             $months[] = date("M Y", strtotime($year . '-' . $month . '-01')); // format the date as "M Y"
@@ -164,6 +177,7 @@ class DashboardController extends Controller
         }
 
         $labels = collect($months);
+
 
         foreach ($BarChart as $mdata) {
             if ($mdata->gender == 'male') {
@@ -178,6 +192,7 @@ class DashboardController extends Controller
         $labels = $BarChart->map(function ($item) {
             return date("M Y", strtotime($item->year . '-' . $item->month . '-01'));
         });
+
 
         $mdata = [
             'labels' => $labels,
@@ -347,7 +362,6 @@ class DashboardController extends Controller
                 'datachart'=>$datachart,
                 'units'=>$units,
                 'organization'=>$organization,
-
             ]
         );
     }
