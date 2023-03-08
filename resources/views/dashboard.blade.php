@@ -293,7 +293,7 @@
                         <div class="card-header font-small-3">
                             <h6>{!! ucwords("Organization with the Highest Monthly Visits") !!}</h6>
                         <div class="card-text font-small-3">
-                           <i class="fa fa-shield"><span>{!! $organization->name !!}</span><span> Visits: {!! $organization->visitor_count !!}</span></i>
+                           <span>{!! $organization->name !!}</span><span> Visits: {!! $organization->visitor_count !!}</span>
                         </div>
                     </div>
                 </div>
