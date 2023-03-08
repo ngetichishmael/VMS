@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\TimeLog;
+use App\Models\UserCode;
 use App\Models\UserDetail;
 use App\Models\VehicleInformation;
 use App\Models\Visitor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class DashboardController extends Controller
 {
@@ -18,6 +20,12 @@ class DashboardController extends Controller
         $pageConfigs = ['pageHeader' => false];
 
         return view('content.dashboard.dashboard-analytics', ['pageConfigs' => $pageConfigs]);
+    }
+    public function OTP()
+    {
+        $pageConfigs = ['pageHeader' => false];
+
+        return view('OTP', ['pageConfigs' => $pageConfigs]);
     }
     public function dashboard()
     {
@@ -196,9 +204,8 @@ class DashboardController extends Controller
             $count = array_values(array_filter($yearlyCount, function ($item) use ($i) {
                 return $item['count'] == $i;
             }));
-
-            if (!empty($count)) {
-                $data['data'][] = $count;
+            if (!empty($monthData)) {
+                $data['data'][] = $monthData[0]['month'];
             } else {
                 $data['data'][] = 0;
             }
@@ -266,5 +273,20 @@ class DashboardController extends Controller
         $pageConfigs = ['pageHeader' => false];
 
         return view('content.dashboard.dashboard-ecommerce', ['pageConfigs' => $pageConfigs]);
+    }
+    public function store(Request $request)
+    {
+        $user = DB::table('users')->where('phone_number', $request->user()->phone_number)->first();
+        $exists = UserCode::where('user_id', $request->user()->id)
+            ->where('code', $request->otp)
+            ->where('updated_at', '>=', now()->subMinutes(5))
+            ->latest('updated_at')
+            ->exists();
+        if ($exists) {
+            return redirect()->to('/dashboard');
+        }
+        throw ValidationException::withMessages([
+            'otp' => "Invalid OTP",
+        ]);
     }
 }
