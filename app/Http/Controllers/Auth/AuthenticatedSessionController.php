@@ -104,7 +104,7 @@ class AuthenticatedSessionController extends Controller
         ));
         curl_exec($curl);
         curl_close($curl);
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->to('/dashboard/otp');
     }
 
     /**
