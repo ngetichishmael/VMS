@@ -55,7 +55,7 @@ class DeviceController extends Controller
         Activity::create([
             'name' => $request->user()->name,
             'target' => "New device added by " . $request->user()->name,
-            'organization' => 'Device' . $device,
+            'organization' => 'Device' . $device->identifier,
             'activity' => "Created a new device with " . $device . '.'
         ]);
         return response()->json(['message' => 'Device created successful'], 201);
