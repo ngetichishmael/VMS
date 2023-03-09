@@ -402,8 +402,7 @@
                <div class="card">
                    <div class="card-header d-flex justify-content-between align-items-sm-center align-items-start flex-sm-row flex-column">
                        <div class="header-left">
-                           <p class="card-subtitle text-muted mb-25">Yearly Visitors</p>
-                           <h4 class="card-title">Visits</h4>
+                           <p class="card-subtitle text-muted mb-25">Yearly Visitors for {!! now()->year !!}</p>
                        </div>
                    </div>
                    <div class="card-body">
@@ -442,6 +441,35 @@
                }); });
            </script>
        </div>
+        <div class="card">
+            <div class="card-header">
+                Visitors Chart
+            </div>
+            <div class="card-body">
+                <canvas id="visitorChart" data-height="400"></canvas>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+            var chartData = <?php echo json_encode($chartDataL); ?>;
+
+            var ctx = document.getElementById('visitorChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+            });
+        </script>
+
 
     </section>
 

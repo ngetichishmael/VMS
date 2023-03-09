@@ -47,7 +47,7 @@ class Dashboard extends Component
     {
         $this->resetPage();
         $searchTerm = '%' . $this->search . '%';
-        $this->visitors = WalkIn::with('organization', 'timeLogs','Resident.unit.block.premise.organization')
+        $this->visitors = WalkIn::with(['timeLogs', 'organization','resident.unit.block.premise.organization'])
             ->when($this->visitorTypeId, function ($query) {
                 $query->where('visitor_type_id', $this->visitorTypeId);
             })
@@ -71,18 +71,8 @@ class Dashboard extends Component
                             ->whereMonth('entry_time', Carbon::now()->month);
                     }
                 });
-            })->whereLike(['name'], $searchTerm)
-//            ->orWhereHas('Resident.unit.block.premise.organization', function ($query) use ($searchTerm) {
-//                $query->where('name', 'like', $searchTerm);
-//            })->orWhereHas('Resident.unit.block.premise', function ($query) use ($searchTerm) {
-//                $query->where('name', 'like', $searchTerm);
-//            })->orWhereHas('Resident.unit.block', function ($query) use ($searchTerm) {
-//                $query->where('name', 'like', $searchTerm);
-//            })->orWhereHas('Resident.unit', function ($query) use ($searchTerm) {
-//                $query->where('name', 'like', $searchTerm);
-//            })
-//            ->leftJoin('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
-//            ->orderBy('time_logs.entry_time', $this->sortTimeAsc ? 'asc' : 'desc')
+            })
+            ->search($this->search)
             ->orderBy('visitors.id', $this->sortField === 'id' ? ($this->sortAsc ? 'asc' : 'desc') : '')
             ->paginate($this->perPage);
     }

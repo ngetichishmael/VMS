@@ -24,16 +24,17 @@
 
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="selectSmall"> Check-In Type </label>
-                    <select wire:model="visitorTypeId" class="form-control form-control-sm">
-                        <option value=""> All </option>
-                        @foreach ($checkInTypes as $type)
-                            <option value="{{ $type->id }}">{{ $type->type }}</option>
-                        @endforeach
+                    <label for="checkinType">Check-in Type</label>
+                    <select class="form-control" wire:model="checkinType" id="checkinType">
+                        <option value="">All Types</option>
+                        <option value="iPass">iPass</option>
+                        <option value="WalkIn">Walk-in</option>
+                        <option value="DriveIn">Drive-in</option>
+                        <option value="ID">ID</option>
+                        <option value="SMS">SMS</option>
                     </select>
                 </div>
             </div>
-
 
             <div class="col-md-4">
                 <div class="form-group">
@@ -82,20 +83,15 @@
                     </select>
                 </div>
             </div>
-
-
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="selectSmall">Sort By Time</label>
-                    <select wire:model="sortTimeAsc" class="form-control form-control-sm" id="selectSmall">
-                        <option value="1">Ascending</option>
-                        <option value="0">Descending</option>
-                    </select>
-                </div>
-            </div>
-
-
-
+            {{--            <div class="col-md-2">--}}
+{{--                <div class="form-group">--}}
+{{--                    <label for="selectSmall">Sort By Time</label>--}}
+{{--                    <select wire:model="sortTimeAsc" class="form-control form-control-sm" id="selectSmall">--}}
+{{--                        <option value="1">Ascending</option>--}}
+{{--                        <option value="0">Descending</option>--}}
+{{--                    </select>--}}
+{{--                </div>--}}
+{{--            </div>--}}
         </div>
 
 

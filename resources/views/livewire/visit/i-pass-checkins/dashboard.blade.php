@@ -55,20 +55,6 @@
                             </select>
                         </div>
                     </div>
-
-
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="selectSmall">Sort By Time</label>
-                            <select wire:model="sortTimeAsc" class="form-control form-control-sm" id="selectSmall">
-                                    <option value="1">Ascending</option>
-                                    <option value="0">Descending</option>
-                            </select>
-                        </div>
-                    </div>
-
-
-               
                 </div>
             </div>
             <!-- users filter end -->
@@ -80,12 +66,12 @@
 
             <!-- list section start -->
             <div class="card">
-  
+
                 <div class="pt-0 card-datatable table-responsive">
                     <div class="card-datatable table-responsive">
-                       
-                    
-                    
+
+
+
                     <table class="table">
                         <thead >
                         <tr>
@@ -110,7 +96,7 @@
 
                             </thead>
 
-                         
+
 
                             <tbody>
                            @forelse($visitors as $key => $visitor)
@@ -144,13 +130,13 @@
                         @endforelse
                         </tbody>
                     </table>
-             
+
                         <div style="margin-left: 80%"  class="mt-1">{{ $visitors->links() }}
                         </div>
-                        
+
                     </div>
                 </div>
-   
+
         </div>
 
 

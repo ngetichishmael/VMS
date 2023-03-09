@@ -75,4 +75,24 @@ class WalkIn extends Model
     {
         return $this->belongsTo(Sentry::class);
     }
+    public function scopeSearch($query, $searchTerm)
+    {
+        return $query->where(function ($q) use ($searchTerm) {
+            $q->orWhere('name', 'like', '%'.$searchTerm.'%')
+                ->orWhereHas('user_details', function ($subQuery) use ($searchTerm) {
+                    $subQuery->where('phone_number', 'like', '%'.$searchTerm.'%');
+                })
+                ->orWhereHas('resident', function ($subQuery) use ($searchTerm) {
+                    $subQuery->whereHas('unit', function ($subSubQuery) use ($searchTerm) {
+                        $subSubQuery->whereHas('block', function ($subSubSubQuery) use ($searchTerm) {
+                            $subSubSubQuery->whereHas('premise', function ($subSubSubSubQuery) use ($searchTerm) {
+                                $subSubSubSubQuery->whereHas('organization', function ($subSubSubSubSubQuery) use ($searchTerm) {
+                                    $subSubSubSubSubQuery->where('name', 'like', '%'.$searchTerm.'%');
+                                });
+                            });
+                        });
+                    });
+                });
+        });
+    }
 }

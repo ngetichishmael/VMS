@@ -51,7 +51,7 @@ class Dashboard extends Component
         $searchTerm = '%' . $this->search . '%';
         $this->resetPage();
 
-        $this->dvisitors = DriveIn::with('vehicle', 'timeLogs', 'Resident.unit', 'visitorType')
+        $this->dvisitors = DriveIn::with(['vehicle', 'timeLogs', 'visitorType','resident.unit.block.premise.organization'] )
             ->where('type', '=', 'DriveIn')->orderBy('visitors.id', 'desc')
             ->whereIn('id', function ($query) {
                 $query->select(DB::raw('MAX(id)'))
@@ -77,20 +77,7 @@ class Dashboard extends Component
                     }
                 });
             })
-            ->whereLike(['name', 'vehicle.registration', 'Resident.name' ], $searchTerm)
-//            ->whereLike([
-//                'Resident.name',
-//                'vehicle.registration',
-//                'Resident.unit.block.premise.organization.name',
-//                'Resident.unit.block.premise.name',
-//                'Resident.unit.block.name',
-//                'Resident.unit.name',
-//                'Resident.unit.block.premise.organization_code.name',
-//                'Resident.unit.block.name',
-//                'Resident.unit.name',
-//            ], $searchTerm)
-//            ->leftJoin('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
-//            ->orderBy('time_logs.entry_time', $this->sortTimeAsc ? 'asc' : 'desc')
+            ->search($this->search)
             ->orderBy('visitors.id', $this->sortField === 'id' ? ($this->sortAsc ? 'asc' : 'desc') : '')
             ->paginate($this->perPage);
     }

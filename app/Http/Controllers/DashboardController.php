@@ -11,9 +11,11 @@ use App\Models\UserDetail;
 use App\Models\VehicleInformation;
 use App\Models\Visitor;
 use Carbon\Carbon;
+use DateInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use Nette\Utils\DateTime;
 
 class DashboardController extends Controller
 {
@@ -138,64 +140,36 @@ class DashboardController extends Controller
             ->count();
 
         $BarChart = UserDetail::select(
-            DB::raw("MONTH(updated_at) as month"),
-            DB::raw("YEAR(updated_at) as year"),
+            DB::raw("MONTH(user_details.updated_at) as month"),
+            DB::raw("YEAR(user_details.updated_at) as year"),
             DB::raw("COUNT(*) as count"),
-            DB::raw("gender")
+            DB::raw("user_details.gender")
         )
-            ->whereRaw("updated_at >= DATE_SUB(CURRENT_DATE, INTERVAL 2 MONTH)") // filter data for past two months and current month
-            ->groupBy('year', 'month', 'gender')
+            ->join('visitors', 'user_details.id', '=', 'visitors.user_detail_id')
+            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->whereRaw("time_logs.entry_time >= DATE_SUB(CURRENT_DATE, INTERVAL 2 MONTH)")
+            ->groupBy('year', 'month', 'user_details.gender')
             ->get();
 
-        $maleData = [];
-        $femaleData = [];
+        $maleDatabar = [];
+        $femaleDatabar = [];
 
-        foreach ($BarChart as $mdata) {
-            if ($mdata->gender == 'male') {
-                $maleData[] = $mdata->count;
-                $femaleData[] = 0;
-            } else {
-                $femaleData[] = $mdata->count;
-                $maleData[] = 0;
-            }
-        }
+        $monthsbar = [];
 
-        $labels = $BarChart->map(function ($item) {
-            return date("M Y", strtotime($item->year . '-' . $item->month . '-01'));
-        });
-
-        $months = [];
-
-        for ($i = 2; $i >= 0; $i--) {
+        for($i=2; $i>=0; $i--) {
             $month = date('m', strtotime("-$i month")); // get the month number
             $year = date('Y', strtotime("-$i month")); // get the year
-            $months[] = date("M Y", strtotime($year . '-' . $month . '-01')); // format the date as "M Y"
+            $monthsbar[] = date("M Y", strtotime($year . '-' . $month . '-01')); // format the date as "M Y"
             $maleCount = $BarChart->where('gender', 'male')->where('month', $month)->where('year', $year)->sum('count');
             $femaleCount = $BarChart->where('gender', 'female')->where('month', $month)->where('year', $year)->sum('count');
             $maleData[] = $maleCount;
             $femaleData[] = $femaleCount;
         }
 
-        $labels = collect($months);
-
-
-        foreach ($BarChart as $mdata) {
-            if ($mdata->gender == 'male') {
-                $maleData[] = $mdata->count;
-                $femaleData[] = 0;
-            } else {
-                $femaleData[] = $mdata->count;
-                $maleData[] = 0;
-            }
-        }
-
-        $labels = $BarChart->map(function ($item) {
-            return date("M Y", strtotime($item->year . '-' . $item->month . '-01'));
-        });
-
+        $labelsbar = collect($monthsbar);
 
         $mdata = [
-            'labels' => $labels,
+            'labels' => $labelsbar,
             'datasets' => [
                 [
                     'label' => 'Male',
@@ -239,19 +213,6 @@ class DashboardController extends Controller
         ];
         $vlabels = Visitor::whereYear('created_at', date('Y'))->select(DB::raw("MONTH(created_at) as month_name"))->get();
         $vdata = Visitor::whereYear('created_at', date('Y'))->select(DB::raw("COUNT(*) as count"))->get();
-        // $users = Visitor::select(DB::raw("COUNT(*) as count"), DB::raw("MONTH(created_at) as month_name"))
-        //     ->whereYear('created_at', date('Y'))
-        //     ->orderBy('id', 'ASC')
-        //     ->pluck('count', 'month_name');
-
-        // $vlabels = $users->keys();
-        // $vdata = $users->values();
-
-        // $yearlyData = UserDetail::select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as count'))
-        //     ->whereYear('created_at', Carbon::now()->year)
-        //     ->get()
-        //     ->toArray();
-
         $yearlyMonth = TimeLog::whereYear('entry_time', Carbon::now()->year)
             ->select(DB::raw('MONTH(entry_time) as month'))->get()->toArray();
         $yearlyCount = TimeLog::whereYear('entry_time', Carbon::now()->year)
@@ -320,6 +281,35 @@ class DashboardController extends Controller
             ->orderByDesc('visitor_count')
             ->first();
 
+        $visitorsData = DB::table('visitors')
+            ->select(DB::raw('DATE(visitors.created_at) as date'), DB::raw('COUNT(*) as count'))
+            ->whereRaw('YEAR(visitors.created_at) = YEAR(CURRENT_DATE)')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+        $dates = $visitorsData->pluck('date')->toArray();
+        $visitorCounts = $visitorsData->pluck('count')->toArray();
+
+        $chartDataL = [
+            'labels' => $dates,
+            'datasets' => [
+                [
+                    'label' => 'Visitors',
+                    'fill' => true,
+                    'backgroundColor' => 'rgba(39, 128, 243,0.2)',
+                    'borderColor' => 'rgba(39, 128, 243,1)',
+                    'borderWidth' => 2,
+                    'pointRadius' => 1,
+                    'pointBackgroundColor' => 'rgba(39, 128, 243,1)',
+                    'pointBorderColor' => '#D16E38',
+                    'pointHoverRadius' => 5,
+                    'pointHoverBackgroundColor' => 'rgba(39, 128, 243,1)',
+                    'pointHoverBorderColor' => 'rgba(208, 111, 57,1)',
+                    'data' => $visitorCounts,
+                ]
+            ]
+        ];
+
         return view(
             'dashboard',
             [
@@ -355,6 +345,7 @@ class DashboardController extends Controller
                 'datachart'=>$datachart,
                 'units'=>$units,
                 'organization'=>$organization,
+                'chartDataL' => $chartDataL,
             ]
         );
     }
