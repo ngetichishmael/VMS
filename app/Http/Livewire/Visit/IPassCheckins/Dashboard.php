@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Visit\IPassCheckins;
 
+use App\Models\DriveIn;
 use App\Models\Visitor;
 use App\Models\VisitorType;
 use App\Models\WalkIn;
@@ -47,7 +48,7 @@ class Dashboard extends Component
     {
         $this->resetPage();
         $searchTerm = '%' . $this->search . '%';
-        $this->visitors = WalkIn::with('organization', 'timeLogs','Resident.unit.block.premise.organization')
+        $this->visitors = DriveIn::with('organization', 'timeLogs','Resident.unit.block.premise.organization')
             ->when($this->visitorTypeId, function ($query) {
                 $query->where('visitor_type_id', $this->visitorTypeId);
             })
@@ -72,19 +73,11 @@ class Dashboard extends Component
                     }
                 });
             })->whereLike(['name'], $searchTerm)
-//            ->orWhereHas('Resident.unit.block.premise.organization', function ($query) use ($searchTerm) {
-//                $query->where('name', 'like', $searchTerm);
-//            })->orWhereHas('Resident.unit.block.premise', function ($query) use ($searchTerm) {
-//                $query->where('name', 'like', $searchTerm);
-//            })->orWhereHas('Resident.unit.block', function ($query) use ($searchTerm) {
-//                $query->where('name', 'like', $searchTerm);
-//            })->orWhereHas('Resident.unit', function ($query) use ($searchTerm) {
-//                $query->where('name', 'like', $searchTerm);
-//            })
 //            ->leftJoin('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
 //            ->orderBy('time_logs.entry_time', $this->sortTimeAsc ? 'asc' : 'desc')
             ->orderBy('visitors.id', $this->sortField === 'id' ? ($this->sortAsc ? 'asc' : 'desc') : '')
             ->paginate($this->perPage);
+
     }
     public function render()
     {
