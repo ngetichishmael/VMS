@@ -17,7 +17,7 @@ class CreateActivitiesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('target');
-            $table->string('organization');
+            $table->text('organization');
             $table->text('activity');
             $table->timestamps();
         });
