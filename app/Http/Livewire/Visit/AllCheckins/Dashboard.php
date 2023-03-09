@@ -50,8 +50,7 @@ class Dashboard extends Component
         $searchTerm = '%' . $this->search . '%';
         $this->resetPage();
 
-        $this->visitors = DriveIn::with( 'vehicle', 'timeLogs', 'Resident.unit.block.premise.organization')
-            ->where('type', '=', 'DriveIn')->orderBy('visitors.id', 'desc')
+        $this->visitors = DriveIn::with( 'vehicle', 'timeLogs', 'Resident.unit.block.premise.organization')->orderBy('visitors.id', 'desc')
             ->whereIn('id', function ($query) {
                 $query->select(DB::raw('MAX(id)'))
                     ->from('visitors')

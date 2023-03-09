@@ -29,26 +29,33 @@
                 <div class="card card-congratulation-medal"
                     style=" background: linear-gradient(to right, #15807A, rgb(111,178,190))">
                     <div class="card-body">
-
                         <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">VISITS TODAY</p>
                         <div class="media" style="text-align: center">
                             <div class="avatar bg-light-primary mr-2">
-                                <div class="avatar-content" style="background: whitesmoke">
+              <div class="avatar-content" style="background: whitesmoke">
                                     <i data-feather="users" class="avatar-icon"></i>
                                 </div>
                             </div>
                             <hr />
                             <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $maleCount }}</h4>
+                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalVisitorsToday }}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Male &nbsp;
-                                    {!! $percentage_male !!}%</p>
+                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Today &nbsp;
+                                    @php
+                                        $percentChange = $yesterdayVisitor > 0 ? (($totalVisitorsToday - $yesterdayVisitor) / $yesterdayVisitor) * 100 : 100;
+                                        $percentChange = number_format($percentChange, 1);
+                                        $color = $percentChange > 0 ? 'green' : 'orange';
+                                        $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
+                                    @endphp
+                                    <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}"
+                                                                          class="{{ $arrow }}"></i>
+                                </p>
                             </div>
                             <div class="media-body my-auto">
                                 <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $yesterdayVisitor}}</h4>
                                 <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">Female &nbsp;
-                                    {!! $percentage_female !!}%</p>
+                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">YESTERDAY&nbsp;</p>
+
                             </div>
                         </div>
                     </div>
@@ -56,7 +63,7 @@
             </div>
             <div class="col-xl-4 col-md-6 col-12">
                 <div class="card card-congratulation-medal"
-                    style=" background: linear-gradient(to right, #e75f04, #fdc39b)">
+                     style=" background: linear-gradient(to right, #e75f04, #fdc39b)">
                     <div class="card-body">
                         <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">WEEKLY VISITS</p>
                         <div class="media" style="text-align: center">
@@ -422,43 +429,6 @@
             </script>
 
         </div>
-        <div>
-            <div class="card">
-                <canvas id="myChart" height="300px"></canvas>
-                <div class="pl-2 header-right d-flex align-items-center">
-                    <div>
-                        <p class="pb-5 pl-4 mb-0 card-text">TOTAL VISITORS : {{ $totalVisitors }}</p>
-                    </div>
-                </div>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                <script type="text/javascript">
-                    var labels = {!! $vlabels !!};
-                    var users = {!! $vdata !!};
-
-                    const data = {
-                        labels: labels,
-                        datasets: [{
-                            label: 'VISITORS MONTHLY GRAPH LINE',
-                            backgroundColor: 'rgb(82,179,220)',
-                            borderColor: 'rgb(133,210,243)',
-                            data: users,
-                        }]
-                    };
-
-                    const config = {
-                        type: 'line',
-                        data: data,
-                        options: {}
-                    };
-
-                    const myChart = new Chart(
-                        document.getElementById('myChart'),
-                        config
-                    );
-                </script>
-            </div>
-        </div>
         <div class="card">
             <div class="col-xl-6 col-12">
                 <div class="card">
@@ -504,6 +474,8 @@
                 });
             </script>
         </div>
+    </div>
+
            <script>
                $(document).ready(function() {
                var yearlyData = {!! $yearlyData !!};
@@ -532,7 +504,6 @@
                }); });
            </script>
        </div>
-
     </section>
 
     @livewire('dashboard.dashboard')
