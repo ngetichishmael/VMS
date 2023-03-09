@@ -32,14 +32,14 @@
             width: 55%;
             height: 25%;
             background-color:#E5E4E2;
-           
+
         }
         .card-right {
             padding: 10px;
             width: 42%;
- 
+
             background-color:#E5E4E2;
-        
+
         }
     </style>
     <div class="row">
@@ -126,6 +126,20 @@
                                         />
                                         <label class="custom-control-label"
                                                for="contributor-read"></label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Returning Visitor</td>
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input"
+                                               id="returning_visitor" name="returning_visitor"
+
+                                               @if ($organization_code->returning_visitor === 1) checked @endif
+                                        />
+                                        <label class="custom-control-label"
+                                               for="returning_visitor"></label>
                                     </div>
                                 </td>
                             </tr>

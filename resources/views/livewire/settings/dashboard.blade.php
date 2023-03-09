@@ -43,45 +43,54 @@
                     <th>Automatic ID </th>
                     <th>SMS </th>
                     <th>iPass </th>
+                    <th>Returning Visitor</th>
                     <th>Action</th>
                 </tr>
                 </thead>
-        
+
                 <tbody>
                 @forelse($settings as $setting)
                     <tr>
                         <td>{!! $setting->organization->name ?? null !!} </td>
                         <td style="color: {{ $setting->id_checkin == 1 ? '#4BB543' : '#ff9966' }}">
-                 
+
                             @if ($setting->id_checkin == 1)
-                                 <i class="fas fa-check-circle"></i> 
+                                 <i class="fas fa-check-circle"></i>
                             @else
-                                 <i class="fas fa-times-circle " ></i> 
+                                 <i class="fas fa-times-circle " ></i>
                             @endif
 
                         </td>
                         <td style="color: {{ $setting->automatic_id_checkin == 1 ? '#4BB543' : '#ff9966'  }}">
 
                             @if ($setting->automatic_id_checkin == 1)
-                                 <i class="fas fa-check-circle"></i> 
+                                 <i class="fas fa-check-circle"></i>
                             @else
-                                 <i class="fas fa-times-circle"></i> 
+                                 <i class="fas fa-times-circle"></i>
                             @endif
                         </td>
                         <td style="color: {{ $setting->sms_checkin == 1 ? '#4BB543' : '#ff9966'  }}">
 
                             @if ($setting->sms_checkin == 1)
-                                 <i class="fas fa-check-circle"></i> 
+                                 <i class="fas fa-check-circle"></i>
                             @else
-                                 <i class="fas fa-times-circle"></i> 
+                                 <i class="fas fa-times-circle"></i>
                             @endif
                         </td>
                         <td style="color: {{ $setting->ipass_checkin == 1 ? '#4BB543' : '#ff9966'  }}">
 
                             @if ($setting->ipass_checkin == 1)
-                                 <i class="fas fa-check-circle"></i> 
+                                 <i class="fas fa-check-circle"></i>
                             @else
-                                 <i class="fas fa-times-circle"></i> 
+                                 <i class="fas fa-times-circle"></i>
+                            @endif
+                        </td>
+                        <td style="color: {{ $setting->returning_visitor == 1 ? '#4BB543' : '#ff9966'  }}">
+
+                            @if ($setting->returning_visitor == 1)
+                                 <i class="fas fa-check-circle"></i>
+                            @else
+                                 <i class="fas fa-times-circle"></i>
                             @endif
                         </td>
                         <td>

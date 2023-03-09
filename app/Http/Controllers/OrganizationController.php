@@ -117,6 +117,7 @@ class OrganizationController extends Controller
         $settings->sms_checkin = $request->input('sms_checkin', 0);
 
         $settings->ipass_checkin = $request->input('ipass_checkin', 0);
+        $settings->returning_visitor = $request->input('returning_visitor', 0);
 
         $settings->save();
 

@@ -41,6 +41,7 @@ class SettingController extends Controller
         $settings->automatic_id_checkin = $request->input('automatic_id_checkin', 0);
         $settings->sms_checkin = $request->input('sms_checkin', 0);
         $settings->ipass_checkin = $request->input('ipass_checkin', 0);
+        $settings->returning_visitor = $request->input('returning_visitor', 0);
         $settings->save();
 
 
@@ -68,6 +69,7 @@ class SettingController extends Controller
         $settings->automatic_id_checkin = $request->has('automatic_id_checkin') ? 1 : 0;
         $settings->sms_checkin = $request->has('sms_checkin') ? 1 : 0;
         $settings->ipass_checkin = $request->has('ipass_checkin') ? 1 : 0;
+        $settings->returning_visitor = $request->has('returning_visitor') ? 1 : 0;
         $settings->save();
 
         $fields = Field::findOrFail($settings->field_id);

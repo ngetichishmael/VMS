@@ -19,6 +19,7 @@ class SettingSeeder extends Seeder
             'id_checkin' => true,
             'automatic_id_checkin' => true,
             'sms_checkin' => true,
+            'returning_visitor'=> false,
             'ipass_checkin' => true,
             'field_id' =>1,
         ]);
@@ -29,6 +30,7 @@ class SettingSeeder extends Seeder
             'automatic_id_checkin' => true,
             'sms_checkin' => false,
             'ipass_checkin' => true,
+            'returning_visitor'=> true,
             'field_id' =>2,
         ]);
 
@@ -37,6 +39,7 @@ class SettingSeeder extends Seeder
             'id_checkin' => true,
             'automatic_id_checkin' => false,
             'sms_checkin' => true,
+            'returning_visitor'=> true,
             'ipass_checkin' => false,
             'field_id' =>3,
         ]);
@@ -47,6 +50,7 @@ class SettingSeeder extends Seeder
             'automatic_id_checkin' => false,
             'sms_checkin' => false,
             'ipass_checkin' => false,
+            'returning_visitor'=> false,
             'field_id' =>4,
         ]);
 
@@ -56,6 +60,7 @@ class SettingSeeder extends Seeder
             'automatic_id_checkin' => true,
             'sms_checkin' => false,
             'ipass_checkin' => false,
+            'returning_visitor'=> true,
             'field_id' =>5,
         ]);
     }

@@ -21,6 +21,7 @@ class CreateSettingsTable extends Migration
             $table->boolean('automatic_id_checkin')->default(false);
             $table->boolean('sms_checkin')->default(false);
             $table->boolean('ipass_checkin')->default(false);
+            $table->boolean('returning_visitor')->default(false);
             $table->foreignIdFor(Field::class)->nullable();;
 
             $table->timestamps();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Organization;
 use App\Models\Sentry;
+use App\Models\UserDetail;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
@@ -49,11 +50,12 @@ class SentryController extends Controller
         $validator = Validator::make($request->all(), [
 
             'name' => 'required|min:2|unique:sentries,name',
-
             'premise_id' => 'required',
-
             'shift_id' => 'required',
-
+            'date_of_birth'=> 'required',
+            'ID_number'=> 'required|numeric',
+            'physical_address'=>'required|string',
+            'gender'=>'required|string',
             'phone_number' => 'required|numeric|unique:sentries,phone_number',
 
         ]);
@@ -65,6 +67,16 @@ class SentryController extends Controller
         $org_code=Premise::where('id',  $request->input('premise_id'))->first();
 
         $organization=Organization::where('code', $org_code->organization_code)->first();
+
+        UserDetail::create([
+            'phone_number' => $request->phone_number ?? '',
+            'date_of_birth' => $request->date_of_birth ?? '',
+            'ID_number' => $request->ID_number ?? '',
+            'image' => $request->image ?? '',
+            'gender' => $request->gender ?? 'male',
+            'company' => $request->company ?? '',
+            'physical_address' => $request->physical_address,
+        ]);
 
         Sentry::create([
             'name' => $request->name,
