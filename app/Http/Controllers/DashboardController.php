@@ -252,9 +252,9 @@ class DashboardController extends Controller
         //     ->get()
         //     ->toArray();
 
-        $yearlyMonth = UserDetail::whereYear('created_at', Carbon::now()->year)
-            ->select(DB::raw('MONTH(created_at) as month'))->get()->toArray();
-        $yearlyCount = UserDetail::whereYear('created_at', Carbon::now()->year)
+        $yearlyMonth = TimeLog::whereYear('entry_time', Carbon::now()->year)
+            ->select(DB::raw('MONTH(entry_time) as month'))->get()->toArray();
+        $yearlyCount = TimeLog::whereYear('entry_time', Carbon::now()->year)
             ->select(DB::raw('COUNT(*) as count'))->get()->toArray();
         // $yearlyData = UserDetail::whereYear('created_at', Carbon::now()->year)->select(DB::raw('COUNT(*) as count'))->get();
 
@@ -319,13 +319,6 @@ class DashboardController extends Controller
             ->groupBy('organizations.name')
             ->orderByDesc('visitor_count')
             ->first();
-
-        if ($organization) {
-            echo $organization->name . ' had the highest number of visitors this month: ' . $organization->visitor_count;
-        } else {
-            echo 'No organizations had visitors this month.';
-        }
-
 
         return view(
             'dashboard',
