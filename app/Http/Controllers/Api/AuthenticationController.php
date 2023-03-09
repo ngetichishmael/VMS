@@ -113,12 +113,11 @@ class AuthenticationController extends Controller
             "token_type" => 'Bearer',
             "message" => "User Logged in",
             "premises" => $premise->name ?? ' ',
+            "premises_id" => $premise->id ?? ' ',
             'organization' => $premise->organization->name ?? ' ',
             "access_token" => $tokenUser,
             "user" => $user,
             "code" => $code,
-            "premises" => $premise->name ?? ' ',
-            'organization' => $premise->organization->name ?? ' ',
             "response" => $responsePassanda,
         ]);
     }
