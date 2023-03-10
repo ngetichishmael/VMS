@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Sentry;
 
+use App\Models\User;
 use Livewire\Component;
 use App\Models\Sentry;
 use App\Models\Device;
@@ -31,7 +32,7 @@ class Dashboard extends Component
 
     public function render()
     {
-  
+
 
         $searchTerm = '%' . $this->search . '%';
 
@@ -86,12 +87,12 @@ class Dashboard extends Component
         ]);
 
 
-   
+
         $sentry = new Sentry;
 
         $sentry->name = $this->name;
 
-   
+
 
         $sentry->premise_id  = $this->premise_id;
 
@@ -100,14 +101,14 @@ class Dashboard extends Component
         $sentry->device_id  = $this->device_id;
 
         $sentry->save();
-  
+
 
         return redirect()->route('Sentry');
     }
 
     public function editSentry($id)
     {
-        
+
         $sentry  = Sentry::where('id', $id)->first();
 
         $this->sentry_edit_id = $id;
@@ -135,37 +136,43 @@ class Dashboard extends Component
         $sentry->premise_id = $this->premise_id;
         $sentry->shift_id = $this->shift_id;
         $sentry->device_id  = $this->device_id;
- 
+
         $sentry->save();
 
         return redirect()->route('Sentry')->with('success','Sentry updated successfully.');
     }
 
-    public function destroy($id)
-    {
-        if ($id) {
-            $sentry = Sentry::where('id', $id);
-            $sentry ->delete();
+//    public function destroy($id)
+//    {
+//        if ($id) {
+//            $sentry = Sentry::where('id', $id);
+//            $sentry ->delete();
+//
+//            return redirect()->to('/users/sentries')->with('error','Sentry Deleted successfully!');
+//        }
+//    }
 
-            return redirect()->to('/users/sentries')->with('error','Sentry Deleted successfully!');
-        }
-    }
-
-    public function activate($id)
+    public function activate($id, $phone_number)
     {
-       
+
        Sentry::whereId($id)->update(
           ['status' => "1"]
+       );
+       User::where('phone_number', $phone_number)->update(
+           ['status' => "1"]
        );
        return redirect()->to('/users/sentries')->with('success','Sentry Activated successfully!');
     }
 
-    public function deactivate($id)
+    public function deactivate($id, $phone_number)
     {
-       
+
        Sentry::whereId($id)->update(
           ['status' => "0"]
        );
+        User::where('phone_number', $phone_number)->update(
+            ['status' => "0"]
+        );
        return redirect()->to('/users/sentries')->with('warning','Sentry Disabled successfully!');
     }
 

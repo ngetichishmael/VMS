@@ -51,12 +51,6 @@
             "slug": "VisitIPassCheckIn"
         },
         {
-            "url": "vehicle/information",
-            "name": "Vehicles",
-            "icon": "garage",
-            "slug": "VehicleInformation"
-        },
-        {
             "navheader": "User Interface",
             "slug": ""
         },

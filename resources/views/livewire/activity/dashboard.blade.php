@@ -1,3 +1,4 @@
+<div>
 <section id="dashboard-ecommerce">
     <section>
         <!-- users filter start -->
@@ -42,9 +43,9 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Action</th>
-                                <th>Created At</th>
+                                <th>Platform</th>
                                 <th>Name</th>
+                                <th>Created At</th>
                                 <th>Organization Code</th>
                                 <th>Activity</th>
                                 <th>Action</th>
@@ -56,11 +57,11 @@
                             @forelse ($activities as $key => $activity)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{!! $activity->created_at ?? now() !!}</td>
                                     <td>{{ $activity->target }}</td>
                                     <td>{{ $activity->name }}</td>
+                                    <td>{!! $activity->created_at ?? now() !!}</td>
                                     <td>{{ $activity->organization }}</td>
-                                    <td>{{ $activity->activity }}</td>
+                                    <td>{{ Str::limit($activity->activity, 20) }}</td>
                                     <td> <a href="#">
                                             <i class="fa fa-eye" style="color:#808080">  </i></a>
                                     </td>
@@ -76,4 +77,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
+</section>
+</div>

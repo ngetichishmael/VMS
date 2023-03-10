@@ -164,7 +164,7 @@ class SentryController extends Controller
      *
      * @param  \App\Http\Requests\UpdateSentryRequest  $request
      * @param  \App\Models\Sentry  $sentry
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -182,7 +182,8 @@ class SentryController extends Controller
 
         $sentry->save();
 
-        return redirect()->to('/users/sentries')->with('success', 'Sentry Updated successfully.');
+
+        return redirect()->to('/users/sentries')->with('success', 'Guard Updated successfully.');
     }
 
     /**

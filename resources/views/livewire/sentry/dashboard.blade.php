@@ -76,14 +76,14 @@
                                 <td>{!! $sentry->shift()->pluck('name')->implode('') !!} </td>
                                 <td>{{ $sentry->updated_at }}</td>
                                 <td>
-                                     <?php if($sentry->status == '1'){ ?> 
+                                     <?php if($sentry->status == '1'){ ?>
                                              <span class="badge badge-pill badge-light-success mr-1">Active</span>
-                                    
-                                     <?php }else{ ?> 
+
+                                     <?php }else{ ?>
                                              <span class="badge badge-pill badge-light-warning mr-1">Disabled</span>
 
                                       <?php } ?>
-                                    
+
                                     </td>
 
                                 <td>
@@ -99,22 +99,22 @@
                                             <!-- delete link -->
                                             <?php if($sentry->status == '0'){ ?>
                                             <a wire:ignore.self href="#"
-                                                wire:click="activate({{ $sentry->id }})"
+                                                wire:click="activate('{{ $sentry->id}}', '{{$sentry->phone_number}}')"
                                                 onclick="return confirm('Are you sure to want to Activate the sentry?')"
                                                 style="padding-right:20px; "> Activate </a>
                                             <?php }else{ ?>
                                             <a wire:ignore.self href="#"
-                                                wire:click="deactivate({{ $sentry->id }})"
+                                                wire:click="deactivate('{{ $sentry->id}}', '{{$sentry->phone_number}}')"
                                                 onclick="return confirm('Are you sure to want to suspend the sentry?')"
                                                 style="padding-right:20px; "> Suspend</i> </a>
                                             <?php } ?>
-                                            
+
                                           <a  href="{{ route('Sentry.show',$sentry->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > View </a>
                                             <!-- delete link -->
 
-                                            <a wire:ignore.self href="#" wire:click="destroy({{ $sentry->id }})"
-                                                onclick="return confirm('Are you sure to want to delete the sentry?')">
-                                                Delete </a>
+{{--                                            <a wire:ignore.self href="#" wire:click="destroy({{ $sentry->id }})"--}}
+{{--                                                onclick="return confirm('Are you sure to want to delete the sentry?')">--}}
+{{--                                                Delete </a>--}}
 
                                         </div>
                                     </div>
@@ -240,7 +240,7 @@
                             @endforeach
                         </select>
                     </fieldset>
-            
+
 
                     <button type="submit" class="btn btn-primary mr-1 data-submit"> {{ __('Register') }} </button>
                     <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
