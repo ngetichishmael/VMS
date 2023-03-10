@@ -200,40 +200,40 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 col-md-6 col-12">
-                <div class="card card-congratulation-medal"
-                     style=" background: linear-gradient(to right, #1f4983, #668cbd)">
-                    <div class="card-body">
-                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">iPass CHECK-IN THIS WEEK</p>
-                        <div class="media" style="text-align: center">
-                            <div class="avatar bg-light-primary mr-2">
-                                <div class="avatar-content" style="background: whitesmoke">
-                                    <i data-feather="badge" class="avatar-icon fa fa-id-badge"></i>
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $ipassThisWeek }}</h4>
-                                <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
-                                    @php
-                                        $percentChange = $ipassLastWeek > 0 ? ($ipassThisWeek - $ipassLastWeek) / $ipassLastWeek * 100 : 100;
-                                       $percentChange = number_format($percentChange, 1);
-                                        $color = $percentChange > 0 ? 'green' : 'orange';
-                                        $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
-                                    @endphp
-                                    <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>
-                                </p>
-                            </div>
-                            <div class="media-body my-auto">
-                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $ipassLastWeek }}</h4>
-                                <hr style="color: #bebbbb" />
-                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+{{--            <div class="col-xl-4 col-md-6 col-12">--}}
+{{--                <div class="card card-congratulation-medal"--}}
+{{--                     style=" background: linear-gradient(to right, #1f4983, #668cbd)">--}}
+{{--                    <div class="card-body">--}}
+{{--                        <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">iPass CHECK-IN THIS WEEK</p>--}}
+{{--                        <div class="media" style="text-align: center">--}}
+{{--                            <div class="avatar bg-light-primary mr-2">--}}
+{{--                                <div class="avatar-content" style="background: whitesmoke">--}}
+{{--                                    <i data-feather="badge" class="avatar-icon fa fa-id-badge"></i>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <hr />--}}
+{{--                            <div class="media-body my-auto">--}}
+{{--                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $ipassThisWeek }}</h4>--}}
+{{--                                <hr style="color: #bebbbb" />--}}
+{{--                                <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK--}}
+{{--                                    @php--}}
+{{--                                        $percentChange = $ipassLastWeek > 0 ? ($ipassThisWeek - $ipassLastWeek) / $ipassLastWeek * 100 : 100;--}}
+{{--                                       $percentChange = number_format($percentChange, 1);--}}
+{{--                                        $color = $percentChange > 0 ? 'green' : 'orange';--}}
+{{--                                        $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';--}}
+{{--                                    @endphp--}}
+{{--                                    <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>--}}
+{{--                                </p>--}}
+{{--                            </div>--}}
+{{--                            <div class="media-body my-auto">--}}
+{{--                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $ipassLastWeek }}</h4>--}}
+{{--                                <hr style="color: #bebbbb" />--}}
+{{--                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <div class="col-xl-4 col-md-6 col-12">
                 <div class="card card-congratulation-medal"
                      style=" background: linear-gradient(to right, rgba(124,17,17,0.7), rgba(180,112,112,0.7))">
@@ -440,35 +440,38 @@
                    }
                }); });
            </script>
-       </div>
-        <div class="card">
-            <div class="card-header">
-                Visitors Chart
-            </div>
-            <div class="card-body">
-                <canvas id="visitorChart" data-height="400"></canvas>
-            </div>
-        </div>
-        <script>
-            $(document).ready(function() {
-            var chartData = <?php echo json_encode($chartDataL); ?>;
+           <div>
+               <div class="card">
+                   <div class="card-header">
+                       Visitors Chart
+                   </div>
+                   <div class="card-body">
+                       <canvas id="visitorChart" data-height="400"></canvas>
+                   </div>
+               </div>
+               <script>
+                   $(document).ready(function() {
+                       var chartData = <?php echo json_encode($chartDataL); ?>;
 
-            var ctx = document.getElementById('visitorChart').getContext('2d');
-            var chart = new Chart(ctx, {
-                type: 'line',
-                data: chartData,
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    }
-                }
-            });
-            });
-        </script>
+                       var ctx = document.getElementById('visitorChart').getContext('2d');
+                       var chart = new Chart(ctx, {
+                           type: 'line',
+                           data: chartData,
+                           options: {
+                               scales: {
+                                   yAxes: [{
+                                       ticks: {
+                                           beginAtZero: true
+                                       }
+                                   }]
+                               }
+                           }
+                       });
+                   });
+               </script>
+           </div>
+       </div>
+
 
 
     </section>
