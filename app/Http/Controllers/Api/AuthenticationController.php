@@ -21,10 +21,6 @@ class AuthenticationController extends Controller
     public function Login(Request $request)
     {
         $user = User::with('premise', 'organization')->where('phone_number', $request->phone_number)->where('status', 1)->first();
-
-        $detail = UserDetail::where('phone_number', $user->phone_number)->first();
-        $sentryid = Sentry::where('user_detail_id', $detail->id ?? '')->first();
-        $premise = Premise::where('id', $sentryid->premise_id ?? '')->first();
         if (!$user) {
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
@@ -39,6 +35,9 @@ class AuthenticationController extends Controller
                     401
                 );
         }
+        $detail = UserDetail::where('phone_number', $user->phone_number)->first();
+        $sentryid = Sentry::where('user_detail_id', $detail->id ?? '')->first();
+        $premise = Premise::where('id', $sentryid->premise_id ?? '')->first();
         $code = rand(100000, 999999);
         $tokenUser = $user->createToken('auth_token')->plainTextToken;
         UserCode::updateOrCreate([
