@@ -42,11 +42,13 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Action</th>
+                                <th>Created At</th>
                                 <th>Name</th>
-                                <th>Target</th>
                                 <th>Organization Code</th>
                                 <th>Activity</th>
-                                <th>Created At</th>
+                                <th>Action</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -54,11 +56,14 @@
                             @forelse ($activities as $key => $activity)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
+                                    <td>{!! $activity->created_at ?? now() !!}</td>
                                     <td>{{ $activity->target }}</td>
                                     <td>{{ $activity->name }}</td>
                                     <td>{{ $activity->organization }}</td>
                                     <td>{{ $activity->activity }}</td>
-                                    <td>{{ now() }}</td>
+                                    <td> <a href="#">
+                                            <i class="fa fa-eye" style="color:#808080">  </i></a>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
