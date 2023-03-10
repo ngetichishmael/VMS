@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
+use App\Models\DriveIn;
+use App\Models\Organization;
+use App\Models\TimeLog;
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
@@ -41,14 +46,18 @@ class ActivityController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $activity = Activity::whereId($id)->first();
+        $activities=Activity::where('name',$activity->name )->get();
+        $organization = Organization::where('code', $activity->organization)->first();
+        return view('livewire.activity.view',compact('activity', 'activities','organization'));
     }
 
-    /**
+
+        /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id

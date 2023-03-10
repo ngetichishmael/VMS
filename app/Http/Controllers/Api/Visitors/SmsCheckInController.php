@@ -191,7 +191,7 @@ class SmsCheckInController extends Controller
         return response()->json(['success' => 'Visitor and vehicle information added successfully.'], 201);
     }
 
-    public function sendUserSMS($visitor_name, $time, $resident_name, $phone_number, $place)
+    public function sendUserSMS($time, $resident_name, $phone_number, $place)
     {
         $curl = curl_init();
         $url = 'https://accounts.jambopay.com/auth/token';

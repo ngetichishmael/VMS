@@ -13,8 +13,6 @@ use Livewire\WithPagination;
 class Dashboard extends Component
 {
     use WithPagination;
-
-    use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $perPage = 10;
     public $sortField = 'id';

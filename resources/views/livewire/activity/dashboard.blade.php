@@ -18,22 +18,23 @@
                     <div class="form-group">
                         <label for="selectSmall">Select Per Page</label>
                         <select class="form-control form-control-sm" id="selectSmall">
-                            <option value="10">10</option>
-                            <option value="20">20</option>
+                            <option value="25">25</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
+                            <option value="150">150</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="selectSmall">Sort</label>
-                        <select class="form-control form-control-sm" id="selectSmall">
-                            <option value="1">Ascending</option>
-                            <option value="0">Descending</option>
+                        <select class="form-control form-control-sm" id="selectSmall" wire:model="sortAsc">
+                            <option value="1">Oldest to Newest</option>
+                            <option value="0">Newest to Oldest</option>
                         </select>
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="card">
@@ -62,7 +63,7 @@
                                     <td>{!! $activity->created_at ?? now() !!}</td>
                                     <td>{{ $activity->organization }}</td>
                                     <td>{{ Str::limit($activity->activity, 20) }}</td>
-                                    <td> <a href="#">
+                                    <td> <a href="{{ route('activity.show', $activity->id) }}">
                                             <i class="fa fa-eye" style="color:#808080">  </i></a>
                                     </td>
                                 </tr>

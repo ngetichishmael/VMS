@@ -40,7 +40,7 @@
         },
         {
             "url": "Visits/IDCheckIn",
-            "name": " ID Check-ins",
+            "name": "Verified ID Check-ins",
             "icon": "badge",
             "slug": "VisitIDCheckIn"
         },

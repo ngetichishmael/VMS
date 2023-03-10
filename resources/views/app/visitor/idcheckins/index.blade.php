@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'ID Check-ins')
+@section('title', 'Verified ID Check-ins')
 
 @section('vendor-style')
     {{-- vendor css files --}}

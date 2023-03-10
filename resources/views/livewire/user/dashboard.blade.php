@@ -56,7 +56,7 @@
                         <table class="table" >
                             <thead>
                                 <tr>
-                               
+
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>PhoneNumber</th>
@@ -64,7 +64,7 @@
                                     <th>Role</th>
                                     <th>Status</th>
                                     <th>Last Login</th>
-                                  
+
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -74,7 +74,7 @@
                             <tbody>
                             @forelse ($users as $key => $user)
                                 <tr>
-                                  
+
 
                                     <td> {{ $user ->name }} </td>
 
@@ -95,14 +95,14 @@
 
                                     </td>
                                     <td>{{ now() }}</td>
-                                
+
                                     <td>
                                         <div class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu">
-                                        <a  href="{{ route('OrganizationUsers.edit',$user->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > Edit </a>   
+                                        <a  href="{{ route('OrganizationUsers.edit',$user->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > Edit </a>
                                         <!-- delete link -->
                                         <?php if($user->status == '0'){ ?>
                                         <a wire:ignore.self href="#" wire:click="activate({{ $user->id }})"  onclick="return confirm('Are you sure to want to Activate the User?')" style="padding-right:20px; " > Activate </a>
@@ -110,7 +110,7 @@
                                         <a wire:ignore.self href="#" wire:click="deactivate({{ $user->id }})"  onclick="return confirm('Are you sure to want to suspend the User?')" style="padding-right:20px; " > Suspend</i> </a>
                                         <?php } ?>
 
-                                        <a wire:ignore.self href="#" wire:click="destroy({{ $user->id }})" onclick="return confirm('Are you sure to want to delete the User?')" > Delete </a>
+{{--                                        <a wire:ignore.self href="#" wire:click="destroy({{ $user->id }})" onclick="return confirm('Are you sure to want to delete the User?')" > Delete </a>--}}
 
                                         </div>
                                         </div>

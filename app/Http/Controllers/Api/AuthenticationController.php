@@ -121,7 +121,7 @@ class AuthenticationController extends Controller
         Activity::create([
             'name' => $detail->name,
             'target' => " Mobile App",
-            'organization' =>$premise->organization->name ?? ' ',
+            'organization' =>$premise->organization->code ?? ' ',
             'activity' => "Login"
 
         ]);
@@ -172,7 +172,7 @@ class AuthenticationController extends Controller
         Activity::create([
             'name' =>$user->name,
             'target' => " Mobile App",
-            'organization' =>$premise->organization->name ?? ' ',
+            'organization' =>$premise->organization->code ?? ' ',
             'activity' => "Entered invalid OTP"
 
         ]);
