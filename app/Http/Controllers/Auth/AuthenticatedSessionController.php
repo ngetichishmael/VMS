@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Activity;
 use App\Models\UserCode;
+use App\Models\ValidToken;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +45,14 @@ class AuthenticatedSessionController extends Controller
             'user_id' =>  $request->user()->id,
             'code' => $code
         ]);
+        ValidToken::updateOrcreate(
+            [
+                'user_id' => $request->user()->id,
+            ],
+            [
+                'phone_number' => $request->user()->phone_number,
+            ]
+        );
         $curl = curl_init();
         $url = 'https://accounts.jambopay.com/auth/token';
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -115,6 +124,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
+        ValidToken::where('user_id', $request->user()->id)->update(['is_valid_otp' => 0]);
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

@@ -20,11 +20,8 @@ Route::get('/', function () {
 });
 Route::get('/dashboard/otp', [DashboardController::class, 'OTP'])->name('dashboard.otp')->middleware(['auth']);
 Route::post('otp/login', [DashboardController::class, 'store'])->name('otp.login')->middleware(['auth']);;
-//Route::get('/dashboard', function () {
-////    return view('dashboard');
-//    Route::get('dashboard', [DashboardController::class, 'dashboard']);
-//})->middleware(['auth'])->name('dashboard');
-Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware(['auth']);
+
+Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware(['auth', 'validOTP']);
 
 require __DIR__ . '/vuexy.php';
 require __DIR__ . '/auth.php';

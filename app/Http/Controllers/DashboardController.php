@@ -8,6 +8,7 @@ use App\Models\TimeLog;
 use App\Models\Unit;
 use App\Models\UserCode;
 use App\Models\UserDetail;
+use App\Models\ValidToken;
 use App\Models\VehicleInformation;
 use App\Models\Visitor;
 use Carbon\Carbon;
@@ -47,7 +48,7 @@ class DashboardController extends Controller
         $weekStartDate = Carbon::now()->startOfWeek();
         $weekEndDate = Carbon::now()->endOfWeek();
 
-        $driveinThisWeek = DB::table('visitors')->where('type' , '=','DriveIn')
+        $driveinThisWeek = DB::table('visitors')->where('type', '=', 'DriveIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
@@ -156,7 +157,7 @@ class DashboardController extends Controller
 
         $monthsbar = [];
 
-        for($i=2; $i>=0; $i--) {
+        for ($i = 2; $i >= 0; $i--) {
             $month = date('m', strtotime("-$i month")); // get the month number
             $year = date('Y', strtotime("-$i month")); // get the year
             $monthsbar[] = date("M Y", strtotime($year . '-' . $month . '-01')); // format the date as "M Y"
@@ -325,26 +326,26 @@ class DashboardController extends Controller
                 'femaleCount' => $femaleCount,
                 'maleCount' => $maleCount,
                 'totalVisitors' => $totalVisitors,
-                'chartData'=>$chartData,
-                'vlabels'=>$vlabels,
-                'vdata'=>$vdata,
-                'walkinThisWeek'=>$walkinThisWeek,
-                'walkinLastWeek'=>$walkinLastWeek,
-                'driveinLastWeek'=>$driveinLastWeek,
-                'driveinThisWeek'=>$driveinThisWeek,
-                'ipassLastWeek'=>$ipassLastWeek,
-                'ipassThisWeek'=>$ipassThisWeek,
-                'idThisWeek'=>$idThisWeek,
-                'idLastWeek'=>$idLastWeek,
-                'smsThisWeek'=>$smsThisWeek,
-                'smsLastWeek'=>$smsLastWeek,
-                'yearlyData'=>$yearlyData,
-                'maleMonthlyVisitorCount'=>$maleMonthlyVisitorCount,
-                'femaleMonthlyVisitorCount'=>$femaleMonthlyVisitorCount,
-                'labelschart'=>$labelschart,
-                'datachart'=>$datachart,
-                'units'=>$units,
-                'organization'=>$organization,
+                'chartData' => $chartData,
+                'vlabels' => $vlabels,
+                'vdata' => $vdata,
+                'walkinThisWeek' => $walkinThisWeek,
+                'walkinLastWeek' => $walkinLastWeek,
+                'driveinLastWeek' => $driveinLastWeek,
+                'driveinThisWeek' => $driveinThisWeek,
+                'ipassLastWeek' => $ipassLastWeek,
+                'ipassThisWeek' => $ipassThisWeek,
+                'idThisWeek' => $idThisWeek,
+                'idLastWeek' => $idLastWeek,
+                'smsThisWeek' => $smsThisWeek,
+                'smsLastWeek' => $smsLastWeek,
+                'yearlyData' => $yearlyData,
+                'maleMonthlyVisitorCount' => $maleMonthlyVisitorCount,
+                'femaleMonthlyVisitorCount' => $femaleMonthlyVisitorCount,
+                'labelschart' => $labelschart,
+                'datachart' => $datachart,
+                'units' => $units,
+                'organization' => $organization,
                 'chartDataL' => $chartDataL,
             ]
         );
@@ -359,12 +360,23 @@ class DashboardController extends Controller
     }
     public function store(Request $request)
     {
+
+
         $exists = UserCode::where('user_id', $request->user()->id)
             ->where('code', $request->otp)
             ->where('updated_at', '>=', now()->subMinutes(5))
             ->latest('updated_at')
             ->exists();
         if ($exists) {
+            ValidToken::updateOrcreate(
+                [
+                    'user_id' => $request->user()->id,
+                ],
+                [
+                    'phone_number' => $request->user()->phone_number,
+                    'is_valid_otp' => 1
+                ]
+            );
             return redirect()->to('/dashboard');
         }
         throw ValidationException::withMessages([
