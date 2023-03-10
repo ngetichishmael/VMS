@@ -41,20 +41,14 @@
                         </div>
                         <div class="col-md-6  mb-1 pl-2">
                             <div class="form-group">
-                                <label >Identification Number</label>
-                                <input type="text" class="form-control"  />
-                            </div>
-                        </div>
-                        <div class="col-md-6  mb-1 pl-2">
-                            <div class="form-group">
-                                <label >KRA PIN</label>
-                                <input type="text" class="form-control"  />
+                                <label >ID Number</label>
+                                <input type="number" class="form-control"  />
                             </div>
                         </div>
                         <div class="col-md-6  mb-1 pl-2">
                             <div class="form-group">
                                 <label >Date of Birth</label>
-                                <input type="text" class="form-control"  />
+                                <input type="date" class="form-control"  />
                             </div>
                         </div>
                         <div class="col-md-6  mb-1 pl-2">
@@ -69,11 +63,11 @@
                                 <input type="text" class="form-control" />
                             </div>
                         </div>
-                       
+
 
                     </div>
                 </div>
-                
+
             </div>
         </div>
         <div class="col-md-4">
@@ -99,27 +93,27 @@
 
                     </div>
                     <div class="row">
-                    
+
 
                     </div>
                 </div>
             </div>
 
         </div>
-     
-       
+
+
             <div class="col-md-3">
-                    <button wire:click.prevent="create" type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2;color:#fff;"  data-toggle="modal" id="smallButton"  
+                    <button wire:click.prevent="create" type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2;color:#fff;"  data-toggle="modal" id="smallButton"
                             data-placement="top" >
                              Create
-                               
+
                         </button>
           </div>
             <!-- <div class="mt-2 col-12 d-flex flex-sm-row flex-column" style="gap: 20px;">
                 <a href="{{ route('VisitDriveIn') }}" type="reset" style="margin-left: 85%;background: #73b2ef; color: #ffffff"
                    class="btn btn-btn-secondary">  Back </a>
             </div> -->
-     
+
 
 @endsection
 

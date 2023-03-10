@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Field;
 use App\Models\Premise;
 use App\Models\Sentry;
@@ -117,6 +118,13 @@ class AuthenticationController extends Controller
 //        $premise = Premise::where('id', $sentryid->premise_id ?? '')->first();
         $detail = Sentry::where('phone_number', $user->phone_number ?? '')->first();
         $premise = Premise::where('id', $detail->premise_id ?? 'premises')->first();
+        Activity::create([
+            'name' => $detail->name,
+            'target' => " Mobile App",
+            'organization' =>$premise->organization->name ?? ' ',
+            'activity' => "Login"
+
+        ]);
         return response()->json([
             "success" => true,
             "token_type" => 'Bearer',
@@ -146,6 +154,13 @@ class AuthenticationController extends Controller
             ->latest('updated_at')
             ->exists();
         if ($exists) {
+            Activity::create([
+                'name' =>$user->name,
+                'target' => " Mobile App",
+                'organization' =>$premise->organization->name ?? ' ',
+                'activity' => "verified OTP"
+
+            ]);
 
             return response()->json(
                 [
@@ -154,6 +169,13 @@ class AuthenticationController extends Controller
                 200
             );
         }
+        Activity::create([
+            'name' =>$user->name,
+            'target' => " Mobile App",
+            'organization' =>$premise->organization->name ?? ' ',
+            'activity' => "Entered invalid OTP"
+
+        ]);
         return response()->json(['message' => 'Invalid OTP entered'], 406);
     }
     public function settings()

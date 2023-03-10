@@ -77,7 +77,7 @@ class SentryController extends Controller
             'company' => $request->company ?? '',
             'physical_address' => $request->physical_address,
         ]);
-
+$user_detail=UserDetail::where('phone_number',$request->phone_number)->first();
         Sentry::create([
             'name' => $request->name,
 
@@ -87,7 +87,7 @@ class SentryController extends Controller
 
             'device_id' => $request->device_id ?? 0,
 
-            'user_detail_id' => $request->user_detail_id ?? null,
+            'user_detail_id' => $user_detail->id,
 
             'shift_id' => $request->shift_id,
 

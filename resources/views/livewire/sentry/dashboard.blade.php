@@ -220,11 +220,31 @@
                         <small class="form-text text-muted"> You can use letters, numbers & periods </small>
                     </div>
 
+                    <div class="form-group">
+                        <label class="form-label" for="user-role">ID Number</label>
+                            <input type="number" id="ID_number" name="ID_number" class="form-control"  required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="user-role">Date of Birth</label>
+                            <input type="date" id="date_of_birth" name="date_of_birth" class="form-control"  required/>
+                    </div>
 
+                    <div class="form-group">
+                            <label class="form-label" for="user-role">Gender</label>
+                                <select id="gender" name="gender" class="form-control" required>
+                                    <option value="#"> Select</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="user-role">Physical Address</label>
+                            <input type="text" id="physical_address" name="physical_address" class="form-control" required  />
+                    </div>
 
-                    <fieldset class="form-group">
+                      <fieldset class="form-group">
                         <label class="form-label" for="user-role">Premise</label>
-                        <select id="premise_id" name="premise_id" class="form-control">
+                        <select id="premise_id" name="premise_id" class="form-control" required>
                             <option value="#"> Select</option>
                             @foreach ($premises as $pre)
                                 <option value="{{ $pre->id }}"> {{ $pre->name }}</option>
