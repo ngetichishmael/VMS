@@ -24,7 +24,7 @@ use App\Http\Controllers\WalkInController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'validOTP'])->group(function () {
     Route::resource('bookings', BookingController::class)->names([
         'index' => 'bookings',
         'show' => 'bookings.show',
