@@ -39,6 +39,7 @@ class AuthenticationController extends Controller
                     401
                 );
         }
+
         $detail = UserDetail::where('phone_number', $user->phone_number)->first();
         $sentryid = Sentry::where('user_detail_id', $detail->id ?? '')->first();
         $premise = Premise::where('id', $sentryid->premise_id ?? '')->first();
