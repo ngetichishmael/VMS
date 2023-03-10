@@ -22,13 +22,13 @@ class AuthenticationController extends Controller
     public function Login(Request $request)
     {
         $user = User::where('phone_number', $request->phone_number)->where('role_id', '4')->first();
-        if ($user->status === 0){
-            return response()
-                ->json(['message' => 'Account suspended, Please contact Admin'], 401);
-        }
         if (!$user) {
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
+        }
+        if ($user->status === 0){
+            return response()
+                ->json(['message' => 'Account suspended, Please contact Admin'], 401);
         }
         if ($user === null) {
             return response()
