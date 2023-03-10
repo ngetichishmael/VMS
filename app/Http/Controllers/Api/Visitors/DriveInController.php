@@ -183,7 +183,7 @@ class DriveInController extends Controller
         $token = json_decode($curl_response);
         curl_close($curl);
 
-        $message = 'Hello ' . $resident_name . ', a visitor by the name ' . $visitor_name . ', has arrived at ' . $place . ' Main Gate at ' . $time . '.';
+        $message = 'Hello ' . $resident_name . ', your visitor by the name ' . $visitor_name . ', has arrived at ' . $place . ' Main Gate at ' . $time . '.';
         $curl = curl_init();
 
         curl_setopt_array($curl, array(

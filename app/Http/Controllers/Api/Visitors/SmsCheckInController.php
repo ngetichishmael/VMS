@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\Visitors;
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\Nationality;
+use App\Models\Premise;
+use App\Models\Resident;
 use App\Models\Sentry;
 use App\Models\TimeLog;
 use App\Models\UserDetail;
@@ -84,7 +86,6 @@ class SmsCheckInController extends Controller
             ->first();
         if ($user_details) {
             $visitor = Visitor::where('user_detail_id', $user_details->id)->latest('id')->first();
-
             if ($visitor && $visitor->time_log_id) {
                 $timeLog = TimeLog::find($visitor->time_log_id);
 
@@ -93,6 +94,8 @@ class SmsCheckInController extends Controller
                 }
             }
         }
+        else
+
         $nationality = Nationality::find($request->nationality);
 
         if (!$nationality) {
@@ -163,16 +166,94 @@ class SmsCheckInController extends Controller
             $vehicle->visitor_id = $visitor->id;
             $vehicle->save();
         }
+        $time = $timeLog->entry_time;
 
+        if (($request->input('notify') !== null) && ($request->input('notify') == 1 || $request->input('notify') == 'true')) {
+            $resident = Resident::where('id', $request->resident_id)->where('status', 1)->first();
+            if ($resident != null || $resident != '') {
+
+                $phone_number = $resident->phone_number;
+                $resident_name = $resident->name;
+                $premise = Premise::where('id', $detail->premise_id)->first();
+                $place = $premise->name;
+                $this->sendUserSMS( $time, $resident_name, $phone_number, $place);
+                return response()->json(['success' => 'Visitor successfully checked in by SMS and ' . $resident_name . ' notified'], 201);
+            }
+        }
         Activity::create([
             'name' => $request->user()->name,
-            'target' => "new sms checking created by " . $request->user()->name,
-            'organization' => 'Visitor by name' . $visitor->name,
+            'target' => "new Drive In created by " . $request->user()->name,
+            'organization' => 'Visitor by' . $visitor->name,
             'activity' => "Created a new visitor with " . $visitor .
                 'with details: ' . $user_details  . ' and vehicle ' . $vehicle
 
         ]);
-        return response()->json(['success' => 'Visitor verified by sms information added successfully.'], 201);
+        return response()->json(['success' => 'Visitor and vehicle information added successfully.'], 201);
+    }
+
+    public function sendUserSMS($visitor_name, $time, $resident_name, $phone_number, $place)
+    {
+        $curl = curl_init();
+        $url = 'https://accounts.jambopay.com/auth/token';
+        curl_setopt($curl, CURLOPT_URL, $url);
+
+        curl_setopt(
+            $curl,
+            CURLOPT_HTTPHEADER,
+            array(
+                'Content-Type: application/x-www-form-urlencoded',
+            )
+        );
+
+        curl_setopt(
+            $curl,
+            CURLOPT_POSTFIELDS,
+            http_build_query(
+                array(
+                    'grant_type' => 'client_credentials',
+                    'client_id' => "qzuRm3UxXShEGUm2OHyFgHzkN1vTkG3kIVGN2z9TEBQ=",
+                    'client_secret' => "36f74f2b-0911-47a5-a61b-20bae94dd3f1gK2G2cWfmWFsjuF5oL8+woPUyD2AbJWx24YGjRi0Jm8="
+                )
+            )
+        );
+
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $curl_response = curl_exec($curl);
+
+        $token = json_decode($curl_response);
+        curl_close($curl);
+
+        $message = 'Hello ' . $resident_name . ', your visitor has arrived at ' . $place . ' Main Gate at ' . $time . '.';
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://swift.jambopay.co.ke/api/public/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode(
+                array(
+                    "sender_name" => "PASANDA",
+                    "contact" => $phone_number,
+                    "message" => $message,
+                    "callback" => "https://pasanda.com/sms/callback"
+                )
+            ),
+
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Authorization: Bearer ' . $token->access_token
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        //        return '$response';
     }
     /**
      * Display the specified resource.

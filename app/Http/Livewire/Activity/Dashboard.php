@@ -18,7 +18,7 @@ class Dashboard extends Component
     {
 
         $searchTerm = '%' . $this->search . '%';
-        $activities = Activity::whereLike(
+        $activities = Activity::orderBy('id', 'desc')->whereLike(
             ['name', 'organization', 'target'],
             $searchTerm
         )

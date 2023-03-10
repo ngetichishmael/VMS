@@ -20,11 +20,15 @@ class AuthenticationController extends Controller
 {
     public function Login(Request $request)
     {
-        $user = User::with('premise', 'organization')->where('phone_number', $request->phone_number)->where('status', 1)->first();
+        $user = User::where('phone_number', $request->phone_number)->first();
 
         $detail = UserDetail::where('phone_number', $user->phone_number)->first();
         $sentryid = Sentry::where('user_detail_id', $detail->id ?? '')->first();
         $premise = Premise::where('id', $sentryid->premise_id ?? '')->first();
+        if ($user->status === 0){
+            return response()
+                ->json(['message' => 'Account suspended, Please contact Admin'], 401);
+        }
         if (!$user) {
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
