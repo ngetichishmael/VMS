@@ -154,14 +154,6 @@ class AuthenticationController extends Controller
             ->latest('updated_at')
             ->exists();
         if ($exists) {
-            Activity::create([
-                'name' =>$user->name,
-                'target' => " Mobile App",
-                'organization' =>$premise->organization->name ?? ' ',
-                'activity' => "verified OTP"
-
-            ]);
-
             return response()->json(
                 [
                     'message' => 'Valid OTP entered'
@@ -169,13 +161,6 @@ class AuthenticationController extends Controller
                 200
             );
         }
-        Activity::create([
-            'name' =>$user->name,
-            'target' => " Mobile App",
-            'organization' =>$premise->organization->code ?? ' ',
-            'activity' => "Entered invalid OTP"
-
-        ]);
         return response()->json(['message' => 'Invalid OTP entered'], 406);
     }
     public function settings()
