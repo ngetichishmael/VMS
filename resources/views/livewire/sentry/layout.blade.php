@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Guard')
+@section('title', 'Guards')
 
 @section('vendor-style')
   <!-- vendor css files -->
