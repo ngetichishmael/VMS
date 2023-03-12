@@ -122,7 +122,7 @@ class AuthenticationController extends Controller
             'name' => $detail->name,
             'target' => " Mobile App",
             'organization' =>$premise->organization->code ?? ' ',
-            'activity' => "Login"
+            'activity' => "User Logged in"
 
         ]);
         return response()->json([
