@@ -27,9 +27,20 @@
             </div>
 
 
+     <fieldset class="form-group">
+              <label class="form-label" for="resident-role">Block</label>
+              <select id="unit_id" name="unit_id" class="select2 form-control form-control-lg" wire:model="selectedBlock" >
+               <option  value="0"> Select</option>
+                @foreach ($blocks as $uni)
+                    <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
+                @endforeach  
+              </select>
+            </fieldset>
+
+      @if (!is_null($units))
             <fieldset class="form-group">
               <label class="form-label" for="resident-role">Unit</label>
-              <select id="unit_id" name="unit_id" class="select2 form-control form-control-lg">
+              <select id="unit_id" name="unit_id" class="select2 form-control form-control-lg" wire:model="selectedUnit">
                <option  value="0"> Select</option>
                 @foreach ($units as $uni)
                     <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
@@ -37,8 +48,17 @@
               </select>
             </fieldset>
 
+                @endif
+
+            {{ $selectedUnit }}
+
+
+
 
             <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
+             <div wire:loading>
+                Hold On...
+            </div>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </form>
