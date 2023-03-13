@@ -57,13 +57,10 @@ class Dashboard extends Component
 
         $blocks = Block::all();
 
-        $units = Unit::all();
-
 
         return view('livewire.premises.resident.dashboard', [ 
             'residents' => $residents, 
              'organizations' => $organizations,
-            //  'units' => $units,
               'blocks' => $blocks,
         ]);
     }
