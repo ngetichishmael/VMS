@@ -49,6 +49,7 @@ Route::group(['namespace' => 'Api'], function () {
         Route::post('visitors/walkin/create', [WalkInController::class, 'store']);
 
         Route::post('visitors/verify_checkout', [VisitorController::class, 'verifyUser']);
+        Route::post('visitors/verify_phone_checkout', [VisitorController::class, 'verifyPhoneNumberUser']);
         Route::put('visitors/checkout', [VisitorController::class, 'checkout'])->name('api.visitors.checkout');
 
         Route::post('visitors/verify_returning_visitor', [VisitorController::class, 'returningVisitorVerify']);

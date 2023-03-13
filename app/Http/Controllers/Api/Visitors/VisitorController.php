@@ -87,6 +87,24 @@ class VisitorController extends Controller
 
         return response()->json(['Message' => 'Visitor exists', 'visitor' => $visitor], 200);
     }
+    public function verifyPhoneNumberUser(Request $request)
+    {
+        $phone_number = $request->input('phone_number');
+        $user = UserDetail::where('phone_number', $phone_number)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'Visitor not found'], 404);
+        }
+        $visitor = Visitor::where('user_detail_id',  $user->id)->orderBy('id', 'desc')->first();
+        $time_log = TimeLog::where('id', $visitor->time_log_id)
+            ->whereNull('exit_time')
+            ->first();
+        if (!$time_log) {
+            return response()->json(['message' => 'User has already exited'], 400);
+        }
+
+        return response()->json(['Message' => 'Visitor exists', 'visitor' => $visitor], 200);
+    }
     public function checkout(Request $request)
     {
         $user_details = TimeLog::whereId($request->time_log_id)->first();
