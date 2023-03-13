@@ -56,9 +56,7 @@
 
 
             <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
-             <div wire:loading>
-                Hold On...
-            </div>
+          
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </form>
