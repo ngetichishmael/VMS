@@ -69,6 +69,9 @@
 
     @livewireStyles
 
+    @livewireScripts
+
+
   
 
 </head>
@@ -79,4 +82,4 @@
     @extends($configData['mainLayoutType'] === 'horizontal' ? 'layouts.horizontalLayoutMaster' : 'layouts.verticalLayoutMaster')
 @endisset
 
-@livewireScripts
+
