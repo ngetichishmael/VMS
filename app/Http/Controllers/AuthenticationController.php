@@ -28,6 +28,8 @@ class AuthenticationController extends Controller
                 ->json(['message' => 'Unauthorized'], 401);
         }
         $token = $user->createToken('auth_token')->plainTextToken;
+//        $user->last_login_at = now();
+//        $user->save();
 
         return response()->json([
             "success" => true,
@@ -56,6 +58,9 @@ class AuthenticationController extends Controller
         $user = User::where('email', $request['email'])->firstOrFail();
 
         $token = $user->createToken('auth_token')->plainTextToken;
+
+//        $user->last_login_at = now();
+//        $user->save();
 
         return response()->json([
             "success" => true,

@@ -69,10 +69,12 @@ class DriveInController extends Controller
                 }
             }
         }
-        $nationality = Nationality::find($request->nationality);
+        $nationality = null;
+        $nationality = Nationality::where('name', $request->input('nationality'))->first();
+
         if (!$nationality) {
             $nationality = new Nationality();
-            $nationality->name = $request->input('nationality') ?? '101';
+            $nationality->name = $request->input('nationality') ?? 'Kenya';
             $nationality->save();
         }
 

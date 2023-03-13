@@ -125,6 +125,8 @@ class AuthenticationController extends Controller
             'activity' => "User Logged in"
 
         ]);
+        $user->last_login_at = now();
+        $user->save();
         return response()->json([
             "success" => true,
             "token_type" => 'Bearer',
@@ -154,6 +156,9 @@ class AuthenticationController extends Controller
             ->latest('updated_at')
             ->exists();
         if ($exists) {
+
+            $user->last_login_at = now();
+            $user->save();
             return response()->json(
                 [
                     'message' => 'Valid OTP entered'

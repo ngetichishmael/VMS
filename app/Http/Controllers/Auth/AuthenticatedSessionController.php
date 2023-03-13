@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Activity;
+use App\Models\User;
 use App\Models\UserCode;
 use App\Models\ValidToken;
 use App\Providers\RouteServiceProvider;
@@ -40,6 +41,7 @@ class AuthenticatedSessionController extends Controller
             'organization' => $request->user()->organization_code,
             'activity' => "Logging in to the web application"
         ]);
+        $request->user()->update(['last_login_at' => now()]);
         $code = rand(100000, 999999);
         UserCode::updateOrCreate([
             'user_id' =>  $request->user()->id,

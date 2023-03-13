@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
             $table->foreignIdFor(Organization::class)->nullable();
             $table->foreignIdFor(Role::class)->nullable();
             $table->rememberToken();
+            $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
         });
     }

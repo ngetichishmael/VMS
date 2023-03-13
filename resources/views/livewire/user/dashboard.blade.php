@@ -94,7 +94,7 @@
                                       <?php } ?>
 
                                     </td>
-                                    <td>{{ now() }}</td>
+                                    <td>{{ $user->last_login_at ?? 'Never Logged in' }}</td>
 
                                     <td>
                                         <div class="dropdown">
