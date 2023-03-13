@@ -32,7 +32,7 @@ class SmsCheckInController extends Controller
     public function smsUncheckout(Request $request)
     {
         return response()->json(
-            Visitor::with(['resident2', 'sentry', 'purpose', 'visitorType'])
+            Visitor::with(['user_details','resident2', 'sentry', 'purpose', 'visitorType'])
                 ->where('sentry_id', $request->user()->id)
                 ->where('type', 'sms')
                 ->whereIn('time_log_id', function ($query) {
