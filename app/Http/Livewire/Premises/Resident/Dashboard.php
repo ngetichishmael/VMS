@@ -67,8 +67,6 @@ class Dashboard extends Component
 
     public function updatedSelectedBlock($block)
     {
-        $this->units = Unit::where('block_id', $id)->get();
-
           if (!is_null($block)) 
           {
             $this->units = Unit::where('block_id', $block)->get();
