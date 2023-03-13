@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Device;
 use App\Models\Organization;
 use App\Models\Sentry;
 use App\Models\UserDetail;
+use App\Models\Visitor;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
@@ -126,17 +128,19 @@ $user_detail=UserDetail::where('phone_number',$request->phone_number)->first();
      * Display the specified resource.
      *
      * @param  \App\Models\Sentry  $sentry
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show($id)
     {
         $sentry = Sentry::find($id);
 
-        $premises = Premise::where('status', 1)->get();
+        $premises = Premise::where('status', 1)->where('id', $sentry->premise_id)->first();
+        $visitors =Visitor::with('timeLogs')->where('sentry_id', $sentry->id)->get();
+        $organization = Organization::where('status', 1)->where('code', $premises->organization_code)->first();
+        $device= Device::where('sentry_id', $sentry->id)->first();
 
-        $shifts = Shift::where('status', 1)->get();
 
-        return view('livewire.sentry.show', compact('sentry'));
+        return view('livewire.sentry.show', compact('sentry', 'device', 'premises', 'organization', 'visitors'));
     }
 
     /**
