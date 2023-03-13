@@ -31,26 +31,27 @@
               <label class="form-label" for="resident-role">Block</label>
               <select id="unit_id" name="unit_id" class="select2 form-control form-control-lg" wire:model="selectedBlock" >
                <option  value="0"> Select</option>
-                @foreach ($blocks as $uni)
-                    <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
+                @foreach ($blocks as $block)
+                    <option  value="{{ $block ->id }}"> {{ $block ->name }}</option>
                 @endforeach  
               </select>
             </fieldset>
 
-      @if (!is_null($units))
-            <fieldset class="form-group">
-              <label class="form-label" for="resident-role">Unit</label>
-              <select id="unit_id" name="unit_id" class="form-control" wire:model="selectedUnit">
-               <option  value="0"> Select</option>
-                @foreach ($units as $uni)
-                    <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
-                @endforeach  
-              </select>
-            </fieldset>
+               @if (!is_null($selectedBlock))
+               <div class="form-group row">
+                   <label for="city" class="col-md-4 col-form-label text-md-right">City</label>
 
-                @endif
+                   <div class="col-md-6">
+                       <select class="form-control" name="city_id">
+                           <option value="" selected>Choose city</option>
+                           @foreach($units as $city)
+                           <option value="{{ $city->id }}">{{ $city->name }}</option>
+                           @endforeach
+                       </select>
+                   </div>
+               </div>
+               @endif
 
-            {{ $selectedUnit }}
 
 
 

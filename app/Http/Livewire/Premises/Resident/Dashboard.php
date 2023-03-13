@@ -65,9 +65,14 @@ class Dashboard extends Component
         ]);
     }
 
-    public function updatedselectedBlock($block_id)
+    public function updatedSelectedBlock($block)
     {
-        $this->units = Unit::where('block_id', $bock_id)->get();
+        $this->units = Unit::where('block_id', $id)->get();
+
+          if (!is_null($block)) 
+          {
+            $this->units = Unit::where('block_id', $block)->get();
+          }
     }
 
 
