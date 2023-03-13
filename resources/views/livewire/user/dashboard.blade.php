@@ -17,7 +17,7 @@
                             <select wire:model="organizationId" class="form-control form-control-sm" >
                                 <option value="">  All  </option>
                                 @foreach ($organizations as $org)
-                                    <option  value="{{ $org ->id }}"> {{ $org ->name }}</option>
+                                    <option  value="{{ $org ->code }}"> {{ $org ->name }}</option>
                                 @endforeach
                             </select>
                         </div>
