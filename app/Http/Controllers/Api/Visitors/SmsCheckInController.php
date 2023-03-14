@@ -188,7 +188,7 @@ class SmsCheckInController extends Controller
                 'with details: ' . $user_details  . ' and vehicle ' . $vehicle
 
         ]);
-        return response()->json(['success' => 'Visitor and vehicle information added successfully.'], 201);
+        return response()->json(['success' => 'Visitor information added successfully.'], 201);
     }
 
     public function sendUserSMS($time, $resident_name, $phone_number, $place)
