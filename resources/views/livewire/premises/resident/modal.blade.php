@@ -29,7 +29,7 @@
 
      <fieldset class="form-group">
               <label class="form-label" for="resident-role">Block</label>
-              <select id="unit_id" name="unit_id" class="select2 form-control form-control-lg" wire:model="selectedBlock" >
+              <select class="select2 form-control form-control-lg" wire:model="selectedBlock" >
                <option  value="0"> Select</option>
                 @foreach ($blocks as $block)
                     <option  value="{{ $block ->id }}"> {{ $block ->name }}</option>
@@ -37,13 +37,13 @@
               </select>
             </fieldset>
 
-               @if (!is_null($selectedBlock))
+               @if (!is_null($units))
                <div class="form-group row">
-                   <label for="city" class="col-md-4 col-form-label text-md-right">City</label>
+                   <label for="city" class="col-md-4 col-form-label text-md-right"> Unit </label>
 
                    <div class="col-md-6">
-                       <select class="form-control" name="city_id">
-                           <option value="" selected>Choose city</option>
+                       <select class="form-control" wire:model="selectedUnit" >
+                           <option value="" selected>Choose unit</option>
                            @foreach($units as $city)
                            <option value="{{ $city->id }}">{{ $city->name }}</option>
                            @endforeach
@@ -52,7 +52,7 @@
                </div>
                @endif
 
-
+            {{ $selectedUnit }}
 
 
 
