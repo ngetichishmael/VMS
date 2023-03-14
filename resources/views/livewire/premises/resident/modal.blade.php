@@ -39,16 +39,14 @@
 
                @if (!is_null($units))
                <div class="form-group row">
-                   <label for="city" class="col-md-4 col-form-label text-md-right"> Unit </label>
-
-                   <div class="col-md-6">
-                       <select class="form-control" wire:model="selectedUnit" >
+                 <label class="form-label" for="resident-role">Unit</label>
+                       <select class="form-control" name="unit_id" wire:model="selectedUnit" >
                            <option value="">Choose unit</option>
                            @foreach($units as $unit)
                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                            @endforeach
                        </select>
-                   </div>
+               
                </div>
                @endif
 
