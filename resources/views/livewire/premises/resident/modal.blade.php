@@ -29,7 +29,7 @@
 
      <fieldset class="form-group">
               <label class="form-label" for="resident-role">Block</label>
-              <select class="select2 form-control form-control-lg" wire:model="selectedBlock" >
+              <select class="form-control" wire:model="selectedBlock" >
                <option  value="0"> Select</option>
                 @foreach ($blocks as $block)
                     <option  value="{{ $block ->id }}"> {{ $block ->name }}</option>
