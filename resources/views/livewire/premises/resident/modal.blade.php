@@ -43,9 +43,9 @@
 
                    <div class="col-md-6">
                        <select class="form-control" wire:model="selectedUnit" >
-                           <option value="" selected>Choose unit</option>
-                           @foreach($units as $city)
-                           <option value="{{ $city->id }}">{{ $city->name }}</option>
+                           <option value="">Choose unit</option>
+                           @foreach($units as $unit)
+                           <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                            @endforeach
                        </select>
                    </div>
