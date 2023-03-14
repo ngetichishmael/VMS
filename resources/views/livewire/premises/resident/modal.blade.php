@@ -38,7 +38,7 @@
             </fieldset>
 
                @if (!is_null($units))
-               <div class="form-group row">
+               <fieldset class="form-group">
                  <label class="form-label" for="resident-role">Unit</label>
                        <select class="form-control" name="unit_id" wire:model="selectedUnit" >
                            <option value="">Choose unit</option>
@@ -46,11 +46,9 @@
                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                            @endforeach
                        </select>
-               
-               </div>
+               </fieldset>
                @endif
 
-            {{ $selectedUnit }}
 
 
 
