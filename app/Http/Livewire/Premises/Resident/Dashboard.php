@@ -37,6 +37,7 @@ class Dashboard extends Component
     public $selectedUnit = null;
     public $units = null;
 
+    
     public function render()
     {
     
@@ -57,99 +58,25 @@ class Dashboard extends Component
 
         $blocks = Block::all();
 
-        $units = Unit::all();
-
 
         return view('livewire.premises.resident.dashboard', [ 
             'residents' => $residents, 
              'organizations' => $organizations,
-            //  'units' => $units,
               'blocks' => $blocks,
         ]);
     }
 
     public function updatedSelectedBlock($block_id)
     {
-        $this->units = Unit::where('id', $block_id)->get();
-    }
-
-
-    private function resetInput()
-    {
-        $this->name = null;
-        $this->email = null;
-        $this->location = null;
-        $this->primary_phone = null;
-        $this->secondary_phone = null;
-        $this->websiteUrl = null;
-        $this->description = null;
-    }
-
-    public function store()
-    {
-        $this->validate([
-            'name' => 'required|min:2',
-
-            'email' => 'required|email|max:255|unique:organizations,email',
-
-            'phone_number'=> 'required|numeric',
-
-
-        ]);
-
-        $resident = new Resident;
-
-        $resident->name = $this->name;
-
-        $resident->email = $this->email;
-
-        $resident->phone_number  = $this->phone_number;
-
-        $resident->unit_id  = $this->unit_id;
-
-
-        $resident->save();
-  
-        $this-> resetInput();
-
-        return redirect()->route('ResidentInformation');
-    }
-
-    public function editresident($id)
-    {
-        
-        $resident  = Resident::where('id', $id)->first();
-
-        $this->resident_edit_id = $id;
-
-        $this->name = $resident ->name;
-
-        $this->email = $resident->email;
-
-        $this->phone_number =  $resident->phone_number;
-
-        $this->unit_id = $resident->unit_id;
-
-  
-
-        $this->dispatchBrowserEvent('show-edit-org-modal');
-    }
-
-    public function editresidentData()
-    {
  
-        $resident  = Resident::where('id', $this->resident_edit_id)->first();
-
-        $resident ->name = $this->name;
-        $resident->email = $this->email;
-        $resident->phone_number = $this->phone_number;
-        $resident->unit_id  = $this->unit_id;
-      
-
-        $resident->save();
-
-        return redirect()->route('ResidentInformation');
+            $this->units = Unit::where('block_id', $block_id)->get();
+          
     }
+
+
+  
+
+
 
     public function destroy($id)
     {

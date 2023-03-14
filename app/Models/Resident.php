@@ -22,6 +22,11 @@ class Resident extends Model
         return $this->unit->block->premise;
     }
 
+    public function Block()
+    {
+        return $this->belongsTo(Block::class, 'block_id', 'id');
+    }
+
     public function unit()
     {
         return $this->belongsTo(Unit::class, 'unit_id', 'id');

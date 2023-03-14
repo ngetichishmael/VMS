@@ -29,36 +29,31 @@
 
      <fieldset class="form-group">
               <label class="form-label" for="resident-role">Block</label>
-              <select id="unit_id" name="unit_id" class="select2 form-control form-control-lg" wire:model="selectedBlock" >
+              <select class="form-control" wire:model="selectedBlock" >
                <option  value="0"> Select</option>
-                @foreach ($blocks as $uni)
-                    <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
+                @foreach ($blocks as $block)
+                    <option  value="{{ $block ->id }}"> {{ $block ->name }}</option>
                 @endforeach  
               </select>
             </fieldset>
 
-      @if (!is_null($units))
-            <fieldset class="form-group">
-              <label class="form-label" for="resident-role">Unit</label>
-              <select id="unit_id" name="unit_id" class="select2 form-control form-control-lg" wire:model="selectedUnit">
-               <option  value="0"> Select</option>
-                @foreach ($units as $uni)
-                    <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
-                @endforeach  
-              </select>
-            </fieldset>
-
-                @endif
-
-            {{ $selectedUnit }}
+               @if (!is_null($units))
+               <fieldset class="form-group">
+                 <label class="form-label" for="resident-role">Unit</label>
+                       <select class="form-control" name="unit_id" wire:model="selectedUnit" >
+                           <option value="">Choose unit</option>
+                           @foreach($units as $unit)
+                           <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                           @endforeach
+                       </select>
+               </fieldset>
+               @endif
 
 
 
 
             <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
-             <div wire:loading>
-                Hold On...
-            </div>
+          
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </form>
