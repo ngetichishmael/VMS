@@ -157,6 +157,9 @@ class AuthenticationController extends Controller
             ->where('updated_at', '>=', now()->subMinutes(5))
             ->latest('updated_at')
             ->first();
+        if (!$exists){
+            return response()->json(['message' => 'Invalid OTP entered'], 406);
+        }
         $user = DB::table('users')->where('id', $exists->user_id)->first();
         if ($user) {
             return response()->json(
