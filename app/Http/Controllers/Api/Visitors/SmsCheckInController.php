@@ -25,15 +25,17 @@ class SmsCheckInController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
+         $sentry=Sentry::where('phone_number', $request->user()->phone_number)->first();
+        return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $sentry->id )
             ->where('type', 'sms')
             ->get());
     }
     public function smsUncheckout(Request $request)
     {
+        $sentry=Sentry::where('phone_number', $request->user()->phone_number)->first();
         return response()->json(
             Visitor::with(['user_details','resident2', 'sentry', 'purpose', 'visitorType'])
-                ->where('sentry_id', $request->user()->id)
+                ->where('sentry_id', $sentry->id)
                 ->where('type', 'sms')
                 ->whereIn('time_log_id', function ($query) {
                     $query->selectRaw('MAX(time_log_id)')
@@ -53,17 +55,17 @@ class SmsCheckInController extends Controller
         $timeLogId = $request->input('timeLogId');
         $timeLog = TimeLog::find($timeLogId);
         if (!$timeLog) {
-            return response()->json(['message' => 'Time log not found'], 404);
+            return response()->json(['message' => 'visitor not found'], 404);
         }
 
         if ($timeLog->exit_time) {
-            return response()->json(['message' => 'Time log already checked out'], 400);
+            return response()->json(['message' => 'Visitor already checked out'], 400);
         }
 
         $timeLog->exit_time = now();
         $timeLog->save();
 
-        return response()->json(['message' => 'Time log checked out successfully']);
+        return response()->json(['message' => 'Visitor checked out successfully']);
     }
     /**
      * Store a newly created resource in storage.

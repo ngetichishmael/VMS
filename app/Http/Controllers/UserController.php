@@ -117,7 +117,7 @@ class UserController extends Controller
         // $data = DB::table('users')->where('id',$id)->get();
         // return view('livewire.user.edit',compact('data'));
 
-    
+
         $user = User::find($id);
 
         $organizations = Organization::where('status', 1)->get();
@@ -151,6 +151,12 @@ class UserController extends Controller
         $user->role_id  = $request->input('role_id');
 
         $user->save();
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "User created by " . $request->user()->name,
+            'organization' => "User " . $user->name,
+            'activity' => "Updated a new user with " . $user
+        ]);
 
         return redirect()->to('/organization/users')->with('success', 'User Updated successfully.');
     }
