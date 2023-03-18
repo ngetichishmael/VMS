@@ -315,21 +315,21 @@
                                 </div>
                             </div>
                         </div>
-                        {{--                        @if ($visitor->vehicle->registration != null) --}}
-                        {{--                        <div class="col-md-12"> --}}
-                        {{--                            <div class="card"> --}}
-                        {{--                                <div class="card-body"> --}}
-                        {{--                                    <h5 class="card-title" style="color: #1f8af5">Vehicle Information</h5> --}}
-                        {{--                                    <div class="col-md-6 mb-1 pl-1"> --}}
-                        {{--                                        <div class="form-group"> --}}
-                        {{--                                            <label >Registration</label> --}}
-                        {{--                                            <input type="text" class="form-control" value="{{ $visitor->vehicle->registration ?? 'Not Available' }}" readonly /> --}}
-                        {{--                                        </div> --}}
-                        {{--                                    </div> --}}
-                        {{--                                </div> --}}
-                        {{--                            </div> --}}
-                        {{--                        </div> --}}
-                        {{--                        @endif --}}
+{{--                                                @if ($visitor->vehicle->registration != null) --}}
+                                                <div class="col-md-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title" style="color: #1f8af5">Vehicle Information</h5>
+                                                            <div class="col-md-6 mb-1 pl-1">
+                                                                <div class="form-group">
+                                                                    <label >Registration</label>
+                                                                    <input type="text" class="form-control" value="{{ $visitor->vehicle->registration ?? 'Not Available' }}" readonly />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+{{--                                                @endif --}}
                     </div>
                 </div>
 

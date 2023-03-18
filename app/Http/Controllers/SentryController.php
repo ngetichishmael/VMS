@@ -69,35 +69,10 @@ class SentryController extends Controller
         $org_code=Premise::where('id',  $request->input('premise_id'))->first();
 
         $organization=Organization::where('code', $org_code->organization_code)->first();
-
-        UserDetail::create([
-            'phone_number' => $request->phone_number ?? '',
-            'date_of_birth' => $request->date_of_birth ?? '',
-            'ID_number' => $request->ID_number ?? '',
-            'image' => $request->image ?? '',
-            'gender' => $request->gender ?? 'male',
-            'company' => $request->company ?? '',
-            'physical_address' => $request->physical_address,
-        ]);
-$user_detail=UserDetail::where('phone_number',$request->phone_number)->first();
-        Sentry::create([
-            'name' => $request->name,
-
-            'phone_number' => $request->phone_number,
-
-            'status' => 1,
-
-            'device_id' => $request->device_id ?? 0,
-
-            'user_detail_id' => $user_detail->id,
-
-            'shift_id' => $request->shift_id,
-
-            'premise_id' => $request->premise_id,
-
-        ]);
-
-
+        $new_user=User::where('phone_number',  $request->input('phone_number'))->where('role_id', 4)->first();
+        if (!$new_user==null){
+            return back()->with('Error', 'Sentry already exists');
+        }
         User::create([
 
             'name' => $request->input('name'),
@@ -114,6 +89,45 @@ $user_detail=UserDetail::where('phone_number',$request->phone_number)->first();
             'password' => Hash::make(Str::random(20)),
         ]);
 
+        $user_detail=UserDetail::where('phone_number',$request->phone_number)->first();
+
+        if (!$user_detail) {
+            $user_detail = new UserDetail();
+            $user_detail->phone_number = $request->phone_number ?? '';
+            $user_detail->date_of_birth = $request->date_of_birth ?? '';
+            $user_detail->ID_number = $request->ID_number ?? '';
+            $user_detail->image = $request->image ?? '';
+            $user_detail->gender = $request->gender ?? 'male';
+            $user_detail->company = $request->company ?? '';
+            $user_detail->physical_address = $request->physical_address;
+            $user_detail->save();
+        }
+//        UserDetail::create([
+//            'phone_number' => $request->phone_number ?? '',
+//            'date_of_birth' => $request->date_of_birth ?? '',
+//            'ID_number' => $request->ID_number ?? '',
+//            'image' => $request->image ?? '',
+//            'gender' => $request->gender ?? 'male',
+//            'company' => $request->company ?? '',
+//            'physical_address' => $request->physical_address,
+//        ]);
+
+        Sentry::create([
+            'name' => $request->name,
+
+            'phone_number' => $request->phone_number,
+
+            'status' => 1,
+
+            'device_id' => $request->device_id ?? 0,
+
+            'user_detail_id' => $user_detail->id,
+
+            'shift_id' => $request->shift_id,
+
+            'premise_id' => $request->premise_id,
+
+        ]);
         Activity::create([
             'name' => $request->user()->name,
             'target' => "Guard creation",
