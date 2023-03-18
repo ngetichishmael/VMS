@@ -47,7 +47,12 @@ class AuthenticationController extends Controller
         $detail = UserDetail::where('phone_number', $user->phone_number)->first();
         $sentryid = Sentry::where('user_detail_id', $detail->id ?? '')->first();
         $premise = Premise::where('id', $sentryid->premise_id ?? '')->first();
+        $user_code=UserCode::all()->pluck("code");
         $code = rand(100000, 999999);
+
+        while(in_array($code, $user_code)){
+            $code = rand(100000, 999999);
+        }
         $tokenUser = $user->createToken('auth_token')->plainTextToken;
         UserCode::updateOrCreate([
             'user_id' => $user->id,
@@ -148,14 +153,12 @@ class AuthenticationController extends Controller
      */
     public function verifyOTP($number, $otp)
     {
-
-        $user = DB::table('users')->where('phone_number', $number)->get();
-        $exists = UserCode::where('user_id', $user[0]->id)
-            ->where('code', $otp)
+        $exists = UserCode::where('code', $otp)
             ->where('updated_at', '>=', now()->subMinutes(5))
             ->latest('updated_at')
-            ->exists();
-        if ($exists) {
+            ->first();
+        $user = DB::table('users')->where('user_id', $exists->user_id)->first();
+        if ($user) {
             return response()->json(
                 [
                     'message' => 'Valid OTP entered'
