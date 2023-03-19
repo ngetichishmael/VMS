@@ -8,6 +8,7 @@ use App\Models\Resident;
 use App\Models\Organization;
 use App\Models\Unit;
 use App\Models\Block;
+use App\Models\Premise;
 use Livewire\WithPagination;
 
 use Illuminate\Support\Facades\Hash;
@@ -33,10 +34,11 @@ class Dashboard extends Component
 
     public  $name, $email, $phone_number, $unit_id, $password, $organization_id;
 
-    public $selectedBlock = null;
-    public $selectedUnit = null;
-    public $units = null;
-
+public $selectedPremise = null;
+public $selectedBlock = null;
+public $selectedUnit = null;
+public $blocks = null;
+public $units = null;
     
     public function render()
     {
@@ -56,25 +58,33 @@ class Dashboard extends Component
 
         $organizations = Organization::all();
 
-        $blocks = Block::all();
+        $premises = Premise::all();
 
 
         return view('livewire.premises.resident.dashboard', [ 
             'residents' => $residents, 
              'organizations' => $organizations,
-              'blocks' => $blocks,
+              'premises' => $premises,
         ]);
     }
 
-    public function updatedSelectedBlock($block_id)
-    {
+    // public function updatedSelectedBlock($block_id)
+    // {
  
-            $this->units = Unit::where('block_id', $block_id)->get();
+    //         $this->units = Unit::where('block_id', $block_id)->get();
           
-    }
+    // }
 
 
-  
+  public function updatedSelectedPremise($premise_id)
+{
+$this->blocks = Block::where('premise_id', $premise_id)->get();
+}
+
+public function updatedSelectedBlock($block_id)
+{
+$this->units = Unit::where('block_id', $block_id)->get();
+}
 
 
 
