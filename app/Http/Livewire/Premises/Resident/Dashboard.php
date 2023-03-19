@@ -56,9 +56,9 @@ public $units = null;
             ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
             ->paginate($this->perPage);
 
-        $organizations = Organization::all();
+        $organizations = Organization::where('status', 1) ->get();
 
-        $premises = Premise::all();
+        $premises = Premise::where('status', 1) ->get();
 
 
         return view('livewire.premises.resident.dashboard', [ 
