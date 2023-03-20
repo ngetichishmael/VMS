@@ -75,7 +75,7 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>ID Check-in</td>
+                                <td>Verified ID Check-in</td>
                                 <td>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input"

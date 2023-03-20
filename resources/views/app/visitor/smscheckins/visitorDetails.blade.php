@@ -307,8 +307,7 @@
                                 </div>
                             </div>
                         </div>
-{{--                        @dd($visitor->vehicle->registration)--}}
-{{--                        @if (!$visitor->vehicle->registration)--}}
+                        @if (!$visitor->vehicle == null)
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-body">
@@ -324,7 +323,7 @@
                                     </div>
                                 </div>
                             </div>
-{{--                        @endif--}}
+                        @endif
                     </div>
                 </div>
 

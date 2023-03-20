@@ -121,17 +121,10 @@
                                     </td>
                                     @endif
                                     <td>
-{{--                                        <div class="dropdown">--}}
-{{--                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"--}}
-{{--                                                role="button" aria-haspopup="true" aria-expanded="false">--}}
-{{--                                                <i class="fas fa-ellipsis-v"></i>--}}
-{{--                                            </a>--}}
-{{--                                            <div class="dropdown-menu">--}}
-                                                <a href="{{ route('VisitDriveIn.show', ['DriveIn' => $visitor->id ?? '']) }}">
-                                                <i class="fa fa-eye" style="color:#808080">  </i></a>
-{{--                                                <a href="#">View History</a>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        <a href="{{ route('VisitDriveIn.show', ['DriveIn' => $visitor->id ?? '']) }}">
+                                                <i class="fa fa-eye" style="color:#808080"> View </i>
+                                        </a>
+
                                     </td>
                                 </tr>
                             @empty

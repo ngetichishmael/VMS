@@ -314,7 +314,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if ($visitor->vehicle != null)
+                        @if (!$visitor->vehicle == null)
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-body">
@@ -413,6 +413,9 @@
                                                     </tr>
                                                 @endforeach
                                             @endforeach
+                                        @endforeach
+                                    @endforeach
+
                                 </tbody>
                             </table>
                         </div>
@@ -425,7 +428,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('vendor-script')
