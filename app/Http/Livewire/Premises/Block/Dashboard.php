@@ -40,7 +40,7 @@ class Dashboard extends Component
                 ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
                 ->paginate($this->perPage);
 
-            $premises = Premise::all();
+            $premises = Premise::where('status', 1) ->get();
 
         return view('livewire.premises.block.dashboard', ['blocks' => $blocks, 'premises' => $premises]);
     }

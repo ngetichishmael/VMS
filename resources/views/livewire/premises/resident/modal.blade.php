@@ -27,7 +27,7 @@
             </div>
 
 
-     <fieldset class="form-group">
+     {{-- <fieldset class="form-group">
               <label class="form-label" for="resident-role">Block</label>
               <select class="form-control" wire:model="selectedBlock" >
                <option  value="0"> Select</option>
@@ -47,7 +47,41 @@
                            @endforeach
                        </select>
                </fieldset>
+               @endif --}}
+
+               <fieldset class="form-group">
+                   <label class="form-label" for="resident-role">Premise</label>
+                   <select class="form-control" wire:model="selectedPremise">
+                       <option value="0">Select</option>
+                       @foreach ($premises as $premise)
+                       <option value="{{ $premise->id }}">{{ $premise->name }}</option>
+                       @endforeach
+                   </select>
+               </fieldset>
+               @if (!is_null($blocks))
+               <fieldset class="form-group">
+                   <label class="form-label" for="resident-role">Block</label>
+                   <select class="form-control" wire:model="selectedBlock">
+                       <option value="">Choose block</option>
+                       @foreach ($blocks as $block)
+                       <option value="{{ $block->id }}">{{ $block->name }}</option>
+                       @endforeach
+                   </select>
+               </fieldset>
                @endif
+
+               @if (!is_null($units))
+               <fieldset class="form-group">
+                   <label class="form-label" for="resident-role">Unit</label>
+                   <select class="form-control" name="unit_id" wire:model="selectedUnit">
+                       <option value="">Choose unit</option>
+                       @foreach ($units as $unit)
+                       <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                       @endforeach
+                   </select>
+               </fieldset>
+               @endif
+
 
 
 
