@@ -26,10 +26,6 @@ class AuthenticationController extends Controller
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
         }
-        if ($user->status === 0){
-            return response()
-                ->json(['message' => 'Account suspended, Please contact Admin'], 401);
-        }
         if ($user === null) {
             return response()
                 ->json(

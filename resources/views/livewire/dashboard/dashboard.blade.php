@@ -23,10 +23,10 @@
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
                                 <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor active' !!} </td>
                                 @if ($visitor->timeLog->exit_time === null)
                                     @php
-                                        $duration = 'Visitor Still Within the Premise';
+                                        $duration = 'Visit Active';
                                     @endphp
                                 @else
                                     @php
@@ -40,7 +40,7 @@
                                   {{ $duration }}
                                   </span>
 
-                               
+
                                 </td>
                                 <td>
                                     <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
@@ -88,10 +88,10 @@
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
                                 <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor active' !!} </td>
                                 @if ($visitor->timeLog->exit_time === null)
                                     @php
-                                        $duration = 'Visitor Still Within the Premise';
+                                        $duration = 'Visit Active';
                                     @endphp
                                 @else
                                     @php
@@ -128,7 +128,7 @@
 <section class="app-user-list">
     <div class="card">
         <h5 class="card-header">Latest Walk-Ins</h5>
-   
+
 
         <div class="pt-0 card-datatable table-responsive">
             <div class="card-datatable table-responsive">
@@ -151,10 +151,10 @@
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
                                 <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor active' !!} </td>
                                 @if ($visitor->timeLog->exit_time === null)
                                     @php
-                                        $duration = 'Visitor Still Within the Premise';
+                                        $duration = 'Visit Active';
                                     @endphp
                                 @else
                                     @php
@@ -191,7 +191,7 @@
 <section class="app-user-list">
     <div class="card">
         <h5 class="card-header">Latest SMS-Ins</h5>
-  
+
 
         <div class="pt-0 card-datatable table-responsive">
             <div class="card-datatable table-responsive">
@@ -214,10 +214,10 @@
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
                                 <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor active' !!} </td>
                                 @if ($visitor->timeLog->exit_time === null)
                                     @php
-                                        $duration = 'Visitor Still Within the Premise';
+                                        $duration = 'Visit Active';
                                     @endphp
                                 @else
                                     @php
@@ -276,10 +276,10 @@
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
                                 <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor active' !!} </td>
                                 @if ($visitor->timeLog->entry_time === null)
                                     @php
-                                        $duration = 'Visitor Still Within the Premise';
+                                        $duration = 'Visit Active';
                                     @endphp
                                 @else
                                     @php
@@ -318,7 +318,7 @@
 
     <div class="card">
         <h5 class="card-header">Latest IPass</h5>
-  
+
         <div class="pt-0 card-datatable table-responsive">
             <div class="card-datatable table-responsive">
                 <table class="table">
@@ -340,10 +340,10 @@
                                 <td>{!! $visitor->resident2->name ?? '' !!} </td>
                                 <td>{!! $visitor->sentry->name ?? '' !!} </td>
                                 <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
+                                <td>{!! $visitor->timeLog->exit_time ?? 'Visit Active' !!} </td>
                                 @if ($visitor->timeLog->exit_time === null)
                                     @php
-                                        $duration = 'Visitor Still Within the Premise';
+                                        $duration = 'Visit Active';
                                     @endphp
                                 @else
                                     @php

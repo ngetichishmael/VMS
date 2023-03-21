@@ -375,8 +375,8 @@
         </script>
 
     </div>
-    <div class="card">
-        <div class="col-xl-6 col-12">
+    <div class="row">
+        <div class="col-xl-6 col-6">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-sm-center align-items-start flex-sm-row flex-column">
                     <div class="header-left">
@@ -384,9 +384,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <canvas id="yearly-visitors" class="chartjs" data-height="400"></canvas>
+                    <canvas id="yearly-visitors" class="chartjs" data-height="600"></canvas>
                 </div>
-                <p class="card-text mb-0 pl-4 pb-5">TOTAL VISITORS : {{ $totalVisitors}}</p>
             </div>
         </div>
 
@@ -418,15 +417,17 @@
                     }
                 }); });
         </script>
-        <div>
+        <div class="col-xl-6 col-12">
             <div class="card">
                 <div class="card-header">
                     Visitors Chart
                 </div>
                 <div class="card-body">
-                    <canvas id="visitorChart" data-height="400"></canvas>
+                    <canvas id="visitorChart" data-height="500"></canvas>
+
                 </div>
             </div>
+            <p class="card-text mb-0 pl-4 pb-5">TOTAL VISITORS : {{ $totalVisitors}}</p>
             <script>
                 $(document).ready(function() {
                     var chartData = <?php echo json_encode($chartDataL); ?>;
@@ -449,7 +450,4 @@
             </script>
         </div>
     </div>
-
-
-
 </section>

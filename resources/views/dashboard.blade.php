@@ -22,14 +22,12 @@
 @section('content')
     <!-- Dashboard Ecommerce Starts -->
     @if(Auth::check() && Auth::user()->role_id == 1)
-        @include('../admin_dashboard')
-    @livewire('dashboard.dashboard')
-
+        @include('admin_dashboard')
+        @livewire('dashboard.dashboard')
     @elseif(Auth::check() && Auth::user()->role_id == 2)
-        @include('../organization_dashboard')
-                @livewire('dashboard.organization_dashboard')
-            @endif
-
+        @include('organization_dashboard')
+        @livewire('dashboard.organization_dashboard')
+    @endif
 @endsection
 
             @section('vendor-script')
