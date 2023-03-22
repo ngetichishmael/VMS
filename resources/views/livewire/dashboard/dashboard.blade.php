@@ -18,42 +18,40 @@
                     </thead>
                     <tbody>
                         @forelse($allTypes as $key => $visitor)
-                            <tr>
-                                <td>{!! $visitor->name !!} </td>
-                                <td>{!! $visitor->resident2->name ?? '' !!} </td>
-                                <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor active' !!} </td>
-                                @if ($visitor->timeLog->exit_time === null)
-                                    @php
-                                        $duration = 'Visit Active';
-                                    @endphp
-                                @else
-                                    @php
-                                        $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
-                                        $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
-                                        $duration = $to->longAbsoluteDiffForHumans($from);
-                                    @endphp
-                                @endif
-
-                                
-                                <td>
-                                  <span class="badge badge-pill badge-light-dark mr-1">
-                                  {{ $duration }}
-                                  </span>
+                        <tr>
+                            <td>{!! $visitor->name !!} </td>
+                            <td>{!! $visitor->resident2->name ?? '' !!} </td>
+                            <td>{!! $visitor->sentry->name ?? '' !!} </td>
+                            <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                            <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
+                            @if ($visitor->timeLog->exit_time === null)
+                            @php
+                            $duration = 'Visitor Still Within the Premise';
+                            @endphp
+                            @else
+                            @php
+                            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
+                            $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
+                            $duration = $to->longAbsoluteDiffForHumans($from);
+                            @endphp
+                            @endif
+                            <td>
+                                <span class="badge badge-pill badge-light-dark mr-1">
+                                    {{ $duration }}
+                                </span>
 
 
-                                </td>
-                                <td>
-                                    <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
-                                    <i class="fa fa-eye" style="color:#808080">  </i></a>
-                                </td>
+                            </td>
+                            <td>
+                                <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
+                                    <i class="fa fa-eye" style="color:#808080"> </i></a>
+                            </td>
 
-                            </tr>
+                        </tr>
                         @empty
-                            <tr>
-                                <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
-                            </tr>
+                        <tr>
+                            <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -85,38 +83,38 @@
                     </thead>
                     <tbody>
                         @forelse($DriveIn as $key => $visitor)
-                            <tr>
-                                <td>{!! $visitor->name !!} </td>
-                                <td>{!! $visitor->resident2->name ?? '' !!} </td>
-                                <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor active' !!} </td>
-                                @if ($visitor->timeLog->exit_time === null)
-                                    @php
-                                        $duration = 'Visit Active';
-                                    @endphp
-                                @else
-                                    @php
-                                        $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
-                                        $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
-                                        $duration = $to->longAbsoluteDiffForHumans($from);
-                                    @endphp
-                                @endif
-                                <td>
-                                    <span class="badge badge-pill badge-light-dark mr-1">
+                        <tr>
+                            <td>{!! $visitor->name !!} </td>
+                            <td>{!! $visitor->resident2->name ?? '' !!} </td>
+                            <td>{!! $visitor->sentry->name ?? '' !!} </td>
+                            <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                            <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
+                            @if ($visitor->timeLog->exit_time === null)
+                            @php
+                            $duration = 'Visitor Still Within the Premise';
+                            @endphp
+                            @else
+                            @php
+                            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
+                            $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
+                            $duration = $to->longAbsoluteDiffForHumans($from);
+                            @endphp
+                            @endif
+                            <td>
+                                <span class="badge badge-pill badge-light-dark mr-1">
                                     {{ $duration }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
-                                    <i class="fa fa-eye" style="color:#808080">  </i></a>
-                                </td>
+                                </span>
+                            </td>
+                            <td>
+                                <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
+                                    <i class="fa fa-eye" style="color:#808080"> </i></a>
+                            </td>
 
-                            </tr>
+                        </tr>
                         @empty
-                            <tr>
-                                <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
-                            </tr>
+                        <tr>
+                            <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -148,38 +146,38 @@
                     </thead>
                     <tbody>
                         @forelse($WalkIn as $key => $visitor)
-                            <tr>
-                                <td>{!! $visitor->name !!} </td>
-                                <td>{!! $visitor->resident2->name ?? '' !!} </td>
-                                <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor active' !!} </td>
-                                @if ($visitor->timeLog->exit_time === null)
-                                    @php
-                                        $duration = 'Visit Active';
-                                    @endphp
-                                @else
-                                    @php
-                                        $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
-                                        $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
-                                        $duration = $to->longAbsoluteDiffForHumans($from);
-                                    @endphp
-                                @endif
-                                <td>
-                                    <span class="badge badge-pill badge-light-dark mr-1">
+                        <tr>
+                            <td>{!! $visitor->name !!} </td>
+                            <td>{!! $visitor->resident2->name ?? '' !!} </td>
+                            <td>{!! $visitor->sentry->name ?? '' !!} </td>
+                            <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                            <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
+                            @if ($visitor->timeLog->exit_time === null)
+                            @php
+                            $duration = 'Visitor Still Within the Premise';
+                            @endphp
+                            @else
+                            @php
+                            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
+                            $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
+                            $duration = $to->longAbsoluteDiffForHumans($from);
+                            @endphp
+                            @endif
+                            <td>
+                                <span class="badge badge-pill badge-light-dark mr-1">
                                     {{ $duration }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
-                                    <i class="fa fa-eye" style="color:#808080">  </i></a>
-                                </td>
+                                </span>
+                            </td>
+                            <td>
+                                <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
+                                    <i class="fa fa-eye" style="color:#808080"> </i></a>
+                            </td>
 
-                            </tr>
+                        </tr>
                         @empty
-                            <tr>
-                                <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
-                            </tr>
+                        <tr>
+                            <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -211,38 +209,38 @@
                     </thead>
                     <tbody>
                         @forelse($Sms as $key => $visitor)
-                            <tr>
-                                <td>{!! $visitor->name !!} </td>
-                                <td>{!! $visitor->resident2->name ?? '' !!} </td>
-                                <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor active' !!} </td>
-                                @if ($visitor->timeLog->exit_time === null)
-                                    @php
-                                        $duration = 'Visit Active';
-                                    @endphp
-                                @else
-                                    @php
-                                        $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
-                                        $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
-                                        $duration = $to->longAbsoluteDiffForHumans($from);
-                                    @endphp
-                                @endif
-                                <td>
-                                    <span class="badge badge-pill badge-light-dark mr-1">
+                        <tr>
+                            <td>{!! $visitor->name !!} </td>
+                            <td>{!! $visitor->resident2->name ?? '' !!} </td>
+                            <td>{!! $visitor->sentry->name ?? '' !!} </td>
+                            <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                            <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
+                            @if ($visitor->timeLog->exit_time === null)
+                            @php
+                            $duration = 'Visitor Still Within the Premise';
+                            @endphp
+                            @else
+                            @php
+                            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
+                            $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
+                            $duration = $to->longAbsoluteDiffForHumans($from);
+                            @endphp
+                            @endif
+                            <td>
+                                <span class="badge badge-pill badge-light-dark mr-1">
                                     {{ $duration }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
-                                    <i class="fa fa-eye" style="color:#808080">  </i></a>
-                                </td>
+                                </span>
+                            </td>
+                            <td>
+                                <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
+                                    <i class="fa fa-eye" style="color:#808080"> </i></a>
+                            </td>
 
-                            </tr>
+                        </tr>
                         @empty
-                            <tr>
-                                <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
-                            </tr>
+                        <tr>
+                            <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -273,39 +271,39 @@
                     </thead>
                     <tbody>
                         @forelse($Id as $key => $visitor)
-                            <tr>
-                                <td>{!! $visitor->name !!} </td>
-                                <td>{!! $visitor->resident2->name ?? '' !!} </td>
-                                <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor active' !!} </td>
-                                @if ($visitor->timeLog->entry_time === null)
-                                    @php
-                                        $duration = 'Visit Active';
-                                    @endphp
-                                @else
-                                    @php
+                        <tr>
+                            <td>{!! $visitor->name !!} </td>
+                            <td>{!! $visitor->resident2->name ?? '' !!} </td>
+                            <td>{!! $visitor->sentry->name ?? '' !!} </td>
+                            <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                            <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
+                            @if ($visitor->timeLog->entry_time === null)
+                            @php
+                            $duration = 'Visitor Still Within the Premise';
+                            @endphp
+                            @else
+                            @php
 
-                                        $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
-                                        $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
-                                        $duration = $to->longAbsoluteDiffForHumans($from);
-                                    @endphp
-                                @endif
-                                <td>
-                                    <span class="badge badge-pill badge-light-dark mr-1">
+                            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
+                            $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
+                            $duration = $to->longAbsoluteDiffForHumans($from);
+                            @endphp
+                            @endif
+                            <td>
+                                <span class="badge badge-pill badge-light-dark mr-1">
                                     {{ $duration }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
-                                    <i class="fa fa-eye" style="color:#808080">  </i></a>
-                                </td>
+                                </span>
+                            </td>
+                            <td>
+                                <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
+                                    <i class="fa fa-eye" style="color:#808080"> </i></a>
+                            </td>
 
-                            </tr>
+                        </tr>
                         @empty
-                            <tr>
-                                <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
-                            </tr>
+                        <tr>
+                            <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -337,38 +335,38 @@
                     </thead>
                     <tbody>
                         @forelse($allTypes as $key => $visitor)
-                            <tr>
-                                <td>{!! $visitor->name !!} </td>
-                                <td>{!! $visitor->resident2->name ?? '' !!} </td>
-                                <td>{!! $visitor->sentry->name ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Visit Active' !!} </td>
-                                @if ($visitor->timeLog->exit_time === null)
-                                    @php
-                                        $duration = 'Visit Active';
-                                    @endphp
-                                @else
-                                    @php
-                                        $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
-                                        $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
-                                        $duration = $to->longAbsoluteDiffForHumans($from);
-                                    @endphp
-                                @endif
-                                <td>
-                                    <span class="badge badge-pill badge-light-dark mr-1">
+                        <tr>
+                            <td>{!! $visitor->name !!} </td>
+                            <td>{!! $visitor->resident2->name ?? '' !!} </td>
+                            <td>{!! $visitor->sentry->name ?? '' !!} </td>
+                            <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                            <td>{!! $visitor->timeLog->exit_time ?? 'Visitor Within the Premise' !!} </td>
+                            @if ($visitor->timeLog->exit_time === null)
+                            @php
+                            $duration = 'Visitor Still Within the Premise';
+                            @endphp
+                            @else
+                            @php
+                            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
+                            $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
+                            $duration = $to->longAbsoluteDiffForHumans($from);
+                            @endphp
+                            @endif
+                            <td>
+                                <span class="badge badge-pill badge-light-dark mr-1">
                                     {{ $duration }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
-                                        <i class="fa fa-eye" style="color:#808080">  </i></a>
-                                </td>
+                                </span>
+                            </td>
+                            <td>
+                                <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
+                                    <i class="fa fa-eye" style="color:#808080"> </i></a>
+                            </td>
 
-                            </tr>
+                        </tr>
                         @empty
-                            <tr>
-                                <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
-                            </tr>
+                        <tr>
+                            <td colspan="10" style="padding-left: 40%">No Records Found!... </td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>

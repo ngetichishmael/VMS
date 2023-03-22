@@ -8,8 +8,12 @@
             <li class="mr-auto nav-item">
                 <a class="navbar-brand" href="{{ url('/dashboard') }}">
                     <span class="brand-logo">
+                       
+
                     </span>
-                    <h2 class="brand-text">MOJA PASS </h2>
+                           
+  <img src="{{ asset('images/logo/Mojaplus-logo_Primary-Logo.png') }}" alt="MojaPass" style="width: 170px; height: 40px;">
+
                 </a>
             </li>
             <li class="nav-item nav-toggle">

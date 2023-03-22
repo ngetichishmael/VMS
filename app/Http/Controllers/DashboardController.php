@@ -29,7 +29,7 @@ class DashboardController extends Controller
     }
     public function OTP()
     {
-        $pageConfigs = ['pageHeader' => false];
+        $pageConfigs = ['blankPage' => true];
 
         return view('otp', ['pageConfigs' => $pageConfigs]);
     }
