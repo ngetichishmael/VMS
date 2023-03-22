@@ -23,6 +23,5 @@ Route::post('otp/login', [DashboardController::class, 'store'])->name('otp.login
 
 Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware(['auth', 'validOTP']);
 
-require __DIR__ . '/vuexy.php';
 require __DIR__ . '/auth.php';
 require __DIR__ . '/users.php';

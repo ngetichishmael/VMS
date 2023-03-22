@@ -66,14 +66,16 @@ class VisitorController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
-    {
-        return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)->get());
+    { $detail = UserDetail::where('phone_number', $request->user()->phone_number)->first();
+        $sentry = Sentry::where('user_detail_id', $detail->id)->first();
+        return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('sentry_id', $sentry->id)->get());
     }
     public function allUncheckedOut(Request $request)
-    {
+    { $detail = UserDetail::where('phone_number', $request->user()->phone_number)->first();
+        $sentry = Sentry::where('user_detail_id', $detail->id)->first();
         return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'vehicle', 'visitorType', 'timeLogs' => function($query) {
             $query->whereNull('exit_time');
-        }])->where('sentry_id', $request->user()->id)->get());
+        }])->where('sentry_id', $sentry->id)->get());
     }
 
     public function verifyUser(Request $request)
@@ -140,65 +142,38 @@ class VisitorController extends Controller
     public function returningVisitorVerify(Request $request)
     {
         $number = $request->input('number');
-//        $stripped_number = preg_replace('/[^0-9]/', '', $number);
         $stripped_number = preg_replace('/\D/', '', $number);
-
-
-        $users = UserDetail::whereRaw("REPLACE(phone_number, '-', '') LIKE '%$stripped_number%'")
+        $userDetails = UserDetail::where('phone_number', 'LIKE', "%$stripped_number%")
             ->orWhere('ID_number', 'LIKE', "%$number%")
-            ->orWhere('phone_number', 'LIKE', "%$number%")
             ->get();
 
-        if ($users->isEmpty()) {
+        if ($userDetails->isEmpty()) {
             return response()->json(['message' => 'Visitor not found'], 404);
         }
 
-        $visitor = Visitor::whereIn('user_detail_id', $users->pluck('id')->toArray())
+        $visitors = Visitor::whereIn('user_detail_id', $userDetails->pluck('id'))
+            ->with('user_details', 'resident2', 'sentry', 'purpose', 'vehicle', 'timeLogs')
             ->orderBy('id', 'desc')
-            ->first();
-        $time_log = TimeLog::where('id', $visitor->time_log_id)
-            ->whereNull('exit_time')
-            ->first();
-        if ($time_log) {
-            return response()->json(['message' => 'User has already checked in'], 409);
-        }
-        if ($visitor->type === 'DriveIn') {
-            $visitor->vehicle = VehicleInformation::where('visitor_id', $visitor->id)->first();
-            return response()->json(['message' => 'Visitor exists and has Vehicle details', 'visitor' => $visitor], 200);
+            ->get();
+
+        if ($visitors->isEmpty()) {
+            return response()->json(['message' => 'Visitor not found'], 404);
         }
 
-        return response()->json(['message' => 'Visitor exists', 'visitor' => $visitor, 'phone'=>$users->phone_number], 200);
+        $response = [
+            'message' => 'Visitor exists',
+            'visitors' => $visitors
+        ];
+        $visitors->each(function ($visitor) use (&$response) {
+            if ($visitor->type === 'DriveIn') {
+                $vehicle = VehicleInformation::where('visitor_id', $visitor->id)->first();
+                $response['message'] = 'Visitor exists and has Vehicle details';
+                $visitor['vehicle'] = $vehicle;
+            }
+        });
+
+        return response()->json($response, 200);
     }
-
-
-
-    //    public function returningVisitorVerify(Request $request)
-    //    {
-    //        $number = $request->input('number');
-    //        $stripped_number = preg_replace('/[^0-9]/', '', $number);
-    //        $user = UserDetail::whereRaw("REPLACE(phone_number, '-', '') LIKE '%$stripped_number'")
-    //            ->orwhere('ID_number', $number)->orwhere('phone_number', $number)->first();
-    //        //$user = UserDetail::where('ID_number', $number)->orWhere('phone_number', $number)->first();
-    //
-    //        if (!$user) {
-    //            return response()->json(['message' => 'Visitor not found'], 404);
-    //        }
-    //
-    //        $visitor = Visitor::where('user_detail_id',  $user->id)->orderBy('id', 'desc')->first();
-    //        $time_log = TimeLog::where('id', $visitor->time_log_id)
-    //            ->whereNull('exit_time')
-    //            ->first();
-    //        if ($time_log) {
-    //            return response()->json(['message' => 'User has already checked in'], 400);
-    //        }
-    //        if ($visitor->type === 'DriveIn') {
-    //            $visitor->vehicle = VehicleInformation::where('visitor_id', $visitor->id)->first();
-    //            return response()->json(['Message' => 'Visitor exists and has a Vehicle details', 'visitor' => $visitor], 200);
-    //        }
-    //
-    //        return response()->json(['Message' => 'Visitor exists', 'visitor' => $visitor], 200);
-    //    }
-
     /**
      * Store a newly created resource in storage.
      *
