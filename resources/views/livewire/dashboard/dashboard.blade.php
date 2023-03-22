@@ -36,7 +36,7 @@
                                     @endphp
                                 @endif
 
-                                
+
                                 <td>
                                   <span class="badge badge-pill badge-light-dark mr-1">
                                   {{ $duration }}
@@ -193,8 +193,6 @@
 <section class="app-user-list">
     <div class="card">
         <h5 class="card-header">Latest SMS-Ins</h5>
-
-
         <div class="pt-0 card-datatable table-responsive">
             <div class="card-datatable table-responsive">
                 <table class="table">

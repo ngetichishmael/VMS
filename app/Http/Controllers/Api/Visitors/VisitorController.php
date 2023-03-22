@@ -69,6 +69,13 @@ class VisitorController extends Controller
     {
         return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)->get());
     }
+    public function allUncheckedOut(Request $request)
+    {
+        return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'vehicle', 'visitorType', 'timeLogs' => function($query) {
+            $query->whereNull('exit_time');
+        }])->where('sentry_id', $request->user()->id)->get());
+    }
+
     public function verifyUser(Request $request)
     {
         $id_number = $request->input('id_number');

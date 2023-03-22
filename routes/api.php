@@ -31,6 +31,7 @@ Route::group(['namespace' => 'Api'], function () {
         Route::post('phone-number/{phone_number}', [SMSCheckingController::class, 'SMSChecking']);
         Route::post('verify/otp/{otp}', [SMSCheckingController::class, 'verifyOTP']);
         Route::get('visitors/my_all', [VisitorController::class, 'index']);
+        Route::get('visitors/allUncheckedOut', [VisitorController::class, 'allUncheckedOut']);
         Route::get('visitors/visitor/{id}', [DriveInController::class, 'show']);
         Route::get('visitors/organization-options', [VisitorController::class, 'organizationOptions']);
         Route::get('visitors/identification-options', [VisitorController::class, 'identificationOptions']);
