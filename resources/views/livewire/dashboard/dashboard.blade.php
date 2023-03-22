@@ -42,7 +42,6 @@
                                   {{ $duration }}
                                   </span>
 
-
                             </td>
                             <td>
                                 <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
