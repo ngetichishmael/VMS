@@ -19,6 +19,13 @@
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
 @endsection
 
+@section('vendor-script')
+{{-- vendor files --}}
+<script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
+@endsection
+
+
+
 @section('content')
     <!-- Dashboard Ecommerce Starts -->
     @if(Auth::check() && Auth::user()->role_id == 1)
