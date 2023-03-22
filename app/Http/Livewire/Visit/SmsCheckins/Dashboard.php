@@ -51,7 +51,7 @@ class Dashboard extends Component
             ->when($this->visitorTypeId, function ($query) {
                 $query->where('visitor_type_id', $this->visitorTypeId);
             })
-            ->where('type', '=','SMS')
+            ->where('type', '=','SMS')->orderBy('visitors.id', 'desc')
             ->whereIn('id', function ($query) {
                 $query->select(DB::raw('MAX(id)'))
                     ->from('visitors')

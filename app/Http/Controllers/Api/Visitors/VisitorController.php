@@ -69,6 +69,13 @@ class VisitorController extends Controller
     {
         return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)->get());
     }
+    public function allUncheckedOut(Request $request)
+    {
+        return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'vehicle', 'visitorType', 'timeLogs' => function($query) {
+            $query->whereNull('exit_time');
+        }])->where('sentry_id', $request->user()->id)->get());
+    }
+
     public function verifyUser(Request $request)
     {
         $id_number = $request->input('id_number');
@@ -82,7 +89,7 @@ class VisitorController extends Controller
             ->whereNull('exit_time')
             ->first();
         if (!$time_log) {
-            return response()->json(['message' => 'User has already exited'], 400);
+            return response()->json(['message' => 'User has already checked out'], 400);
         }
 
         return response()->json(['Message' => 'Visitor exists', 'visitor' => $visitor], 200);
@@ -114,7 +121,7 @@ class VisitorController extends Controller
             ]);
             if ($result === 0) {
                 return response()->json(
-                    ['message' => 'Visitor time log does not exist or has already checked out!'],
+                    ['message' => 'Visitor checkin record does not exist or has already checked out!'],
                     406
                 );
             }
@@ -133,7 +140,9 @@ class VisitorController extends Controller
     public function returningVisitorVerify(Request $request)
     {
         $number = $request->input('number');
-        $stripped_number = preg_replace('/[^0-9]/', '', $number);
+//        $stripped_number = preg_replace('/[^0-9]/', '', $number);
+        $stripped_number = preg_replace('/\D/', '', $number);
+
 
         $users = UserDetail::whereRaw("REPLACE(phone_number, '-', '') LIKE '%$stripped_number%'")
             ->orWhere('ID_number', 'LIKE', "%$number%")
@@ -158,7 +167,7 @@ class VisitorController extends Controller
             return response()->json(['message' => 'Visitor exists and has Vehicle details', 'visitor' => $visitor], 200);
         }
 
-        return response()->json(['message' => 'Visitor exists', 'visitor' => $visitor], 200);
+        return response()->json(['message' => 'Visitor exists', 'visitor' => $visitor, 'phone'=>$users->phone_number], 200);
     }
 
 

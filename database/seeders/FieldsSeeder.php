@@ -23,6 +23,7 @@ class FieldsSeeder extends Seeder
             'attachments'=>true,
             'gender'=>true,
             'company'=>true,
+            'fingerprint'=>false,
         ]);
 
         Field::create([
@@ -34,6 +35,7 @@ class FieldsSeeder extends Seeder
             'attachments'=>true,
             'gender'=>true,
             'company'=>true,
+            'fingerprint'=>true,
         ]);
 
         Field::create([
@@ -45,6 +47,7 @@ class FieldsSeeder extends Seeder
             'attachments'=>false,
             'gender'=>true,
             'company'=>true,
+            'fingerprint'=>true
         ]);
 
         Field::create([
@@ -56,6 +59,7 @@ class FieldsSeeder extends Seeder
             'attachments'=>true,
             'gender'=>true,
             'company'=>true,
+            'fingerprint'=>true
         ]);
 
         Field::create([
@@ -67,6 +71,7 @@ class FieldsSeeder extends Seeder
             'attachments'=>true,
             'gender'=>true,
             'company'=>true,
+            'fingerprint'=>true,
         ]);
     }
 }

@@ -212,8 +212,12 @@ class DashboardController extends Controller
                 ]
             ]
         ];
-        $vlabels = Visitor::whereYear('created_at', date('Y'))->select(DB::raw("MONTH(created_at) as month_name"))->get();
-        $vdata = Visitor::whereYear('created_at', date('Y'))->select(DB::raw("COUNT(*) as count"))->get();
+        $vlabels = TimeLog::whereYear('entry_time', date('Y'))
+            ->select(DB::raw("MONTH(entry_time) as month_name"))->get();
+
+        $vdata = TimeLog::whereYear('entry_time', date('Y'))
+            ->select(DB::raw("COUNT(*) as count"))->get();
+
         $yearlyMonth = TimeLog::whereYear('entry_time', Carbon::now()->year)
             ->select(DB::raw('MONTH(entry_time) as month'))->get()->toArray();
         $yearlyCount = TimeLog::whereYear('entry_time', Carbon::now()->year)

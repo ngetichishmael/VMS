@@ -29,8 +29,8 @@
                     <div class="form-group">
                         <label for="selectSmall">Sort</label>
                         <select class="form-control form-control-sm" id="selectSmall" wire:model="sortAsc">
-                            <option value="1">Oldest to Newest</option>
-                            <option value="0">Newest to Oldest</option>
+                            <option value="1">Newest to Oldest</option>
+                            <option value="0">Oldest to Newest</option>
                         </select>
                     </div>
                 </div>
