@@ -22,3 +22,8 @@
   <!-- Page js files -->
   <script src="{{ asset(mix('js/scripts/forms/form-select2.js')) }}"></script>
 @endsection
+@section('vendor-script')
+{{-- vendor files --}}
+<script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
+@endsection
+

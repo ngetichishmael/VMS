@@ -16,3 +16,9 @@
 @livewire('shift.dashboard')
 @endsection
 
+@section('vendor-script')
+{{-- vendor files --}}
+<script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
+@endsection
+
+
