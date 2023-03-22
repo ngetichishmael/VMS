@@ -56,7 +56,7 @@ class WalkInController extends Controller
                 $timeLog = TimeLog::find($visitor->time_log_id);
 
                 if ($timeLog && $timeLog->exit_time === null) {
-                    return response()->json(['error' => 'User already signed in, If its by mistake, Sign the user out first to sign back in'], 409);
+                    return response()->json(['error' => 'User already signed in, to continue checkout then checkin'], 409);
                 }
             }
         }

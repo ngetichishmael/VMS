@@ -23,6 +23,7 @@ class CreateFieldsTable extends Migration
             $table->boolean('attachments')->default(true);
             $table->boolean('gender')->default(true);
             $table->boolean('company')->default(true);
+            $table->boolean('fingerprint')->default(true);
             $table->timestamps();
         });
     }

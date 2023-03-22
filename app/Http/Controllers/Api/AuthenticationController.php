@@ -119,6 +119,10 @@ class AuthenticationController extends Controller
 //        $premise = Premise::where('id', $sentryid->premise_id ?? '')->first();
         $detail = Sentry::where('phone_number', $user->phone_number ?? '')->first();
         $premise = Premise::where('id', $detail->premise_id ?? 'premises')->first();
+        $settings = Setting::where('organization_code', $premise->organization->code ?? 'not found')->first();
+        $fields = Field::where('id', $settings->field_id ?? 'not found')->first();
+        $fingerprint = $fields->fingerprint ?? null;
+
         Activity::create([
             'name' => $detail->name,
             'target' => " Mobile App",
@@ -135,6 +139,7 @@ class AuthenticationController extends Controller
             "premises" => $premise->name ?? ' ',
             "premises_id" => $premise->id ?? ' ',
             'organization' => $premise->organization->name ?? ' ',
+            'fingerprint' =>$fingerprint,
             "access_token" => $tokenUser,
             "user" => $user,
             "code" => $code,

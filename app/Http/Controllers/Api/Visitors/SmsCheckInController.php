@@ -26,7 +26,7 @@ class SmsCheckInController extends Controller
     public function index(Request $request)
     {
          $sentry=Sentry::where('phone_number', $request->user()->phone_number)->first();
-        return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $sentry->id )
+        return response()->json(Visitor::with(['resident2', 'user_details', 'sentry', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $sentry->id )
             ->where('type', 'sms')
             ->get());
     }
@@ -34,7 +34,7 @@ class SmsCheckInController extends Controller
     {
         $sentry=Sentry::where('phone_number', $request->user()->phone_number)->first();
         return response()->json(
-            Visitor::with(['user_details','resident2', 'sentry', 'purpose', 'visitorType'])
+            Visitor::with(['user_details','resident2', 'sentry', 'purpose', 'visitorType', 'timeLogs'])
                 ->where('sentry_id', $sentry->id)
                 ->where('type', 'sms')
                 ->whereIn('time_log_id', function ($query) {
@@ -92,7 +92,7 @@ class SmsCheckInController extends Controller
                 $timeLog = TimeLog::find($visitor->time_log_id);
 
                 if ($timeLog && $timeLog->exit_time === null) {
-                    return response()->json(['error' => 'User already signed in, If its by mistake, Sign the user out first to sign back in'],409);
+                    return response()->json(['error' => 'User already signed in, to continue checkout then checkin'],409);
                 }
             }
         }

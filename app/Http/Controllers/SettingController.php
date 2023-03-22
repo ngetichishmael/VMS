@@ -31,6 +31,7 @@ class SettingController extends Controller
         $fields->attachments = $request->input('attachments', 1);
         $fields->gender = $request->input('gender', 1);
         $fields->company = $request->input('company', 1);
+        $fields->fingerprint = $request->input('fingerprint', 1);
         $fields->save();
 
         // Add data to settings table
@@ -81,6 +82,7 @@ class SettingController extends Controller
         $fields->attachments = $request->has('attachments') ? 1 : 0;
         $fields->gender = $request->has('gender') ? 1 : 0;
         $fields->company = $request->has('company') ? 1 : 0;
+        $fields->fingerprint = $request->has('fingerprint') ? 1 : 0;
         $fields->save();
 
         return redirect()->route('OrganizationSetting')->with('success', 'Settings updated successfully');
