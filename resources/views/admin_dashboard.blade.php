@@ -20,7 +20,7 @@
                             <hr style="color: #bebbbb" />
                             <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">TODAY
                                 @php
-                                    $percentChange = $yesterdayVisitor > 0 ? ($totalVisitorsToday - $yesterdayVisitor) / $yesterdayVisitor * 100 : 100;
+                                    $percentChange = $yesterdayVisitor > 0 ? ($totalVisitorsToday - $yesterdayVisitor) / $yesterdayVisitor * 100 : 0;
                                     $percentChange = number_format($percentChange, 1);
                                     $color = $percentChange > 0 ? 'green' : 'orange';
                                     $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
@@ -91,7 +91,7 @@
                             <hr style="color: #bebbbb" />
                             <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
                                 @php
-                                    $percentChange = $yesterdayVisitor > 0 ? ($totalVisitorsToday - $yesterdayVisitor) / $yesterdayVisitor * 100 : 100;
+                                    $percentChange = $idLastWeek > 0 ? ($idThisWeek - $idLastWeek) / $idLastWeek * 100 : 0;
                                    $percentChange = number_format($percentChange, 1);
                                     $color = $percentChange > 0 ? 'green' : 'orange';
                                     $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
@@ -127,7 +127,7 @@
                             <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
 
                                 @php
-                                    $percentChange = $walkinLastWeek > 0 ? ($walkinThisWeek - $walkinLastWeek) / $walkinLastWeek * 100 : 100;
+                                    $percentChange = $walkinLastWeek > 0 ? ($walkinThisWeek - $walkinLastWeek) / $walkinLastWeek * 100 : 0;
                                    $percentChange = number_format($percentChange, 1);
                                     $color = $percentChange > 0 ? 'green' : 'orange';
                                     $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
@@ -161,7 +161,7 @@
                             <hr style="color: #bebbbb" />
                             <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
                                 @php
-                                    $percentChange = $driveinLastWeek > 0 ? ($driveinThisWeek - $driveinLastWeek) / $driveinLastWeek * 100 : 100;
+                                    $percentChange = $driveinLastWeek > 0 ? ($driveinThisWeek - $driveinLastWeek) / $driveinLastWeek * 100 : 0;
                                    $percentChange = number_format($percentChange, 1);
                                     $color = $percentChange > 0 ? 'green' : 'orange';
                                     $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
@@ -195,7 +195,7 @@
         {{--                                <hr style="color: #bebbbb" />--}}
         {{--                                <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK--}}
         {{--                                    @php--}}
-        {{--                                        $percentChange = $ipassLastWeek > 0 ? ($ipassThisWeek - $ipassLastWeek) / $ipassLastWeek * 100 : 100;--}}
+        {{--                                        $percentChange = $ipassLastWeek > 0 ? ($ipassThisWeek - $ipassLastWeek) / $ipassLastWeek * 100 : 0;--}}
         {{--                                       $percentChange = number_format($percentChange, 1);--}}
         {{--                                        $color = $percentChange > 0 ? 'green' : 'orange';--}}
         {{--                                        $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';--}}
@@ -229,7 +229,7 @@
                             <hr style="color: #bebbbb" />
                             <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
                                 @php
-                                    $percentChange = $smsLastWeek > 0 ? ($smsThisWeek - $smsLastWeek) / $smsLastWeek * 100 : 100;
+                                    $percentChange = $smsLastWeek > 0 ? ($smsThisWeek - $smsLastWeek) / $smsLastWeek * 100 : 0;
                                    $percentChange = number_format($percentChange, 1);
                                     $color = $percentChange > 0 ? 'green' : 'orange';
                                     $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
