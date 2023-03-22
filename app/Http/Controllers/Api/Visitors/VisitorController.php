@@ -71,12 +71,29 @@ class VisitorController extends Controller
         return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'vehicle', 'visitorType', 'timeLogs'])->where('sentry_id', $sentry->id)->get());
     }
     public function allUncheckedOut(Request $request)
-    { $detail = UserDetail::where('phone_number', $request->user()->phone_number)->first();
+    {
+        $detail = UserDetail::where('phone_number', $request->user()->phone_number)->first();
         $sentry = Sentry::where('user_detail_id', $detail->id)->first();
-        return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'vehicle', 'visitorType', 'timeLogs' => function($query) {
-            $query->whereNull('exit_time');
-        }])->where('sentry_id', $sentry->id)->get());
+
+        return response()->json(
+            Visitor::with([
+                'resident2',
+                'sentry',
+                'purpose',
+                'vehicle',
+                'visitorType',
+                'timeLogs' => function($query) {
+                    $query->whereNull('exit_time');
+                }
+            ])
+                ->where('sentry_id', $sentry->id)
+                ->whereHas('timeLogs', function($query) {
+                    $query->whereNull('exit_time');
+                })
+                ->get()
+        );
     }
+
 
     public function verifyUser(Request $request)
     {
@@ -141,19 +158,20 @@ class VisitorController extends Controller
     public function returningVisitorVerify(Request $request)
     {
         $validatedData = $request->validate([
-            'number' => 'required|string'
+            'number' => 'numeric'
         ]);
         $number = $request->input('number');
 //        $stripped_number = preg_replace('/\D/', '', $number);
         $stripped_number = preg_replace('/[^0-9]/', '', $number);
-        $userDetails = UserDetail::where('phone_number', 'LIKE', "%$stripped_number%")
+        $userDetails = UserDetail::select('id')
+            ->where('phone_number', 'LIKE', "%$stripped_number%")
             ->orWhere('ID_number', 'LIKE', "%$number%")
+            ->distinct()
             ->get();
 
         if ($userDetails->isEmpty()) {
             return response()->json(['message' => 'Visitor not found'], 404);
         }
-
         $visitors = Visitor::whereIn('user_detail_id', $userDetails->pluck('id'))
             ->with('user_details', 'resident2', 'sentry', 'purpose', 'vehicle', 'timeLogs')
             ->orderBy('id', 'desc')
