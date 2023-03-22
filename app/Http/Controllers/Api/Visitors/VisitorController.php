@@ -140,7 +140,9 @@ class VisitorController extends Controller
     public function returningVisitorVerify(Request $request)
     {
         $number = $request->input('number');
-        $stripped_number = preg_replace('/[^0-9]/', '', $number);
+//        $stripped_number = preg_replace('/[^0-9]/', '', $number);
+        $stripped_number = preg_replace('/\D/', '', $number);
+
 
         $users = UserDetail::whereRaw("REPLACE(phone_number, '-', '') LIKE '%$stripped_number%'")
             ->orWhere('ID_number', 'LIKE', "%$number%")
