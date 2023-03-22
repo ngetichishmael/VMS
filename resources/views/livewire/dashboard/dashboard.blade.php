@@ -35,6 +35,8 @@
                                         $duration = $to->longAbsoluteDiffForHumans($from);
                                     @endphp
                                 @endif
+
+                                
                                 <td>
                                   <span class="badge badge-pill badge-light-dark mr-1">
                                   {{ $duration }}
