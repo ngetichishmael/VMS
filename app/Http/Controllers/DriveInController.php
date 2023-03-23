@@ -54,12 +54,19 @@ class DriveInController extends Controller
     public function show($driveIn)
     {
 
+//        $visitor = DriveIn::with('purpose1', 'sentry', 'timeLogs')->whereId($driveIn)->first();
+//        $visitorCount = Visitor::where('user_detail_id', $visitor->user_details->id)->count();
+//        $lastTimeLog = TimeLog::where('id', $visitor->time_log_id)->orderBy('id', 'desc')->first();
+//        $historyTimeLogs = TimeLog::where('visitor_id', $visitor->id)->orderBy('entry_time', 'desc')->get();
         $visitor = DriveIn::with('purpose1', 'sentry', 'timeLogs')->whereId($driveIn)->first();
         $visitorCount = Visitor::where('user_detail_id', $visitor->user_details->id)->count();
-        $lastTimeLog = TimeLog::where('id', $visitor->time_log_id)->orderBy('id', 'desc')->first();
-        $historyTimeLogs = TimeLog::where('visitor_id', $visitor->id)->orderBy('entry_time', 'desc')->get();
+        $visitorTimeLogs = TimeLog::join('visitors', 'time_logs.id', '=', 'visitors.time_log_id')
+            ->where('time_logs.id', $visitor->time_log_id)
+            ->where('visitors.user_detail_id', $visitor->user_details->id)
+            ->get();
 
-        return view('app.visitor.drivers.visitorDetails', compact('visitor', 'historyTimeLogs', 'visitorCount', 'lastTimeLog'));
+        $lastTimeLog = $visitorTimeLogs->last();
+        return view('app.visitor.drivers.visitorDetails', compact('visitor', 'visitorTimeLogs', 'visitorCount', 'lastTimeLog'));
     }
     /**
      * Show the form for editing the specified resource.

@@ -1,6 +1,7 @@
 @php
     use Carbon\Carbon;
 @endphp
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"  crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <div>
 
@@ -95,10 +96,6 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-
-
-
-
                         <tbody style="font-size: small">
                             @forelse($dvisitors as $key => $visitor)
                                 <tr>
@@ -122,7 +119,7 @@
                                     @endif
                                     <td>
                                         <a href="{{ route('VisitDriveIn.show', ['DriveIn' => $visitor->id ?? '']) }}">
-                                                <i class="fa fa-eye" style="color:#808080"> View </i>
+                                                <i class="fa fa-eye" style="color:#808080"></i>
                                         </a>
 
                                     </td>
@@ -140,9 +137,8 @@
 
                     </div>
                 </div>
-
-        </div>
-
+            </div>
+</div>
 
 
 
