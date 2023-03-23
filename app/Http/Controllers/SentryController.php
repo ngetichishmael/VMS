@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+use Livewire\WithPagination;
+
 
 class SentryController extends Controller
 {
@@ -147,14 +149,13 @@ class SentryController extends Controller
     public function show($id)
     {
         $sentry = Sentry::find($id);
-
         $premises = Premise::where('status', 1)->where('id', $sentry->premise_id)->first();
         $visitors =Visitor::with('timeLogs')->where('sentry_id', $sentry->id)->get();
         $organization = Organization::where('status', 1)->where('code', $premises->organization_code)->first();
         $device= Device::where('sentry_id', $sentry->id)->first();
 
-
-        return view('livewire.sentry.show', compact('sentry', 'device', 'premises', 'organization', 'visitors'));
+        $activities=Activity::where('name',$sentry->name )->paginate(10);
+        return view('livewire.sentry.show', compact('sentry', 'device', 'premises','activities', 'organization', 'visitors'));
     }
 
     /**

@@ -161,52 +161,83 @@
 
 
 
-  <div class="card col-9">
-  <div class="card-body">
-    <h5 class="card-title" style="color: #1f8af5">Visitor History</h5>
-    <div class="row col-12">
-        <div class="table-responsive">
+  <div class="card col-11">
+      <div class="card-body">
+          <h5 class="card-title" style="color: #1f8af5">Guard Activity Logs</h5>
+          <div class="row col-12">
+              <div class="table-responsive">
+                  <table class="table table-hover">
+                      <thead>
+                      <tr>
+                          <th>Created At</th>
+                          <th>Activity</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      @forelse ($activities as $key => $activity)
+                          <tr>
+                              <td>{!! $activity->created_at ?? now() !!}</td>
+                              <td>{{$activity->activity }}</td>
+                          </tr>
+                      @empty
+                          <tr>
+                              <td colspan="6" style="text-align: center;"> No Record Found </td>
+                          </tr>
+                      @endforelse
+                      </tbody>
+                  </table>
+                  <div class="d-flex justify-content-center">
+                      {{ $activities->links() }}
+                  </div>
+              </div>
+          </div>
 
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Date</th>
-                    <th>Time In</th>
-                    <th>Time Out</th>
-                    <th>Duration</th>
-                </tr>
-                </thead>
-                <tbody>
-                @forelse ($visitors as $visitor)
-                    @forelse ($visitor->timeLogs as $timeLog)
-                        <tr>
-                            <td>{{ $visitor->name ?? 'NA' }}</td>
-                            <td>{{ $visitor->type ?? 'NA' }}</td>
-                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}</td>
-                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}</td>
-                            <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}</td>
-                            <td>{!! Carbon::parse($timeLog->entry_time ?? now())->diff(Carbon::parse($timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds') !!}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" style="text-align: center;"> No Record Found </td>
-                        </tr>
-                    @endforelse
-                @empty
-                    <tr>
-                        <td colspan="6" style="text-align: center;"> No Record Found </td>
-                    </tr>
-                @endforelse
+{{--</div> <div class="card col-9">--}}
+{{--  <div class="card-body">--}}
+{{--    <h5 class="card-title" style="color: #1f8af5">Visitor History</h5>--}}
+{{--    <div class="row col-12">--}}
+{{--        <div class="table-responsive">--}}
 
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+{{--            <table class="table table-hover">--}}
+{{--                <thead>--}}
+{{--                <tr>--}}
+{{--                    <th>Name</th>--}}
+{{--                    <th>Type</th>--}}
+{{--                    <th>Date</th>--}}
+{{--                    <th>Time In</th>--}}
+{{--                    <th>Time Out</th>--}}
+{{--                    <th>Duration</th>--}}
+{{--                </tr>--}}
+{{--                </thead>--}}
+{{--                <tbody>--}}
+{{--                @forelse ($visitors as $visitor)--}}
+{{--                    @forelse ($visitor->timeLogs as $timeLog)--}}
+{{--                        <tr>--}}
+{{--                            <td>{{ $visitor->name ?? 'NA' }}</td>--}}
+{{--                            <td>{{ $visitor->type ?? 'NA' }}</td>--}}
+{{--                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}</td>--}}
+{{--                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}</td>--}}
+{{--                            <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}</td>--}}
+{{--                            <td>{!! Carbon::parse($timeLog->entry_time ?? now())->diff(Carbon::parse($timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds') !!}</td>--}}
+{{--                        </tr>--}}
+{{--                    @empty--}}
+{{--                        <tr>--}}
+{{--                            <td colspan="6" style="text-align: center;"> No Record Found </td>--}}
+{{--                        </tr>--}}
+{{--                    @endforelse--}}
+{{--                @empty--}}
+{{--                    <tr>--}}
+{{--                        <td colspan="6" style="text-align: center;"> No Record Found </td>--}}
+{{--                    </tr>--}}
+{{--                @endforelse--}}
 
-</div>
+{{--                </tbody>--}}
+{{--            </table>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+
+{{--</div>--}}
 
 
 <div class="d-flex flex-wrap">
@@ -215,11 +246,12 @@
 
 
 
-
+</div>
 
 
 
 </section>
+
 @endsection
 
 
