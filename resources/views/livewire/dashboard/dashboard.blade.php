@@ -26,8 +26,6 @@
                                 <td>{!! $visitor->resident2->name ?? 'NA' !!} </td>
                                 <td>{!! $visitor->user_details->ID_number ?? 'NA' !!} </td>
                                 <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
-                                <td>{!! $visitor->timeLog->exit_time ?? 'Visitor active' !!} </td>
-<<<<<<< HEAD
                                 @if (!isset($visitor->timeLog->exit_time))
                                     <td>...</td>
                                     <td> <span class="mr-1 badge badge-pill badge-light-primary">Visit Active</span> </td>
@@ -41,30 +39,6 @@
                                     </td>
                                 @endif
                                 <td>
-=======
-
-                               @if ($visitor->timeLog->exit_time === null)
-
-
-                                    <td> <span class="mr-1 badge badge-pill badge-light-primary">Visit Active</span> </td>
-                               @else
-                                        @php
-                                        $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
-                                        $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
-                                        $duration = $to->longAbsoluteDiffForHumans($from);
-                                        @endphp
-
-                               <td>
-                                   <span class="mr-1 badge badge-pill badge-light-dark">
-                                       {{ $duration }}
-
-                                   </span>
-                               </td>
-                               @endif
-
-
-
->>>>>>> 64449d81829f8586bff7b406fda0d1fc05133d3f
                             <td>
                                 <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
                                     <i class="fa fa-eye" style="color:#808080"> </i></a>
