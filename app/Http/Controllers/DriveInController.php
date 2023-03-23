@@ -53,18 +53,13 @@ class DriveInController extends Controller
      */
     public function show($driveIn)
     {
-
-//        $visitor = DriveIn::with('purpose1', 'sentry', 'timeLogs')->whereId($driveIn)->first();
-//        $visitorCount = Visitor::where('user_detail_id', $visitor->user_details->id)->count();
-//        $lastTimeLog = TimeLog::where('id', $visitor->time_log_id)->orderBy('id', 'desc')->first();
-//        $historyTimeLogs = TimeLog::where('visitor_id', $visitor->id)->orderBy('entry_time', 'desc')->get();
-        $visitor = DriveIn::with('purpose1', 'sentry', 'timeLogs')->whereId($driveIn)->first();
-        $visitorCount = Visitor::where('user_detail_id', $visitor->user_details->id)->count();
+        $visitor = DriveIn::with('purpose1', 'sentry', 'timeLogs')->whereId($driveIn)->firstOrFail();
+        $userDetailId = $visitor->user_details->id;
+        $visitorCount = Visitor::where('user_detail_id', $userDetailId)->count();
         $visitorTimeLogs = TimeLog::join('visitors', 'time_logs.id', '=', 'visitors.time_log_id')
-            ->where('time_logs.id', $visitor->time_log_id)
-            ->where('visitors.user_detail_id', $visitor->user_details->id)
+            ->where('visitors.user_detail_id', $userDetailId)
+            ->orderBy('entry_time', 'desc')
             ->get();
-
         $lastTimeLog = $visitorTimeLogs->last();
         return view('app.visitor.drivers.visitorDetails', compact('visitor', 'visitorTimeLogs', 'visitorCount', 'lastTimeLog'));
     }

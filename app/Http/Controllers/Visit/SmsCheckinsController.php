@@ -39,13 +39,16 @@ class SmsCheckinsController extends Controller
      */
     public function show($id)
     {
-        $visitor = WalkIn::with('purpose1','sentry','timeLogs')->whereId($id)->first();
-        $visitorCount = Visitor::where('user_detail_id', $visitor->user_details->id)->count();
-        $lastTimeLog=TimeLog::where('id', $visitor->time_log_id)->orderBy('id', 'desc')->first();
-        $HistoryTimeLogs=WalkIn::with('timeLogs')->where('user_detail_id', $visitor->user_details->id)->orderBy('id', 'desc')->get();
+        $visitor = WalkIn::with('purpose1', 'sentry', 'timeLogs')->whereId($id)->firstOrFail();
+        $userDetailId = $visitor->user_details->id;
+        $visitorCount = Visitor::where('user_detail_id', $userDetailId)->count();
+        $visitorTimeLogs = TimeLog::join('visitors', 'time_logs.id', '=', 'visitors.time_log_id')
+            ->where('visitors.user_detail_id', $userDetailId)
+            ->orderBy('entry_time', 'desc')
+            ->get();
+        $lastTimeLog = $visitorTimeLogs->last();
 
-        return view('app.visitor.smscheckins.visitorDetails',compact('visitor', 'HistoryTimeLogs','visitorCount', 'lastTimeLog'));
-
+        return view('app.visitor.smscheckins.visitorDetails', compact('visitor', 'visitorTimeLogs', 'visitorCount', 'lastTimeLog'));
     }
 
     /**

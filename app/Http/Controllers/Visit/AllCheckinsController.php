@@ -38,21 +38,13 @@ class AllCheckinsController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show($id)
-    {
-//        $visitor = DriveIn::with('purpose1','sentry','timeLogs')->whereId($id)->first();
-//        $visitorCount = Visitor::where('user_detail_id', $visitor->user_details->id)->count();
-//        $lastTimeLog=TimeLog::where('id', $visitor->time_log_id)->orderBy('id', 'desc')->first();
-//        $historyTimeLogs = TimeLog::where('id', $visitor->id)->orderBy('entry_time', 'desc')->get();
-//
-//        return view('app.visitor.allcheckins.visitorDetails',compact('visitor', 'visitorCount','historyTimeLogs', 'lastTimeLog'));
-//
-        $visitor = DriveIn::with('purpose1', 'sentry', 'timeLogs')->whereId($id)->first();
-        $visitorCount = Visitor::where('user_detail_id', $visitor->user_details->id)->count();
+    {$visitor = DriveIn::with('purpose1', 'sentry', 'timeLogs')->whereId($id)->firstOrFail();
+        $userDetailId = $visitor->user_details->id;
+        $visitorCount = Visitor::where('user_detail_id', $userDetailId)->count();
         $visitorTimeLogs = TimeLog::join('visitors', 'time_logs.id', '=', 'visitors.time_log_id')
-            ->where('time_logs.id', $visitor->time_log_id)
-            ->where('visitors.user_detail_id', $visitor->user_details->id)
+            ->where('visitors.user_detail_id', $userDetailId)
+            ->orderBy('entry_time', 'desc')
             ->get();
-
         $lastTimeLog = $visitorTimeLogs->last();
 
         return view('app.visitor.drivers.visitorDetails', compact('visitor', 'visitorTimeLogs', 'visitorCount', 'lastTimeLog'));
