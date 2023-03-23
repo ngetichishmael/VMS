@@ -38,7 +38,7 @@
                                     </span>
                                     </td>
                                 @endif
-                                <td>
+
                             <td>
                                 <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
                                     <i class="fa fa-eye" style="color:#808080"> </i></a>

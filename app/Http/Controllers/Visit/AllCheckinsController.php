@@ -48,10 +48,12 @@ class AllCheckinsController extends Controller
 //
         $visitor = DriveIn::with('purpose1', 'sentry', 'timeLogs')->whereId($id)->first();
         $visitorCount = Visitor::where('user_detail_id', $visitor->user_details->id)->count();
-        $lastTimeLog = TimeLog::where('id', $visitor->time_log_id)->orderBy('id', 'desc')->first();
-        $visitorTimeLogs = TimeLog::where('id', $visitor->time_log_id)
-            ->where('user_detail_id', $visitor->user_details->id)
+        $visitorTimeLogs = TimeLog::join('visitors', 'time_logs.id', '=', 'visitors.time_log_id')
+            ->where('time_logs.id', $visitor->time_log_id)
+            ->where('visitors.user_detail_id', $visitor->user_details->id)
             ->get();
+
+        $lastTimeLog = $visitorTimeLogs->last();
 
         return view('app.visitor.drivers.visitorDetails', compact('visitor', 'visitorTimeLogs', 'visitorCount', 'lastTimeLog'));
     }
