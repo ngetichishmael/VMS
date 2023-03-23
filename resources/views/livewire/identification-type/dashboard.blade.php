@@ -32,7 +32,8 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal" style="background-color: #1877F2; color:#fff;" id="smallButton" data-target="#modals-slide-in" 
+                    <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal" style="background-color:  #1a3258; color:#fff;" id="smallButton" data-target="#modals-slide-in"
+
                             data-placement="top" title="New Organazition">+ Add New Indentification
                            
                         </button>

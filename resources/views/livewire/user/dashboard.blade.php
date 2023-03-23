@@ -33,8 +33,9 @@
                               </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2; color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in"
+                    <div class="col-md-2">
+                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1a3258; color:#fff; " data-toggle="modal" id="smallButton" data-target="#modals-slide-in"
+
                             data-placement="top" title="New User">
                           + Add New User
 
