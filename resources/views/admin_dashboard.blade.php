@@ -267,14 +267,19 @@
             </div>
         </div>
         <div class="col-xl-6 col-12">
-            <div class="card col-8">
+            <div class="card">
                 <div class="card-header font-small-3">
-                    <h6>{!! ucwords("Organization with the Highest Monthly Visits") !!}</h6>
-                    <div class="card-text font-small-3">
-                        <i class="fa fa-building"><span>{!! $organization->name !!}</span><span> Visits: {!! $organization->visitor_count !!}</span></i>
+                    <h6>{!! ucwords("Organizations with the Highest Monthly Visits") !!}</h6>
+                    <div class="card-text font-small-3 col-12" >
+                        @foreach($organizations as $organization)
+                            <div class="card-text font-small-3">
+                                <i class="fa fa-building"><span>{!! $organization->name !!}</span><span> Visits: {!! $organization->visitor_count !!}</span></i>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
+
         </div>
     </div></div>
 </section>

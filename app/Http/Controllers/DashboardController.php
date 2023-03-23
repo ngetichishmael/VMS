@@ -271,9 +271,9 @@ class DashboardController extends Controller
             ->whereMonth('time_logs.entry_time', '=', now()->month)
             ->groupBy('units.id', 'units.name')
             ->orderByDesc('visitors_count')
-            ->limit(2)
+            ->take(5)
             ->get();
-        $organization = DB::table('organizations')
+        $organizations = DB::table('organizations')
             ->select('organizations.name', DB::raw('COUNT(visitors.id) as visitor_count'))
             ->join('premises', 'organizations.code', '=', 'premises.organization_code')
             ->join('blocks', 'premises.id', '=', 'blocks.premise_id')
@@ -284,7 +284,22 @@ class DashboardController extends Controller
             ->whereMonth('time_logs.entry_time', Carbon::now()->month)
             ->groupBy('organizations.name')
             ->orderByDesc('visitor_count')
-            ->first();
+            ->limit(5)
+            ->get();
+
+//        $organizations = DB::table('organizations')
+//            ->select('organizations.name', DB::raw('COUNT(visitors.id) as visitor_count'))
+//            ->join('premises', 'organizations.code', '=', 'premises.organization_code')
+//            ->join('blocks', 'premises.id', '=', 'blocks.premise_id')
+//            ->join('units', 'blocks.id', '=', 'units.block_id')
+//            ->join('residents', 'units.id', '=', 'residents.unit_id')
+//            ->join('visitors', 'residents.id', '=', 'visitors.resident_id')
+//            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+//            ->whereMonth('time_logs.entry_time', Carbon::now()->month)
+//            ->groupBy('organizations.name')
+//            ->orderByDesc('visitor_count')
+//            ->take(5)
+//            ->get();
 
         $visitorsData = DB::table('visitors')
             ->select(DB::raw('DATE(visitors.created_at) as date'), DB::raw('COUNT(*) as count'))
@@ -349,7 +364,7 @@ class DashboardController extends Controller
                 'labelschart' => $labelschart,
                 'datachart' => $datachart,
                 'units' => $units,
-                'organization' => $organization,
+                'organizations' => $organizations,
                 'chartDataL' => $chartDataL,
             ]
         );
