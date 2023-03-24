@@ -164,7 +164,7 @@
 
   <div class="card col-9">
       <div class="card-body">
-          <h5 class="card-title" style="color: #1f8af5">Guard Activity Logs</h5>
+          <h5 class="card-title" style="color: #1a3258">Guard Activity Logs</h5>
           <div class="row col-12">
               <div class="table-responsive">
                   <table class="table table-hover">
