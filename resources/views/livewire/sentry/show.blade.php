@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="{{ asset(mix('css/base/pages/app-user.css')) }}">
 @endsection
 
+
 @section('content')
     @php
         use Carbon\Carbon;
@@ -161,7 +162,7 @@
 
 
 
-  <div class="card col-11">
+  <div class="card col-9">
       <div class="card-body">
           <h5 class="card-title" style="color: #1f8af5">Guard Activity Logs</h5>
           <div class="row col-12">
@@ -186,8 +187,10 @@
                       @endforelse
                       </tbody>
                   </table>
-                  <div class="d-flex justify-content-center">
-                      {{ $activities->links() }}
+                  <div style="margin-left: 5%" class="mt-1">
+              {{ $activities->links('pagination::bootstrap-4') }}
+
+
                   </div>
               </div>
           </div>
@@ -241,7 +244,7 @@
 
 
 <div class="d-flex flex-wrap">
-     <a href="{{url('/users/sentries')}}" style="margin-left: 65%;" class="btn btn-primary"> Back </a>
+     <a href="{{url('/users/sentries')}}" style="margin-left: 85%;" class="btn btn-primary"> Back </a>
 </div>
 
 
@@ -255,3 +258,7 @@
 @endsection
 
 
+@section('vendor-script')
+{{-- vendor files --}}
+<script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
+@endsection
