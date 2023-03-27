@@ -107,7 +107,7 @@
                                         <!-- delete link -->
                                         <?php if($user->status == '0'){ ?>
                                 
-                                         <a wire:ignore.self href="#" wire:click="activate({{ $user->id }})" onclick="return confirm('Are you sure to want to Activate the User?') || event.stopImmediatePropagation();" style="padding-right:20px;">Activate</a>
+                                         <a  href="#" wire:click="activate({{ $user->id }})" onclick="return confirm('Are you sure to want to Activate the User?') || event.stopImmediatePropagation();" style="padding-right:20px;">Activate</a>
                                         <?php }else{ ?>
                                         <a wire:ignore.self href="#" wire:click="deactivate({{ $user->id }})"  onclick="return confirm('Are you sure to want to suspend the User?')" style="padding-right:20px; " > Suspend</i> </a>
                                         <?php } ?>
