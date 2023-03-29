@@ -43,17 +43,17 @@ class Dashboard extends Component
 
         $searchTerm = '%' . $this->search . '%';
 
-        $organization = Organization::withCount('user')
-    
+        $organization = Organization::withCount('user')->orderBy('organizations.id', 'desc')
+
             ->whereLike(['name', 'email' ,'primary_phone','location'], $searchTerm)
-                
+
         ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
             ->paginate($this->perPage);
         return view('livewire.organization.dashboard', ['organization' => $organization]);
     }
 
 
- 
+
     private function resetInput()
     {
         $this->name = null;
@@ -77,7 +77,7 @@ class Dashboard extends Component
             'location' => 'required',
 
         ]);
-    
+
         $code = Str::random(20);
 
         $organization = new Organization;
@@ -107,7 +107,7 @@ class Dashboard extends Component
 
     public function editOrganization($id)
     {
-        
+
         $organization  = Organization::where('id', $id)->first();
 
         $this->organization_edit_id = $id;
@@ -124,17 +124,17 @@ class Dashboard extends Component
 
         $this->websiteUrl = $organization->websiteUrl;
 
-        $this->description = $organization->description; 
+        $this->description = $organization->description;
 
         $this->dispatchBrowserEvent('show-edit-org-modal');
     }
 
     public function editOrganizationData()
     {
-  
+
 
         $organization  = Organization::where('id', $this->organization_edit_id)->first();
-   
+
         $organization ->name = $this->name;
         $organization->location = $this->location;
         $organization->email = $this->email;
@@ -159,7 +159,7 @@ class Dashboard extends Component
 
     public function activate($id)
     {
-       
+
        Organization::whereId($id)->update(
           ['status' => "1"]
        );
@@ -168,7 +168,7 @@ class Dashboard extends Component
 
     public function deactivate($id)
     {
-       
+
        Organization::whereId($id)->update(
           ['status' => "0"]
        );
