@@ -154,7 +154,10 @@ class SentryController extends Controller
         $organization = Organization::where('status', 1)->where('code', $premises->organization_code)->first();
         $device= Device::where('sentry_id', $sentry->id)->first();
 
-        $activities=Activity::where('name',$sentry->name )->paginate(10);
+        $activities = Activity::where('name', $sentry->name)->paginate(10);
+        $activities->appends(request()->query());
+        $activities->links('pagination::bootstrap-4');
+
         return view('livewire.sentry.show', compact('sentry', 'device', 'premises','activities', 'organization', 'visitors'));
     }
 
