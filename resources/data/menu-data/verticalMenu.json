@@ -135,5 +135,93 @@
             "icon": "spatial_tracking",
             "slug": "activity"
         }
+    ],
+
+    "staffmenu": [
+        {
+            "navheader": "Dashboard",
+            "slug": ""
+        },
+        {
+            "url": "dashboard",
+            "name": "Dashboard",
+            "icon": "home",
+            "slug": "dashboard"
+        },
+        {
+            "navheader": "Logs",
+            "slug": ""
+        },
+        {
+            "url": "Visits/AllCheckIn",
+            "name": "All Check-ins",
+            "icon": "people",
+            "slug": "VisitAllCheckIn"
+        },
+        {
+            "url": "Visits/DriveIn",
+            "name": "Driver-ins",
+            "icon": "emoji_transportation",
+            "slug": "VisitDriveIn"
+        },
+        {
+            "url": "Visits/WalkIn",
+            "name": "Walks-ins",
+            "icon": "directions_walk",
+            "slug": "VisitWalkIn"
+        },
+        {
+            "url": "Visits/SMSCheckIn",
+            "name": "SMS Check-ins",
+            "icon": "SMS",
+            "slug": "VisitSMSCheckIn"
+        },
+        {
+            "url": "Visits/IDCheckIn",
+            "name": "Verified ID Check-ins",
+            "icon": "badge",
+            "slug": "VisitIDCheckIn"
+        },
+        {
+            "url": "Visits/IPassCheckIn",
+            "name": "IPass Check-ins",
+            "icon": "QR_CODE",
+            "slug": "VisitIPassCheckIn"
+        },
+        {
+            "navheader": "User Interface",
+            "slug": ""
+        },
+        {
+            "url": "organization/users",
+            "name": "Users",
+            "icon": "group",
+            "slug": "OrganizationUsers"
+        },
+        {
+            "url": "users/sentries",
+            "name": "Guards",
+            "icon": "person_pin",
+            "slug": "Sentry"
+        },
+        {
+            "navheader": "Others",
+            "slug": ""
+        },
+        {
+            "url": "shifts",
+            "name": "Shifts",
+            "icon": "track_changes",
+            "slug": "shifts"
+        },
+
+        {
+            "url": "logs/activities",
+            "name": "Logs",
+            "icon": "spatial_tracking",
+            "slug": "activity"
+        }
     ]
 }
+
+

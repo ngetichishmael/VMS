@@ -6,6 +6,7 @@ use App\Models\DriveIn;
 use App\Models\Visitor;
 use App\Models\VisitorType;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -45,40 +46,85 @@ class Dashboard extends Component
     }
     public function applyTimeFilter()
     {
-        $searchTerm = '%' . $this->search . '%';
-        $this->resetPage();
+        $user = Auth::user();
+        $userAccountType = $user->role_id;
+        if ($userAccountType===1) {
+            $searchTerm = '%' . $this->search . '%';
+            $this->resetPage();
 
-        $this->visitors = DriveIn::with( ['vehicle', 'timeLogs', 'resident.unit.block.premise.organization'] )
-            ->orderBy('visitors.id', 'desc')
-            ->whereIn('visitors.id', function ($query) {
-                $query->select(DB::raw('MAX(visitors.id)'))
-                    ->from('visitors')
-                    ->groupBy('user_detail_id');
-            })
-            ->when($this->visitorTypeId, function ($query) {
-                $query->where('visitor_type_id', $this->visitorTypeId);
-            })
-            ->when($this->checkinType, function ($query) {
-                $query->where('type', $this->checkinType);
-            })
-            ->when($this->timeFilter != 'all', function ($query) {
-                $query->whereHas('timeLogs', function ($subQuery) {
-                    if ($this->timeFilter == 'daily') {
-                        $subQuery->whereDate('entry_time', Carbon::now()->toDateString());
-                    } else if ($this->timeFilter == 'weekly') {
-                        $subQuery->whereBetween('entry_time', [
-                            Carbon::now()->startOfWeek()->toDateTimeString(),
-                            Carbon::now()->endOfWeek()->toDateTimeString(),
-                        ]);
-                    } else if ($this->timeFilter == 'monthly') {
-                        $subQuery->whereYear('entry_time', Carbon::now()->year)
-                            ->whereMonth('entry_time', Carbon::now()->month);
-                    }
-                });
-            })
-            ->search($this->search)
-            ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
-            ->paginate($this->perPage);
+            $this->visitors = DriveIn::with(['vehicle', 'timeLogs', 'resident.unit.block.premise.organization'])
+                ->orderBy('visitors.id', 'desc')
+                ->whereIn('visitors.id', function ($query) {
+                    $query->select(DB::raw('MAX(visitors.id)'))
+                        ->from('visitors')
+                        ->groupBy('user_detail_id');
+                })
+                ->when($this->visitorTypeId, function ($query) {
+                    $query->where('visitor_type_id', $this->visitorTypeId);
+                })
+                ->when($this->checkinType, function ($query) {
+                    $query->where('type', $this->checkinType);
+                })
+                ->when($this->timeFilter != 'all', function ($query) {
+                    $query->whereHas('timeLogs', function ($subQuery) {
+                        if ($this->timeFilter == 'daily') {
+                            $subQuery->whereDate('entry_time', Carbon::now()->toDateString());
+                        } else if ($this->timeFilter == 'weekly') {
+                            $subQuery->whereBetween('entry_time', [
+                                Carbon::now()->startOfWeek()->toDateTimeString(),
+                                Carbon::now()->endOfWeek()->toDateTimeString(),
+                            ]);
+                        } else if ($this->timeFilter == 'monthly') {
+                            $subQuery->whereYear('entry_time', Carbon::now()->year)
+                                ->whereMonth('entry_time', Carbon::now()->month);
+                        }
+                    });
+                })
+                ->search($this->search)
+                ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+                ->paginate($this->perPage);
+
+        }
+        elseif($userAccountType==2){
+            $organization_code = Auth::user()->organization_code;
+            $searchTerm = '%' . $this->search . '%';
+            $this->resetPage();
+            $this->visitors = DriveIn::with(['vehicle', 'timeLogs', 'resident.unit.block.premise.organization'])
+                ->join('sentries', 'visitors.sentry_id', '=', 'sentries.id')
+                ->join('premises', 'sentries.premise_id', '=', 'premises.id')
+                ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+                ->where('organizations.code', $organization_code)
+                ->orderBy('visitors.id', 'desc')
+                ->whereIn('visitors.id', function ($query) {
+                    $query->select(DB::raw('MAX(visitors.id)'))
+                        ->from('visitors')
+                        ->groupBy('visitors.user_detail_id');
+                })
+                ->when($this->visitorTypeId, function ($query) {
+                    $query->where('visitor_type_id', $this->visitorTypeId);
+                })
+                ->when($this->checkinType, function ($query) {
+                    $query->where('type', $this->checkinType);
+                })
+                ->when($this->timeFilter != 'all', function ($query) {
+                    $query->whereHas('timeLogs', function ($subQuery) {
+                        if ($this->timeFilter == 'daily') {
+                            $subQuery->whereDate('entry_time', Carbon::now()->toDateString());
+                        } else if ($this->timeFilter == 'weekly') {
+                            $subQuery->whereBetween('entry_time', [
+                                Carbon::now()->startOfWeek()->toDateTimeString(),
+                                Carbon::now()->endOfWeek()->toDateTimeString(),
+                            ]);
+                        } else if ($this->timeFilter == 'monthly') {
+                            $subQuery->whereYear('entry_time', Carbon::now()->year)
+                                ->whereMonth('entry_time', Carbon::now()->month);
+                        }
+                    });
+                })
+                ->search($this->search)
+                ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+                ->paginate($this->perPage);
+        }
     }
     public function render()
     {

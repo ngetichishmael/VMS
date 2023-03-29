@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Organization;
 
 use App\Models\User;
 use App\Models\Organization;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Str;
@@ -41,15 +42,15 @@ class Dashboard extends Component
     public function render()
     {
 
-        $searchTerm = '%' . $this->search . '%';
 
-        $organization = Organization::withCount('user')->orderBy('organizations.id', 'desc')
+            $searchTerm = '%' . $this->search . '%';
 
-            ->whereLike(['name', 'email' ,'primary_phone','location'], $searchTerm)
+            $organization = Organization::withCount('user')->orderBy('organizations.id', 'desc')
+                ->whereLike(['name', 'email', 'primary_phone', 'location'], $searchTerm)
+                ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+                ->paginate($this->perPage);
+            return view('livewire.organization.dashboard', ['organization' => $organization]);
 
-        ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
-            ->paginate($this->perPage);
-        return view('livewire.organization.dashboard', ['organization' => $organization]);
     }
 
 

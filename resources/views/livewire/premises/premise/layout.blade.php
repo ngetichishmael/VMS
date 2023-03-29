@@ -9,11 +9,19 @@
 @endsection
 
 @section('content')
-    <!-- Dashboard Ecommerce Starts -->
-    @livewire('premises.premise.dashboard')
-    <!-- Dashboard Ecommerce ends -->
-
-    
+    @if(Auth::check() && Auth::user()->role_id == 1)
+        <!-- Dashboard Ecommerce Starts -->
+        @livewire('premises.premise.dashboard')
+        <!-- Dashboard Ecommerce ends -->
+    @else
+        <div class="card">
+            <div class="pt-0 card-datatable table-responsive">
+                <div class="card-datatable table-responsive">
+                    <p style="font-size: large; color: orangered; padding-left: 40%" >"Unauthorized to access this page !!!!...."</p>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
 
 @section('vendor-script')

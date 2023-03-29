@@ -88,7 +88,7 @@ class DriveIn extends Model
     public function scopeSearch($query, $searchTerm)
     {
         return $query->where(function ($q) use ($searchTerm) {
-            $q->orWhere('name', 'like', '%'.$searchTerm.'%')
+            $q->orWhere('visitors.name', 'like', '%'.$searchTerm.'%')
                 ->orWhereHas('vehicle', function ($subQuery) use ($searchTerm) {
                     $subQuery->where('registration', 'like', '%'.$searchTerm.'%');
                 })
@@ -97,7 +97,7 @@ class DriveIn extends Model
                         $subSubQuery->whereHas('block', function ($subSubSubQuery) use ($searchTerm) {
                             $subSubSubQuery->whereHas('premise', function ($subSubSubSubQuery) use ($searchTerm) {
                                 $subSubSubSubQuery->whereHas('organization', function ($subSubSubSubSubQuery) use ($searchTerm) {
-                                    $subSubSubSubSubQuery->where('name', 'like', '%'.$searchTerm.'%');
+                                    $subSubSubSubSubQuery->where('resident.name', 'like', '%'.$searchTerm.'%');
                                 });
                             });
                         });
