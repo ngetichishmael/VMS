@@ -17,15 +17,15 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         //
     ];
-    public function handle($request, Closure $next)
-    {
-        $user=Auth::user()->token;
-        session(['token' => $user]);
-        if (! $request->session()->exists('user') || $request->session()->has('user')) {
-            return $next($request);
-        }
-        return redirect('/login');
-    }
+//    public function handle($request, Closure $next)
+//    {
+//        $user=Auth::user()->token;
+//        session(['token' => $user]);
+//        if (! $request->session()->exists('user') || $request->session()->has('user')) {
+//            return $next($request);
+//        }
+//        return redirect('/login');
+//    }
 
 
 }

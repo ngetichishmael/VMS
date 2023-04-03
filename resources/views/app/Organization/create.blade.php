@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
 @endsection
 @section('content')
+    @if(Auth::check() && Auth::user()->role_id == 1)
 <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
     <div class="modal-dialog">
         <form class="add-new-user modal-content pt-0" method="POST" action="{{ route('OrganizationInformation.store') }}">
@@ -59,6 +60,15 @@
         </form>
     </div>
 </div>
+    @else
+        <div class="card">
+            <div class="pt-0 card-datatable table-responsive">
+                <div class="card-datatable table-responsive">
+                    <p style="font-size: large; color: orangered; padding-left: 40%" >"Unauthorized to access this page !!!!...."</p>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
 
 @section('vendor-script')

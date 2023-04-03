@@ -90,10 +90,6 @@ class Dashboard extends Component
             $searchTerm = '%' . $this->search . '%';
             $this->resetPage();
             $this->visitors = DriveIn::with(['vehicle', 'timeLogs', 'resident.unit.block.premise.organization'])
-                ->join('sentries', 'visitors.sentry_id', '=', 'sentries.id')
-                ->join('premises', 'sentries.premise_id', '=', 'premises.id')
-                ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
-                ->where('organizations.code', $organization_code)
                 ->orderBy('visitors.id', 'desc')
                 ->whereIn('visitors.id', function ($query) {
                     $query->select(DB::raw('MAX(visitors.id)'))
@@ -121,9 +117,13 @@ class Dashboard extends Component
                         }
                     });
                 })
+                ->whereHas('resident.unit.block.premise.organization', function ($query) use ($organization_code) {
+                    $query->where('code', $organization_code);
+                })
                 ->search($this->search)
                 ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
                 ->paginate($this->perPage);
+
         }
     }
     public function render()

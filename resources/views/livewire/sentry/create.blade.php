@@ -19,6 +19,7 @@
 @endsection
 
 @section('content')
+    @if(Auth::check() && Auth::user()->role_id == 1)
     <div class="row" style="padding-left: 5%" >
         <div class="col-md-8">
             <div class="card">
@@ -113,6 +114,15 @@
                 <a href="{{ route('VisitDriveIn') }}" type="reset" style="margin-left: 85%;background: #73b2ef; color: #ffffff"
                    class="btn btn-btn-secondary">  Back </a>
             </div> -->
+        @else
+            <div class="card">
+                <div class="pt-0 card-datatable table-responsive">
+                    <div class="card-datatable table-responsive">
+                        <p style="font-size: large; color: orangered; padding-left: 40%" >"Unauthorized to access this page !!!!...."</p>
+                    </div>
+                </div>
+            </div>
+        @endif
 
 
 @endsection

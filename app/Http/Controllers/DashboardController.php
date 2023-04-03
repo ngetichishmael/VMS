@@ -703,11 +703,9 @@ class DashboardController extends Controller
     }
     public function store(Request $request)
     {
-
-
         $exists = UserCode::where('user_id', $request->user()->id)
             ->where('code', $request->otp)
-            ->where('updated_at', '>=', now()->subMinutes(5))
+            ->where('updated_at', '>=', now()->subMinutes(10))
             ->latest('updated_at')
             ->exists();
         if ($exists) {
@@ -722,8 +720,12 @@ class DashboardController extends Controller
             );
             return redirect()->to('/dashboard');
         }
-        throw ValidationException::withMessages([
-            'otp' => "Invalid OTP",
-        ]);
+        try {
+            throw ValidationException::withMessages([
+                'otp' => "Invalid OTP",
+            ]);
+        } catch (ValidationException $e) {
+            dd($e->getMessage());
+        }
     }
 }

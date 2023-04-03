@@ -97,7 +97,7 @@ class DriveIn extends Model
                         $subSubQuery->whereHas('block', function ($subSubSubQuery) use ($searchTerm) {
                             $subSubSubQuery->whereHas('premise', function ($subSubSubSubQuery) use ($searchTerm) {
                                 $subSubSubSubQuery->whereHas('organization', function ($subSubSubSubSubQuery) use ($searchTerm) {
-                                    $subSubSubSubSubQuery->where('resident.name', 'like', '%'.$searchTerm.'%');
+                                    $subSubSubSubSubQuery->where('name', 'like', '%'.$searchTerm.'%');
                                 });
                             });
                         });

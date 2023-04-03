@@ -36,11 +36,13 @@
             </div>
 
             <div class="col-md-2">
+                @if(Auth::check() && Auth::user()->role_id == 1)
                 <button type="button" class="btn btn-icon btn-outline-success" data-toggle="modal"
                     style="background-color: #1a3258; color:#fff;" id="smallButton" data-target="#modals-slide-in"
 
                     data-placement="top">+ Add New Sentry
                 </button>
+                @endif
             </div>
         </div>
     </div>
@@ -63,7 +65,9 @@
                             <th>Shift</th>
                             <th>Last Login</th>
                             <th>Status</th>
+                            @if(Auth::check() && Auth::user()->role_id == 1)
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -86,7 +90,7 @@
                                       <?php } ?>
 
                                     </td>
-
+                                @if(Auth::check() && Auth::user()->role_id == 1)
                                 <td>
                                     <div class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -120,6 +124,7 @@
                                         </div>
                                     </div>
                                 </td>
+                                @endif
                             </tr>
 
                         @empty

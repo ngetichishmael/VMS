@@ -24,6 +24,7 @@
 @endsection
 
 @section('content')
+    @if(Auth::check() && Auth::user()->role_id == 1)
     <section id="page-account-settings">
             @if (session('status'))
                 <div class="col-md-6 col-xl-12">
@@ -87,7 +88,7 @@
                                 <!-- form -->
                                 <form class="validate-form" action="" method="POST">
                                     @csrf
-                                 
+
                                     <div class="row">
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
@@ -182,7 +183,7 @@
 
                                         <div class="col-12">
                                         <button type="submit" class="btn btn-primary mr-1 mt-1">Update</button>
-                     
+
                                         <a href="{{ route('OrganizationUsers') }}" type="reset" class="btn btn-outline-secondary mt-1">Cancel</a>
                                     </div>
 
@@ -200,6 +201,15 @@
             <!--/ right content section -->
         </div>
     </section>
+    @else
+        <div class="card">
+            <div class="pt-0 card-datatable table-responsive">
+                <div class="card-datatable table-responsive">
+                    <p style="font-size: large; color: orangered; padding-left: 40%" >"Unauthorized to access this page !!!!...."</p>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
 
 

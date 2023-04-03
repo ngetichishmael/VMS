@@ -11,7 +11,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Resident Name</th>
+                            <th>Host Name</th>
                             <th>ID Number</th>
                             <th>Time In</th>
                             <th>Time Out</th>
@@ -70,7 +70,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Resident Name</th>
+                            <th>Host Name</th>
                             <th>ID Number</th>
                             <th>Time In</th>
                             <th>Time Out</th>
@@ -128,7 +128,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Resident Name</th>
+                            <th>Host Name</th>
                             <th>ID Number</th>
                             <th>Time In</th>
                             <th>Time Out</th>
@@ -184,7 +184,7 @@
                     <thead>
                         <tr>
                             <th>Phone</th>
-                            <th>Resident Name</th>
+                            <th>Host Name</th>
                             <th>ID Number</th>
                             <th>Time In</th>
                             <th>Time Out</th>
@@ -241,7 +241,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Resident Name</th>
+                            <th>Host Name</th>
                             <th>ID Number</th>
                             <th>Time In</th>
                             <th>Time Out</th>
@@ -300,7 +300,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Resident Name</th>
+                            <th>Host Name</th>
                             <th>ID Number</th>
                             <th>Time In</th>
                             <th>Time Out</th>

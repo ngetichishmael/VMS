@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\User;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Organization;
@@ -37,30 +38,54 @@ class Dashboard extends Component
     {
 
         $searchTerm = '%' . $this->search . '%';
+        $user = Auth::user();
+        $userAccountType = $user->role_id;
+        if ($userAccountType === 1) {
+            $users = User::whereIn('role_id', [1, 2])->with('organization', 'role')
+                ->when($this->organizationId, function ($query) {
+                    $query->where('organization_code', $this->organizationId);
+                })
+                ->when($this->roleId, function ($query) {
+                    $query->where('role_id', $this->roleId);
+                })
+                ->whereLike(['name', 'organization.name', 'role.name'], $searchTerm)
+                ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
+                ->paginate($this->perPage);
 
-        $users = User::whereIn('role_id',[1,2])->with('organization','role')
-            ->when($this->organizationId, function ($query) {
-                $query->where('organization_code', $this->organizationId);
-            })
-            ->when($this->roleId, function ($query) {
-                $query->where('role_id', $this->roleId);
-            })
-            ->whereLike(['name','organization.name','role.name'], $searchTerm)
-            ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
-            ->paginate($this->perPage);
+            $organizations = Organization::where('status', 1)->get();
 
-        $organizations = Organization::where('status', 1) ->get();
+            $roles = Role::all();
 
-        $roles = Role::all();
+            return view('livewire.user.dashboard', [
+                'users' => $users,
+                'organizations' => $organizations,
+                'roles' => $roles,
+            ]);
+        } elseif ($userAccountType == 2) {
+            $organization_code = Auth::user()->organization_code;
+            $users = User::whereIn('role_id', [1, 2])->with('organization', 'role')
+                ->when($this->organizationId, function ($query) {
+                    $query->where('organization_code', $this->organizationId);
+                })
+                ->when($this->roleId, function ($query) {
+                    $query->where('role_id', $this->roleId);
+                })
+                ->where('organization_code', $organization_code)
+                ->whereLike(['name', 'organization.name', 'role.name'], $searchTerm)
+                ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
+                ->paginate($this->perPage);
 
+            $organizations = Organization::where('status', 1)->get();
 
-        return view('livewire.user.dashboard', [
-            'users' => $users,
-             'organizations' => $organizations,
-             'roles' => $roles,
-        ]);
+            $roles = Role::all();
+
+            return view('livewire.user.dashboard', [
+                'users' => $users,
+                'organizations' => $organizations,
+                'roles' => $roles,
+            ]);
+        }
     }
-
     private function resetInput()
     {
         $this->name = null;
