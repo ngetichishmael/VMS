@@ -62,7 +62,7 @@ class Visitor extends Model
     }
     public function resident(): BelongsTo
     {
-        return $this->belongsTo(Resident::class, 'id', 'resident_id');
+        return $this->belongsTo(Resident::class,  'resident_id', 'id');
     }
     public function resident2(): BelongsTo
     {

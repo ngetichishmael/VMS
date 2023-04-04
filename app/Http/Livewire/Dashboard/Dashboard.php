@@ -40,25 +40,25 @@ class Dashboard extends Component
         }
         elseif ($userAccountType===2) {
             $organization_code = Auth::user()->organization_code;
-            $allTypes = DriveIn::whereHas('resident.unit.block.premise.organization', function ($query) use ($organization_code) {
+            $allTypes = Visitor::whereHas('resident.unit.block.premise.organization', function ($query) use ($organization_code) {
                 $query->where('code', $organization_code);
             })->orderBy('id', 'desc')->paginate($this->perPageAll);
-            $WalkIn = WalkIn::select("*")->where('type', 'WalkIn')
+            $WalkIn = Visitor::select("*")->where('type', 'WalkIn')
                 ->whereHas('resident.unit.block.premise.organization', function ($query) use ($organization_code) {
                     $query->where('code', $organization_code);
                 })
                 ->orderBy('id', 'desc')->paginate($this->perPageWalkInAll);
-            $DriveIn =DriveIn::select("*")->where('type', 'DriveIn')
+            $DriveIn =Visitor::select("*")->where('type', 'DriveIn')
                 ->whereHas('resident.unit.block.premise.organization', function ($query) use ($organization_code) {
                     $query->where('code', $organization_code);
                 })
                 ->orderBy('id', 'desc')->paginate($this->perPageDriveInAll);
-            $Sms = DriveIn::select("*")->where('type', 'Sms')
+            $Sms = Visitor::select("*")->where('type', 'Sms')
                 ->whereHas('resident.unit.block.premise.organization', function ($query) use ($organization_code) {
                     $query->where('code', $organization_code);
                 })
                 ->orderBy('id', 'desc')->paginate($this->perPageSmsAll);
-            $Id = DriveIn::select("*")->where('type', 'ID')
+            $Id = Visitor::select("*")->where('type', 'ID')
                 ->whereHas('resident.unit.block.premise.organization', function ($query) use ($organization_code) {
                     $query->where('code', $organization_code);
                 })

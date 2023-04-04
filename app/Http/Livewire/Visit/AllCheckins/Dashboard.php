@@ -46,12 +46,11 @@ class Dashboard extends Component
     }
     public function applyTimeFilter()
     {
+        $searchTerm = '%' . $this->search . '%';
+        $this->resetPage();
         $user = Auth::user();
         $userAccountType = $user->role_id;
         if ($userAccountType===1) {
-            $searchTerm = '%' . $this->search . '%';
-            $this->resetPage();
-
             $this->visitors = DriveIn::with(['vehicle', 'timeLogs', 'resident.unit.block.premise.organization'])
                 ->orderBy('visitors.id', 'desc')
                 ->whereIn('visitors.id', function ($query) {

@@ -86,7 +86,7 @@
                                     <hr style="color: #bebbbb" />
                                     <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
                                         @php
-                                            $percentChange = $totalLastWeekVisit > 0 ? ($totalThisWeek - $totalLastWeekVisit) / $totalLastWeekVisit * 100: 100;
+                                            $percentChange = $totalLastWeekVisit > 0 ? ($totalThisWeek - $totalLastWeekVisit) / $totalLastWeekVisit * 100: 0;
                                             $percentChange = number_format($percentChange, 1);
                                             $color = $percentChange > 0 ? 'green' : 'orange';
                                             $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
@@ -762,11 +762,11 @@
                 <div class="col-xl-6 col-12">
                     <div class="card">
                         <div class="card-header font-small-3">
-                            <h6>{!! ucwords("Organizations with the Highest Monthly Visits") !!}</h6>
+                            <h6>{!! ucwords("Premises with the Highest Monthly Visits") !!}</h6>
                             <div class="card-text font-small-3 col-12" >
-                                @foreach($organizations as $organization)
+                                @foreach($premises as $premise)
                                     <div class="card-text font-small-3">
-                                        <i class="fa fa-building"><span>{!! $organization->name !!}</span><span> Visits: {!! $organization->visitor_count !!}</span></i>
+                                        <i class="fa fa-building"><span>{!! $premise->name !!}</span><span> Visits: {!! $organization->visitor_count !!}</span></i>
                                     </div>
                                 @endforeach
                             </div>
