@@ -766,7 +766,7 @@
                             <div class="card-text font-small-3 col-12" >
                                 @foreach($premises as $premise)
                                     <div class="card-text font-small-3">
-                                        <i class="fa fa-building"><span>{!! $premise->name !!}</span><span> Visits: {!! $organization->visitor_count !!}</span></i>
+                                        <i class="fa fa-building"><span>{!! $premise->name !!}</span><span> Visits: {!! $premise->visitor_count !!}</span></i>
                                     </div>
                                 @endforeach
                             </div>

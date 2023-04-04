@@ -389,83 +389,185 @@ class DashboardController extends Controller
             ->whereHas('visitor.resident.unit.block.premise.organization', function ($query) use ($organization_code) {
                 $query->where('code', $organization_code);
             })->count();
-        $totalWeekVisit = TimeLog::whereBetween('entry_time', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
-        $totalLastWeekVisit = TimeLog::whereBetween('entry_time', [Carbon::now()->subWeek(1), Carbon::now()->startOfWeek()])->count();
-        $totalVehicleVisit = VehicleInformation::whereBetween('updated_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
-        $totalLastVehicleVisit = VehicleInformation::whereBetween('updated_at', [Carbon::now()->subWeek(1), Carbon::now()->startOfWeek()])->count();
-        $totalLastWeekVisit = TimeLog::whereBetween('entry_time', [Carbon::now()->subWeek(1), Carbon::now()->startOfWeek()])->count();
-        $totalMaleLastWeek = UserDetail::where('gender', 'male')->whereBetween('updated_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
-        $totalFemaleLastWeek = UserDetail::where('gender', 'female')->whereBetween('updated_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
+        $totalWeekVisit = TimeLog::whereBetween('entry_time', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->whereHas('visitor.resident.unit.block.premise.organization', function ($query) use ($organization_code) {
+                $query->where('code', $organization_code);
+            })->count();
+        $totalLastWeekVisit = TimeLog::whereBetween('entry_time', [Carbon::now()->subWeek(1), Carbon::now()->startOfWeek()])
+            ->whereHas('visitor.resident.unit.block.premise.organization', function ($query) use ($organization_code) {
+                $query->where('code', $organization_code);
+            })->count();
+        $totalVehicleVisit = VehicleInformation::whereBetween('updated_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->whereHas('visitor.resident.unit.block.premise.organization', function ($query) use ($organization_code) {
+                $query->where('code', $organization_code);
+            })->count();
+        $totalLastVehicleVisit = VehicleInformation::whereBetween('updated_at', [Carbon::now()->subWeek(1), Carbon::now()->startOfWeek()])
+            ->whereHas('visitor.resident.unit.block.premise.organization', function ($query) use ($organization_code) {
+                $query->where('code', $organization_code);
+            })->count();
+        $totalLastWeekVisit = TimeLog::whereBetween('entry_time', [Carbon::now()->subWeek(1), Carbon::now()->startOfWeek()])
+            ->whereHas('visitor.resident.unit.block.premise.organization', function ($query) use ($organization_code) {
+                $query->where('code', $organization_code);
+            })->count();
+        $totalMaleLastWeek = UserDetail::join('visitors', 'user_details.id', '=', 'visitors.user_detail_id')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('organizations.code', $organization_code)
+            ->where('user_details.gender', 'male')
+            ->whereBetween('user_details.updated_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->count();
+        $totalFemaleLastWeek = UserDetail::join('visitors', 'user_details.id', '=', 'visitors.user_detail_id')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('organizations.code', $organization_code)
+            ->where('user_details.gender', 'female')
+            ->whereBetween('user_details.updated_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->count();
+//        $totalFemaleLastWeek = UserDetail::where('gender', 'female')->whereBetween('updated_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
         $weekStartDate = Carbon::now()->startOfWeek();
         $weekEndDate = Carbon::now()->endOfWeek();
 
-        $driveinThisWeek = DB::table('visitors')->where('type', '=', 'DriveIn')
-            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
-            ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
-            ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
-            ->count();
+        $driveinThisWeek = Visitor::where('type', '=', 'DriveIn')
+            ->whereHas('timeLogs', function ($query) use ($weekStartDate, $weekEndDate) {
+                $query->whereBetween('entry_time', [$weekStartDate, $weekEndDate]);
+            })
+            ->whereHas('resident.unit.block.premise.organization', function ($query) {
+                $query->where('code', Auth::user()->organization_code);
+            })->count();
         $driveinLastWeek = DB::table('visitors')
             ->where('type', '=', 'DriveIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('organizations.code', $organization_code)
             ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
-            ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->count();
-
-        $smsThisWeek = DB::table('visitors')->where('type', '=', 'SMS')
+        $smsThisWeek = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
-            ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
-            ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('visitors.type', '=', 'SMS')
+            ->whereBetween('time_logs.entry_time', [$weekStartDate, $weekEndDate])
+            ->orWhereBetween('time_logs.exit_time', [$weekStartDate, $weekEndDate])
+            ->where('organizations.code', '=', $organization_code)
             ->count();
         $smsLastWeek = DB::table('visitors')
-            ->where('type', '=', 'SMS')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
-            ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
-            ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('organizations.code', $organization_code)
+            ->where('visitors.type', '=', 'SMS')
+            ->where(function($query) {
+                $query->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()]);
+            })
             ->count();
-        $walkinThisWeek = DB::table('visitors')->where('type', '=', 'WalkIn')
+        $walkinThisWeek = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('visitors.type', '=', 'WalkIn')
+            ->where('organizations.code', '=', $organization_code)
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
-            ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
         $walkinLastWeek = DB::table('visitors')
+            ->select('visitors.*')
+            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
             ->where('type', '=', 'WalkIn')
-            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->where('organizations.code', '=', $organization_code)
             ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
-            ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->count();
-        $ipassThisWeek = DB::table('visitors')->where('type', '=', 'iPass')
+        $ipassThisWeek = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
-            ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
-            ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('visitors.type', '=', 'iPass')
+            ->whereBetween('time_logs.entry_time', [$weekStartDate, $weekEndDate])
+            ->where('organizations.code', '=', $organization_code)
             ->count();
         $ipassLastWeek = DB::table('visitors')
             ->where('type', '=', 'iPass')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('organizations.code', '=', $organization_code)
             ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
-            ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->count();
 
-        $idThisWeek = DB::table('visitors')->where('type', '=', 'ID')
+        $idThisWeek = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('visitors.type', '=', 'ID')
+            ->where('organizations.code', '=', $organization_code)
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
-            ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
             ->count();
+
         $idLastWeek = DB::table('visitors')
             ->where('type', '=', 'ID')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('organizations.code', '=', $organization_code)
             ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
-            ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->count();
+
         $today = Carbon::today();
         $maleCount = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('user_details', 'visitors.user_detail_id', '=', 'user_details.id')
-            ->where('user_details.gender', '=', 'female')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('organizations.code', '=', $organization_code)
+            ->where('user_details.gender', '=', 'male')
             ->whereDate('time_logs.entry_time', '=', $today)
             ->count();
         $femaleCount = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('user_details', 'visitors.user_detail_id', '=', 'user_details.id')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('organizations.code', $organization_code)
             ->where('user_details.gender', '=', 'female')
             ->whereDate('time_logs.entry_time', '=', $today)
             ->count();
@@ -481,13 +583,26 @@ class DashboardController extends Controller
         $femaleMonthlyVisitorCount = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('user_details', 'visitors.user_detail_id', '=', 'user_details.id')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
             ->where('user_details.gender', '=', 'Female')
             ->whereMonth('time_logs.entry_time', Carbon::now()->month)
+            ->where('organizations.code', '=', $organization_code)
             ->count();
+
         $maleMonthlyVisitorCount = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('user_details', 'visitors.user_detail_id', '=', 'user_details.id')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
             ->where('user_details.gender', '=', 'Male')
+            ->where('organizations.code', $organization_code)
             ->whereMonth('time_logs.entry_time', Carbon::now()->month)
             ->count();
 
@@ -499,6 +614,12 @@ class DashboardController extends Controller
         )
             ->join('visitors', 'user_details.id', '=', 'visitors.user_detail_id')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('organizations.code', $organization_code)
             ->whereRaw("time_logs.entry_time >= DATE_SUB(CURRENT_DATE, INTERVAL 2 MONTH)")
             ->groupBy('year', 'month', 'user_details.gender')
             ->get();
@@ -535,13 +656,21 @@ class DashboardController extends Controller
                 ]
             ]
         ];
-        $monthlyData = DB::table('user_details')
-            ->selectRaw('COUNT(*) as count, FLOOR(DATEDIFF(NOW(), date_of_birth)/365.25) - 18 as age')
-            ->whereRaw('date_of_birth IS NOT NULL')
-            ->whereRaw('created_at >= DATE_SUB(NOW(), INTERVAL 7 YEAR)')
+        $monthlyData = DB::table('visitors')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->join('user_details', 'visitors.user_detail_id', '=', 'user_details.id')
+            ->selectRaw('COUNT(*) as count, FLOOR(DATEDIFF(NOW(), user_details.date_of_birth)/365.25) - 18 as age')
+            ->whereRaw('user_details.date_of_birth IS NOT NULL')
+            ->whereRaw('user_details.created_at >= DATE_SUB(NOW(), INTERVAL 7 YEAR)')
+            ->where('organizations.code', '=', $organization_code)
             ->groupBy('age')
             ->orderBy('age')
             ->get();
+
 
         $labels = $monthlyData->pluck('age');
         $data = $monthlyData->pluck('count');
@@ -564,15 +693,45 @@ class DashboardController extends Controller
             ]
         ];
         $vlabels = TimeLog::whereYear('entry_time', date('Y'))
-            ->select(DB::raw("MONTH(entry_time) as month_name"))->get();
+            ->whereHas('visitor.resident.unit.block.premise.organization', function ($query) use ($organization_code) {
+                $query->where('code', $organization_code);
+            })
+            ->select(DB::raw("MONTH(entry_time) as month_name"))
+            ->get();
 
-        $vdata = TimeLog::whereYear('entry_time', date('Y'))
-            ->select(DB::raw("COUNT(*) as count"))->get();
+        $vdata = TimeLog::join('visitors', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->join('user_details', 'visitors.user_detail_id', '=', 'user_details.id')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('organizations.code', '=', $organization_code)
+            ->whereYear('time_logs.entry_time', date('Y'))
+            ->select(DB::raw("COUNT(*) as count"))
+            ->get();
 
-        $yearlyMonth = TimeLog::whereYear('entry_time', Carbon::now()->year)
-            ->select(DB::raw('MONTH(entry_time) as month'))->get()->toArray();
-        $yearlyCount = TimeLog::whereYear('entry_time', Carbon::now()->year)
+        $yearlyMonth = TimeLog::join('visitors', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->join('residents', 'residents.id', '=', 'visitors.resident_id')
+            ->join('units', 'units.id', '=', 'residents.unit_id')
+            ->join('blocks', 'blocks.id', '=', 'units.block_id')
+            ->join('premises', 'premises.id', '=', 'blocks.premise_id')
+            ->join('organizations', 'organizations.code', '=', 'premises.organization_code')
+            ->where('organizations.code', '=', $organization_code)
+            ->whereYear('entry_time', Carbon::now()->year)
+            ->select(DB::raw('MONTH(entry_time) as month'))
+            ->get()
+            ->toArray();
+        $yearlyCount = TimeLog::join('visitors', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('organizations.code', $organization_code)
+            ->whereYear('entry_time', Carbon::now()->year)
             ->select(DB::raw('COUNT(*) as count'))->get()->toArray();
+
         // $yearlyData = UserDetail::whereYear('created_at', Carbon::now()->year)->select(DB::raw('COUNT(*) as count'))->get();
 
         $data = [
@@ -601,7 +760,13 @@ class DashboardController extends Controller
         $chart = DB::table('visitors')
             ->join('user_details', 'visitors.user_detail_id', '=', 'user_details.id')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
             ->select(DB::raw('COUNT(*) as total'), DB::raw('FLOOR(DATEDIFF(CURRENT_DATE, user_details.date_of_birth) / 365.25 / 10) * 10 + 18 AS age'))
+            ->where('organizations.code', '=', $organization_code)
             ->whereBetween('time_logs.entry_time', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])
             ->groupBy(DB::raw('FLOOR(DATEDIFF(CURRENT_DATE, user_details.date_of_birth) / 365.25 / 10) * 10 + 18'))
             ->orderBy('age')
@@ -614,16 +779,29 @@ class DashboardController extends Controller
             $labelschart[] = $item->age . ' - ' . ($item->age + 9);
             $datachart[] = $item->total;
         }
-        $totalVisitors = DB::table('visitors')->count();
+        $totalVisitors = DB::table('visitors')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('organizations.code', '=', $organization_code)
+            ->count();
+
         $units = Unit::select('units.id', 'units.name', DB::raw('COUNT(*) as visitors_count'))
             ->join('residents', 'residents.unit_id', '=', 'units.id')
             ->join('visitors', 'visitors.resident_id', '=', 'residents.id')
             ->join('time_logs', 'time_logs.id', '=', 'visitors.time_log_id')
+            ->join('blocks', 'blocks.id', '=', 'units.block_id')
+            ->join('premises', 'premises.id', '=', 'blocks.premise_id')
+            ->join('organizations', 'organizations.code', '=', 'premises.organization_code')
+            ->where('organizations.code', '=', $organization_code)
             ->whereMonth('time_logs.entry_time', '=', now()->month)
             ->groupBy('units.id', 'units.name')
             ->orderByDesc('visitors_count')
             ->take(5)
             ->get();
+
         $premises = DB::table('premises')
             ->select('premises.name', DB::raw('COUNT(visitors.id) as visitor_count'))
             ->join('blocks', 'premises.id', '=', 'blocks.premise_id')
