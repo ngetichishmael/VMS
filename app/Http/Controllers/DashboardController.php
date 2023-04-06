@@ -160,7 +160,7 @@ class DashboardController extends Controller
 
             $monthsbar = [];
 
-            for ($i = 2; $i >= 0; $i--) {
+            for ($i = 5; $i >= 0; $i--) {
                 $month = date('m', strtotime("-$i month")); // get the month number
                 $year = date('Y', strtotime("-$i month")); // get the year
                 $monthsbar[] = date("M Y", strtotime($year . '-' . $month . '-01')); // format the date as "M Y"
@@ -580,19 +580,6 @@ class DashboardController extends Controller
             $percentage_female  = 0;
         }
 
-        $femaleMonthlyVisitorCount = DB::table('visitors')
-            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
-            ->join('user_details', 'visitors.user_detail_id', '=', 'user_details.id')
-            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
-            ->join('units', 'residents.unit_id', '=', 'units.id')
-            ->join('blocks', 'units.block_id', '=', 'blocks.id')
-            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
-            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
-            ->where('user_details.gender', '=', 'Female')
-            ->whereMonth('time_logs.entry_time', Carbon::now()->month)
-            ->where('organizations.code', '=', $organization_code)
-            ->count();
-
         $maleMonthlyVisitorCount = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('user_details', 'visitors.user_detail_id', '=', 'user_details.id')
@@ -605,7 +592,18 @@ class DashboardController extends Controller
             ->where('organizations.code', $organization_code)
             ->whereMonth('time_logs.entry_time', Carbon::now()->month)
             ->count();
-
+        $femaleMonthlyVisitorCount  = DB::table('visitors')
+            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->join('user_details', 'visitors.user_detail_id', '=', 'user_details.id')
+            ->join('residents', 'visitors.resident_id', '=', 'residents.id')
+            ->join('units', 'residents.unit_id', '=', 'units.id')
+            ->join('blocks', 'units.block_id', '=', 'blocks.id')
+            ->join('premises', 'blocks.premise_id', '=', 'premises.id')
+            ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
+            ->where('user_details.gender', '=', 'Female')
+            ->where('organizations.code', $organization_code)
+            ->whereMonth('time_logs.entry_time', Carbon::now()->month)
+            ->count();
         $BarChart = UserDetail::select(
             DB::raw("MONTH(user_details.updated_at) as month"),
             DB::raw("YEAR(user_details.updated_at) as year"),
@@ -620,7 +618,7 @@ class DashboardController extends Controller
             ->join('premises', 'blocks.premise_id', '=', 'premises.id')
             ->join('organizations', 'premises.organization_code', '=', 'organizations.code')
             ->where('organizations.code', $organization_code)
-            ->whereRaw("time_logs.entry_time >= DATE_SUB(CURRENT_DATE, INTERVAL 2 MONTH)")
+            ->whereRaw("time_logs.entry_time >= DATE_SUB(CURRENT_DATE, INTERVAL 6 MONTH)")
             ->groupBy('year', 'month', 'user_details.gender')
             ->get();
 
@@ -629,14 +627,14 @@ class DashboardController extends Controller
 
         $monthsbar = [];
 
-        for ($i = 2; $i >= 0; $i--) {
+        for ($i = 5; $i >= 0; $i--) {
             $month = date('m', strtotime("-$i month")); // get the month number
             $year = date('Y', strtotime("-$i month")); // get the year
             $monthsbar[] = date("M Y", strtotime($year . '-' . $month . '-01')); // format the date as "M Y"
             $maleCount = $BarChart->where('gender', 'male')->where('month', $month)->where('year', $year)->sum('count');
             $femaleCount = $BarChart->where('gender', 'female')->where('month', $month)->where('year', $year)->sum('count');
-            $maleData[] = $maleCount;
-            $femaleData[] = $femaleCount;
+            $maleDatabar[] = $maleCount;
+            $femaleDatabar[] = $femaleCount;
         }
 
         $labelsbar = collect($monthsbar);
@@ -647,12 +645,12 @@ class DashboardController extends Controller
                 [
                     'label' => 'Male',
                     'backgroundColor' => '#007bff',
-                    'data' => $maleData,
+                    'data' => $maleDatabar,
                 ],
                 [
                     'label' => 'Female',
                     'backgroundColor' => '#fd6b37',
-                    'data' => $femaleData,
+                    'data' => $femaleDatabar,
                 ]
             ]
         ];
@@ -817,8 +815,14 @@ class DashboardController extends Controller
             ->get();
 
         $visitorsData = DB::table('visitors')
+            ->join('residents', 'residents.id', '=', 'visitors.resident_id')
+            ->join('units', 'units.id', '=', 'residents.unit_id')
+            ->join('blocks', 'blocks.id', '=', 'units.block_id')
+            ->join('premises', 'premises.id', '=', 'blocks.premise_id')
+            ->join('organizations', 'organizations.code', '=', 'premises.organization_code')
             ->select(DB::raw('DATE(visitors.created_at) as date'), DB::raw('COUNT(*) as count'))
             ->whereRaw('YEAR(visitors.created_at) = YEAR(CURRENT_DATE)')
+            ->where('organizations.code', '=', $organization_code)
             ->groupBy('date')
             ->orderBy('date')
             ->get();
