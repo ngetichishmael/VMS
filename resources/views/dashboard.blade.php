@@ -548,7 +548,7 @@
                                     <hr style="color: #bebbbb" />
                                     <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
                                         @php
-                                            $percentChange = $OtotalLastWeekVisit > 0 ? ($OtotalThisWeek - $OtotalLastWeekVisit) / $OtotalLastWeekVisit * 100: 100;
+                                            $percentChange = $OtotalLastWeekVisit > 0 ? ($OtotalThisWeek - $OtotalLastWeekVisit) / $OtotalLastWeekVisit * 100: 0;
                                             $percentChange = number_format($percentChange, 1);
                                             $color = $percentChange > 0 ? 'green' : 'orange';
                                             $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
