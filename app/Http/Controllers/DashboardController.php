@@ -920,7 +920,11 @@ class DashboardController extends Controller
                 'otp' => "Invalid OTP",
             ]);
         } catch (ValidationException $e) {
-            dd($e->getMessage());
+           throw ValidationException::withMessages([
+                'otp' => "Invalid OTP",
+
+            ]);
+//            $e->getMessage();
         }
     }
 }
