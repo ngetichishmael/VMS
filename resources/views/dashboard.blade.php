@@ -49,7 +49,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalVisitorsToday}}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">TODAY
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">TODAY
                                         @php
                                             $percentChange = $yesterdayVisitor > 0 ? ($totalVisitorsToday - $yesterdayVisitor) / $yesterdayVisitor * 100 : 0;
                                             $percentChange = number_format($percentChange, 1);
@@ -63,7 +63,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $yesterdayVisitor}}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">YESTERDAY&nbsp;</p>
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">YESTERDAY&nbsp;</p>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalThisWeek }}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">THIS WEEK
                                         @php
                                             $percentChange = $totalLastWeekVisit > 0 ? ($totalThisWeek - $totalLastWeekVisit) / $totalLastWeekVisit * 100: 0;
                                             $percentChange = number_format($percentChange, 1);
@@ -98,7 +98,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalLastWeekVisit }}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-3 mb-0"style="color: #fbfcfd"> LAST WEEK</p>
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd"> LAST WEEK</p>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $idThisWeek }}
                                     </h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">THIS WEEK
                                         @php
                                             $percentChange = $idLastWeek > 0 ? ($idThisWeek - $idLastWeek) / $idLastWeek * 100 : 0;
                                            $percentChange = number_format($percentChange, 1);
@@ -134,7 +134,7 @@
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $idLastWeek }}
                                     </h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">LAST WEEK</p>
                                 </div>
                             </div>
                         </div>
@@ -155,7 +155,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $walkinThisWeek }}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">THIS WEEK
 
                                         @php
                                             $percentChange = $walkinLastWeek > 0 ? ($walkinThisWeek - $walkinLastWeek) / $walkinLastWeek * 100 : 0;
@@ -169,7 +169,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $walkinLastWeek}}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">LAST WEEK</p>
                                 </div>
                             </div>
                         </div>
@@ -190,7 +190,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $driveinThisWeek }}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">THIS WEEK
                                         @php
                                             $percentChange = $driveinLastWeek > 0 ? ($driveinThisWeek - $driveinLastWeek) / $driveinLastWeek * 100 : 0;
                                            $percentChange = number_format($percentChange, 1);
@@ -203,7 +203,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $driveinLastWeek }}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">LAST WEEK</p>
                                 </div>
                             </div>
                         </div>
@@ -224,7 +224,7 @@
                 {{--                            <div class="media-body my-auto">--}}
                 {{--                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $ipassThisWeek }}</h4>--}}
                 {{--                                <hr style="color: #bebbbb" />--}}
-                {{--                                <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK--}}
+                {{--                                <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">THIS WEEK--}}
                 {{--                                    @php--}}
                 {{--                                        $percentChange = $ipassLastWeek > 0 ? ($ipassThisWeek - $ipassLastWeek) / $ipassLastWeek * 100 : 0;--}}
                 {{--                                       $percentChange = number_format($percentChange, 1);--}}
@@ -237,7 +237,7 @@
                 {{--                            <div class="media-body my-auto">--}}
                 {{--                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $ipassLastWeek }}</h4>--}}
                 {{--                                <hr style="color: #bebbbb" />--}}
-                {{--                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>--}}
+                {{--                                <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">LAST WEEK</p>--}}
                 {{--                            </div>--}}
                 {{--                        </div>--}}
                 {{--                    </div>--}}
@@ -258,7 +258,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $smsThisWeek }}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">THIS WEEK
                                         @php
                                             $percentChange = $smsLastWeek > 0 ? ($smsThisWeek - $smsLastWeek) / $smsLastWeek * 100 : 0;
                                            $percentChange = number_format($percentChange, 1);
@@ -271,7 +271,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $smsLastWeek }}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">LAST WEEK</p>
                                 </div>
                             </div>
                         </div>
@@ -508,10 +508,10 @@
                                     </div>
                                 </div>
                                 <hr />
-                                <div class="media-body my-auto">
+                                <div class="media-body my-auto ">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OtotalVisitorsToday}}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">TODAY
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">TODAY
                                         @php
                                             $percentChange = $OyesterdayVisitor > 0 ? ($OtotalVisitorsToday - $OyesterdayVisitor) / $OyesterdayVisitor * 100 : 0;
                                             $percentChange = number_format($percentChange, 1);
@@ -525,7 +525,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OyesterdayVisitor}}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">YESTERDAY&nbsp;</p>
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">YESTERDAY&nbsp;</p>
                                 </div>
                             </div>
                         </div>
@@ -546,7 +546,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OtotalThisWeek }}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">THIS WEEK
                                         @php
                                             $percentChange = $OtotalLastWeekVisit > 0 ? ($OtotalThisWeek - $OtotalLastWeekVisit) / $OtotalLastWeekVisit * 100: 0;
                                             $percentChange = number_format($percentChange, 1);
@@ -560,7 +560,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OtotalLastWeekVisit }}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-3 mb-0"style="color: #fbfcfd"> LAST WEEK</p>
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd"> LAST WEEK</p>
                                 </div>
                             </div>
                         </div>
@@ -582,7 +582,7 @@
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OidThisWeek }}
                                     </h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">THIS WEEK
                                         @php
                                             $percentChange = $OidLastWeek > 0 ? ($OidThisWeek - $OidLastWeek) / $OidLastWeek * 100 : 0;
                                            $percentChange = number_format($percentChange, 1);
@@ -596,7 +596,7 @@
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OidLastWeek }}
                                     </h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">LAST WEEK</p>
                                 </div>
                             </div>
                         </div>
@@ -617,7 +617,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OwalkinThisWeek }}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">THIS WEEK
 
                                         @php
                                             $percentChange = $OwalkinLastWeek > 0 ? ($OwalkinThisWeek - $OwalkinLastWeek) / $OwalkinLastWeek * 100 : 0;
@@ -631,7 +631,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OwalkinLastWeek}}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">LAST WEEK</p>
                                 </div>
                             </div>
                         </div>
@@ -652,7 +652,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OdriveinThisWeek }}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">THIS WEEK
                                         @php
                                             $percentChange = $OdriveinLastWeek > 0 ? ($OdriveinThisWeek - $OdriveinLastWeek) / $OdriveinLastWeek * 100 : 0;
                                            $percentChange = number_format($percentChange, 1);
@@ -665,7 +665,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OdriveinLastWeek }}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">LAST WEEK</p>
                                 </div>
                             </div>
                         </div>
@@ -686,7 +686,7 @@
                 {{--                            <div class="media-body my-auto">--}}
                 {{--                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $ipassThisWeek }}</h4>--}}
                 {{--                                <hr style="color: #bebbbb" />--}}
-                {{--                                <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK--}}
+                {{--                                <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">THIS WEEK--}}
                 {{--                                    @php--}}
                 {{--                                        $percentChange = $ipassLastWeek > 0 ? ($ipassThisWeek - $ipassLastWeek) / $ipassLastWeek * 100 : 0;--}}
                 {{--                                       $percentChange = number_format($percentChange, 1);--}}
@@ -699,7 +699,7 @@
                 {{--                            <div class="media-body my-auto">--}}
                 {{--                                <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $ipassLastWeek }}</h4>--}}
                 {{--                                <hr style="color: #bebbbb" />--}}
-                {{--                                <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>--}}
+                {{--                                <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">LAST WEEK</p>--}}
                 {{--                            </div>--}}
                 {{--                        </div>--}}
                 {{--                    </div>--}}
@@ -720,7 +720,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OsmsThisWeek }}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">THIS WEEK
                                         @php
                                             $percentChange = $OsmsLastWeek > 0 ? ($OsmsThisWeek - $OsmsLastWeek) / $OsmsLastWeek * 100 : 0;
                                            $percentChange = number_format($percentChange, 1);
@@ -733,7 +733,7 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OsmsLastWeek }}</h4>
                                     <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">LAST WEEK</p>
                                 </div>
                             </div>
                         </div>
