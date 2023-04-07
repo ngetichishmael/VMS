@@ -771,7 +771,7 @@ class DashboardController extends Controller
             ->get()
             ->toArray();
 
-        $Olabels = [];
+        $Olabelschart = [];
         $Odatachart = [];
         foreach ($chart as $item) {
             $Olabelschart[] = $item->age . ' - ' . ($item->age + 9);
