@@ -382,34 +382,34 @@ class DashboardController extends Controller
     public function staffdashboard($organization_code)
     {
 
-        $todayVisit = TimeLog::whereBetween('entry_time', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])->whereHas('visitor.resident.unit.block.premise.organization', function ($query) use ($organization_code) {
+        $OtodayVisit = TimeLog::whereBetween('entry_time', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])->whereHas('visitor.resident.unit.block.premise.organization', function ($query) use ($organization_code) {
             $query->where('code', $organization_code);
         })->count();
-        $yesterdayVisits = TimeLog::whereBetween('entry_time', [Carbon::yesterday()->startOfDay(), Carbon::yesterday()->endOfDay()])
+        $OyesterdayVisits = TimeLog::whereBetween('entry_time', [Carbon::yesterday()->startOfDay(), Carbon::yesterday()->endOfDay()])
             ->whereHas('visitor.resident.unit.block.premise.organization', function ($query) use ($organization_code) {
                 $query->where('code', $organization_code);
             })->count();
-        $totalWeekVisit = TimeLog::whereBetween('entry_time', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+        $OtotalWeekVisit = TimeLog::whereBetween('entry_time', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->whereHas('visitor.resident.unit.block.premise.organization', function ($query) use ($organization_code) {
                 $query->where('code', $organization_code);
             })->count();
-        $totalLastWeekVisit = TimeLog::whereBetween('entry_time', [Carbon::now()->subWeek(1), Carbon::now()->startOfWeek()])
+        $OtotalLastWeekVisit = TimeLog::whereBetween('entry_time', [Carbon::now()->subWeek(1), Carbon::now()->startOfWeek()])
             ->whereHas('visitor.resident.unit.block.premise.organization', function ($query) use ($organization_code) {
                 $query->where('code', $organization_code);
             })->count();
-        $totalVehicleVisit = VehicleInformation::whereBetween('updated_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+        $OtotalVehicleVisit = VehicleInformation::whereBetween('updated_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->whereHas('visitor.resident.unit.block.premise.organization', function ($query) use ($organization_code) {
                 $query->where('code', $organization_code);
             })->count();
-        $totalLastVehicleVisit = VehicleInformation::whereBetween('updated_at', [Carbon::now()->subWeek(1), Carbon::now()->startOfWeek()])
+        $OtotalLastVehicleVisit = VehicleInformation::whereBetween('updated_at', [Carbon::now()->subWeek(1), Carbon::now()->startOfWeek()])
             ->whereHas('visitor.resident.unit.block.premise.organization', function ($query) use ($organization_code) {
                 $query->where('code', $organization_code);
             })->count();
-        $totalLastWeekVisit = TimeLog::whereBetween('entry_time', [Carbon::now()->subWeek(1), Carbon::now()->startOfWeek()])
+        $OtotalLastWeekVisit = TimeLog::whereBetween('entry_time', [Carbon::now()->subWeek(1), Carbon::now()->startOfWeek()])
             ->whereHas('visitor.resident.unit.block.premise.organization', function ($query) use ($organization_code) {
                 $query->where('code', $organization_code);
             })->count();
-        $totalMaleLastWeek = UserDetail::join('visitors', 'user_details.id', '=', 'visitors.user_detail_id')
+        $OtotalMaleLastWeek = UserDetail::join('visitors', 'user_details.id', '=', 'visitors.user_detail_id')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
             ->join('units', 'residents.unit_id', '=', 'units.id')
             ->join('blocks', 'units.block_id', '=', 'blocks.id')
@@ -419,7 +419,7 @@ class DashboardController extends Controller
             ->where('user_details.gender', 'male')
             ->whereBetween('user_details.updated_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->count();
-        $totalFemaleLastWeek = UserDetail::join('visitors', 'user_details.id', '=', 'visitors.user_detail_id')
+        $OtotalFemaleLastWeek = UserDetail::join('visitors', 'user_details.id', '=', 'visitors.user_detail_id')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
             ->join('units', 'residents.unit_id', '=', 'units.id')
             ->join('blocks', 'units.block_id', '=', 'blocks.id')
@@ -433,14 +433,14 @@ class DashboardController extends Controller
         $weekStartDate = Carbon::now()->startOfWeek();
         $weekEndDate = Carbon::now()->endOfWeek();
 
-        $driveinThisWeek = Visitor::where('type', '=', 'DriveIn')
+        $OdriveinThisWeek = Visitor::where('type', '=', 'DriveIn')
             ->whereHas('timeLogs', function ($query) use ($weekStartDate, $weekEndDate) {
                 $query->whereBetween('entry_time', [$weekStartDate, $weekEndDate]);
             })
             ->whereHas('resident.unit.block.premise.organization', function ($query) {
                 $query->where('code', Auth::user()->organization_code);
             })->count();
-        $driveinLastWeek = DB::table('visitors')
+        $OdriveinLastWeek = DB::table('visitors')
             ->where('type', '=', 'DriveIn')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
@@ -451,7 +451,7 @@ class DashboardController extends Controller
             ->where('organizations.code', $organization_code)
             ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->count();
-        $smsThisWeek = DB::table('visitors')
+        $OsmsThisWeek = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
             ->join('units', 'residents.unit_id', '=', 'units.id')
@@ -463,7 +463,7 @@ class DashboardController extends Controller
             ->orWhereBetween('time_logs.exit_time', [$weekStartDate, $weekEndDate])
             ->where('organizations.code', '=', $organization_code)
             ->count();
-        $smsLastWeek = DB::table('visitors')
+        $OsmsLastWeek = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
             ->join('units', 'residents.unit_id', '=', 'units.id')
@@ -476,7 +476,7 @@ class DashboardController extends Controller
                 $query->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()]);
             })
             ->count();
-        $walkinThisWeek = DB::table('visitors')
+        $OwalkinThisWeek = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
             ->join('units', 'residents.unit_id', '=', 'units.id')
@@ -487,7 +487,7 @@ class DashboardController extends Controller
             ->where('organizations.code', '=', $organization_code)
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->count();
-        $walkinLastWeek = DB::table('visitors')
+        $OwalkinLastWeek = DB::table('visitors')
             ->select('visitors.*')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
@@ -499,7 +499,7 @@ class DashboardController extends Controller
             ->where('organizations.code', '=', $organization_code)
             ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->count();
-        $ipassThisWeek = DB::table('visitors')
+        $OipassThisWeek = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
             ->join('units', 'residents.unit_id', '=', 'units.id')
@@ -510,7 +510,7 @@ class DashboardController extends Controller
             ->whereBetween('time_logs.entry_time', [$weekStartDate, $weekEndDate])
             ->where('organizations.code', '=', $organization_code)
             ->count();
-        $ipassLastWeek = DB::table('visitors')
+        $OipassLastWeek = DB::table('visitors')
             ->where('type', '=', 'iPass')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
@@ -522,7 +522,7 @@ class DashboardController extends Controller
             ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
             ->count();
 
-        $idThisWeek = DB::table('visitors')
+        $OidThisWeek = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
             ->join('units', 'residents.unit_id', '=', 'units.id')
@@ -534,7 +534,7 @@ class DashboardController extends Controller
             ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
             ->count();
 
-        $idLastWeek = DB::table('visitors')
+        $OidLastWeek = DB::table('visitors')
             ->where('type', '=', 'ID')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
@@ -547,7 +547,7 @@ class DashboardController extends Controller
             ->count();
 
         $today = Carbon::today();
-        $maleCount = DB::table('visitors')
+        $OmaleCount = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('user_details', 'visitors.user_detail_id', '=', 'user_details.id')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
@@ -559,7 +559,7 @@ class DashboardController extends Controller
             ->where('user_details.gender', '=', 'male')
             ->whereDate('time_logs.entry_time', '=', $today)
             ->count();
-        $femaleCount = DB::table('visitors')
+        $OfemaleCount = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('user_details', 'visitors.user_detail_id', '=', 'user_details.id')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
@@ -571,16 +571,16 @@ class DashboardController extends Controller
             ->where('user_details.gender', '=', 'female')
             ->whereDate('time_logs.entry_time', '=', $today)
             ->count();
-        $totalCount = $maleCount + $femaleCount;
+        $totalCount = $OmaleCount + $OfemaleCount;
         if ($totalCount > 0) {
-            $percentage_male = ($maleCount / $totalCount) * 100;
-            $percentage_female  = ($femaleCount / $totalCount) * 100;
+            $percentage_male = ($OmaleCount / $totalCount) * 100;
+            $percentage_female  = ($OfemaleCount / $totalCount) * 100;
         } else {
             $percentage_male = 0;
             $percentage_female  = 0;
         }
 
-        $maleMonthlyVisitorCount = DB::table('visitors')
+        $OmaleMonthlyVisitorCount = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('user_details', 'visitors.user_detail_id', '=', 'user_details.id')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
@@ -592,7 +592,7 @@ class DashboardController extends Controller
             ->where('organizations.code', $organization_code)
             ->whereMonth('time_logs.entry_time', Carbon::now()->month)
             ->count();
-        $femaleMonthlyVisitorCount  = DB::table('visitors')
+        $OfemaleMonthlyVisitorCount  = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('user_details', 'visitors.user_detail_id', '=', 'user_details.id')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
@@ -639,7 +639,7 @@ class DashboardController extends Controller
 
         $labelsbar = collect($monthsbar);
 
-        $mdata = [
+        $Omdata = [
             'labels' => $labelsbar,
             'datasets' => [
                 [
@@ -673,7 +673,7 @@ class DashboardController extends Controller
         $labels = $monthlyData->pluck('age');
         $data = $monthlyData->pluck('count');
 
-        $chartData = [
+        $OchartData = [
             'labels' => $labels,
             'datasets' => [
                 [
@@ -690,14 +690,14 @@ class DashboardController extends Controller
                 ]
             ]
         ];
-        $vlabels = TimeLog::whereYear('entry_time', date('Y'))
+        $Ovlabels = TimeLog::whereYear('entry_time', date('Y'))
             ->whereHas('visitor.resident.unit.block.premise.organization', function ($query) use ($organization_code) {
                 $query->where('code', $organization_code);
             })
             ->select(DB::raw("MONTH(entry_time) as month_name"))
             ->get();
 
-        $vdata = TimeLog::join('visitors', 'visitors.time_log_id', '=', 'time_logs.id')
+        $Ovdata = TimeLog::join('visitors', 'visitors.time_log_id', '=', 'time_logs.id')
             ->join('user_details', 'visitors.user_detail_id', '=', 'user_details.id')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
             ->join('units', 'residents.unit_id', '=', 'units.id')
@@ -753,7 +753,7 @@ class DashboardController extends Controller
             $data['labels'][] = date('F', mktime(0, 0, 0, $i, 1));
         }
 
-        $yearlyData = json_encode($data);
+        $OyearlyData = json_encode($data);
 
         $chart = DB::table('visitors')
             ->join('user_details', 'visitors.user_detail_id', '=', 'user_details.id')
@@ -771,13 +771,13 @@ class DashboardController extends Controller
             ->get()
             ->toArray();
 
-        $labels = [];
-        $datachart = [];
+        $Olabels = [];
+        $Odatachart = [];
         foreach ($chart as $item) {
-            $labelschart[] = $item->age . ' - ' . ($item->age + 9);
-            $datachart[] = $item->total;
+            $Olabelschart[] = $item->age . ' - ' . ($item->age + 9);
+            $Odatachart[] = $item->total;
         }
-        $totalVisitors = DB::table('visitors')
+        $OtotalVisitors = DB::table('visitors')
             ->join('residents', 'visitors.resident_id', '=', 'residents.id')
             ->join('units', 'residents.unit_id', '=', 'units.id')
             ->join('blocks', 'units.block_id', '=', 'blocks.id')
@@ -786,7 +786,7 @@ class DashboardController extends Controller
             ->where('organizations.code', '=', $organization_code)
             ->count();
 
-        $units = Unit::select('units.id', 'units.name', DB::raw('COUNT(*) as visitors_count'))
+        $Ounits = Unit::select('units.id', 'units.name', DB::raw('COUNT(*) as visitors_count'))
             ->join('residents', 'residents.unit_id', '=', 'units.id')
             ->join('visitors', 'visitors.resident_id', '=', 'residents.id')
             ->join('time_logs', 'time_logs.id', '=', 'visitors.time_log_id')
@@ -800,7 +800,7 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        $premises = DB::table('premises')
+        $Opremises = DB::table('premises')
             ->select('premises.name', DB::raw('COUNT(visitors.id) as visitor_count'))
             ->join('blocks', 'premises.id', '=', 'blocks.premise_id')
             ->join('units', 'blocks.id', '=', 'units.block_id')
@@ -827,9 +827,9 @@ class DashboardController extends Controller
             ->orderBy('date')
             ->get();
         $dates = $visitorsData->pluck('date')->toArray();
-        $visitorCounts = $visitorsData->pluck('count')->toArray();
+        $OvisitorCounts = $visitorsData->pluck('count')->toArray();
 
-        $chartDataL = [
+        $OchartDataL = [
             'labels' => $dates,
             'datasets' => [
                 [
@@ -844,7 +844,7 @@ class DashboardController extends Controller
                     'pointHoverRadius' => 5,
                     'pointHoverBackgroundColor' => 'rgba(39, 128, 243,1)',
                     'pointHoverBorderColor' => 'rgba(208, 111, 57,1)',
-                    'data' => $visitorCounts,
+                    'data' => $OvisitorCounts,
                 ]
             ]
         ];
@@ -852,39 +852,39 @@ class DashboardController extends Controller
         return view(
             'dashboard',
             [
-                'totalVisitorsToday' => $todayVisit,
-                'yesterdayVisitor' => $yesterdayVisits,
-                'totalThisWeek' => $totalWeekVisit,
-                'totalLastWeekVisit' => $totalLastWeekVisit,
-                'totalVehicleWeek' => $totalVehicleVisit,
-                'totalLastVehicleVisit' => $totalLastVehicleVisit,
-                'totalMaleLastWeek' => $totalMaleLastWeek,
-                'totalFemaleLastWeek' => $totalFemaleLastWeek,
-                'BarChart' => json_encode($mdata),
-                'femaleCount' => $femaleCount,
-                'maleCount' => $maleCount,
-                'totalVisitors' => $totalVisitors,
-                'chartData' => $chartData,
-                'vlabels' => $vlabels,
-                'vdata' => $vdata,
-                'walkinThisWeek' => $walkinThisWeek,
-                'walkinLastWeek' => $walkinLastWeek,
-                'driveinLastWeek' => $driveinLastWeek,
-                'driveinThisWeek' => $driveinThisWeek,
-                'ipassLastWeek' => $ipassLastWeek,
-                'ipassThisWeek' => $ipassThisWeek,
-                'idThisWeek' => $idThisWeek,
-                'idLastWeek' => $idLastWeek,
-                'smsThisWeek' => $smsThisWeek,
-                'smsLastWeek' => $smsLastWeek,
-                'yearlyData' => $yearlyData,
-                'maleMonthlyVisitorCount' => $maleMonthlyVisitorCount,
-                'femaleMonthlyVisitorCount' => $femaleMonthlyVisitorCount,
-                'labelschart' => $labelschart,
-                'datachart' => $datachart,
-                'units' => $units,
-                'premises' => $premises,
-                'chartDataL' => $chartDataL,
+                'OtotalVisitorsToday' => $OtodayVisit,
+                'OyesterdayVisitor' => $OyesterdayVisits,
+                'OtotalThisWeek' => $OtotalWeekVisit,
+                'OtotalLastWeekVisit' => $OtotalLastWeekVisit,
+                'OtotalVehicleWeek' => $OtotalVehicleVisit,
+                'OtotalLastVehicleVisit' => $OtotalLastVehicleVisit,
+                'OtotalMaleLastWeek' => $OtotalMaleLastWeek,
+                'OtotalFemaleLastWeek' => $OtotalFemaleLastWeek,
+                'OBarChart' => json_encode($Omdata),
+                'OfemaleCount' => $OfemaleCount,
+                'OmaleCount' => $OmaleCount,
+                'OtotalVisitors' => $OtotalVisitors,
+                'OchartData' => $OchartData,
+                'Ovlabels' => $Ovlabels,
+                'Ovdata' => $Ovdata,
+                'OwalkinThisWeek' => $OwalkinThisWeek,
+                'OwalkinLastWeek' => $OwalkinLastWeek,
+                'OdriveinLastWeek' => $OdriveinLastWeek,
+                'OdriveinThisWeek' => $OdriveinThisWeek,
+                'OipassLastWeek' => $OipassLastWeek,
+                'OipassThisWeek' => $OipassThisWeek,
+                'OidThisWeek' => $OidThisWeek,
+                'OidLastWeek' => $OidLastWeek,
+                'OsmsThisWeek' => $OsmsThisWeek,
+                'OsmsLastWeek' => $OsmsLastWeek,
+                'OyearlyData' => $OyearlyData,
+                'OmaleMonthlyVisitorCount' => $OmaleMonthlyVisitorCount,
+                'OfemaleMonthlyVisitorCount' => $OfemaleMonthlyVisitorCount,
+                'Olabelschart' => $Olabelschart,
+                'Odatachart' => $Odatachart,
+                'Ounits' => $Ounits,
+                'Opremises' => $Opremises,
+                'OchartDataL' => $OchartDataL,
             ]
         );
     }

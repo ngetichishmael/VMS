@@ -509,11 +509,11 @@
                                 </div>
                                 <hr />
                                 <div class="media-body my-auto">
-                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalVisitorsToday}}</h4>
+                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OtotalVisitorsToday}}</h4>
                                     <hr style="color: #bebbbb" />
                                     <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">TODAY
                                         @php
-                                            $percentChange = $yesterdayVisitor > 0 ? ($totalVisitorsToday - $yesterdayVisitor) / $yesterdayVisitor * 100 : 0;
+                                            $percentChange = $OyesterdayVisitor > 0 ? ($OtotalVisitorsToday - $OyesterdayVisitor) / $OyesterdayVisitor * 100 : 0;
                                             $percentChange = number_format($percentChange, 1);
                                             $color = $percentChange > 0 ? 'green' : 'orange';
                                             $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
@@ -523,7 +523,7 @@
                                     </p>
                                 </div>
                                 <div class="media-body my-auto">
-                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $yesterdayVisitor}}</h4>
+                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OyesterdayVisitor}}</h4>
                                     <hr style="color: #bebbbb" />
                                     <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">YESTERDAY&nbsp;</p>
                                 </div>
@@ -544,11 +544,11 @@
                                 </div>
                                 <hr />
                                 <div class="media-body my-auto">
-                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalThisWeek }}</h4>
+                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OtotalThisWeek }}</h4>
                                     <hr style="color: #bebbbb" />
                                     <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
                                         @php
-                                            $percentChange = $totalLastWeekVisit > 0 ? ($totalThisWeek - $totalLastWeekVisit) / $totalLastWeekVisit * 100: 100;
+                                            $percentChange = $OtotalLastWeekVisit > 0 ? ($OtotalThisWeek - $OtotalLastWeekVisit) / $OtotalLastWeekVisit * 100: 100;
                                             $percentChange = number_format($percentChange, 1);
                                             $color = $percentChange > 0 ? 'green' : 'orange';
                                             $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
@@ -558,7 +558,7 @@
                                     </p>
                                 </div>
                                 <div class="media-body my-auto">
-                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalLastWeekVisit }}</h4>
+                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OtotalLastWeekVisit }}</h4>
                                     <hr style="color: #bebbbb" />
                                     <p class="card-text font-small-3 mb-0"style="color: #fbfcfd"> LAST WEEK</p>
                                 </div>
@@ -579,12 +579,12 @@
                                 </div>
                                 <hr />
                                 <div class="media-body my-auto" >
-                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $idThisWeek }}
+                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OidThisWeek }}
                                     </h4>
                                     <hr style="color: #bebbbb" />
                                     <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
                                         @php
-                                            $percentChange = $idLastWeek > 0 ? ($idThisWeek - $idLastWeek) / $idLastWeek * 100 : 0;
+                                            $percentChange = $OidLastWeek > 0 ? ($OidThisWeek - $OidLastWeek) / $OidLastWeek * 100 : 0;
                                            $percentChange = number_format($percentChange, 1);
                                             $color = $percentChange > 0 ? 'green' : 'orange';
                                             $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
@@ -593,7 +593,7 @@
                                     </p>
                                 </div>
                                 <div class="media-body my-auto">
-                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $idLastWeek }}
+                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OidLastWeek }}
                                     </h4>
                                     <hr style="color: #bebbbb" />
                                     <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
@@ -615,12 +615,12 @@
                                 </div>
                                 <hr />
                                 <div class="media-body my-auto">
-                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $walkinThisWeek }}</h4>
+                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OwalkinThisWeek }}</h4>
                                     <hr style="color: #bebbbb" />
                                     <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
 
                                         @php
-                                            $percentChange = $walkinLastWeek > 0 ? ($walkinThisWeek - $walkinLastWeek) / $walkinLastWeek * 100 : 0;
+                                            $percentChange = $OwalkinLastWeek > 0 ? ($OwalkinThisWeek - $OwalkinLastWeek) / $OwalkinLastWeek * 100 : 0;
                                            $percentChange = number_format($percentChange, 1);
                                             $color = $percentChange > 0 ? 'green' : 'orange';
                                             $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
@@ -629,7 +629,7 @@
                                     </p>
                                 </div>
                                 <div class="media-body my-auto">
-                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $walkinLastWeek}}</h4>
+                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OwalkinLastWeek}}</h4>
                                     <hr style="color: #bebbbb" />
                                     <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
                                 </div>
@@ -650,11 +650,11 @@
                                 </div>
                                 <hr />
                                 <div class="media-body my-auto">
-                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $driveinThisWeek }}</h4>
+                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OdriveinThisWeek }}</h4>
                                     <hr style="color: #bebbbb" />
                                     <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
                                         @php
-                                            $percentChange = $driveinLastWeek > 0 ? ($driveinThisWeek - $driveinLastWeek) / $driveinLastWeek * 100 : 0;
+                                            $percentChange = $OdriveinLastWeek > 0 ? ($OdriveinThisWeek - $OdriveinLastWeek) / $OdriveinLastWeek * 100 : 0;
                                            $percentChange = number_format($percentChange, 1);
                                             $color = $percentChange > 0 ? 'green' : 'orange';
                                             $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
@@ -663,7 +663,7 @@
                                     </p>
                                 </div>
                                 <div class="media-body my-auto">
-                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $driveinLastWeek }}</h4>
+                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OdriveinLastWeek }}</h4>
                                     <hr style="color: #bebbbb" />
                                     <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
                                 </div>
@@ -718,11 +718,11 @@
                                 </div>
                                 <hr />
                                 <div class="media-body my-auto">
-                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $smsThisWeek }}</h4>
+                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OsmsThisWeek }}</h4>
                                     <hr style="color: #bebbbb" />
                                     <p class="card-text font-small-2 mb-0"style="color: #fbfcfd">THIS WEEK
                                         @php
-                                            $percentChange = $smsLastWeek > 0 ? ($smsThisWeek - $smsLastWeek) / $smsLastWeek * 100 : 0;
+                                            $percentChange = $OsmsLastWeek > 0 ? ($OsmsThisWeek - $OsmsLastWeek) / $OsmsLastWeek * 100 : 0;
                                            $percentChange = number_format($percentChange, 1);
                                             $color = $percentChange > 0 ? 'green' : 'orange';
                                             $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
@@ -731,7 +731,7 @@
                                     </p>
                                 </div>
                                 <div class="media-body my-auto">
-                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $smsLastWeek }}</h4>
+                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $OsmsLastWeek }}</h4>
                                     <hr style="color: #bebbbb" />
                                     <p class="card-text font-small-3 mb-0"style="color: #fbfcfd">LAST WEEK</p>
                                 </div>
@@ -749,10 +749,10 @@
                         <div class="card-header font-small-3">
                             <h5>Units with highest number of visitors this month</h5>
                             <div class="card-text font-small-3 col-12" >
-                                @foreach($units as $unit)
+                                @foreach($Ounits as $unit)
                                     <h6>{{ $unit->name }} ({{ $unit->visitors_count }} visitors)</h6>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: {{ $unit->visitors_count }}%;" aria-valuenow="{{ $unit->visitors_count }}" aria-valuemin="0" aria-valuemax="{{ $units->max('visitors_count') }}"></div>
+                                        <div class="progress-bar" role="progressbar" style="width: {{ $unit->visitors_count }}%;" aria-valuenow="{{ $unit->visitors_count }}" aria-valuemin="0" aria-valuemax="{{ $Ounits->max('visitors_count') }}"></div>
                                     </div>
                                 @endforeach
                             </div>
@@ -764,7 +764,7 @@
                         <div class="card-header font-small-3">
                             <h6>{!! ucwords("Premises with the Highest Monthly Visits") !!}</h6>
                             <div class="card-text font-small-3 col-12" >
-                                @foreach($premises as $premise)
+                                @foreach($Opremises as $premise)
                                     <div class="card-text font-small-3">
                                         <i class="fa fa-building"><span>{!! $premise->name !!}</span><span> Visits: {!! $premise->visitor_count !!}</span></i>
                                     </div>
@@ -794,18 +794,18 @@
                         <div class="header-right d-flex align-items-center pl-2">
                             <div class="d-flex align-items-center">
                                 <span class="bullet bullet-primary"></span>
-                                <h6 class="mb-0 ml-50">{{ $maleMonthlyVisitorCount }} MALE</h6>
+                                <h6 class="mb-0 ml-50">{{ $OmaleMonthlyVisitorCount }} MALE</h6>
                             </div>
                             <div class="d-flex align-items-center ml-75">
                                 <span class="bullet bullet-danger"></span>
-                                <h6 class="mb-0 ml-50">{{ $femaleMonthlyVisitorCount }} FEMALE</h6>
+                                <h6 class="mb-0 ml-50">{{ $OfemaleMonthlyVisitorCount }} FEMALE</h6>
                             </div>
                         </div>
                     </div>
                 </div>
                 <script>
                     $(document).ready(function() {
-                        var BarChart = {!! $BarChart !!};
+                        var BarChart = {!! $OBarChart !!};
                         var ctx = document.getElementById('monthly-visits').getContext('2d');
                         var myChart = new Chart(ctx, {
                             type: 'bar',
@@ -841,10 +841,10 @@
                 <script>
                     $(document).ready(function() {
                         var monthlyData = {
-                            labels: {!! json_encode($labelschart) !!},
+                            labels: {!! json_encode($Olabelschart) !!},
                             datasets: [
                                 {
-                                    data: {!! json_encode($datachart) !!},
+                                    data: {!! json_encode($Odatachart) !!},
                                     backgroundColor: [
                                         "#FF6384",
                                         "#36A2EB",
@@ -890,7 +890,7 @@
 
                 <script>
                     $(document).ready(function() {
-                        var yearlyData = {!! $yearlyData !!};
+                        var yearlyData = {!! $OyearlyData !!};
                         var ctx = document.getElementById('yearly-visitors').getContext('2d');
                         var myChart = new Chart(ctx, {
                             type: 'line',
@@ -926,10 +926,10 @@
 
                         </div>
                     </div>
-                    <p class="card-text mb-0 pl-4 pb-5">TOTAL VISITORS : {{ $totalVisitors}}</p>
+                    <p class="card-text mb-0 pl-4 pb-5">TOTAL VISITORS : {{ $OtotalVisitors}}</p>
                     <script>
                         $(document).ready(function() {
-                            var chartData = <?php echo json_encode($chartDataL); ?>;
+                            var chartData = <?php echo json_encode($OchartDataL); ?>;
 
                             var ctx = document.getElementById('visitorChart').getContext('2d');
                             var chart = new Chart(ctx, {
