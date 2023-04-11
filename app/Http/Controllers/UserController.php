@@ -109,7 +109,7 @@ class UserController extends Controller
             'organization' => "User " . $user->name,
             'activity' => "Created a new user with " . $user
         ]);
-        return redirect()->to('/organization/users')->with('success', 'User added successfully.');
+        return redirect()->to('/organization/users')->with('success', 'User added successfully. Use phone number as the default password');
     }
 
     /**
