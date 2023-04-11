@@ -32,7 +32,7 @@
               </div>
               <div class="form-group">
                   <label class="form-label" for="basic-icon-default-fullname">Gender</label>
-                  <select id="role_id" name="role_id" class="select2 form-control form-control-lg" required>
+                  <select id="gender" name="gender" class="select2 form-control form-control-lg" required>
                       <option  value="#"> Select</option>
                       <option  value="male"> Male</option>
                       <option  value="female"> Female</option>
@@ -62,10 +62,10 @@
               </select>
             </fieldset>
 
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Password</label>
-              <input  type="password" name="password"  class="form-control" required />
-            </div>
+{{--            <div class="form-group">--}}
+{{--              <label class="form-label" for="basic-icon-default-fullname">Password</label>--}}
+{{--              <input  type="password" name="password"  class="form-control" required />--}}
+{{--            </div>--}}
 
             <button  type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
