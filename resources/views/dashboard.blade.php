@@ -553,7 +553,7 @@
                                             $color = $percentChange > 0 ? 'green' : 'orange';
                                             $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
                                         @endphp
-                                        <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>
+                                        <span>{{ $percentChange }}%</span> <i style=" color: {{ $color }}" class="{{ $arrow }}"></i>
 
                                     </p>
                                 </div>

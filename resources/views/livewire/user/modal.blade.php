@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
-              <input  type="tel" name="phone_number"  id="phone_number" class="form-control" required />
+              <input  type="number" name="phone_number"  id="phone_number" class="form-control" required />
                 <small class="form-text text-muted"> +254</small>
             </div>
               <div class="form-group">
