@@ -8,9 +8,13 @@ use App\Models\Organization;
 use App\Models\TimeLog;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
+use Livewire\WithPagination;
 
 class ActivityController extends Controller
 {
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+    public $perPage = 25;
     /**
      * Display a listing of the resource.
      *
@@ -51,7 +55,7 @@ class ActivityController extends Controller
     public function show($id)
     {
         $activity = Activity::whereId($id)->first();
-        $activities=Activity::where('name',$activity->name )->get();
+        $activities=Activity::where('name',$activity->name )->get()->paginate($this->perPage);
         $organization = Organization::where('code', $activity->organization)->first();
         return view('livewire.activity.view',compact('activity', 'activities','organization'));
     }
