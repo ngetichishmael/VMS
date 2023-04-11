@@ -108,7 +108,7 @@
                         @endforelse
                         </tbody>
                     </table>
-{{--                    <div class="mt-1">{{ $activities->links() }}--}}
+                    <div class="mt-1">{{ $activities->links() }}
                     </div>
                 </div>
             </div>
