@@ -28,7 +28,7 @@ class LoginVerificationNotification extends Notification
     public function __construct()
     {
         $this->subject = "Verify your Login";
-        $this->fromEmail = "developer@fedhatrac.com";
+        $this->fromEmail = "noreply@mojapass.com";
         $this->mailer = "smtp";
         $this->otp = new Otp;
     }
