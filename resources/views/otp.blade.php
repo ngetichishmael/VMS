@@ -38,7 +38,7 @@ $configData = Helper::applClasses();
         <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
             <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
                 <h2 class="card-title font-weight-bold mb-1">Welcome to Moja<b>Pass</b>! 👋</h2>
-                <p class="card-text mb-2">Enter the OTP Sent to your Device</p>
+                <p class="card-text mb-2">Enter the OTP Sent to your Email</p>
                 @if ($errors->has('otp'))
                 <span class="help-block">
                     <strong class="text-danger">{{ $errors->first('otp') }}</strong>
