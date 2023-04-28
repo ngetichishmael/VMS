@@ -178,6 +178,8 @@ return [
         App\Providers\MenuServiceProvider::class,
 
         Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
+
+        Ichtrojan\Otp\OtpServiceProvider::class,
     ],
 
     /*
@@ -231,6 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         // custom theme helper
         'Helper' => App\Helpers\Helper::class,
+        'Otp' => Ichtrojan\Otp\Otp::class,
     ],
 
 ];
