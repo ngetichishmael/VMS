@@ -44,12 +44,7 @@ class AuthenticatedSessionController extends Controller
             'activity' => "Logging in to the web application"
         ]);
         $request->user()->update(['last_login_at' => now()]);
-        
-        $code = rand(100000, 999999);
-        UserCode::updateOrCreate([
-            'user_id' =>  $request->user()->id,
-            'code' => $code
-        ]);
+
         ValidToken::updateOrCreate(
             [
                 'user_id' => $request->user()->id,
