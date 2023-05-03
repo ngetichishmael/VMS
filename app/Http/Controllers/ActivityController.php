@@ -52,15 +52,21 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
+//    public function show($id)
+//    {
+//        $activity = Activity::whereId($id)->first();
+//        $activities=Activity::where('name',$activity->name )->get()->paginate($this->perPage);
+//        $organization = Organization::where('code', $activity->organization)->first();
+//        return view('livewire.activity.view',compact('activity', 'activities','organization'));
+//    }
+
     public function show($id)
     {
         $activity = Activity::whereId($id)->first();
-        $activities=Activity::where('name',$activity->name )->get()->paginate($this->perPage);
+        $activities = Activity::where('name', $activity->name)->paginate($this->perPage);
         $organization = Organization::where('code', $activity->organization)->first();
-        return view('livewire.activity.view',compact('activity', 'activities','organization'));
+        return view('livewire.activity.view', compact('activity', 'activities', 'organization'));
     }
-
-
         /**
      * Show the form for editing the specified resource.
      *

@@ -69,10 +69,6 @@
             </div>
             <!-- /User Card Ends-->
         </div>
-
-
-
-
         <div class="card">
 
             <div class="pt-0 card-datatable table-responsive">
