@@ -443,7 +443,8 @@ class VisitorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $visitor=Visitor::where('id', $id)->first();
+
     }
 
     /**
