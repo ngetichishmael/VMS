@@ -119,7 +119,7 @@
                                              Blacklist
                                         </a>
                                     @else
-                                        <a href="{{ route('VisitAllCheckIn.update', ['visitor' => $visitor->id, 'status' => 0]) }}" style="color: rgba(255,69,0,0.7);">
+                                        <a href="{{ route('VisitAllCheckIn.update', ['id' => $visitor->id, 'status' => 0]) }}" style="color: rgba(255,69,0,0.7);">
                                              Whitelist
                                         </a>
                                     @endif

@@ -66,9 +66,7 @@ class VisitorController extends Controller
      */
     public function update($id, $status)
     {
-        dd($id);
-        $visitor = Visitor::find($request->query('visitor'));
-        info("visitor is ".$visitor);
+        $visitor = Visitor::find($id);
 
         if($visitor->status==1){
             $whitelisted_by=request()->user()->user_code;
@@ -78,7 +76,7 @@ class VisitorController extends Controller
             $blacklisted_by =request()->user()->user_code;
             $visitor->blacklisted_by=$blacklisted_by;
         }
-        $visitor->status = $request->query('status') == 1 ? 1 : 0;
+        $visitor->status = $status == 1 ? 1 : 0;
         $visitor->save();
         return back()->with('success', 'Status Updated Successfully');
     }
