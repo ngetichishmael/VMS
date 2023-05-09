@@ -217,6 +217,6 @@ Route::middleware(['auth', 'validOTP'])->group(function () {
         'index' => 'activity',
         'show' => 'activity.show',
     ]);
-    Route::get('Visits/AllCheckIn/{visitor}/{status}', 'AllCheckinsController@update')->name('VisitAllCheckIn.update');
+    Route::get('Visits/AllCheckIn/{visitor}/{status}', 'VisitorController@update')->name('VisitAllCheckIn.update');
 
 });
