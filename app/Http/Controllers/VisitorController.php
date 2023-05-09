@@ -64,10 +64,10 @@ class VisitorController extends Controller
      * @param  \App\Models\Visitor  $visitor
      * @return \Illuminate\Http\Response
      */
-    public function update()
+    public function update(Request $request)
     {
         info(request());
-        $visitor = Visitor::find(request()->query('visitor'));
+        $visitor = Visitor::find($request->query('visitor'));
         info("visitor is ".$visitor);
 
         if($visitor->status==1){
