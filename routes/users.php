@@ -20,6 +20,7 @@ use App\Http\Controllers\Visit\AllCheckinsController;
 use App\Http\Controllers\Visit\IDCheckinsController;
 use App\Http\Controllers\Visit\iPassCheckinsController;
 use App\Http\Controllers\Visit\SmsCheckinsController;
+use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\WalkInController;
 use Illuminate\Support\Facades\Route;
 
@@ -217,6 +218,6 @@ Route::middleware(['auth', 'validOTP'])->group(function () {
         'index' => 'activity',
         'show' => 'activity.show',
     ]);
-    Route::get('Visits/AllCheckIn/{visitor}/{status}', 'VisitorController@update')->name('VisitAllCheckIn.update');
+    Route::get('Visits/AllCheckIn/{visitor}/{status}', [VisitorController::class , 'update'])->name('VisitAllCheckIn.update');
 
 });
