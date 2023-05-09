@@ -124,7 +124,7 @@
                                             </a>
                                         @else
                                             <a href="{{ route('VisitAllCheckIn.update', ['visitor' => $visitor->id, 'status' => 0]) }}" style="color: rgba(255,69,0,0.7);">
-                                                <i class="fa fa-eye"></i> Whitelist
+                                                Whitelist
                                             </a>
                                         @endif
                                     </td>
