@@ -68,6 +68,7 @@ class VisitorController extends Controller
     {
         $visitor->status = $request->input('status') ? 1 : 0;
         $visitor->save();
+        return back()->with('success', 'Status Updated Successfully');
     }
 
     /**

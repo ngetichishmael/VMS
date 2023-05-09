@@ -111,7 +111,6 @@
                             <th>Time In</th>
                             <th>Time Out</th>
                             <th>Duration</th>
-                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -119,9 +118,8 @@
                     <tbody>
                         @forelse($visitors as $key => $visitor)
                             <td>{!! $visitor->name ?? 'NA' !!} </td>
-                            <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}
-                            </td>
-{{--                            <td>{!! $visitor->resident->unit->block->premise->organization()->pluck('name')->implode('') !!}</td>--}}
+                            <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }} </td>
+                            <td>{!! $visitor->resident->unit->block->premise->organization()->pluck('name')->implode('') !!}</td>
                             <td>{!! $visitor->type !!} </td>
                             <td>{!! $visitor->timeLog->entry_time !!}</td>
                             @if (!isset($visitor->timeLog->exit_time))
@@ -139,7 +137,7 @@
                             <td>
                                 @if ($visitor->status == 0)
                                     <a href="{{ route('VisitAllCheckIn.update', ['visitor' => $visitor->id, 'status' => 1]) }}" style="color: #5a7c5a;">
-                                        <i class="fa fa-edit"></i> Blacklist
+                                        Blacklist
                                     </a>
                                 @else
                                     <a href="{{ route('VisitAllCheckIn.update', ['visitor' => $visitor->id, 'status' => 0]) }}" style="color: rgba(255,69,0,0.7);">
