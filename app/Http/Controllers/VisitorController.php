@@ -67,7 +67,7 @@ class VisitorController extends Controller
     public function update(Request $request)
     {
         info(request());
-        dd($request->query('visitor'));
+        dd($request->query('id'));
         $visitor = Visitor::find($request->query('visitor'));
         info("visitor is ".$visitor);
 

@@ -115,7 +115,7 @@
                                 @endif
                                 <td>
                                     @if ($visitor->status == 0)
-                                        <a href="{{ route('VisitAllCheckIn.update', ['visitor' => $visitor->id, 'status' => 1]) }}" style="color: #5a7c5a;">
+                                        <a href="{{ route('VisitAllCheckIn.update', ['id' => $visitor->id, 'status' => 1]) }}" style="color: #5a7c5a;">
                                              Blacklist
                                         </a>
                                     @else
