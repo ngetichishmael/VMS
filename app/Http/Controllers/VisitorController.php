@@ -66,7 +66,7 @@ class VisitorController extends Controller
      */
     public function update(UpdateVisitorRequest $request, Visitor $visitor)
     {
-        //
+//        $visitor::where()
     }
 
     /**

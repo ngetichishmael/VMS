@@ -58,7 +58,7 @@ Route::group(['namespace' => 'Api'], function () {
 
         Route::post('visitors/verify_returning_visitor', [VisitorController::class, 'returningVisitorVerify']);
         Route::put('visitors/checkin_returning_visitor', [VisitorController::class, 'store'])->name('api.visitors.store');
-        Route::put('visitors/blacklist', [VisitorController::class, 'update'])->name('api.visitors.update');
+        Route::put('visitors/blacklist', [VisitorController::class, 'blacklist'])->name('api.visitors.blacklist');
 
         Route::post('visitors/device', [DeviceController::class, 'store']);
         Route::get('visitors/device/all', [DeviceController::class, 'store']);

@@ -103,10 +103,10 @@
                 <table class="table">
                     <thead>
                         <tr>
-               
+
                             <th>Name</th>
                             <th>Site</th>
-                          
+
                             <th>Organization</th>
                             <th>Check-in type</th>
                             <th>Time In</th>
@@ -137,6 +137,8 @@
                                 </td>
                             @endif
                             <td>
+                                <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
+                                    <i class="fa fa-circle-notch" style="color:#808080"> </i></a>
                                 <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
                                     <i class="fa fa-eye" style="color:#808080"> </i></a>
                             </td>
