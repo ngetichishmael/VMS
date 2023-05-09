@@ -84,10 +84,11 @@
 {{--                            </th>--}}
                             <th>Phone Number</th>
                             <th>Site</th>
-                            <th>Section</th>
+{{--                            <th>Section</th>--}}
                             <th>Organization</th>
                             <th>Time In</th>
                             <th>Time Out</th>
+                            <th>Duration</th>
                             <th>Duration</th>
                             <th>Action</th>
                         </tr>
@@ -114,16 +115,18 @@
                                         </span>
                                     </td>
                                 @endif
-                                <td >
+                                <td>
                                     @if ($visitor->status == 0)
-                                        <a href="{{ route('VisitAllCheckIn.update', ['visitor' => $visitor->id, 'status' => 1]) }}" style="color: palegreen;">
-                                            <i class="fa fa-eye"></i> Blacklist
+                                        <a href="{{ route('VisitAllCheckIn.update', ['visitor' => $visitor->id, 'status' => 1]) }}" style="color: #5a7c5a;">
+                                            <i class="fa fa-edit"></i> Blacklist
                                         </a>
                                     @else
-                                        <a href="{{ route('VisitAllCheckIn.update', ['visitor' => $visitor->id, 'status' => 0]) }}" style="color: orangered;">
+                                        <a href="{{ route('VisitAllCheckIn.update', ['visitor' => $visitor->id, 'status' => 0]) }}" style="color: rgba(255,69,0,0.7);">
                                             <i class="fa fa-eye"></i> Whitelist
                                         </a>
                                     @endif
+                                </td>
+                                <td>
                                     <a href="{{ route('VisitSMSCheckIn.show', $visitor->id) }}">
                                     <i class="fa fa-eye" style="color:#808080">  </i></a>
                                 </td>

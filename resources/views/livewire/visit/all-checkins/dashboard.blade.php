@@ -106,12 +106,12 @@
 
                             <th>Name</th>
                             <th>Site</th>
-
                             <th>Organization</th>
                             <th>Check-in type</th>
                             <th>Time In</th>
                             <th>Time Out</th>
                             <th>Duration</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -121,7 +121,7 @@
                             <td>{!! $visitor->name ?? 'NA' !!} </td>
                             <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}
                             </td>
-                            <td>{!! $visitor->resident->unit->block->premise->organization()->pluck('name')->implode('') !!}</td>
+{{--                            <td>{!! $visitor->resident->unit->block->premise->organization()->pluck('name')->implode('') !!}</td>--}}
                             <td>{!! $visitor->type !!} </td>
                             <td>{!! $visitor->timeLog->entry_time !!}</td>
                             @if (!isset($visitor->timeLog->exit_time))
@@ -138,14 +138,16 @@
                             @endif
                             <td>
                                 @if ($visitor->status == 0)
-                                    <a href="{{ route('VisitAllCheckIn.update', ['visitor' => $visitor->id, 'status' => 1]) }}" style="color: palegreen;">
-                                        <i class="fa fa-eye"></i> Blacklist
+                                    <a href="{{ route('VisitAllCheckIn.update', ['visitor' => $visitor->id, 'status' => 1]) }}" style="color: #5a7c5a;">
+                                        <i class="fa fa-edit"></i> Blacklist
                                     </a>
                                 @else
-                                    <a href="{{ route('VisitAllCheckIn.update', ['visitor' => $visitor->id, 'status' => 0]) }}" style="color: orangered;">
+                                    <a href="{{ route('VisitAllCheckIn.update', ['visitor' => $visitor->id, 'status' => 0]) }}" style="color: rgba(255,69,0,0.7);">
                                         <i class="fa fa-eye"></i> Whitelist
                                     </a>
                                 @endif
+                            </td>
+                            <td>
                                 <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
                                     <i class="fa fa-eye" style="color:#808080"> </i></a>
                             </td>
