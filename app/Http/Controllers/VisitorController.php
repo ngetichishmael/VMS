@@ -64,19 +64,18 @@ class VisitorController extends Controller
      * @param  \App\Models\Visitor  $visitor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update($id, $status)
     {
-        info(request());
-        dd($request->query('id'));
+        dd($id);
         $visitor = Visitor::find($request->query('visitor'));
         info("visitor is ".$visitor);
 
         if($visitor->status==1){
-            $whitelisted_by=$request->user()->user_code;
+            $whitelisted_by=request()->user()->user_code;
             $visitor->whitelisted_by=$whitelisted_by;
         }
         else{
-            $blacklisted_by =$request->user()->user_code;
+            $blacklisted_by =request()->user()->user_code;
             $visitor->blacklisted_by=$blacklisted_by;
         }
         $visitor->status = $request->query('status') == 1 ? 1 : 0;
