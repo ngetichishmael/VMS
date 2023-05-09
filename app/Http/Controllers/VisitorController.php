@@ -66,7 +66,8 @@ class VisitorController extends Controller
      */
     public function update(UpdateVisitorRequest $request, Visitor $visitor)
     {
-//        $visitor::where()
+        $visitor->status = $request->input('status') ? 1 : 0;
+        $visitor->save();
     }
 
     /**
