@@ -68,6 +68,7 @@ class VisitorController extends Controller
     {
         info(request());
         $visitor = Visitor::find(request()->query('visitor'));
+        info("visitor is ".$visitor);
 
         if($visitor->status==1){
             $whitelisted_by=request()->user()->user_code;
