@@ -212,6 +212,7 @@ Route::middleware(['auth', 'validOTP'])->group(function () {
     Route::resource('Visits/AllCheckIn', AllCheckinsController::class)->names([
         'index' => 'VisitAllCheckIn',
         'show' => 'VisitAllCheckIn.show',
+        'update' => 'VisitAllCheckIn.update',
     ]);
     Route::resource('logs/activities', ActivityController::class)->names([
         'index' => 'activity',

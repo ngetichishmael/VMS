@@ -120,7 +120,7 @@
                                             <i class="fa fa-eye"></i> Blacklist
                                         </a>
                                     @else
-                                        <a href="{{ route('VisitAllCheckIn.update', ['visitor' => $visitor->id, 'status' => 0]) }}" style="color: redorange;">
+                                        <a href="{{ route('VisitAllCheckIn.update', ['visitor' => $visitor->id, 'status' => 0]) }}" style="color: orangered;">
                                             <i class="fa fa-eye"></i> Whitelist
                                         </a>
                                     @endif
