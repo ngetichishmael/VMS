@@ -27,7 +27,7 @@ $configData = Helper::applClasses();
         <!-- Left Text-->
         <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
             <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
-            
+
                        <img class="img-fluid" src="{{ asset('images/pages/login-v2-dark.svg') }}" alt="Login V2" />
 
             </div>
@@ -38,7 +38,7 @@ $configData = Helper::applClasses();
         <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
             <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
                 <h2 class="card-title font-weight-bold mb-1">Welcome to Moja<b>Pass</b>! 👋</h2>
-                <p class="card-text mb-2">Enter the OTP Sent to your Email</p>
+                <p class="card-text mb-2">Enter the OTP Sent to your Email and Phone number</p>
                 @if ($errors->has('otp'))
                 <span class="help-block">
                     <strong class="text-danger">{{ $errors->first('otp') }}</strong>
@@ -51,7 +51,14 @@ $configData = Helper::applClasses();
                         <input class="form-control" id="otp" type="text" name="otp" placeholder="****" aria-describedby="login-email" autofocus="" tabindex="1" />
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-block" tabindex="4">Verify</button>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-primary btn-block" tabindex="4">Verify</button>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{route('login')}}" type="reset" class="btn btn-primary btn-block" tabindex="4">Resend</a>
+                        </div>
+                    </div>
                 </form>
 
             </div>
