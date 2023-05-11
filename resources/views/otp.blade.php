@@ -59,7 +59,7 @@ $configData = Helper::applClasses();
 {{--                            <button id="resendButton" type="button" class="btn btn-primary btn-block" tabindex="4" disabled>Resend</button>--}}
 {{--                        </div>--}}
                         <div class="col-md-6">
-                            <a href="{{route('login')}}" id="resendButton" type="button" class="btn btn-primary btn-block" tabindex="4"  disabled>Resend</a>
+                            <a href="{{route('login')}}" id="resendButton" type="button" class="btn btn-primary btn-block" tabindex="4" disabled="">Resend</a>
                         </div>
                     </div>
                 </form>
