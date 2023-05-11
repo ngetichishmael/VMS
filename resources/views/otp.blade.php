@@ -59,13 +59,13 @@ $configData = Helper::applClasses();
 {{--                            <button id="resendButton" type="button" class="btn btn-primary btn-block" tabindex="4" disabled>Resend</button>--}}
 {{--                        </div>--}}
                         <div class="col-md-6">
-                            <a href="{{route('login')}}" id="resendButton" type="button" class="btn btn-primary btn-block" tabindex="4" disabled="">Resend</a>
+                            <a href="{{route('login')}}" id="resendButton" type="button" class="btn btn-primary btn-block" tabindex="4">Resend</a>
                         </div>
                     </div>
                 </form>
 
                 <div class="col-md-6 mt-5 " style="margin-left: 80%">
-                    <a href="/" id="resendButton" type="reset" tabindex="4"  disabled>Back to Login</a>
+                    <a href="/" id="resendButton" type="reset" tabindex="4" >Back to Login</a>
                 </div>
             </div>
         </div>
@@ -73,33 +73,56 @@ $configData = Helper::applClasses();
 
 </div>
 <script>
-    // Countdown timer in seconds
-    var countdownSeconds = 60;
+    var counter = 60;
+    var resendButton = $('#resendButton');
 
-    function startTimer() {
-        var button = document.getElementById('resendButton');
-
-        // Disable the button initially
-        button.disabled = true;
-
-        var interval = setInterval(function() {
-            // Update the button text with the remaining seconds
-            button.innerText = 'Resend (' + countdownSeconds + 's)';
-
-            if (countdownSeconds === 0) {
-                // Enable the button after the countdown
-                button.disabled = false;
-                button.innerText = 'Resend';
-                clearInterval(interval);
-            }
-
-            countdownSeconds--;
-        }, 1000);
+    function updateCounter() {
+        if (counter > 0) {
+            counter--;
+            resendButton.text('Resend (' + counter + 's)');
+            setTimeout(updateCounter, 1000);
+        } else {
+            resendButton.text('Resend');
+            resendButton.prop('disabled', false);
+        }
     }
 
-    // Start the timer when the page loads
-    window.onload = startTimer;
+    resendButton.click(function() {
+        resendButton.prop('disabled', true);
+        counter = 60;
+        updateCounter();
+        // Add your resend logic here if needed
+    });
 </script>
+
+{{--<script>--}}
+{{--    // Countdown timer in seconds--}}
+{{--    var countdownSeconds = 60;--}}
+
+{{--    function startTimer() {--}}
+{{--        var button = document.getElementById('resendButton');--}}
+
+{{--        // Disable the button initially--}}
+{{--        button.disabled = true;--}}
+
+{{--        var interval = setInterval(function() {--}}
+{{--            // Update the button text with the remaining seconds--}}
+{{--            button.innerHTML  = 'Resend (' + countdownSeconds + 's)';--}}
+
+{{--            if (countdownSeconds === 0) {--}}
+{{--                // Enable the button after the countdown--}}
+{{--                button.disabled = false;--}}
+{{--                button.innerHTML  = 'Resend';--}}
+{{--                clearInterval(interval);--}}
+{{--            }--}}
+
+{{--            countdownSeconds--;--}}
+{{--        }, 1000);--}}
+{{--    }--}}
+
+{{--    // Start the timer when the page loads--}}
+{{--    window.onload = startTimer;--}}
+{{--</script>--}}
 
 @endsection
 
