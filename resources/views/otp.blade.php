@@ -55,16 +55,52 @@ $configData = Helper::applClasses();
                         <div class="col-md-6">
                             <button type="submit" class="btn btn-primary btn-block" tabindex="4">Verify</button>
                         </div>
+{{--                        <div class="col-md-6">--}}
+{{--                            <button id="resendButton" type="button" class="btn btn-primary btn-block" tabindex="4" disabled>Resend</button>--}}
+{{--                        </div>--}}
                         <div class="col-md-6">
-                            <a href="{{route('login')}}" type="reset" class="btn btn-primary btn-block" tabindex="4">Resend</a>
+                            <a href="{{route('login')}}" id="resendButton" type="button" class="btn btn-primary btn-block" tabindex="4"  disabled>Resend</a>
                         </div>
                     </div>
                 </form>
 
+                <div class="col-md-6 mt-5 " style="margin-left: 80%">
+                    <a href="/" id="resendButton" type="reset" tabindex="4"  disabled>Back to Login</a>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
+<script>
+    // Countdown timer in seconds
+    var countdownSeconds = 60;
+
+    function startTimer() {
+        var button = document.getElementById('resendButton');
+
+        // Disable the button initially
+        button.disabled = true;
+
+        var interval = setInterval(function() {
+            // Update the button text with the remaining seconds
+            button.innerText = 'Resend (' + countdownSeconds + 's)';
+
+            if (countdownSeconds === 0) {
+                // Enable the button after the countdown
+                button.disabled = false;
+                button.innerText = 'Resend';
+                clearInterval(interval);
+            }
+
+            countdownSeconds--;
+        }, 1000);
+    }
+
+    // Start the timer when the page loads
+    window.onload = startTimer;
+</script>
+
 @endsection
 
 @section('vendor-script')
