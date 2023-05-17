@@ -18,7 +18,7 @@ class AuthenticationController extends Controller
     {
         $user = null;
         if (!Auth::attempt([
-            'phone_number' => $request->phone_number, 'status' => '1', 'role_id'=> '1' | '2'
+            'phone_number' => $request->phone_number, 'status' => '1', 'role_id'=> '1' || '2'
         ], true)) {
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
