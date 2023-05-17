@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::match(['get', 'post'],'/', function () {
     $pageConfigs = ['blankPage' => true];
     return view('welcome', ['pageConfigs' => $pageConfigs]);
 });
