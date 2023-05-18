@@ -83,8 +83,7 @@ class SmsCheckInController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
-            ->orWhere('phone_number', $request->input('phone1'))
+        $user_details = UserDetail::where('phone_number', $request->input('phone1'))
             ->first();
         if ($user_details) {
             $visitor = Visitor::where('user_detail_id', $user_details->id)->latest('id')->first();
@@ -143,8 +142,7 @@ class SmsCheckInController extends Controller
         $timeLog->save();
         $visitor->time_log_id = $timeLog->id;
 
-        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
-            ->orWhere('phone_number', $request->input('phone1'))
+        $user_details = UserDetail::where('phone_number', $request->input('phone1'))
             ->first();
         if (!$user_details) {
             $user_details = new UserDetail();
