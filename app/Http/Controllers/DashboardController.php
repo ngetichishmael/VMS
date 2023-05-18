@@ -896,6 +896,7 @@ class DashboardController extends Controller
 
         return view('content.dashboard.dashboard-ecommerce', ['pageConfigs' => $pageConfigs]);
     }
+
     public function store(Request $request)
     {
         $exists = UserCode::where('user_id', $request->user()->id)
@@ -903,8 +904,9 @@ class DashboardController extends Controller
             ->where('updated_at', '>=', now()->subMinutes(10))
             ->latest('updated_at')
             ->exists();
+
         if ($exists) {
-            ValidToken::updateOrcreate(
+            ValidToken::updateOrCreate(
                 [
                     'user_id' => $request->user()->id,
                 ],
@@ -913,18 +915,44 @@ class DashboardController extends Controller
                     'is_valid_otp' => 1
                 ]
             );
+
             return redirect()->to('/dashboard');
         }
-        try {
-            throw ValidationException::withMessages([
-                'otp' => "Invalid OTP",
-            ]);
-        } catch (ValidationException $e) {
-           throw ValidationException::withMessages([
-                'otp' => "Invalid OTP",
 
-            ]);
-//            $e->getMessage();
-        }
+        throw ValidationException::withMessages([
+            'otp' => ["Invalid OTP"],
+        ]);
     }
+
+//    public function store(Request $request)
+//    {
+//        $exists = UserCode::where('user_id', $request->user()->id)
+//            ->where('code', $request->otp)
+//            ->where('updated_at', '>=', now()->subMinutes(10))
+//            ->latest('updated_at')
+//            ->exists();
+//        if ($exists) {
+//            ValidToken::updateOrcreate(
+//                [
+//                    'user_id' => $request->user()->id,
+//                ],
+//                [
+//                    'phone_number' => $request->user()->phone_number,
+//                    'is_valid_otp' => 1
+//                ]
+//            );
+//            return redirect()->to('/dashboard');
+//        }
+//        try {
+//            throw ValidationException::withMessages([
+//                'otp' => "Invalid OTP",
+//            ]);
+//        } catch (ValidationException $e) {
+//           throw ValidationException::withMessages([
+//                'otp' => "Invalid OTP",
+//
+//            ]);
+////            $e->getMessage();
+//        }
+//    }
 }

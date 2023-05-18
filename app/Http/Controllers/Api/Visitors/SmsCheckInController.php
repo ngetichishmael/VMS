@@ -27,7 +27,7 @@ class SmsCheckInController extends Controller
     {
          $sentry=Sentry::where('phone_number', $request->user()->phone_number)->first();
         return response()->json(Visitor::with(['resident2', 'user_details', 'sentry', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $sentry->id )
-            ->where('type', 'sms')
+            ->where('type', 'SMS')
             ->get());
     }
     public function smsUncheckout(Request $request)
