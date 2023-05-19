@@ -100,7 +100,8 @@
 {{--                                <td>{{ $visitor->id }}</td>--}}
                                 <td>{!! $visitor->name!!} </td>
 {{--                                <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}</td>--}}
-                                <td>{{ $visitor->sentry->premise_id->name ?? '' }}</td>
+                                <td>{{ $visitor->sentry->premise_id->premise->name ?? '' }}</td>
+                                <td>{{ $visitor->sentry->premise_id ?? '' }}</td>
 {{--                                <td>{!! $visitor->resident->unit->name !!}</td>--}}
 {{--                                <td>{!! $visitor->resident->unit->block->premise->organization()->pluck("name")->implode('') !!}</td>--}}
                                 <td>{{ $visitor->sentry->premise_id->premise->organization_code->organization->name ?? '' }}</td>
