@@ -85,7 +85,6 @@
                             <th>Name </th>
                             <th>Site</th>
 {{--                            <th>Section</th>--}}
-                            <th>dd</th>
                             <th>Organization</th>
                             <th>Time In</th>
                             <th>Time Out</th>

@@ -118,8 +118,8 @@
                     <tbody>
                         @forelse($visitors as $key => $visitor)
                             <td>{!! $visitor->name ?? 'NA' !!} </td>
-                            <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }} </td>
-                            <td>{!! $visitor->resident->unit->block->premise->organization()->pluck('name')->implode('') !!}</td>
+                            <td>{{ $visitor->sentry->premise->name ?? '' }}</td>
+                            <td>{{ $visitor->sentry->premise->organization->name ?? '' }}</td>
                             <td>{!! $visitor->type !!} </td>
                             <td>{!! $visitor->timeLog->entry_time !!}</td>
                             @if (!isset($visitor->timeLog->exit_time))
