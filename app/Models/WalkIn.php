@@ -28,7 +28,7 @@ class WalkIn extends Model
 
     public function premises()
     {
-        return $this->hasMany(Premise::class, );
+        return $this->hasMany(Premise::class, 'premise_id' );
     }
     public function user(): HasMany
     {
