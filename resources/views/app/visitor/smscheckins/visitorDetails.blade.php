@@ -186,14 +186,14 @@
                             <div class="form-group">
                                 <label>Company Name</label>
                                 <input type="text" class="form-control"
-                                    value="{{ $visitor->user_details->company ?? 'Not Available' }}" readonly />
+                                       value="{{ $visitor->sentry->premise->organization->name ?? 'Not Available' }}" readonly />
                             </div>
                         </div>
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Premises Name</label>
                                 <input type="text" class="form-control"
-                                    value="{{ $visitor->Resident->unit->block->premise->name ?? 'Not Available' }}"
+                                       value="{{ $visitor->sentry->premise->name  ?? 'Not Available' }}"
                                     readonly />
                             </div>
                         </div>
