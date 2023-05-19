@@ -87,7 +87,7 @@
 
                                 <th>Name</th>
                                 <th>Vehicle Reg</th>
-                                <th>Site</th>
+                                <th>Premises</th>
                                 <th>Organization</th>
                                 <th>Time In</th>
                                 <th>Time Out</th>

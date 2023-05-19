@@ -105,7 +105,7 @@
                         <tr>
 
                             <th>Name</th>
-                            <th>Site</th>
+                            <th>Premises</th>
                             <th>Organization</th>
                             <th>Check-in type</th>
                             <th>Time In</th>
