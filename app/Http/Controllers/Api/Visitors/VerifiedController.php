@@ -11,6 +11,7 @@ use App\Models\Sentry;
 use App\Models\TimeLog;
 use App\Models\UserDetail;
 use App\Models\Visitor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -91,8 +92,9 @@ class VerifiedController extends Controller
             $visitor->attachment4 = basename($path);
         }
         $timeLog = new TimeLog;
-        $timeLog->entry_time = now();
+        $timeLog->entry_time = Carbon::now();
         $timeLog->save();
+        
         $time=$timeLog->entry_time;
         $visitor->time_log_id = $timeLog->id;
 

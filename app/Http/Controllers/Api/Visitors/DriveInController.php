@@ -82,7 +82,7 @@ class DriveInController extends Controller
         //        $now = Carbon::now();
         //        $nairobiNow = $now->setTimezone('Africa/Nairobi');
         //        $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
-        $timeLog->entry_time = now();
+        $timeLog->entry_time = Carbon::now();
 
         $timeLog->save();
         $time = $timeLog->entry_time;

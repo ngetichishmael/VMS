@@ -121,13 +121,13 @@
                                     </h4>
                                     <hr style="color: #bebbbb" />
                                     <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">THIS WEEK
-                                        @php
-                                            $percentChange = $idLastWeek > 0 ? ($idThisWeek - $idLastWeek) / $idLastWeek * 100 : 0;
-                                           $percentChange = number_format($percentChange, 1);
-                                            $color = $percentChange > 0 ? 'green' : 'orange';
-                                            $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
-                                        @endphp
-                                        <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>
+{{--                                        @php--}}
+{{--                                            $percentChange = $idLastWeek > 0 ? ($idThisWeek - $idLastWeek) / $idLastWeek * 100 : 0;--}}
+{{--                                           $percentChange = number_format($percentChange, 1);--}}
+{{--                                            $color = $percentChange > 0 ? 'green' : 'orange';--}}
+{{--                                            $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';--}}
+{{--                                        @endphp--}}
+{{--                                        <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>--}}
                                     </p>
                                 </div>
                                 <div class="media-body my-auto">

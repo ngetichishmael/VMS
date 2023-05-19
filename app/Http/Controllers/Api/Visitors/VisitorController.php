@@ -313,7 +313,7 @@ class VisitorController extends Controller
         $visitor->tag = $request->input('tag');
 
         $timeLog = new TimeLog;
-        $timeLog->entry_time = now();
+        $timeLog->entry_time = Carbon::now();
         $timeLog->save();
         $time=$timeLog->entry_time;
         $visitor->time_log_id = $timeLog->id;

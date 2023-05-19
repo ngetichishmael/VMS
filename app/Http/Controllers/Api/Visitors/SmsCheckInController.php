@@ -138,12 +138,11 @@ class SmsCheckInController extends Controller
 
 
          $timeLog = new TimeLog;
-        $timeLog->entry_time = now();
+        $timeLog->entry_time = Carbon::now();
         $timeLog->save();
         $visitor->time_log_id = $timeLog->id;
 
-        $user_details = UserDetail::where('phone_number', $request->input('phone1'))
-            ->first();
+        $user_details = UserDetail::where('phone_number', $request->input('phone1'))->first();
         if (!$user_details) {
             $user_details = new UserDetail();
             $user_details->phone_number = $request->input('phone1');
