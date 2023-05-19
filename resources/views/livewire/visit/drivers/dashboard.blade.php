@@ -101,9 +101,9 @@
                                 <tr>
 {{--                                    <td>{{ $visitor->id }}</td>--}}
                                     <td>{!! $visitor->name !!} </td>
+                                    <td>{!! $visitor->vehicle()->pluck('registration')->implode('') !!} </td>
                                     <td>{{ $visitor->sentry->premise->name ?? '' }}</td>
                                     <td>{{ $visitor->sentry->premise->organization->name ?? '' }}</td>
-                                    <td>{!! $visitor->Resident->unit->block->premise->organization->name ?? 'Not Found' !!}</td>
                                     <td>{!! $visitor->timeLog->entry_time ?? '-' !!}</td>
                                     @if (!isset($visitor->timeLog->exit_time))
                                         <td>...</td>

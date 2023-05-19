@@ -97,7 +97,7 @@
                         <tbody>
                         @forelse($visitors as $visitor)
                             <tr>
-{{--                                <td>{!! $visitor->name!!} </td>--}}
+                                <td>{!! $visitor->name!!} </td>
                                 <td>{{ $visitor->sentry->premise->name ?? '' }}</td>
                                 <td>{{ $visitor->sentry->premise->organization->name ?? '' }}</td>
                                 <td>{!! $visitor->timeLog->entry_time !!}</td>
