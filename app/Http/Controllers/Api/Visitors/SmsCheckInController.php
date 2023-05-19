@@ -89,11 +89,14 @@ class SmsCheckInController extends Controller
         })->where('phone_number', $request->input('phone1'))->first();
         if ($user_details) {
             $visitor = Visitor::where('user_detail_id', $user_details->id)->latest('id')->first();
+            if ($visitor->status==1) {
+                return response()->json(['error' => 'Visitor is in the blacklist, please contact Admin'], 409);
+            }
             if ($visitor && $visitor->time_log_id) {
                 $timeLog = TimeLog::find($visitor->time_log_id);
 
                 if ($timeLog && $timeLog->exit_time === null) {
-                    return response()->json(['error' => 'User already signed in, to continue checkout then checkin'],409);
+                    return response()->json(['error' => 'Visitor already signed in, to continue checkout then checkin'],409);
                 }
             }
         }
