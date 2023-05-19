@@ -85,8 +85,8 @@
                             <th>Name </th>
                             <th>Site</th>
 {{--                            <th>Section</th>--}}
+                            <th>dd</th>
                             <th>Organization</th>
-                            <th></th>
                             <th>Time In</th>
                             <th>Time Out</th>
                             <th>Duration</th>
@@ -102,6 +102,7 @@
                                 <td>{!! $visitor->name!!} </td>
 {{--                                <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}</td>--}}
                                 <td>{{ $visitor->sentry->premise_id->premises->name ?? '' }}</td>
+                                <td>{{ $visitor->sentry->premise_id ?? '' }}</td>
                                 <td>{{ $visitor->sentry->premise_id->premises ?? '' }}</td>
 {{--                                <td>{!! $visitor->resident->unit->name !!}</td>--}}
 {{--                                <td>{!! $visitor->resident->unit->block->premise->organization()->pluck("name")->implode('') !!}</td>--}}
