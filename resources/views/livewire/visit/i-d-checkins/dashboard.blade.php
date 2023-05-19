@@ -103,6 +103,7 @@
 {{--                                <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}</td>--}}
                                 <td>{{ $visitor->sentry->premise_id->premises->name ?? '' }}</td>
                                 <td>{{ $visitor->sentry->premise_id ?? '' }}</td>
+                                <td>{{ $visitor->sentry->premise->name ?? '' }}</td>
                                 <td>{{ $visitor->sentry->premise_id->premises ?? '' }}</td>
 {{--                                <td>{!! $visitor->resident->unit->name !!}</td>--}}
 {{--                                <td>{!! $visitor->resident->unit->block->premise->organization()->pluck("name")->implode('') !!}</td>--}}
