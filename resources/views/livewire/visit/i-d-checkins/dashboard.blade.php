@@ -100,10 +100,10 @@
 {{--                                <td>{{ $visitor->id }}</td>--}}
                                 <td>{!! $visitor->name!!} </td>
 {{--                                <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}</td>--}}
-                                <td>{{ $visitor->sentry->id ?? '' }}</td>
+                                <td>{{ $visitor->sentry->premise_id->name ?? '' }}</td>
 {{--                                <td>{!! $visitor->resident->unit->name !!}</td>--}}
 {{--                                <td>{!! $visitor->resident->unit->block->premise->organization()->pluck("name")->implode('') !!}</td>--}}
-                                <td>{{ $visitor->sentry->id ?? '' }}</td>
+                                <td>{{ $visitor->sentry->premise_id->premise->organization_code->organization->name ?? '' }}</td>
                                 <td>{!! $visitor->timeLog->entry_time ?? null !!}</td>
 
                                 @if (!isset($visitor->timeLog->exit_time))
