@@ -40,9 +40,7 @@ class VerifiedController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
-            ->orWhere('phone_number', $request->input('phone1'))
-            ->first();
+        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))->first();
         if ($user_details) {
             $visitor = Visitor::where('user_detail_id', $user_details->id)->latest('id')->first();
 

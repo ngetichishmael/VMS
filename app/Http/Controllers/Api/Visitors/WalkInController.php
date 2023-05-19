@@ -47,9 +47,10 @@ class WalkInController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
-            ->orWhere('phone_number', $request->input('phone1'))
-            ->first();
+        $user_details = UserDetail::where(function ($query) {
+            $query->whereNotNull('phone_number')
+                ->where('phone_number', '!=', 0);
+        })->where('phone_number', $request->input('phone1'))->first();
         if ($user_details) {
             $visitor = Visitor::where('user_detail_id', $user_details->id)->latest('id')->first();
 
@@ -105,9 +106,13 @@ class WalkInController extends Controller
         $visitor->time_log_id = $timeLog->id;
 
 
-        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
-            ->orWhere('phone_number', $request->input('phone1'))
-            ->first();
+//        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
+//            ->orWhere('phone_number', $request->input('phone1'))
+//            ->first();
+        $user_details = UserDetail::where(function ($query) {
+            $query->whereNotNull('phone_number')
+                ->where('phone_number', '!=', 0);
+        })->where('phone_number', $request->input('phone1'))->first();
         if (!$user_details) {
             $user_details = new UserDetail();
             $user_details->phone_number = $request->input('phone1');
