@@ -49,16 +49,16 @@
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalVisitorsToday}}</h4>
                                     <hr style="color: #bebbbb" />
-{{--                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">TODAY--}}
-{{--                                        @php--}}
-{{--                                            $percentChange = $yesterdayVisitor > 0 ? ($totalVisitorsToday - $yesterdayVisitor) / $yesterdayVisitor * 100 : 0;--}}
-{{--                                            $percentChange = number_format($percentChange, 1);--}}
-{{--                                            $color = $percentChange > 0 ? 'green' : 'orange';--}}
-{{--                                            $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';--}}
-{{--                                        @endphp--}}
-{{--                                        <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>--}}
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">TODAY
+                                        @php
+                                            $percentChange = $yesterdayVisitor > 0 ? ($totalVisitorsToday - $yesterdayVisitor) / $yesterdayVisitor * 100 : 0;
+                                            $percentChange = number_format($percentChange, 1);
+                                            $color = $percentChange > 0 ? 'green' : 'orange';
+                                            $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
+                                        @endphp
+                                        <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>
 
-{{--                                    </p>--}}
+                                    </p>
                                 </div>
                                 <div class="media-body my-auto">
                                     <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $yesterdayVisitor}}</h4>
@@ -109,34 +109,34 @@
                          style=" background: linear-gradient(to right, #792e07, #ff8b4e)">
                         <div class="card-body" >
                             <p class="card-text font-small-3 mx-1"style="color: #fbfcfd">ID CHECK-IN THIS WEEK</p>
-                            <div class="media" style="text-align: center">
-                                <div class="avatar bg-light-primary mr-2">
-                                    <div class="avatar-content" style="background: whitesmoke">
-                                        <i data-feather="" class="avatar-icon fa fa-id-card-alt"></i>
-                                    </div>
-                                </div>
-                                <hr />
-                                <div class="media-body my-auto" >
-                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $idThisWeek }}
-                                    </h4>
-                                    <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">THIS WEEK
-                                        @php
-                                            $percentChange = $idLastWeek > 0 ? ($idThisWeek - $idLastWeek) / $idLastWeek * 100 : 0;
-                                           $percentChange = number_format($percentChange, 1);
-                                            $color = $percentChange > 0 ? 'green' : 'orange';
-                                            $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
-                                        @endphp
-                                        <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>
-                                    </p>
-                                </div>
-                                <div class="media-body my-auto">
-                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $idLastWeek }}
-                                    </h4>
-                                    <hr style="color: #bebbbb" />
-                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">LAST WEEK</p>
-                                </div>
-                            </div>
+{{--                            <div class="media" style="text-align: center">--}}
+{{--                                <div class="avatar bg-light-primary mr-2">--}}
+{{--                                    <div class="avatar-content" style="background: whitesmoke">--}}
+{{--                                        <i data-feather="" class="avatar-icon fa fa-id-card-alt"></i>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <hr />--}}
+{{--                                <div class="media-body my-auto" >--}}
+{{--                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $idThisWeek }}--}}
+{{--                                    </h4>--}}
+{{--                                    <hr style="color: #bebbbb" />--}}
+{{--                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">THIS WEEK--}}
+{{--                                        @php--}}
+{{--                                            $percentChange = $idLastWeek > 0 ? ($idThisWeek - $idLastWeek) / $idLastWeek * 100 : 0;--}}
+{{--                                           $percentChange = number_format($percentChange, 1);--}}
+{{--                                            $color = $percentChange > 0 ? 'green' : 'orange';--}}
+{{--                                            $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';--}}
+{{--                                        @endphp--}}
+{{--                                        <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>--}}
+{{--                                    </p>--}}
+{{--                                </div>--}}
+{{--                                <div class="media-body my-auto">--}}
+{{--                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $idLastWeek }}--}}
+{{--                                    </h4>--}}
+{{--                                    <hr style="color: #bebbbb" />--}}
+{{--                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">LAST WEEK</p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                     </div>
                 </div>
