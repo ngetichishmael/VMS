@@ -46,25 +46,25 @@
                                     </div>
                                 </div>
                                 <hr />
-{{--                                <div class="media-body my-auto">--}}
-{{--                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalVisitorsToday}}</h4>--}}
-{{--                                    <hr style="color: #bebbbb" />--}}
-{{--                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">TODAY--}}
-{{--                                        @php--}}
-{{--                                            $percentChange = $yesterdayVisitor > 0 ? ($totalVisitorsToday - $yesterdayVisitor) / $yesterdayVisitor * 100 : 0;--}}
-{{--                                            $percentChange = number_format($percentChange, 1);--}}
-{{--                                            $color = $percentChange > 0 ? 'green' : 'orange';--}}
-{{--                                            $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';--}}
-{{--                                        @endphp--}}
-{{--                                        <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>--}}
+                                <div class="media-body my-auto">
+                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $totalVisitorsToday}}</h4>
+                                    <hr style="color: #bebbbb" />
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">TODAY
+                                        @php
+                                            $percentChange = $yesterdayVisitor > 0 ? ($totalVisitorsToday - $yesterdayVisitor) / $yesterdayVisitor * 100 : 0;
+                                            $percentChange = number_format($percentChange, 1);
+                                            $color = $percentChange > 0 ? 'green' : 'orange';
+                                            $arrow = $percentChange > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down';
+                                        @endphp
+                                        <span>{{ $percentChange }}%</span> <i style="color: {{ $color }}" class="{{ $arrow }}"></i>
 
-{{--                                    </p>--}}
-{{--                                </div>--}}
-{{--                                <div class="media-body my-auto">--}}
-{{--                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $yesterdayVisitor}}</h4>--}}
-{{--                                    <hr style="color: #bebbbb" />--}}
-{{--                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">YESTERDAY&nbsp;</p>--}}
-{{--                                </div>--}}
+                                    </p>
+                                </div>
+                                <div class="media-body my-auto">
+                                    <h4 class="font-weight-bolder mb-0" style="color: #ffffff">{{ $yesterdayVisitor}}</h4>
+                                    <hr style="color: #bebbbb" />
+                                    <p class="card-text font-small-1 mb-0"style="color: #fbfcfd">YESTERDAY&nbsp;</p>
+                                </div>
                             </div>
                         </div>
                     </div>
