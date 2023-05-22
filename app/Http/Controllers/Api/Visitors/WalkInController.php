@@ -56,16 +56,15 @@ class WalkInController extends Controller
                 $timeLog = TimeLog::find($visitor->time_log_id);
 
                 if ($timeLog && $timeLog->exit_time === null) {
-                    return response()->json(['error' => 'User already signed in, If its by mistake, Sign the user out first to sign back in'], 409);
+                    return response()->json(['error' => 'User already signed in, to continue checkout then checkin'], 409);
                 }
             }
         }
-
-        $nationality = Nationality::find($request->nationality);
-
+        $nationality = null;
+        $nationality = Nationality::where('name', $request->input('nationality'))->first();
         if (!$nationality) {
             $nationality = new Nationality();
-            $nationality->name = $request->input('nationality') ?? '101';
+            $nationality->name = $request->input('nationality') ?? 'Kenya';
             $nationality->save();
         }
         $detail=Sentry::where('phone_number', $request->user()->phone_number ?? '')->first();

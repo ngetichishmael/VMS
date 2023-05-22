@@ -152,7 +152,7 @@
                         <div class="pl-3 image-container" style="width: 200px;height: 150px">
                             @if ($visitor->user_details->image)
                                 <img src="{{ asset('storage/attachments/' . $visitor->user_details->image) }}"
-                                    alt="{{ $visitor->name }}'s ID picture" class="img-fluid" />
+                                    alt="{{ $visitor->user_details->phone_number }}'s ID picture" class="img-fluid" />
                             @else
                                 <div class="image-placeholder">
                                     <i class="fas fa-user"></i>
@@ -161,10 +161,10 @@
                         </div>
                         <div class="card-right">
                             <div class="details">
-                                <span><strong>Name:</strong> {{ $visitor->name }}</span>
+                                <span><strong>Phone: </strong> {{ $visitor->user_details->phone_number}}</span>
                                 <br>
-                                <span><strong>Gender:</strong> {{ ucwords($visitor->user_details->gender) }}</span>
-                                <span><strong>Checked-in By:</strong> {{ $visitor->sentry->name ?? 'Unknown' }}</span>
+                                <span><strong>Gender: </strong> {{ ucwords($visitor->user_details->gender) }}</span>
+                                <span><strong>Checked-in By: </strong> {{ $visitor->sentry->name ?? 'Unknown' }}</span>
 
                                 <ul class="list-group list-group-flush" style="color: #78be6f">
                                     <li class="list-group-item"><strong>No. of Visits: {{ $visitorCount ?? '0' }}</strong>
@@ -209,13 +209,6 @@
                                 <label>Destination</label>
                                 <input type="text" class="form-control"
                                     value="{{ $visitor->Resident->unit->name ?? 'Not Available' }}" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-10">
-                            <div class="form-group">
-                                <label>Signed In By</label>
-                                <input type="text" class="form-control"
-                                    value="{{ $visitor->sentry->name ?? 'Not Available' }}" readonly />
                             </div>
                         </div>
                     </div>
@@ -271,13 +264,13 @@
                                 <input type="text" class="form-control" value="{!! $visitor->purpose1->purpose_description ?? 'Not Available' !!}" readonly />
                             </div>
                         </div>
-                        <div class="pl-1 mb-1 col-md-4">
-                            <div class="form-group">
-                                <label>Phone Number</label>
-                                <input type="text" class="form-control"
-                                    value="{{ $visitor->user_details->phone_number ?? 'Not Available' }}" readonly />
-                            </div>
-                        </div>
+{{--                        <div class="pl-1 mb-1 col-md-4">--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label>Phone Number</label>--}}
+{{--                                <input type="text" class="form-control"--}}
+{{--                                    value="{{ $visitor->user_details->phone_number ?? 'Not Available' }}" readonly />--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <div class="pl-1 mb-1 col-md-4">
                             <div class="form-group">
                                 <label>Alternative Phone Number</label>
@@ -297,7 +290,7 @@
                             <div class="form-group">
                                 <label>Last Check-out</label>
                                 <input type="text" class="form-control"
-                                    value="{{ $lastTimeLog->exit_time ?? 'Not Available' }}" readonly />
+                                    value="{{ $lastTimeLog->exit_time ?? 'Still in...' }}" readonly />
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -314,8 +307,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if ($visitor->vehicle->registration != null)
-                            @dd($visitor->vehicle->registration)
+                        @if (!$visitor->vehicle == null)
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-body">
@@ -382,7 +374,7 @@
                 </div>
             @endif
 
-            
+
             <div class="card col-12">
                 <div class="card-body">
                     <h5 class="card-title" style="color: #1f8af5">Visitor History</h5>
@@ -399,18 +391,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    @foreach ($visitor->timeLogs as $timeLog)
-                                        <tr>
-                                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}
-                                            </td>
-                                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}
-                                            </td>
-                                            <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}
-                                            </td>
-                                            <td>{!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds') !!}</td>
-                                        </tr>
-                                    @endforeach
+                                @foreach ($visitorTimeLogs as $timeLog)
+                                    <tr>
+                                        <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}</td>
+                                        <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}</td>
+                                        <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}</td>
+                                        <td>{!! Carbon::parse($timeLog->entry_time ?? now())->diff(Carbon::parse($timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds') !!}</td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

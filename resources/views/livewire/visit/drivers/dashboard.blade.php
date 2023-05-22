@@ -1,6 +1,7 @@
 @php
     use Carbon\Carbon;
 @endphp
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"  crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <div>
 
@@ -95,10 +96,6 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-
-
-
-
                         <tbody style="font-size: small">
                             @forelse($dvisitors as $key => $visitor)
                                 <tr>
@@ -121,17 +118,10 @@
                                     </td>
                                     @endif
                                     <td>
-{{--                                        <div class="dropdown">--}}
-{{--                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"--}}
-{{--                                                role="button" aria-haspopup="true" aria-expanded="false">--}}
-{{--                                                <i class="fas fa-ellipsis-v"></i>--}}
-{{--                                            </a>--}}
-{{--                                            <div class="dropdown-menu">--}}
-                                                <a href="{{ route('VisitDriveIn.show', ['DriveIn' => $visitor->id ?? '']) }}">
-                                                <i class="fa fa-eye" style="color:#808080">  </i></a>
-{{--                                                <a href="#">View History</a>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        <a href="{{ route('VisitDriveIn.show', ['DriveIn' => $visitor->id ?? '']) }}">
+                                                <i class="fa fa-eye" style="color:#808080"></i>
+                                        </a>
+
                                     </td>
                                 </tr>
                             @empty
@@ -147,9 +137,8 @@
 
                     </div>
                 </div>
-
-        </div>
-
+            </div>
+</div>
 
 
 

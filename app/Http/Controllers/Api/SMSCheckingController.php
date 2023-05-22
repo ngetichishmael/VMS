@@ -5,18 +5,24 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\UserCode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SMSCheckingController extends Controller
 {
     public function SMSChecking(Request $request, $phone_number)
     {
         $user_id = $request->user()->id;
-        $user_code = rand(1000, 9999);
+        $user_code=UserCode::all()->pluck("code")->toArray();
+        $code = rand(1000, 9999);
+
+        while(in_array($code, $user_code)){
+            $code = rand(1000, 9999);
+        }
         UserCode::create([
             'user_id' => $user_id,
-            'code' => $user_code
+            'code' => $code
         ]);
-        $this->sendUserSMS($user_code, $phone_number);
+        $this->sendUserSMS($code, $phone_number);
         return response()->json([
             "success" => true,
             'status' => 200,
@@ -90,9 +96,7 @@ class SMSCheckingController extends Controller
     }
     public function verifyOTP(Request $request, $otp)
     {
-
-        $exists = UserCode::where('user_id', $request->user()->id)
-            ->where('code', $otp)
+        $exists = UserCode::where('code', $otp)
             ->where('updated_at', '>=', now()->subMinutes(5))
             ->latest('updated_at')
             ->exists();

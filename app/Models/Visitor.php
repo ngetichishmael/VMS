@@ -27,15 +27,18 @@ class Visitor extends Model
     {
         return $this->belongsTo(Organization::class, 'organization_code', 'code');
     }
-
+    public function timeLogs()
+    {
+        return $this->hasMany(TimeLog::class,'id','time_log_id');
+    }
     public function purpose(): BelongsTo
     {
         return $this->belongsTo(Purpose::class, 'purpose_id');
     }
-    public function timeLogs(): BelongsTo
-    {
-        return $this->belongsTo(TimeLog::class, 'time_log_id', 'id');
-    }
+//    public function timeLogs(): BelongsTo
+//    {
+//        return $this->belongsTo(TimeLog::class, 'time_log_id', 'id');
+//    }
     public function timeLog()
     {
         return $this->belongsTo(TimeLog::class);

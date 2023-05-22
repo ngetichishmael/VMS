@@ -57,14 +57,14 @@
                     </li>
 
 
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                         <a class="nav-link" id="account-pill-general" data-toggle="pill"
                             href="#account-vertical-general" aria-expanded="true">
 
                             <i data-feather="lock" class="font-medium-3 mr-1"></i>
                             <span class="font-weight-bold">Reset Password</span>
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
             <!--/ left menu section -->

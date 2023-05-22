@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f59546b7b0d7dbd67718ed4d63ae0327",
+    "content-hash": "53eb668442c5a65f7c3ff89841724f30",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -961,6 +961,7 @@
         },
         {
             "name": "guzzlehttp/psr7",
+<<<<<<< HEAD
             "version": "2.5.0",
             "source": {
                 "type": "git",
@@ -971,6 +972,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/guzzle/psr7/zipball/b635f279edd83fc275f822a1188157ffea568ff6",
                 "reference": "b635f279edd83fc275f822a1188157ffea568ff6",
+=======
+            "version": "2.4.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/psr7.git",
+                "reference": "3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf",
+                "reference": "3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf",
+>>>>>>> 651e1264b4cb979718287edb3687b58eb6be3592
                 "shasum": ""
             },
             "require": {
@@ -1057,7 +1070,11 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/guzzle/psr7/tree/2.5.0"
+=======
+                "source": "https://github.com/guzzle/psr7/tree/2.4.4"
+>>>>>>> 651e1264b4cb979718287edb3687b58eb6be3592
             },
             "funding": [
                 {
@@ -1073,7 +1090,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
             "time": "2023-04-17T16:11:26+00:00"
+=======
+            "time": "2023-03-09T13:19:02+00:00"
+>>>>>>> 651e1264b4cb979718287edb3687b58eb6be3592
         },
         {
             "name": "haruncpi/laravel-id-generator",
@@ -1121,6 +1142,53 @@
                 "source": "https://github.com/haruncpi/laravel-id-generator/tree/v1.1.0"
             },
             "time": "2021-10-01T06:16:03+00:00"
+        },
+        {
+            "name": "ichtrojan/laravel-otp",
+            "version": "v1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ichtrojan/laravel-otp.git",
+                "reference": "3fe67dfca3837c924bf968c019c7662caaab3740"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ichtrojan/laravel-otp/zipball/3fe67dfca3837c924bf968c019c7662caaab3740",
+                "reference": "3fe67dfca3837c924bf968c019c7662caaab3740",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Ichtrojan\\Otp\\OtpServiceProvider"
+                    ],
+                    "aliases": {
+                        "Otp": "Ichtrojan\\Otp\\Otp"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ichtrojan\\Otp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Okoh",
+                    "email": "michael@okoh.co.uk"
+                }
+            ],
+            "description": "A simple package to generate and validate OTPs",
+            "support": {
+                "issues": "https://github.com/ichtrojan/laravel-otp/issues",
+                "source": "https://github.com/ichtrojan/laravel-otp/tree/v1.4.1"
+            },
+            "time": "2021-05-13T09:01:34+00:00"
         },
         {
             "name": "kyslik/column-sortable",
@@ -6930,6 +6998,7 @@
         },
         {
             "name": "phpunit/phpunit",
+<<<<<<< HEAD
             "version": "9.6.8",
             "source": {
                 "type": "git",
@@ -6940,6 +7009,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/17d621b3aff84d0c8b62539e269e87d8d5baa76e",
                 "reference": "17d621b3aff84d0c8b62539e269e87d8d5baa76e",
+=======
+            "version": "9.6.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/phpunit.git",
+                "reference": "86e761949019ae83f49240b2f2123fb5ab3b2fc5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/86e761949019ae83f49240b2f2123fb5ab3b2fc5",
+                "reference": "86e761949019ae83f49240b2f2123fb5ab3b2fc5",
+>>>>>>> 651e1264b4cb979718287edb3687b58eb6be3592
                 "shasum": ""
             },
             "require": {
@@ -7012,8 +7093,12 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
+<<<<<<< HEAD
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
                 "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.8"
+=======
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.5"
+>>>>>>> 651e1264b4cb979718287edb3687b58eb6be3592
             },
             "funding": [
                 {
@@ -7029,7 +7114,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
             "time": "2023-05-11T05:14:45+00:00"
+=======
+            "time": "2023-03-09T06:34:10+00:00"
+>>>>>>> 651e1264b4cb979718287edb3687b58eb6be3592
         },
         {
             "name": "sebastian/cli-parser",

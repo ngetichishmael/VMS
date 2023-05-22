@@ -315,21 +315,23 @@
                                 </div>
                             </div>
                         </div>
-                        {{--                        @if ($visitor->vehicle->registration != null) --}}
-                        {{--                        <div class="col-md-12"> --}}
-                        {{--                            <div class="card"> --}}
-                        {{--                                <div class="card-body"> --}}
-                        {{--                                    <h5 class="card-title" style="color: #1f8af5">Vehicle Information</h5> --}}
-                        {{--                                    <div class="col-md-6 mb-1 pl-1"> --}}
-                        {{--                                        <div class="form-group"> --}}
-                        {{--                                            <label >Registration</label> --}}
-                        {{--                                            <input type="text" class="form-control" value="{{ $visitor->vehicle->registration ?? 'Not Available' }}" readonly /> --}}
-                        {{--                                        </div> --}}
-                        {{--                                    </div> --}}
-                        {{--                                </div> --}}
-                        {{--                            </div> --}}
-                        {{--                        </div> --}}
-                        {{--                        @endif --}}
+                        @if (!$visitor->vehicle == null)
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="color: #1f8af5">Vehicle Information</h5>
+                                        <div class="pl-1 mb-1 col-md-6">
+                                            <div class="form-group">
+                                                <label>Registration</label>
+                                                <input type="text" class="form-control"
+                                                       value="{{ $visitor->vehicle->registration ?? 'Not Available' }}"
+                                                       readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
@@ -347,7 +349,7 @@
                                 <div class="d-flex align-items-center justify-content-center">
                                     <a href="{{ asset('storage/attachments/' . $visitor->attachment1) }}" data-fancybox>
                                         <img src="{{ asset('storage/attachments/' . $visitor->attachment1) }}"
-                                            class="img-fluid" alt="">
+                                             class="img-fluid" alt="">
                                     </a>
                                 </div>
                             </div>
@@ -355,7 +357,7 @@
                                 <div class="d-flex align-items-center justify-content-center">
                                     <a href="{{ asset('storage/attachments/' . $visitor->attachment2) }}" data-fancybox>
                                         <img src="{{ asset('storage/attachments/' . $visitor->attachment2) }}"
-                                            class="img-fluid" alt="">
+                                             class="img-fluid" alt="">
                                     </a>
                                 </div>
                             </div>
@@ -363,7 +365,7 @@
                                 <div class="d-flex align-items-center justify-content-center">
                                     <a href="{{ asset('storage/attachments/' . $visitor->attachment3) }}" data-fancybox>
                                         <img src="{{ asset('storage/attachments/' . $visitor->attachment3) }}"
-                                            class="img-fluid" alt="">
+                                             class="img-fluid" alt="">
                                     </a>
                                 </div>
                             </div>
@@ -371,7 +373,7 @@
                                 <div class="d-flex align-items-center justify-content-center">
                                     <a href="{{ asset('storage/attachments/' . $visitor->attachment4) }}" data-fancybox>
                                         <img src="{{ asset('storage/attachments/' . $visitor->attachment4) }}"
-                                            class="img-fluid" alt="">
+                                             class="img-fluid" alt="">
                                     </a>
                                 </div>
                             </div>
@@ -387,26 +389,23 @@
 
                             <table class="table table-hover">
                                 <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Time In</th>
-                                        <th>Time Out</th>
-                                        <th>Duration</th>
-                                    </tr>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Time In</th>
+                                    <th>Time Out</th>
+                                    <th>Duration</th>
+                                </tr>
                                 </thead>
                                 <tbody>
 
-                                    @foreach ($visitor->timeLogs as $timeLog)
-                                        <tr>
-                                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}
-                                            </td>
-                                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}
-                                            </td>
-                                            <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}
-                                            </td>
-                                            <td>{!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds') !!}</td>
-                                        </tr>
-                                    @endforeach
+                                @foreach ($visitorTimeLogs as $timeLog)
+                                    <tr>
+                                        <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}</td>
+                                        <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}</td>
+                                        <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}</td>
+                                        <td>{!! Carbon::parse($timeLog->entry_time ?? now())->diff(Carbon::parse($timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds') !!}</td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

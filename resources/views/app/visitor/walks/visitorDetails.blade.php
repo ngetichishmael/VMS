@@ -142,7 +142,7 @@
             <div class="destination-card">
                 <div class="destination-card-left">
                     <div class="card">
-                        <h5 class="card-title" style="color: #1f8af5;">
+                        <h5 class="card-title" style="color: #1a3258;">
                             <i data-feather="lock" class="font-medium-3 mr-25 fa fa-user-alt"></i>
                             &nbsp;Visitor Information
                         </h5>
@@ -177,7 +177,7 @@
                     {{--                <div class="row"> --}}
                     {{--                    <div class="card col-4"> --}}
                     {{--                        <div class="card-body" > --}}
-                    <h6 class="py-1 pl-2 mx-1 mb-0 font-medium-2 card-title" style="color: #1f8af5; padding-left: 8%;">
+                    <h6 class="py-1 pl-2 mx-1 mb-0 font-medium-2 card-title" style="color: #1a3258; padding-left: 8%;">
                         <i data-feather="lock" class="font-medium-3 mr-25 fa fa-building"></i>
                         <span class="align-middle"> &nbsp; Visitor's Destination Premises</span>
                     </h6>
@@ -228,7 +228,7 @@
                 <div class="destination-card-right">
                     <div class="visitor-info">
                         <div class="mb-1 col-md-12">
-                            <h5 class="card-title" style="color: #1f8af5;">
+                            <h5 class="card-title" style="color: #1a3258;">
                                 <i data-feather="lock" class="font-medium-3 mr-25 "></i>
                                 &nbsp;Other Visitor Details
                             </h5>
@@ -318,7 +318,7 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title" style="color: #1f8af5">Vehicle Information</h5>
+                                        <h5 class="card-title" style="color: #1a3258">Vehicle Information</h5>
                                         <div class="pl-1 mb-1 col-md-6">
                                             <div class="form-group">
                                                 <label>Registration</label>
@@ -342,7 +342,7 @@
                     $visitor->attachment4 != null)
                 <div class="card col-12">
                     <div class="card-body">
-                        <h5 class="card-title" style="color: #1f8af5">Image Attachments</h5>
+                        <h5 class="card-title" style="color: #1a3258">Image Attachments</h5>
                         <div class="row">
                             <div class="col-md-3 col-6">
                                 <div class="d-flex align-items-center justify-content-center">
@@ -382,7 +382,7 @@
             @endif
             <div class="card col-12">
                 <div class="card-body">
-                    <h5 class="card-title" style="color: #1f8af5">Visitor History</h5>
+                    <h5 class="card-title" style="color: #1a3258">Visitor History</h5>
                     <div class="row col-12">
                         <div class="table-responsive">
 
@@ -396,18 +396,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    @foreach ($visitor->timeLogs as $timeLog)
-                                        <tr>
-                                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}
-                                            </td>
-                                            <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}
-                                            </td>
-                                            <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}
-                                            </td>
-                                            <td>{!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds') !!}</td>
-                                        </tr>
-                                    @endforeach
+                                @foreach ($visitorTimeLogs as $timeLog)
+                                    <tr>
+                                        <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}</td>
+                                        <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}</td>
+                                        <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}</td>
+                                        <td>{!! Carbon::parse($timeLog->entry_time ?? now())->diff(Carbon::parse($timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds') !!}</td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

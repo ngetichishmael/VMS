@@ -18,7 +18,7 @@ class AuthenticationController extends Controller
     {
         $user = null;
         if (!Auth::attempt([
-            'phone_number' => $request->phone_number, 'status' => '1', 'role_id'=> '1'
+            'phone_number' => $request->phone_number, 'status' => '1', 'role_id'=> '1' | '2'
         ], true)) {
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
@@ -28,6 +28,8 @@ class AuthenticationController extends Controller
                 ->json(['message' => 'Unauthorized'], 401);
         }
         $token = $user->createToken('auth_token')->plainTextToken;
+//        $user->last_login_at = now();
+//        $user->save();
 
         return response()->json([
             "success" => true,
@@ -56,6 +58,9 @@ class AuthenticationController extends Controller
         $user = User::where('email', $request['email'])->firstOrFail();
 
         $token = $user->createToken('auth_token')->plainTextToken;
+
+//        $user->last_login_at = now();
+//        $user->save();
 
         return response()->json([
             "success" => true,

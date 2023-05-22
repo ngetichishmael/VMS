@@ -17,7 +17,7 @@
                             <select wire:model="organizationId" class="form-control form-control-sm" >
                                 <option value="">  All  </option>
                                 @foreach ($organizations as $org)
-                                    <option  value="{{ $org ->id }}"> {{ $org ->name }}</option>
+                                    <option  value="{{ $org ->code }}"> {{ $org ->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -33,8 +33,9 @@
                               </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2; color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in"
+                    <div class="col-md-2">
+                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1a3258; color:#fff; " data-toggle="modal" id="smallButton" data-target="#modals-slide-in"
+
                             data-placement="top" title="New User">
                           + Add New User
 
@@ -94,7 +95,7 @@
                                       <?php } ?>
 
                                     </td>
-                                    <td>{{ now() }}</td>
+                                    <td>{{ $user->last_login_at ?? 'Never Logged in' }}</td>
 
                                     <td>
                                         <div class="dropdown">
@@ -105,7 +106,8 @@
                                         <a  href="{{ route('OrganizationUsers.edit',$user->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > Edit </a>
                                         <!-- delete link -->
                                         <?php if($user->status == '0'){ ?>
-                                        <a wire:ignore.self href="#" wire:click="activate({{ $user->id }})"  onclick="return confirm('Are you sure to want to Activate the User?')" style="padding-right:20px; " > Activate </a>
+                                
+                                         <a  href="#" wire:click="activate({{ $user->id }})" onclick="return confirm('Are you sure to want to Activate the User?') || event.stopImmediatePropagation();" style="padding-right:20px;">Activate</a>
                                         <?php }else{ ?>
                                         <a wire:ignore.self href="#" wire:click="deactivate({{ $user->id }})"  onclick="return confirm('Are you sure to want to suspend the User?')" style="padding-right:20px; " > Suspend</i> </a>
                                         <?php } ?>
@@ -135,206 +137,4 @@
 
         </div>
 
-
-              <!-- Modal to add new user starts-->
-    <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
-      <div class="modal-dialog">
-        <form class="add-new-user modal-content pt-0" method="POST" action="{!! route('OrganizationUsers.store') !!}">
-        {{ csrf_field() }}
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-          <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">New User</h5>
-          </div>
-          <div class="modal-body flex-grow-1">
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
-              <input  type="text" name="name"  class="form-control" required />
-
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-email">Email</label>
-              <input  type="email" name="email"  class="form-control" required />
-
-              <small class="form-text text-muted"> You can use letters, numbers & periods </small>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
-              <input  type="tel" name="phone_number"  class="form-control" required />
-
-            </div>
-
-
-            <fieldset class="form-group">
-              <label class="form-label" for="user-role">Organization</label>
-              <select id="organization_code" name="organization_code" class="form-control">
-               <option  value="#"> Select</option>
-                @foreach ($organizations as $organizat)
-                    <option  value="{{ $organizat ->code }}"> {{ $organizat ->name }}</option>
-                @endforeach
-              </select>
-            </fieldset>
-
-            <fieldset class="form-group">
-              <label class="form-label" for="user-role">Role</label>
-              <select id="role_id" name="role_id" class="form-control" required>
-              <option  value="#"> Select</option>
-                @foreach ($roles as $ros)
-                    <option  value="{{ $ros ->id }}"> {{ $ros ->name }}</option>
-                @endforeach
-              </select>
-            </fieldset>
-
-
-
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Password</label>
-              <input  type="password" name="password"  class="form-control" required />
-            </div>
-
-            <button  type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
-            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- Modal to add new user Ends-->
-
-     <!-- Modal to Edit user starts-->
-     <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-edit-slide-in">
-      <div class="modal-dialog">
-        <form class="add-new-user modal-content pt-0" >
-
-        {{ csrf_field() }}
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-          <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
-          </div>
-          <div class="modal-body flex-grow-1">
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
-              <input  type="text" wire:model="name"  class="form-control" required />
-
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-email">Email</label>
-              <input  type="email" wire:model="email"  class="form-control" required />
-
-              <small class="form-text text-muted"> You can use letters, numbers & periods </small>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
-              <input  type="tel" wire:model="phone_number"  class="form-control" required />
-
-            </div>
-
-
-            <fieldset class="form-group">
-              <label class="form-label" for="user-role">Organization</label>
-              <select id="organization_code" wire:model="organization_code" class="form-control">
-               <option  value="#"> Select</option>
-                @foreach ($organizations as $organ)
-                    <option  value="{{ $organ ->id }}"> {{ $organ ->name }}</option>
-                @endforeach
-              </select>
-            </fieldset>
-
-            <fieldset class="form-group">
-              <label class="form-label" for="user-role">Role</label>
-              <select id="role_id" wire:model="role_id" class="form-control" required>
-              <option  value="#"> Select</option>
-                @foreach ($roles as $roll)
-                    <option  value="{{ $roll ->id }}"> {{ $roll ->name }}</option>
-                @endforeach
-              </select>
-            </fieldset>
-
-
-            <button wire:click="editUserData" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Update') }} </button>
-            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- Modal to Edit user Ends-->
-
-      <!-- Dashboard Ecommerce ends -->
-      @push('scripts')
-    <script>
-
-
-        window.addEventListener('show-edit-org-modal', event =>{
-            $('#modals-edit-slide-in').modal('show');
-        });
-
-
-    </script>
-@endpush
-
-
-
-
-              <!-- Modal to add new user starts-->
-              <!-- <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
-                <div class="modal-dialog">
-                  <form class="add-new-user modal-content pt-0" >
-                  {{ csrf_field() }}
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-                    <div class="modal-header mb-1">
-                      <h5 class="modal-title" id="exampleModalLabel">New User</h5>
-                    </div>
-                    <div class="modal-body flex-grow-1">
-                      <div class="form-group">
-                        <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
-                        <input  type="text" wire:model="name"  class="form-control" required />
-
-                      </div>
-
-                      <div class="form-group">
-                        <label class="form-label" for="basic-icon-default-email">Email</label>
-                        <input  type="email" wire:model="email"  class="form-control" required />
-
-                        <small class="form-text text-muted"> You can use letters, numbers & periods </small>
-                      </div>
-                      <div class="form-group">
-                        <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
-                        <input  type="tel" wire:model="phone_number"  class="form-control" required />
-
-                      </div>
-
-
-                      <fieldset class="form-group">
-                        <label class="form-label" for="user-role">Organization</label>
-                        <select id="organization_code" wire:model="organization_code" class="form-control">
-                         <option  value="#"> Select</option>
-                          @foreach ($organizations as $organizat)
-                              <option  value="{{ $organizat ->id }}"> {{ $organizat ->name }}</option>
-                          @endforeach
-                        </select>
-                      </fieldset>
-
-                      <fieldset class="form-group">
-                        <label class="form-label" for="user-role">Role</label>
-                        <select id="role_id" wire:model="role_id" class="form-control" required>
-                        <option  value="#"> Select</option>
-                          @foreach ($roles as $ros)
-                              <option  value="{{ $ros ->id }}"> {{ $ros ->name }}</option>
-                          @endforeach
-                        </select>
-                      </fieldset>
-
-
-
-                      <div class="form-group">
-                        <label class="form-label" for="basic-icon-default-fullname">Password</label>
-                        <input  type="password" wire:model="password"  class="form-control" required />
-                      </div>
-
-                      <button wire:click="store" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
-                      <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-                    </div>
-                  </form>
-                </div>
-              </div> -->
-              <!-- Modal to add new user Ends-->
+ @include('livewire.user.modal')

@@ -32,8 +32,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2; color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
+                    <div class="col-md-2">
+                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color:  #1a3258; color:#fff;" data-toggle="modal" id="smallButton" data-target="#modals-slide-in"
+
                             data-placement="top" title="New resident">
                           + Add New Resident
                                
@@ -132,113 +133,5 @@
    
         </div>
 
-    
-              <!-- Modal to add new resident starts-->
-    <div wire:ignore.self class="modal modal-slide-in new-resident-modal fade" id="modals-slide-in">
-      <div class="modal-dialog">
-        <form class="add-new-resident modal-content pt-0"  method="POST" action="{!! route('ResidentInformation.store') !!}">
-        {{ csrf_field() }} 
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-          <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">New Resident</h5>
-          </div>
-          <div class="modal-body flex-grow-1">
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
-              <input  type="text" name="name"  class="form-control" required />
-
-            </div>
-   
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-email">Email</label>
-              <input  type="email" name="email"  class="form-control" required />
-
-              <small class="form-text text-muted"> You can use letters, numbers & periods </small>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
-              <input  type="tel" name="phone_number"  class="form-control" required />
-
-            </div>
-
-
-            <fieldset class="form-group">
-              <label class="form-label" for="resident-role">Unit</label>
-              <select id="unit_id" name="unit_id" class="form-control">
-               <option  value="0"> Select</option>
-                @foreach ($units as $uni)
-                    <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
-                @endforeach  
-              </select>
-            </fieldset>
-
-
-            <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
-            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- Modal to add new resident Ends-->
-
-     <!-- Modal to Edit resident starts-->
-     <div wire:ignore.self class="modal modal-slide-in new-resident-modal fade" id="modals-edit-slide-in">
-      <div class="modal-dialog">
-        <form class="add-new-resident modal-content pt-0" >
-        {{ csrf_field() }} 
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-          <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">Edit resident</h5>
-          </div>
-          <div class="modal-body flex-grow-1">
-          <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
-              <input  type="text" wire:model="name"  class="form-control" required />
-
-            </div>
-   
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-email">Email</label>
-              <input  type="email" wire:model="email"  class="form-control" required />
-
-              <small class="form-text text-muted"> You can use letters, numbers & periods </small>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
-              <input  type="tel" wire:model="phone_number"  class="form-control" required />
-
-            </div>
-
-
-            <fieldset class="form-group">
-              <label class="form-label" for="resident-role">Unit</label>
-              <select id="unit_id" wire:model="unit_id" class="form-control">
-               <option  value="#"> Select</option>
-                @foreach ($units as $uni)
-                    <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
-                @endforeach  
-              </select>
-            </fieldset>
-
-
+      @include('livewire.premises.resident.modal')
             
-            <button wire:click="editresidentData" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Update') }} </button>
-            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- Modal to Edit resident Ends-->
-
-      <!-- Dashboard Ecommerce ends -->
-      @push('scripts')
-    <script>
-
-
-        window.addEventListener('show-edit-org-modal', event =>{
-            $('#modals-edit-slide-in').modal('show');
-        });
-
-    
-    </script>
-@endpush

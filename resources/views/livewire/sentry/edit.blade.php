@@ -35,7 +35,7 @@
           </a>
         </li>
    
-        <!-- information -->
+        {{-- <!-- information -->
         <li class="nav-item">
           <a
             class="nav-link"
@@ -47,7 +47,7 @@
             <i data-feather="info" class="font-medium-3 mr-1"></i>
             <span class="font-weight-bold">Information</span>
           </a>
-        </li>
+        </li> --}}
  
   
       </ul>

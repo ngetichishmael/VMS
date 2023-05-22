@@ -26,10 +26,6 @@ class AuthenticationController extends Controller
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
         }
-        if ($user->status === 0){
-            return response()
-                ->json(['message' => 'Account suspended, Please contact Admin'], 401);
-        }
         if ($user === null) {
             return response()
                 ->json(
@@ -47,7 +43,12 @@ class AuthenticationController extends Controller
         $detail = UserDetail::where('phone_number', $user->phone_number)->first();
         $sentryid = Sentry::where('user_detail_id', $detail->id ?? '')->first();
         $premise = Premise::where('id', $sentryid->premise_id ?? '')->first();
+        $user_code=UserCode::all()->pluck("code")->toArray();
         $code = rand(100000, 999999);
+
+        while(in_array($code, $user_code)){
+            $code = rand(100000, 999999);
+        }
         $tokenUser = $user->createToken('auth_token')->plainTextToken;
         UserCode::updateOrCreate([
             'user_id' => $user->id,
@@ -118,13 +119,19 @@ class AuthenticationController extends Controller
 //        $premise = Premise::where('id', $sentryid->premise_id ?? '')->first();
         $detail = Sentry::where('phone_number', $user->phone_number ?? '')->first();
         $premise = Premise::where('id', $detail->premise_id ?? 'premises')->first();
+        $settings = Setting::where('organization_code', $premise->organization->code ?? 'not found')->first();
+        $fields = Field::where('id', $settings->field_id ?? 'not found')->first();
+        $fingerprint = $fields->fingerprint ?? null;
+
         Activity::create([
             'name' => $detail->name,
             'target' => " Mobile App",
             'organization' =>$premise->organization->code ?? ' ',
-            'activity' => "Login"
+            'activity' => "User Logged in"
 
         ]);
+        $user->last_login_at = now();
+        $user->save();
         return response()->json([
             "success" => true,
             "token_type" => 'Bearer',
@@ -132,6 +139,7 @@ class AuthenticationController extends Controller
             "premises" => $premise->name ?? ' ',
             "premises_id" => $premise->id ?? ' ',
             'organization' => $premise->organization->name ?? ' ',
+            'fingerprint' =>$fingerprint,
             "access_token" => $tokenUser,
             "user" => $user,
             "code" => $code,
@@ -146,14 +154,15 @@ class AuthenticationController extends Controller
      */
     public function verifyOTP($number, $otp)
     {
-
-        $user = DB::table('users')->where('phone_number', $number)->get();
-        $exists = UserCode::where('user_id', $user[0]->id)
-            ->where('code', $otp)
+        $exists = UserCode::where('code', $otp)
             ->where('updated_at', '>=', now()->subMinutes(5))
             ->latest('updated_at')
-            ->exists();
-        if ($exists) {
+            ->first();
+        if (!$exists){
+            return response()->json(['message' => 'Invalid OTP entered'], 406);
+        }
+        $user = DB::table('users')->where('id', $exists->user_id)->first();
+        if ($user) {
             return response()->json(
                 [
                     'message' => 'Valid OTP entered'

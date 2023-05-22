@@ -65,14 +65,16 @@ class DriveInController extends Controller
                 $timeLog = TimeLog::find($visitor->time_log_id);
 
                 if ($timeLog && $timeLog->exit_time === null) {
-                    return response()->json(['error' => 'User already signed in, If its by mistake, Sign the user out first to sign back in'], 409);
+                    return response()->json(['error' => 'User already signed in, to continue checkout then checkin'], 409);
                 }
             }
         }
-        $nationality = Nationality::find($request->nationality);
+        $nationality = null;
+        $nationality = Nationality::where('name', $request->input('nationality'))->first();
+
         if (!$nationality) {
             $nationality = new Nationality();
-            $nationality->name = $request->input('nationality') ?? '101';
+            $nationality->name = $request->input('nationality') ?? 'Kenya';
             $nationality->save();
         }
 
@@ -136,7 +138,7 @@ class DriveInController extends Controller
                 $premise = Premise::where('id', $detail->premise_id)->first();
                 $place = $premise->name;
                 $this->sendUserSMS($visitor_name, $time, $resident_name, $phone_number, $place);
-                return response()->json(['success' => 'Visitor and vehicle information added successfully and ' . $resident_name . ' notified'], 201);
+                return response()->json(['success' => 'Visitor added successfully and ' . $resident_name . ' notified'], 201);
             }
         }
         Activity::create([

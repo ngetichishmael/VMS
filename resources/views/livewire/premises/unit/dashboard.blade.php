@@ -35,8 +35,9 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
-                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1877F2; color:#fff;"  data-toggle="modal" id="smallButton" data-target="#modals-slide-in" 
+                    <div class="col-md-2">
+                    <button type="button" class="btn btn-icon btn-outline-success" style="background-color:  #1a3258; color:#fff;" data-toggle="modal" id="smallButton" data-target="#modals-slide-in"
+
                             data-placement="top" > + Add Unit   
                         </button>
                     </div>
@@ -80,26 +81,26 @@
                                     </td>
                                    
                                     <td>
-<div class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-    <i class="fas fa-ellipsis-v"></i>
-</a>
-<div class="dropdown-menu">
+                                      <div class="dropdown">
+                                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                      </a>
+                                      <div class="dropdown-menu">
 
-        <!--update link-->
-        <a  href="{{ route('UnitInformation.edit',$unit->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > Edit </a> 
-<!-- delete link -->
-<?php if($unit->status == '0'){ ?>
-<a wire:ignore.self href="#" wire:click="activate({{ $unit->id }})"  onclick="return confirm('Are you sure to want to Activate the unit?')" style="padding-right:20px; " > Activate </a>
-<?php }else{ ?>
-<a wire:ignore.self href="#" wire:click="deactivate({{ $unit->id }})"  onclick="return confirm('Are you sure to want to suspend the unit?')" style="padding-right:20px; " > Suspend</i> </a>
-<?php } ?>
+                                              <!--update link-->
+                                              <a  href="{{ route('UnitInformation.edit',$unit->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > Edit </a> 
+                                      <!-- delete link -->
+                                      <?php if($unit->status == '0'){ ?>
+                                      <a wire:ignore.self href="#" wire:click="activate({{ $unit->id }})"  onclick="return confirm('Are you sure to want to Activate the unit?')" style="padding-right:20px; " > Activate </a>
+                                      <?php }else{ ?>
+                                      <a wire:ignore.self href="#" wire:click="deactivate({{ $unit->id }})"  onclick="return confirm('Are you sure to want to suspend the unit?')" style="padding-right:20px; " > Suspend</i> </a>
+                                      <?php } ?>
 
-<a wire:ignore.self href="#" wire:click="destroy({{ $unit->id }})" onclick="return confirm('Are you sure to want to delete the unit?')" > Delete </a>
+                                      <a wire:ignore.self href="#" wire:click="destroy({{ $unit->id }})" onclick="return confirm('Are you sure to want to delete the unit?')" > Delete </a>
 
-</div>
-</div>
-</td>
+                                      </div>
+                                      </div>
+                                      </td>
                                 </tr>
 
                                 @empty
@@ -116,84 +117,6 @@
  
         </div>
 
+  @include('livewire.premises.unit.modal')
 
-
-         <!-- Modal to add new unit starts-->
-    <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
-      <div class="modal-dialog">
-        <form class="add-new-user modal-content pt-0" method="POST" action="{!! route('UnitInformation.store') !!}">
-        {{ csrf_field() }} 
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-          <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">New Unit</h5>
-          </div>
-          <div class="modal-body flex-grow-1">
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Unit Name</label>
-              <input  type="text" name="name"  class="form-control" required />
-
-            </div>
-            <fieldset class="form-group">
-              <label class="form-label" for="user-role">Premise Name</label>
-              <select id="block_id"  name="block_id" class="form-control">
-                
-                @foreach ($blocks as $block)
-                    <option  value="{{ $block ->id }}"> {{ $block ->name }}</option>
-                @endforeach  
-              </select>
-            </fieldset>
-            
-            <button type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Register') }} </button>
-            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- Modal to add new unit Ends-->
-
-          <!-- Modal to edit unit starts-->
-          <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-edit-slide-in">
-      <div class="modal-dialog">
-        <form class="add-new-user modal-content pt-0" >
-        {{ csrf_field() }} 
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-          <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">Edit Unit</h5>
-          </div>
-          <div class="modal-body flex-grow-1">
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">unit Name</label>
-              <input  type="text" wire:model="name"  class="form-control" required />
-
-            </div>
-            <fieldset class="form-group">
-              <label class="form-label" for="user-role">Premise Name</label>
-              <select id="block_id"  wire:model="block_id" class="form-control">
-                
-                @foreach ($blocks as $bloc)
-                    <option  value="{{ $bloc ->id }}"> {{ $bloc ->name }}</option>
-                @endforeach  
-              </select>
-            </fieldset>
-            
-            <button wire:click="editUnitData" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Update') }} </button>
-            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- Modal to add new unit Ends-->
-
-
-
-    @push('scripts')
-    <script>
-  
-
-        window.addEventListener('show-edit-unit-modal', event =>{
-            $('#modals-edit-slide-in').modal('show');
-        });
-
-    
-    </script>
-@endpush
+        

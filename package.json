@@ -5,8 +5,7 @@
         "watch": "mix watch",
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
-        "production": "mix --production",
-        "dev": "webpack --mode development"
+        "production": "mix --production"
     },
     "dependencies": {
         "bootstrap": "4.6.0"

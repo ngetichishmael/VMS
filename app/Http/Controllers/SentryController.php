@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Device;
 use App\Models\Organization;
 use App\Models\Sentry;
 use App\Models\UserDetail;
+use App\Models\Visitor;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
@@ -16,6 +18,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+use Livewire\WithPagination;
+
 
 class SentryController extends Controller
 {
@@ -67,35 +71,10 @@ class SentryController extends Controller
         $org_code=Premise::where('id',  $request->input('premise_id'))->first();
 
         $organization=Organization::where('code', $org_code->organization_code)->first();
-
-        UserDetail::create([
-            'phone_number' => $request->phone_number ?? '',
-            'date_of_birth' => $request->date_of_birth ?? '',
-            'ID_number' => $request->ID_number ?? '',
-            'image' => $request->image ?? '',
-            'gender' => $request->gender ?? 'male',
-            'company' => $request->company ?? '',
-            'physical_address' => $request->physical_address,
-        ]);
-$user_detail=UserDetail::where('phone_number',$request->phone_number)->first();
-        Sentry::create([
-            'name' => $request->name,
-
-            'phone_number' => $request->phone_number,
-
-            'status' => 1,
-
-            'device_id' => $request->device_id ?? 0,
-
-            'user_detail_id' => $user_detail->id,
-
-            'shift_id' => $request->shift_id,
-
-            'premise_id' => $request->premise_id,
-
-        ]);
-
-
+        $new_user=User::where('phone_number',  $request->input('phone_number'))->where('role_id', 4)->first();
+        if (!$new_user==null){
+            return back()->with('Error', 'Sentry already exists');
+        }
         User::create([
 
             'name' => $request->input('name'),
@@ -112,6 +91,45 @@ $user_detail=UserDetail::where('phone_number',$request->phone_number)->first();
             'password' => Hash::make(Str::random(20)),
         ]);
 
+        $user_detail=UserDetail::where('phone_number',$request->phone_number)->first();
+
+        if (!$user_detail) {
+            $user_detail = new UserDetail();
+            $user_detail->phone_number = $request->phone_number ?? '';
+            $user_detail->date_of_birth = $request->date_of_birth ?? '';
+            $user_detail->ID_number = $request->ID_number ?? '';
+            $user_detail->image = $request->image ?? '';
+            $user_detail->gender = $request->gender ?? 'male';
+            $user_detail->company = $request->company ?? '';
+            $user_detail->physical_address = $request->physical_address;
+            $user_detail->save();
+        }
+//        UserDetail::create([
+//            'phone_number' => $request->phone_number ?? '',
+//            'date_of_birth' => $request->date_of_birth ?? '',
+//            'ID_number' => $request->ID_number ?? '',
+//            'image' => $request->image ?? '',
+//            'gender' => $request->gender ?? 'male',
+//            'company' => $request->company ?? '',
+//            'physical_address' => $request->physical_address,
+//        ]);
+
+        Sentry::create([
+            'name' => $request->name,
+
+            'phone_number' => $request->phone_number,
+
+            'status' => 1,
+
+            'device_id' => $request->device_id ?? 0,
+
+            'user_detail_id' => $user_detail->id,
+
+            'shift_id' => $request->shift_id,
+
+            'premise_id' => $request->premise_id,
+
+        ]);
         Activity::create([
             'name' => $request->user()->name,
             'target' => "Guard creation",
@@ -126,17 +144,21 @@ $user_detail=UserDetail::where('phone_number',$request->phone_number)->first();
      * Display the specified resource.
      *
      * @param  \App\Models\Sentry  $sentry
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show($id)
     {
         $sentry = Sentry::find($id);
+        $premises = Premise::where('status', 1)->where('id', $sentry->premise_id)->first();
+        $visitors =Visitor::with('timeLogs')->where('sentry_id', $sentry->id)->get();
+        $organization = Organization::where('status', 1)->where('code', $premises->organization_code)->first();
+        $device= Device::where('sentry_id', $sentry->id)->first();
 
-        $premises = Premise::where('status', 1)->get();
+        $activities = Activity::where('name', $sentry->name)->paginate(10);
+        $activities->appends(request()->query());
+        $activities->links('pagination::bootstrap-4');
 
-        $shifts = Shift::where('status', 1)->get();
-
-        return view('livewire.sentry.show', compact('sentry'));
+        return view('livewire.sentry.show', compact('sentry', 'device', 'premises','activities', 'organization', 'visitors'));
     }
 
     /**

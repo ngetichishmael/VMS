@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\UserDetail;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Organization;
@@ -50,22 +51,24 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|max:255|unique:users,email',
-            'phone_number' => 'required|numeric|unique:users,phone_number',
+            'phone_number' => 'required|numeric',
             'organization_code' => 'required',
             'role_id' => 'required',
-
-
         ]);
 
         if ($validator->fails()) {
             throw new \Illuminate\Validation\ValidationException($validator);
+        }
+        $check=User::where('phone_number', $request->input('phone_number'))->where('role_id', 1)->first();
+        if (!$check==null){
+            return back()->with('Error', 'System user already exists');
         }
 
         $user = new User;
@@ -78,13 +81,27 @@ class UserController extends Controller
 
         $user->organization_code  = $request->input('organization_code');
 
-        $user->role_id  = $request->input('role_id');
+        $user->role_id  =  $request->input('role_id');
 
         $user->password  = Hash::make($request->password);
 
         $user->email_verified_at = now();
 
         $user->save();
+        $organization=Organization::where('code',$request->input('organization_code'))->first();
+        $user_detail=UserDetail::where('phone_number',$request->phone_number)->first();
+
+        if (!$user_detail) {
+            $user_detail = new UserDetail();
+            $user_detail->phone_number = $request->phone_number ?? '';
+//            $user_detail->date_of_birth = $request->date_of_birth ?? '';
+//            $user_detail->ID_number = $request->ID_number ?? '';
+//            $user_detail->image = $request->image ?? '';
+            $user_detail->gender = $request->gender ?? 'male';
+            $user_detail->company = $organization->name;
+            $user_detail->physical_address = $request->physical_address ?? 'nairobi';
+            $user_detail->save();
+        }
 
         Activity::create([
             'name' => $request->user()->name,
@@ -117,7 +134,7 @@ class UserController extends Controller
         // $data = DB::table('users')->where('id',$id)->get();
         // return view('livewire.user.edit',compact('data'));
 
-    
+
         $user = User::find($id);
 
         $organizations = Organization::where('status', 1)->get();
@@ -151,6 +168,12 @@ class UserController extends Controller
         $user->role_id  = $request->input('role_id');
 
         $user->save();
+        Activity::create([
+            'name' => $request->user()->name,
+            'target' => "User created by " . $request->user()->name,
+            'organization' => "User " . $user->name,
+            'activity' => "Updated a new user with " . $user
+        ]);
 
         return redirect()->to('/organization/users')->with('success', 'User Updated successfully.');
     }

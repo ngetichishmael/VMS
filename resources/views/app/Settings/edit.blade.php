@@ -75,7 +75,7 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>ID Check-in</td>
+                                <td>Verified ID Check-in</td>
                                 <td>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input"
@@ -265,6 +265,20 @@
                                                     />
                                                     <label class="custom-control-label"
                                                            for="company"></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Enable Fingure Print in Mobile</td>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                           id="fingerprint" name="fingerprint"
+
+                                                           @if ($fields->fingerprint === 1) checked @endif
+                                                    />
+                                                    <label class="custom-control-label"
+                                                           for="fingerprint"></label>
                                                 </div>
                                             </td>
                                         </tr>

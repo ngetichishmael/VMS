@@ -314,7 +314,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if ($visitor->vehicle != null)
+                        @if (!$visitor->vehicle == null)
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-body">
@@ -396,23 +396,33 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($HistoryTimeLogs as $driveIn)
-                                        @foreach ($driveIn->timeLogs as $timeLog)
+{{--                                    @foreach ($HistoryTimeLogs as $driveIn)--}}
+{{--                                        @foreach ($driveIn->timeLogs as $timeLog)--}}
 
-                                            @foreach ($HistoryTimeLogs as $driveIn)
-                                                @foreach ($driveIn->timeLogs as $timeLog)
-                                                    <tr>
-                                                    <tr>
-                                                        <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}
-                                                        </td>
-                                                        <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}
-                                                        </td>
-                                                        <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}
-                                                        </td>
-                                                        <td>{!! Carbon::parse($timeLog->entry_time ?? now())->diff(Carbon::parse($timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds') !!}</td>
-                                                    </tr>
+{{--                                            @foreach ($HistoryTimeLogs as $driveIn)--}}
+{{--                                                @foreach ($driveIn->timeLogs as $timeLog)--}}
+{{--                                                    <tr>--}}
+{{--                                                    <tr>--}}
+{{--                                                        <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}--}}
+{{--                                                        </td>--}}
+{{--                                                        <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}--}}
+{{--                                                        </td>--}}
+{{--                                                        <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}--}}
+{{--                                                        </td>--}}
+{{--                                                        <td>{!! Carbon::parse($timeLog->entry_time ?? now())->diff(Carbon::parse($timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds') !!}</td>--}}
+{{--                                                    </tr>--}}
+{{--                                                @endforeach--}}
+{{--                                            @endforeach--}}
+{{--                                        @endforeach--}}
+{{--                                    @endforeach--}}
+                                @foreach ($visitorTimeLogs as $timeLog)
+                               <tr>
+                              <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('m/d/Y') : '-' }}</td>
+                                <td>{{ $timeLog->entry_time ? Carbon::parse($timeLog->entry_time)->format('h:i A') : '-' }}</td>
+                                <td>{{ $timeLog->exit_time ? Carbon::parse($timeLog->exit_time)->format('h:i A') : '-' }}</td>
+                             <td>{!! Carbon::parse($timeLog->entry_time ?? now())->diff(Carbon::parse($timeLog->exit_time ?? now()))->format('%H Hours %I Minutes %S Seconds') !!}</td>
+                            </tr>
                                                 @endforeach
-                                            @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -425,7 +435,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('vendor-script')
