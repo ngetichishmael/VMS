@@ -256,18 +256,32 @@
                             <td>{!! $visitor->resident2->name ?? 'NA' !!} </td>
                            <td>{!! $visitor->user_details->ID_number ?? 'NA' !!} </td>
                             <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
-                            <td>{!! $visitor->timeLog->exit_time ?? 'Visit Active' !!} </td>
-                            @if ($visitor->timeLog->entry_time === null)
-                            @php
-                            $duration = 'Visit Active';
-                            @endphp
-                            @else
-                            @php
+{{--                            <td>{!! $visitor->timeLog->exit_time ?? 'Visit Active' !!} </td>--}}
+{{--                            @if ($visitor->timeLog->entry_time === null)--}}
+{{--                            @php--}}
+{{--                            $duration = 'Visit Active';--}}
+{{--                            @endphp--}}
+{{--                            @else--}}
+{{--                            @php--}}
 
-                            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);
-                            $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);
-                            $duration = $to->longAbsoluteDiffForHumans($from);
-                            @endphp
+{{--                            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->exit_time);--}}
+{{--                            $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $visitor->timeLog->entry_time);--}}
+{{--                            $duration = $to->longAbsoluteDiffForHumans($from);--}}
+{{--                            @endphp--}}
+{{--                            @endif--}}
+{{--                            <td>--}}
+                            <td>{!! $visitor->timeLog->entry_time ?? '' !!} </td>
+                            @if (!isset($visitor->timeLog->exit_time))
+                                <td>...</td>
+                                <td> <span class="mr-1 badge badge-pill badge-light-primary">Visit Active</span> </td>
+                            @else
+                                <td>{!! $visitor->timeLog->exit_time ?? null !!}</td>
+
+                                <td>
+                                    <span class="mr-1 badge badge-pill badge-light-dark">
+                                        {!! Carbon::parse($visitor->timeLog->entry_time ?? now())->diff(Carbon::parse($visitor->timeLog->exit_time ?? now()))->format('%H Hrs %I Mins ') !!}
+                                    </span>
+                                </td>
                             @endif
                             <td>
                                 <a href="{{ route('VisitAllCheckIn.show', $visitor->id) }}">
