@@ -950,8 +950,16 @@
                 </div>
             </div>
         </section>
+        @livewire('dashboard.dashboard')
+    @else
+
+        <p style="color: orangered">
+        <div class="row">
+            <span> Sorry, you don't have permission to access the dashboard, please contact system admin</span>
+        </div>
+        </p>
     @endif
-    @livewire('dashboard.dashboard')
+
 @endsection
 
             @section('vendor-script')
