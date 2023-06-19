@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Sentry;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Models\Sentry;
 use App\Models\Device;
@@ -36,6 +37,9 @@ class Dashboard extends Component
 
         $searchTerm = '%' . $this->search . '%';
 
+        $user = Auth::user();
+        $userAccountType = $user->role_id;
+        if ($userAccountType===1) {
         $sentries = Sentry::with('user_detail','shift','device','premise')
             ->when($this->userDetailsId, function ($query) {
                 $query->where('user_detail_id', $this->userDetailsId);
@@ -59,6 +63,35 @@ class Dashboard extends Component
             'shifts' => $shifts,
             'devices' => $devices,
         ]);
+        } elseif ($userAccountType == 2) {
+            $organization_code = Auth::user()->organization_code;
+            $sentries = Sentry::with('user_detail','shift','device','premise')
+                ->when($this->userDetailsId, function ($query) {
+                    $query->where('user_detail_id', $this->userDetailsId);
+                })
+                ->when($this->shiftId, function ($query) {
+                    $query->where('shift_id', $this->shiftId);
+                })
+                ->whereHas('premise.organization', function ($query) use ($organization_code) {
+                    $query->where('code', $organization_code);
+                })
+                ->whereLike(['name','user_detail.ID_number','user_detail.phone_number', 'user_detail.company','shift.name','device.identifier','premise.name'], $searchTerm)
+                ->orderBy($this->orderBy, $this->orderAsc ? 'desc' : 'asc')
+                ->paginate($this->perPage);
+
+            $premises = Premise::where('status', 1) ->get();
+
+            $shifts = Shift::where('status', 1) ->get();
+
+            $devices = Device::all();
+
+            return view('livewire.sentry.dashboard', [
+                'sentries' => $sentries,
+                'premises' => $premises,
+                'shifts' => $shifts,
+                'devices' => $devices,
+            ]);
+        }
     }
 
 

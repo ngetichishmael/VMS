@@ -34,12 +34,14 @@
                         </div>
                     </div>
                     <div class="col-md-2">
+                        @if(Auth::check() && Auth::user()->role_id == 1)
                     <button type="button" class="btn btn-icon btn-outline-success" style="background-color: #1a3258; color:#fff; " data-toggle="modal" id="smallButton" data-target="#modals-slide-in"
 
                             data-placement="top" title="New User">
                           + Add New User
 
                         </button>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -65,8 +67,9 @@
                                     <th>Role</th>
                                     <th>Status</th>
                                     <th>Last Login</th>
-
+                                    @if(Auth::check() && Auth::user()->role_id == 1)
                                     <th>Actions</th>
+                                    @endif
                                 </tr>
                             </thead>
 
@@ -96,7 +99,7 @@
 
                                     </td>
                                     <td>{{ $user->last_login_at ?? 'Never Logged in' }}</td>
-
+                                    @if(Auth::check() && Auth::user()->role_id == 1)
                                     <td>
                                         <div class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -106,7 +109,7 @@
                                         <a  href="{{ route('OrganizationUsers.edit',$user->id)}}" class="" style="padding-right:20px"   id="smallButton"   data-placement="top" > Edit </a>
                                         <!-- delete link -->
                                         <?php if($user->status == '0'){ ?>
-                                
+
                                          <a  href="#" wire:click="activate({{ $user->id }})" onclick="return confirm('Are you sure to want to Activate the User?') || event.stopImmediatePropagation();" style="padding-right:20px;">Activate</a>
                                         <?php }else{ ?>
                                         <a wire:ignore.self href="#" wire:click="deactivate({{ $user->id }})"  onclick="return confirm('Are you sure to want to suspend the User?')" style="padding-right:20px; " > Suspend</i> </a>
@@ -117,6 +120,7 @@
                                         </div>
                                         </div>
                                         </td>
+                                    @endif
                                 </tr>
 
 

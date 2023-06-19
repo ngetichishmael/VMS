@@ -83,7 +83,7 @@ class UserController extends Controller
 
         $user->role_id  =  $request->input('role_id');
 
-        $user->password  = Hash::make($request->password);
+        $user->password  = Hash::make($request->input('phone_number'));
 
         $user->email_verified_at = now();
 
@@ -109,7 +109,7 @@ class UserController extends Controller
             'organization' => "User " . $user->name,
             'activity' => "Created a new user with " . $user
         ]);
-        return redirect()->to('/organization/users')->with('success', 'User added successfully.');
+        return redirect()->to('/organization/users')->with('success', 'User added successfully. Use phone number as the default password');
     }
 
     /**

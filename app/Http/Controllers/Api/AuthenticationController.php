@@ -155,7 +155,7 @@ class AuthenticationController extends Controller
     public function verifyOTP($number, $otp)
     {
         $exists = UserCode::where('code', $otp)
-            ->where('updated_at', '>=', now()->subMinutes(5))
+            ->where('updated_at', '>=', now()->subMinutes(30))
             ->latest('updated_at')
             ->first();
         if (!$exists){

@@ -29,30 +29,30 @@
 
                                         <div class="d-flex flex-column ml-1">
                                             <div class="user-info mb-1">
-                                                <h4 class="mb-0">Name : {{ $activity->name }}</h4>
+                                                <h4 class="mb-0">Name : {{ $activity->name ?? 'NA'}}</h4>
                                             </div>
 
                                             <div class="card">
                                                 <h5 class="mb-1">Action     <span class="badge badge-light-secondary"
-                                                    >{{ $activity->activity }} <span class="nextYear"></span></span>
+                                                    >{{ $activity->activity ?? ''}} <span class="nextYear"></span></span>
                                                 </h5>
 
                                             </div>
                                             <div class="card">
                                                 <h5 class="mb-1">Target     <span class="badge badge-light-secondary"
-                                                    >{{ $activity->target }} <span class="nextYear"></span></span>
+                                                    >{{ $activity->target ?? ''}} <span class="nextYear"></span></span>
                                                 </h5>
 
                                             </div>
                                             <div class="card">
                                                 <h5 class="mb-1">Time     <span class="badge badge-light-secondary"
-                                                    >{{ $activity->created_at }} <span class="nextYear"></span></span>
+                                                    >{{ $activity->created_at ?? ''}} <span class="nextYear"></span></span>
                                                 </h5>
 
                                             </div>
                                             <div class="card">
                                                 <h5 class="mb-1">Organization Name <span class="badge badge-light-secondary"
-                                                    >{{ $organization->name}} <span class="nextYear"></span></span>
+                                                    >{{ $organization->name ?? ''}} <span class="nextYear"></span></span>
                                                 </h5>
 
                                             </div>
@@ -69,16 +69,12 @@
             </div>
             <!-- /User Card Ends-->
         </div>
-
-
-
-
         <div class="card">
 
             <div class="pt-0 card-datatable table-responsive">
                 <div class="card-datatable table-responsive">
                     <div class="card-title pt-2 pb-1 pl-4" style="align-content: center; color: orange">
-                        Other trail of actions performed by {!! $activity->name !!}
+                        Other trail of actions performed by {!! $activity->name ?? ''!!}
                     </div>
                     <table class="table">
                         <thead>
@@ -95,11 +91,11 @@
 
                         @forelse ($activities as $key => $activity)
                             <tr>
-                                <td>{{ $activity->target }}</td>
-                                <td>{{ $activity->name }}</td>
+                                <td>{{ $activity->target ?? '' }}</td>
+                                <td>{{ $activity->name ?? '' }}</td>
                                 <td>{!! $activity->created_at ?? now() !!}</td>
-                                <td>{{ $activity->organization }}</td>
-                                <td>{{$activity->activity }}</td>
+                                <td>{{ $activity->organization ?? ''}}</td>
+                                <td>{{$activity->activity ?? ''}}</td>
                             </tr>
                         @empty
                             <tr>
@@ -108,7 +104,7 @@
                         @endforelse
                         </tbody>
                     </table>
-{{--                    <div class="mt-1">{{ $activities->links() }}--}}
+                    <div class="mt-1">{{ $activities->links() }}
                     </div>
                 </div>
             </div>

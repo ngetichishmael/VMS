@@ -4,6 +4,7 @@
 use App\Http\Controllers\Api\DeviceController;
 use App\Http\Controllers\Api\Visitors\DriveInController;
 use App\Http\Controllers\Api\Visitors\SmsCheckInController;
+use App\Http\Controllers\Api\Visitors\VerifiedController;
 use App\Http\Controllers\Api\Visitors\WalkInController;
 use App\Http\Controllers\Api\AuthenticationController;
 use App\Http\Controllers\Api\SMSCheckingController;
@@ -48,6 +49,8 @@ Route::group(['namespace' => 'Api'], function () {
         Route::post('visitors/smsCheckin/create', [SmsCheckInController::class, 'store']);
         Route::get('visitors/walkin/all', [WalkInController::class, 'index']);
         Route::post('visitors/walkin/create', [WalkInController::class, 'store']);
+        Route::get('visitors/id/all', [VerifiedController::class, 'index']);
+        Route::post('visitors/id/create', [VerifiedController::class, 'store']);
 
         Route::post('visitors/verify_checkout', [VisitorController::class, 'verifyUser']);
         Route::post('visitors/verify_phone_checkout', [VisitorController::class, 'verifyPhoneNumberUser']);
@@ -55,6 +58,7 @@ Route::group(['namespace' => 'Api'], function () {
 
         Route::post('visitors/verify_returning_visitor', [VisitorController::class, 'returningVisitorVerify']);
         Route::put('visitors/checkin_returning_visitor', [VisitorController::class, 'store'])->name('api.visitors.store');
+        Route::put('visitors/blacklist', [VisitorController::class, 'blacklist'])->name('api.visitors.blacklist');
 
         Route::post('visitors/device', [DeviceController::class, 'store']);
         Route::get('visitors/device/all', [DeviceController::class, 'store']);

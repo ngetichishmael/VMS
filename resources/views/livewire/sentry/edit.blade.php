@@ -16,6 +16,7 @@
 
 @section('content')
 <!-- account setting page -->
+@if(Auth::check() && Auth::user()->role_id == 1)
 <section id="page-account-settings">
   <div class="row">
     <!-- left menu section -->
@@ -34,7 +35,7 @@
             <span class="font-weight-bold">General</span>
           </a>
         </li>
-   
+
         {{-- <!-- information -->
         <li class="nav-item">
           <a
@@ -48,8 +49,8 @@
             <span class="font-weight-bold">Information</span>
           </a>
         </li> --}}
- 
-  
+
+
       </ul>
     </div>
     <!--/ left menu section -->
@@ -67,12 +68,12 @@
               aria-labelledby="account-pill-general"
               aria-expanded="true"
             >
-         
+
 
               <!-- form -->
               <form class="validate-form mt-2" method="post" action="{{ route('Sentry.update', $sentry->id) }}">
-              @method('PATCH') 
-              @csrf  
+              @method('PATCH')
+              @csrf
                 <div class="row">
                   <div class="col-12 col-sm-6">
                     <div class="form-group">
@@ -95,7 +96,7 @@
                                           <option  value="{{ $sentry ->premise_id }}" > Select ...</option>
                                             @foreach ($premises as $prem)
                                                 <option  value="{{ $prem ->id }}"> {{ $prem ->name }}</option>
-                                            @endforeach  
+                                            @endforeach
                                           </select>
                                         </fieldset>
                                         </div>
@@ -107,7 +108,7 @@
                                           <option  value="{{ $sentry ->shift_id }}" > Select ...</option>
                                             @foreach ($shifts as $shift)
                                                 <option  value="{{ $shift ->id }}"> {{ $shift ->name }}</option>
-                                            @endforeach  
+                                            @endforeach
                                           </select>
                                         </fieldset>
                                         </div>
@@ -126,13 +127,13 @@
                   <div class="col-12 mt-75">
                     <div class="alert alert-warning mb-50" role="alert">
                       <h4 class="alert-heading">Your email is not vailable.</h4>
-                   
+
                     </div>
                   </div>
                   <div class="col-12">
                     <button type="submit" class="btn btn-primary mt-2 mr-1">Update</button>
-      
-                                         
+
+
                     <a href="{{ route('Sentry') }}" type="reset" class="btn btn-outline-secondary mt-2">Cancel</a>
                   </div>
                 </div>
@@ -141,7 +142,7 @@
             </div>
             <!--/ general tab -->
 
-       
+
             <!-- information -->
             <div
               class="tab-pane fade"
@@ -221,10 +222,10 @@
             </div>
             <!--/ information -->
 
-          
-        
 
-           
+
+
+
           </div>
         </div>
       </div>
@@ -232,6 +233,15 @@
     <!--/ right content section -->
   </div>
 </section>
+@else
+    <div class="card">
+        <div class="pt-0 card-datatable table-responsive">
+            <div class="card-datatable table-responsive">
+                <p style="font-size: large; color: orangered; padding-left: 40%" >"Unauthorized to access this page !!!!...."</p>
+            </div>
+        </div>
+    </div>
+@endif
 <!-- / account setting page -->
 @endsection
 

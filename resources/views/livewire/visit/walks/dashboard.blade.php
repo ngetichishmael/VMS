@@ -83,12 +83,12 @@
 {{--                                @endif--}}
 {{--                            </th>--}}
                             <th>Name</th>
-                            <th>Site</th>
-                            <th>Section</th>
+                            <th>Premises</th>
                             <th>Organization</th>
                             <th>Time In</th>
                             <th>Time Out</th>
                             <th>Duration</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -97,9 +97,8 @@
                         @forelse($visitors as $visitor)
                             <tr>
                                 <td>{!! $visitor->name!!} </td>
-                                <td>{{ $visitor->resident->unit->block ? $visitor->resident->unit->block->premise->name : '' }}</td>
-                                <td>{!! $visitor->resident->unit->name !!}</td>
-                                <td>{!! $visitor->resident->unit->block->premise->organization()->pluck("name")->implode('') !!}</td>
+                                <td>{{ $visitor->sentry->premise->name ?? '' }}</td>
+                                <td>{{ $visitor->sentry->premise->organization->name ?? '' }}</td>
                                 <td>{!! $visitor->timeLog->entry_time !!}</td>
                                 @if($visitor->timeLog->exit_time=='0000-00-00 00:00:00' || $visitor->timeLog->exit_time=='' || $visitor->timeLog->exit_time==null)
                                     <td>...</td>
@@ -112,7 +111,18 @@
                                         </span>
                                     </td>
                                 @endif
-                                <td >
+                                <td>
+                                    @if ($visitor->status == 0)
+                                        <a href="{{ route('VisitAllCheckIn.update', ['id' => $visitor->id, 'status' => 1]) }}" style="color: #5a7c5a;">
+                                             Blacklist
+                                        </a>
+                                    @else
+                                        <a href="{{ route('VisitAllCheckIn.update', ['id' => $visitor->id, 'status' => 0]) }}" style="color: rgba(255,69,0,0.7);">
+                                             Whitelist
+                                        </a>
+                                    @endif
+                                </td>
+                                <td>
                                     <a href="{{ route('VisitWalkIn.show', $visitor->id) }}">
                                     <i class="fa fa-eye" style="color:#808080">  </i></a>
                                 </td>

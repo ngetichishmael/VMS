@@ -64,9 +64,21 @@ class VisitorController extends Controller
      * @param  \App\Models\Visitor  $visitor
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateVisitorRequest $request, Visitor $visitor)
+    public function update($id, $status)
     {
-        //
+        $visitor = Visitor::find($id);
+
+        if($visitor->status==1){
+            $whitelisted_by=request()->user()->user_code;
+            $visitor->whitelisted_by=$whitelisted_by;
+        }
+        else{
+            $blacklisted_by =request()->user()->user_code;
+            $visitor->blacklisted_by=$blacklisted_by;
+        }
+        $visitor->status = $status == 1 ? 1 : 0;
+        $visitor->save();
+        return back()->with('success', 'Status Updated Successfully');
     }
 
     /**

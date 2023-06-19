@@ -313,7 +313,7 @@ class VisitorController extends Controller
         $visitor->tag = $request->input('tag');
 
         $timeLog = new TimeLog;
-        $timeLog->entry_time = now();
+        $timeLog->entry_time = Carbon::now();
         $timeLog->save();
         $time=$timeLog->entry_time;
         $visitor->time_log_id = $timeLog->id;
@@ -441,9 +441,38 @@ class VisitorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function blacklist(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'number' => 'numeric'
+        ]);
+        $number = $request->input('number');
+//        $stripped_number = preg_replace('/\D/', '', $number);
+        $stripped_number = preg_replace('/[^0-9]/', '', $number);
+        $userDetails = UserDetail::select('id')
+            ->where('phone_number', 'LIKE', "%$stripped_number%")
+            ->orWhere('ID_number', 'LIKE', "%$number%")
+            ->distinct()
+            ->get();
+
+        if ($userDetails->isEmpty()) {
+            return response()->json(['message' => 'Visitor not found'], 404);
+        }
+        $visitors = Visitor::whereIn('user_detail_id', $userDetails->pluck('id'))
+            ->with('user_details', 'resident2', 'sentry', 'purpose', 'vehicle', 'timeLogs')
+            ->orderBy('id', 'desc')
+            ->distinct('user_detail_id')
+            ->get();
+
+        if ($visitors->isEmpty()) {
+            return response()->json(['message' => 'Visitor not found'], 404);
+        }
+
+        $visitors->status = '1';
+        $visitors->blacklisted_by = $request->user()->user_code;
+        $visitors->save();
+
+        return response()->json(['message'=>'Visitor added to blacklist successful', 200]);
     }
 
     /**

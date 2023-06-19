@@ -10,24 +10,17 @@ use App\Models\Resident;
 use App\Models\Sentry;
 use App\Models\TimeLog;
 use App\Models\UserDetail;
-use App\Models\VehicleInformation;
 use App\Models\Visitor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class WalkInController extends Controller
+class VerifiedController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function index(Request $request)
     {
         return response()->json(Visitor::with(['resident2', 'sentry', 'purpose', 'visitorType', 'timeLogs'])->where('sentry_id', $request->user()->id)
-            ->where('type', 'walkin')
+            ->where('type', 'ID')
             ->get());
     }
 
@@ -47,10 +40,7 @@ class WalkInController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        $user_details = UserDetail::where(function ($query) {
-            $query->whereNotNull('phone_number')
-                ->where('phone_number', '!=', 0);
-        })->where('phone_number', $request->input('phone1'))->first();
+        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))->first();
         if ($user_details) {
             $visitor = Visitor::where('user_detail_id', $user_details->id)->latest('id')->first();
             if ($visitor->status==1) {
@@ -60,7 +50,7 @@ class WalkInController extends Controller
                 $timeLog = TimeLog::find($visitor->time_log_id);
 
                 if ($timeLog && $timeLog->exit_time === null) {
-                    return response()->json(['error' => 'Visitor already signed in, to continue checkout then checkin'], 409);
+                    return response()->json(['error' => 'User already signed in, to continue checkout then checkin'], 409);
                 }
             }
         }
@@ -104,17 +94,12 @@ class WalkInController extends Controller
         $timeLog = new TimeLog;
         $timeLog->entry_time = Carbon::now();
         $timeLog->save();
+
         $time=$timeLog->entry_time;
         $visitor->time_log_id = $timeLog->id;
 
 
-//        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
-//            ->orWhere('phone_number', $request->input('phone1'))
-//            ->first();
-        $user_details = UserDetail::where(function ($query) {
-            $query->whereNotNull('phone_number')
-                ->where('phone_number', '!=', 0);
-        })->where('phone_number', $request->input('phone1'))->first();
+        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))->first();
         if (!$user_details) {
             $user_details = new UserDetail();
             $user_details->phone_number = $request->input('phone1');
@@ -152,7 +137,7 @@ class WalkInController extends Controller
 
         Activity::create([
             'name' => $request->user()->name,
-            'target' => "New Walk In created by " . $request->user()->name,
+            'target' => "New ID Checkin In created by " . $request->user()->name,
             'organization' => 'Visitor by' . $visitor->name,
             'activity' => "Created a new visitor with " . $visitor .
                 'with details: ' . $user_details  . '.'
@@ -244,17 +229,6 @@ class WalkInController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

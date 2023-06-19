@@ -88,7 +88,7 @@ class DriveIn extends Model
     public function scopeSearch($query, $searchTerm)
     {
         return $query->where(function ($q) use ($searchTerm) {
-            $q->orWhere('name', 'like', '%'.$searchTerm.'%')
+            $q->orWhere('visitors.name', 'like', '%'.$searchTerm.'%')
                 ->orWhereHas('vehicle', function ($subQuery) use ($searchTerm) {
                     $subQuery->where('registration', 'like', '%'.$searchTerm.'%');
                 })

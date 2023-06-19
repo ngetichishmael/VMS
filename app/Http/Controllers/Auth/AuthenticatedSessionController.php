@@ -54,8 +54,8 @@ class AuthenticatedSessionController extends Controller
                 'is_valid_otp' => 0,
             ]
         );
-    
-    
+
+
         $request->user()->notify(new LoginVerificationNotification());
 
         return redirect()->to('/dashboard/otp');

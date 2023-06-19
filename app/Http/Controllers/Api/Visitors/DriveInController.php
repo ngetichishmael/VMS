@@ -55,17 +55,20 @@ class DriveInController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
 
-        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
-            ->orWhere('phone_number', $request->input('phone1'))
-            ->first();
+        $user_details = UserDetail::where(function ($query) {
+            $query->whereNotNull('phone_number')
+                ->where('phone_number', '!=', 0);
+        })->where('phone_number', $request->input('phone1'))->first();
         if ($user_details) {
             $visitor = Visitor::where('user_detail_id', $user_details->id)->latest('id')->first();
-
+            if ($visitor->status==1) {
+                return response()->json(['error' => 'Visitor is in the blacklist, please contact Admin'], 409);
+            }
             if ($visitor && $visitor->time_log_id) {
                 $timeLog = TimeLog::find($visitor->time_log_id);
 
                 if ($timeLog && $timeLog->exit_time === null) {
-                    return response()->json(['error' => 'User already signed in, to continue checkout then checkin'], 409);
+                    return response()->json(['error' => 'Visitor already signed in, to continue checkout then checkin'], 409);
                 }
             }
         }
@@ -82,7 +85,7 @@ class DriveInController extends Controller
         //        $now = Carbon::now();
         //        $nairobiNow = $now->setTimezone('Africa/Nairobi');
         //        $timeLog->entry_time = $nairobiNow->format('Y-m-d H:i:s');
-        $timeLog->entry_time = now();
+        $timeLog->entry_time = Carbon::now();
 
         $timeLog->save();
         $time = $timeLog->entry_time;
@@ -105,9 +108,10 @@ class DriveInController extends Controller
 
         $visitor->time_log_id = $timeLog->id;
 
-        $user_details = UserDetail::where('ID_number', $request->input('IDNO'))
-            ->orWhere('phone_number', $request->input('phone1'))
-            ->first();
+        $user_details = UserDetail::where(function ($query) {
+            $query->whereNotNull('phone_number')
+                ->where('phone_number', '!=', 0);
+        })->where('phone_number', $request->input('phone1'))->first();
         if (!$user_details) {
             $user_details = new UserDetail();
             $user_details->phone_number = $request->input('phone1');
