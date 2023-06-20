@@ -29,7 +29,7 @@ class ForgotPasswordController extends Controller
 
       
         return $response == Password::RESET_LINK_SENT
-            ? redirect()->route('Forgot')->with('status', trans($response))->with('message', 'Password reset link sent successfully to your Email Account.')
+            ? redirect()->route('Forgot')->with('status', trans($response))->with('message', 'Password reset link sent successfully.')
             : redirect()->back()->withErrors(['email' => trans($response)])->with('message', 'Failed to send password reset link.');
         
     }
