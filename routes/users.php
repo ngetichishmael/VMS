@@ -22,7 +22,18 @@ use App\Http\Controllers\Visit\iPassCheckinsController;
 use App\Http\Controllers\Visit\SmsCheckinsController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\WalkInController;
+use App\Http\Controllers\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
+
+Route::resource('forgotpassword', ForgotPasswordController::class)->names([
+    'index' => 'Forgot',
+    'show' => 'Forgot.show',
+    'store' => 'Forgot.store',
+]);
+
+
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('password.reset');
+Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');
 
 
 Route::middleware(['auth', 'validOTP'])->group(function () {
@@ -214,10 +225,13 @@ Route::middleware(['auth', 'validOTP'])->group(function () {
         'index' => 'VisitAllCheckIn',
         'show' => 'VisitAllCheckIn.show',
     ]);
+
     Route::resource('logs/activities', ActivityController::class)->names([
         'index' => 'activity',
         'show' => 'activity.show',
     ]);
+
+
     Route::get('Visits/AllCheckIn/{id}/{status}', [VisitorController::class , 'update'])->name('VisitAllCheckIn.update');
 
 });

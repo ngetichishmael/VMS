@@ -38,19 +38,20 @@
             <!-- Login-->
             <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
-                    <h2 class="card-title font-weight-bold mb-1">Welcome to Moja<b>Pass</b>! 👋</h2>
-                    <p class="card-text mb-2">Please sign-in to your account</p>
-                    @if ($errors->has('email'))
-                        <span class="help-block">
-                            <strong class="text-danger">{{ $errors->first('email') }}</strong>
-                        </span>
+                    <h2 class="card-title font-weight-bold mb-1">Forgot your password?</h2>
+                    <p class="card-text mb-2"> Simply enter the email address associated with your account and we’ll send you an email with instructions on how to reset your password.</p>
+              
+                    @if(session('message'))
+                        
+                            <span class="help-block @if(session('status')) text-success @else text-danger @endif">
+                                <strong>{{ session('message') }}</strong>
+                            </span>
+                    
                     @endif
-                    @if ($errors->has('password'))
-                        <span class="help-block">
-                            <strong class="text-danger">{{ $errors->first('password') }}</strong>
-                        </span>
-                    @endif
-                    <form class="auth-login-form mt-2" action="{{ route('login') }}" method="POST">
+
+
+          
+                    <form class="auth-login-form mt-2" action="{{ route('Forgot.store') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label class="form-label" for="email">Email</label>
@@ -58,31 +59,12 @@
                                 placeholder="vms@deveint.com" aria-describedby="login-email" autofocus=""
                                 tabindex="1" />
                         </div>
-                        <div class="form-group">
-                            <div class="d-flex justify-content-between">
-                                <label for="login-password">Password</label>
-                                <a href="{{ route('Forgot') }}">
-                                    <small>Forgot Password?</small>
-                                </a>
-                            </div>
-                            <div class="input-group input-group-merge form-password-toggle">
-                                <input class="form-control form-control-merge" id="password" type="password"
-                                    name="password" placeholder="············" aria-describedby="password"
-                                    tabindex="2" />
-                                <div class="input-group-append">
-                                    <span class="input-group-text cursor-pointer">
-                                        <i data-feather="eye"></i>
-                                    </span>
-                                </div>
-                            </div>
+                 
+                        <button type="submit" class="btn btn-primary btn-block" tabindex="4">Submit</button>
+
+                        <div class="col-md-4 mt-5 " style="margin-left: 80%">
+                            <a href="{{ route('logout') }}" id="resendButton" type="reset" tabindex="4" >Back to Login</a>
                         </div>
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" id="remember-me" type="checkbox" tabindex="3" />
-                                <label class="custom-control-label" for="remember-me"> Remember Me</label>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block" tabindex="4">Sign in</button>
                     </form>
 
                 </div>
