@@ -55,7 +55,6 @@ class SentryController extends Controller
 
             'name' => 'required|min:2|unique:sentries,name',
             'premise_id' => 'required',
-            'shift_id' => 'required',
             'date_of_birth'=> 'required',
             'ID_number'=> 'required|numeric',
             'physical_address'=>'required|string',
@@ -125,7 +124,7 @@ class SentryController extends Controller
 
             'user_detail_id' => $user_detail->id,
 
-            'shift_id' => $request->shift_id,
+            'shift_id' => $request->shift_id ?? 1,
 
             'premise_id' => $request->premise_id,
 
