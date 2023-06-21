@@ -16,7 +16,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Livewire\WithPagination;
 
@@ -87,7 +86,7 @@ class SentryController extends Controller
 
             'email_verified_at' => now(),
 
-            'password' => Hash::make(Str::random(20)),
+            'password' => Hash::make($request->phone_number),
         ]);
 
         $user_detail=UserDetail::where('phone_number',$request->phone_number)->first();
