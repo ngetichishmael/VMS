@@ -24,6 +24,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
+use App\Http\Requests\Auth\LoginRequest;
+
+use App\Models\UserCode;
+use App\Models\ValidToken;
+use Illuminate\Support\Facades\Auth;
+
+use App\Notifications\LoginVerificationNotification;
+
 
 class UserController extends Controller
 {
@@ -257,5 +265,21 @@ class UserController extends Controller
         }
 
         return response($output);
+    }
+
+    public function ResendOTP(LoginRequest $request)
+    {
+        $user = Auth::user();
+    
+        $user->update(['last_login_at' => now()]);
+    
+        $validToken = ValidToken::updateOrCreate(
+            ['user_id' => $user->id],
+            ['email' => $user->email, 'is_valid_otp' => 0]
+        );
+    
+        $user->notify(new LoginVerificationNotification());
+    
+        return redirect()->to('/dashboard/otp');
     }
 }
