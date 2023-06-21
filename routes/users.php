@@ -31,6 +31,7 @@ Route::resource('forgotpassword', ForgotPasswordController::class)->names([
     'store' => 'Forgot.store',
 ]);
 
+Route::post('/resend-otp', [UserController::class, 'ResendOTP'])->name('resend.otp');
 
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('password.reset');
 Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');

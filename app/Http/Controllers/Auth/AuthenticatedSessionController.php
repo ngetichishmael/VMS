@@ -60,7 +60,7 @@ class AuthenticatedSessionController extends Controller
 
         return redirect()->to('/dashboard/otp');
     }
-
+    
     /**
      * Destroy an authenticated session.
      *
