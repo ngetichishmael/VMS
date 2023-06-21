@@ -52,21 +52,21 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="padding:10px">
                             <button type="submit" class="btn btn-primary btn-block" tabindex="4">Verify</button>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="padding:10px">
                             <button id="resendButton" onclick="resend()"  type="button" class="btn btn-primary btn-block" tabindex="4" disabled>Resend</button>
                         </div>
-{{--                        <div class="col-md-6">--}}
-{{--                            <a href="{{route('login')}}" id="resendButton" type="button" class="btn btn-primary btn-block" tabindex="4">Resend</a>--}}
-{{--                        </div>--}}
+
                     </div>
                 </form>
 
-                <div class="col-md-4 mt-5 " style="margin-left: 80%">
-                    <a href="{{ route('logout') }}" id="resendButton" type="reset" tabindex="4" >Back to Login</a>
-                </div>
+                <p class="text-right mt-2">
+                        <a href="{{ route('logout') }}">
+                            <i data-feather="chevron-left"></i> Back to login
+                        </a>
+                    </p>
             </div>
         </div>
     </div>

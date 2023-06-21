@@ -56,18 +56,18 @@
             <!-- Left Text-->
             <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
                 <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
-                    @if ($configData['theme'] === 'dark')
-                        <img class="img-fluid" src="{{ asset('images/pages/login-v2-dark.svg') }}" alt="Login V2" />
-                    @else
-                        <img class="img-fluid" src="{{ asset('images/pages/login-v2.svg') }}" alt="Login V2" />
-                    @endif
+                @if($configData['theme'] === 'dark')
+                <img src="{{asset('images/pages/reset-password-v2-dark.svg')}}" class="img-fluid" alt="Register V2" />
+                @else
+                <img src="{{asset('images/pages/reset-password-v2.svg')}}" class="img-fluid" alt="Register V2" />
+                @endif
                 </div>
             </div>
             <!-- /Left Text-->
             <!-- Login-->
             <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
-                    <h2 class="card-title font-weight-bold mb-1"> Reset your password</h2>
+                    <h2 class="card-title font-weight-bold mb-1">Reset your Password 🔒</h2>
                     <p class="card-text mb-2"> Enter your new password below </p>
                     @error('email')
                         <span class="help-block">
@@ -82,12 +82,13 @@
                     <form class="auth-login-form mt-2" action="{{ route('password.update') }}" method="POST">
                         @csrf
                         <input type="hidden" name="token" value="{{ $token }}" />
-                        <div class="form-group">
+                        <input type="hidden" name="email" value="{{ $email }}" />
+                        <!-- <div class="form-group">
                             <label class="form-label" for="email">Email</label>
                             <input class="form-control" id="email" type="email" name="email"
                                 placeholder="" aria-describedby="login-email" autofocus=""
                                 tabindex="1" />
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <div class="d-flex justify-content-between">
                                 <label for="login-password">Password</label>
@@ -122,6 +123,12 @@
                     
                         <button type="submit" class="btn btn-primary btn-block" tabindex="4">Reset Password</button>
                     </form>
+
+                    <p class="text-right mt-2">
+                        <a href="{{ route('logout') }}">
+                            <i data-feather="chevron-left"></i> Back to login
+                        </a>
+                    </p>
 
                 </div>
             </div>

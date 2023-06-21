@@ -29,7 +29,7 @@ class ForgotPasswordController extends Controller
 
       
         return $response == Password::RESET_LINK_SENT
-            ? redirect()->route('Forgot')->with('status', trans($response))->with('message', 'Password reset link sent successfully.')
+            ? redirect()->route('Forgot')->with('status', trans($response))->with('message', 'Reset link has been sent to your email.')
             : redirect()->back()->withErrors(['email' => trans($response)])->with('message', 'Failed to send password reset link.');
         
     }
@@ -40,6 +40,7 @@ class ForgotPasswordController extends Controller
 
         return view('reset_password', [
             'token' => $request->token,
+            'email' => $request->email,
             'pageConfigs' => $pageConfigs
         ]);
     }
@@ -60,9 +61,11 @@ class ForgotPasswordController extends Controller
             }
         );
     
-        return $response == Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', trans($response))
-            : redirect()->back()->withErrors(['email' => trans($response)]);
+        if ($response == Password::PASSWORD_RESET) {
+            return redirect()->route('login')->with('status', 'Password updated successful.');
+        } else {
+            return redirect()->back()->withErrors(['email' => trans($response)]);
+        }
     }
     
     

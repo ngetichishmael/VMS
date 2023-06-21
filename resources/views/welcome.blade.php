@@ -51,6 +51,12 @@
                             <strong class="text-danger">{{ $errors->first('password') }}</strong>
                         </span>
                     @endif
+                    @if(session('status'))
+                        <span class="help-block">
+                            <strong class="text-success"> {{ session('status') }} </strong>
+                        </span>
+                    @endif
+
                     <form class="auth-login-form mt-2" action="{{ route('login') }}" method="POST">
                         @csrf
                         <div class="form-group">
