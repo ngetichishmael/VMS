@@ -1,3 +1,32 @@
+<!-- <form method="POST" action="{{ route('password.update') }}">
+    @csrf
+    <input type="hidden" name="token" value="{{ $token }}" />
+    <div>
+        <label for="email">Email</label>
+        <input id="email" type="email" name="email" required autofocus />
+        @error('email')
+            <span>{{ $message }}</span>
+        @enderror
+    </div>
+    <div>
+        <label for="password">New Password</label>
+        <input id="password" type="password" name="password" required />
+        @error('password')
+            <span>{{ $message }}</span>
+        @enderror
+    </div>
+    <div>
+        <label for="password_confirmation">Confirm Password</label>
+        <input id="password_confirmation" type="password" name="password_confirmation" required />
+    </div>
+    <div>
+        <button type="submit">Reset Password</button>
+    </div>
+</form> -->
+
+
+
+
 @php
     $configData = Helper::applClasses();
 @endphp
@@ -17,7 +46,7 @@
             <!-- Brand logo-->
             <a class="brand-logo" style="padding-left:30px;" href="javascript:void(0);">
 
-<img src="{{ asset('images/logo/Mojaplus-logo_Primary-Logo.png') }}" alt="MojaPass" style="width: 180px; height: 100px;">
+<img src="{{ asset('images/logo/Mojaplus-logo_Primary-Logo.png') }}" alt="MojaPass" style="width: 200px; height: 60px;">
 
 
 
@@ -38,36 +67,34 @@
             <!-- Login-->
             <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
-                    <h2 class="card-title font-weight-bold mb-1">Welcome to Moja<b>Pass</b>! 👋</h2>
-                    <p class="card-text mb-2">Please sign-in to your account</p>
-                    @if ($errors->has('email'))
+                    <h2 class="card-title font-weight-bold mb-1"> Reset your password</h2>
+                    <p class="card-text mb-2"> Enter your new password below </p>
+                    @error('email')
                         <span class="help-block">
-                            <strong class="text-danger">{{ $errors->first('email') }}</strong>
+                            <strong class="text-danger"> {{ $message }} </strong>
                         </span>
-                    @endif
-                    @if ($errors->has('password'))
+                    @enderror
+                    @error('password')
                         <span class="help-block">
-                            <strong class="text-danger">{{ $errors->first('password') }}</strong>
+                            <strong class="text-danger"> {{ $message }} </strong>
                         </span>
-                    @endif
-                    <form class="auth-login-form mt-2" action="{{ route('login') }}" method="POST">
+                    @enderror
+                    <form class="auth-login-form mt-2" action="{{ route('password.update') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="token" value="{{ $token }}" />
                         <div class="form-group">
                             <label class="form-label" for="email">Email</label>
-                            <input class="form-control" id="email" type="text" name="email"
-                                placeholder="vms@deveint.com" aria-describedby="login-email" autofocus=""
+                            <input class="form-control" id="email" type="email" name="email"
+                                placeholder="" aria-describedby="login-email" autofocus=""
                                 tabindex="1" />
                         </div>
                         <div class="form-group">
                             <div class="d-flex justify-content-between">
                                 <label for="login-password">Password</label>
-                                <a href="{{ route('Forgot') }}">
-                                    <small>Forgot Password?</small>
-                                </a>
                             </div>
                             <div class="input-group input-group-merge form-password-toggle">
                                 <input class="form-control form-control-merge" id="password" type="password"
-                                    name="password" placeholder="············" aria-describedby="password"
+                                    name="password" placeholder="" aria-describedby="password"
                                     tabindex="2" />
                                 <div class="input-group-append">
                                     <span class="input-group-text cursor-pointer">
@@ -76,13 +103,24 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" id="remember-me" type="checkbox" tabindex="3" />
-                                <label class="custom-control-label" for="remember-me"> Remember Me</label>
+                            <div class="d-flex justify-content-between">
+                                <label for="login-password">Confirm Password</label>
+                            </div>
+                            <div class="input-group input-group-merge form-password-toggle">
+                                <input class="form-control form-control-merge" id="password_confirmation" type="password"
+                                    name="password_confirmation" placeholder="" aria-describedby="password"
+                                    tabindex="2" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text cursor-pointer">
+                                        <i data-feather="eye"></i>
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block" tabindex="4">Sign in</button>
+                    
+                        <button type="submit" class="btn btn-primary btn-block" tabindex="4">Reset Password</button>
                     </form>
 
                 </div>

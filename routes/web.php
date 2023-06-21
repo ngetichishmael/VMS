@@ -18,6 +18,12 @@ Route::match(['get', 'head'], '/', function () {
     $pageConfigs = ['blankPage' => true];
     return view('welcome', ['pageConfigs' => $pageConfigs]);
 });
+
+// Route::match(['get', 'head'], '/forgotpassword', function () {
+//     $pageConfigs = ['blankPage' => true];
+//     return view('forgotpassword', ['pageConfigs' => $pageConfigs]);
+// });
+
 Route::get('/dashboard/otp', [DashboardController::class, 'OTP'])->name('dashboard.otp')->middleware(['auth']);
 Route::post('otp/login', [DashboardController::class, 'store'])->name('otp.login')->middleware(['auth']);;
 

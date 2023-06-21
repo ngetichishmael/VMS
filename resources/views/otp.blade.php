@@ -64,7 +64,7 @@ $configData = Helper::applClasses();
                     </div>
                 </form>
 
-                <div class="col-md-6 mt-5 " style="margin-left: 80%">
+                <div class="col-md-4 mt-5 " style="margin-left: 80%">
                     <a href="{{ route('logout') }}" id="resendButton" type="reset" tabindex="4" >Back to Login</a>
                 </div>
             </div>
