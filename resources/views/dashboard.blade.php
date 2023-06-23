@@ -337,39 +337,36 @@
             </div>
 
             <div class="col-lg-6 col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row pb-50">
-                            <div class="card-header font-small-3">
-                                <h5> Highly visited Organizations this month</h5>
-                            </div>
-                            </div>
-                            <hr />
-                            <div class="row avg-sessions pt-50">
-                        
-                            <div class="card-text font-small-3 col-12" >
-                                @foreach($organizations as $organization)
-                                    <div class="card-text font-small-3">
-                                        <i class="fa fa-building"><span>{!! $organization->name !!}</span><span> Visits: {!! $organization->visitor_count !!}</span></i>
-                                    </div>
-                                @endforeach
-                            </div>
-    
-                            
+  <div class="card">
+      <div class="card-body">
+          <div class="row pb-50">
+              <div class="card-header font-small-3">
+                  <h5> Highly visited Organizations this month</h5>
+              </div>
+              </div>
+              <hr />
+              <div class="row avg-sessions pt-50">
+          
+              <div class="card-text font-small-3 col-12" >
+                  @foreach($organizations as $organization)
+                      <div class="card-text font-small-3">
+                          <i class="fa fa-building"><span>{!! $organization->name !!}</span><span> Visits: {!! $organization->visitor_count !!}</span></i>
+                      </div>
+                  @endforeach
+              </div>
 
-                                
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
+              
 
-                
-
-        
+                  
+              
+          </div>
       </div>
-    </div>
+  </div>
+</div>
 
+  
+
+<!-- 
                 <div class="col-xl-6 col-12">
                     <div class="card">
                         <div class="card-header font-small-3">
@@ -383,7 +380,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
   
 
