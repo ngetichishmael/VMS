@@ -315,6 +315,9 @@
             </div></div>
         </section>
 
+
+
+
         <section id="chartjs-chart">
             <div class="row">
                 <!-- Horizontal Bar Chart Start -->
@@ -322,14 +325,14 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-sm-center align-items-start flex-sm-row flex-column">
                             <div class="header-left">
-                                <p class="card-subtitle text-muted mb-25">{!! ucwords("Monthly Visits by Gender") !!}</p>
-                                <h4 class="card-title">{!! ucwords("Monthly Visits by Gender") !!}</h4>
+                                <h5 class="card-header"> Monthly Visits by Gender </h5>
                             </div>
+                            
                         </div>
                         <div class="card-body">
                             <canvas id="monthly-visits" class="chartjs" data-height="400"></canvas>
                         </div>
-                        <div class="header-right d-flex align-items-center pl-2">
+                        <!-- <div class="header-right d-flex align-items-center pl-2">
                             <div class="d-flex align-items-center">
                                 <span class="bullet bullet-primary"></span>
                                 <h6 class="mb-0 ml-50">{{ $maleMonthlyVisitorCount }} MALE</h6>
@@ -338,41 +341,51 @@
                                 <span class="bullet bullet-danger"></span>
                                 <h6 class="mb-0 ml-50">{{ $femaleMonthlyVisitorCount }} FEMALE</h6>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <script>
-                    $(document).ready(function() {
-                        var BarChart = {!! $BarChart !!};
-                        var ctx = document.getElementById('monthly-visits').getContext('2d');
-                        var myChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: BarChart,
-                            options: {
-                                responsive:true,
-                                title:'MONTHLY VISITS',
-                                scales: {
-                                    yAxes: [{
-                                        ticks: {
-                                            beginAtZero: true
-                                        }
-                                    }]
-                                },
-                                barThickness: 10
-                            }
+                        $(document).ready(function() {
+                            var BarChart = {!! $BarChart !!};
+                            
+                            // Update labels with month short forms
+                            BarChart.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                            
+                            var ctx = document.getElementById('monthly-visits').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: BarChart,
+                                options: {
+                                    responsive: true,
+                                    title: 'MONTHLY VISITS',
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    },
+                                    barThickness: 10
+                                }
+                            });
                         });
-                    });
+                    </script>
 
-                </script>
                 <!-- Horizontal Bar Chart End -->
+
+
+
+
                 <div class="col-xl-6 col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <p class="card-subtitle text-muted mb-25">{!! ucwords("Monthly Visits by Age") !!}</p>
-                            <h4 class="card-title">{!! ucwords("Monthly Visits by AGE") !!}</h4>
+                        <div class="card-header d-flex justify-content-between align-items-sm-center align-items-start flex-sm-row flex-column">
+                            <div class="header-left">
+                                <h5 class="card-header"> Monthly Visits by Age </h5>
+                            </div>
+                            
                         </div>
                         <div class="card-body">
-                            <canvas id="monthly-visitors-by-age1" height="274"></canvas>
+                            <canvas id="monthly-visitors-by-age1" class="chartjs"  data-height="400"></canvas>
                         </div>
                     </div>
                 </div>
