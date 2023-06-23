@@ -44,21 +44,21 @@
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="first-name-column"> Organization Name</label>
-                     <input type="text" class="form-control"  name="name" value="{{ $organization ->name }}"  />
+                     <input type="text" class="form-control"  name="name" value="{{ $organization ->name }}"  required/>
               </div>
             </div>
 
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="last-name-column">Email</label>
-                    <input type="email" class="form-control"  name="email" value="{{ $organization ->email}}"   />
+                    <input type="email" class="form-control"  name="email" value="{{ $organization ->email}}"   required/>
               </div>
             </div>
 
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="last-name-column">Phone Number</label>
-                    <input type="tel" class="form-control"  name="primary_phone"  value="{{ $organization ->primary_phone }}" />
+                    <input type="tel" class="form-control"  name="primary_phone"  value="{{ $organization ->primary_phone }}" required/>
               </div>
             </div>
             <div class="col-md-6 col-12">
@@ -70,7 +70,7 @@
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="country-floating">Location</label>
-                <input type="text" class="form-control" name="location" value="{{ $organization ->location}}" />
+                <input type="text" class="form-control" name="location" value="{{ $organization ->location}}" required/>
               </div>
             </div>
             <div class="col-md-6 col-12">

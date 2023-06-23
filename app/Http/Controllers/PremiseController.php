@@ -49,6 +49,7 @@ class PremiseController extends Controller
             'location' => 'required',
             'address' => 'required',
             'organization_code' => 'required',
+            'description' => 'max:200',
         ]);
 
         if ($validator->fails()) {

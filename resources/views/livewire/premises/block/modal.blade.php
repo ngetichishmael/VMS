@@ -16,7 +16,6 @@
             <fieldset class="form-group">
               <label class="form-label" for="user-role">Premise Name</label>
               <select id="premise_id"  name="premise_id" class="select2 form-control form-control-lg">
-                
                 @foreach ($premises as $premise)
                     <option  value="{{ $premise ->id }}"> {{ $premise ->name }}</option>
                 @endforeach  

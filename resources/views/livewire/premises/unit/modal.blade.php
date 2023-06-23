@@ -18,7 +18,6 @@
             <fieldset class="form-group">
               <label class="form-label" for="user-role">Premise Name</label>
               <select id="block_id"  name="block_id" class="select2 form-control form-control-lg">
-                  <option  value="0"> Select</option>
                 @foreach ($blocks as $block)
                     <option  value="{{ $block ->id }}"> {{ $block ->name }}</option>
                 @endforeach  

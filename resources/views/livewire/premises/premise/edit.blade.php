@@ -45,20 +45,20 @@
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="last-name-column">Premise Name</label>
-                    <input type="name" class="form-control"  name="name" value="{{ $premise ->name}}"   />
+                    <input type="name" class="form-control"  name="name" value="{{ $premise ->name}}"  required/>
               </div>
             </div>
 
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="last-name-column">Location</label>
-                    <input type="text" class="form-control"  name="location"  value="{{ $premise ->location }}" />
+                    <input type="text" class="form-control"  name="location"  value="{{ $premise ->location }}" required/>
               </div>
             </div>
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="city-column"> Address</label>
-                <input type="text" class="form-control" name="address" value="{{ $premise ->address}}" /> 
+                <input type="text" class="form-control" name="address" value="{{ $premise ->address}}" required/> 
              </div>
             </div>
 
@@ -67,9 +67,9 @@
                                         <fieldset class="form-group">
                                           <label  for="user-role">Organization Name</label>
                                           <select  name="organization_code" class="form-control">
-                                          <option  value="{{ $premise ->organization_code }}" > Select ...</option>
                                             @foreach ($organization as $org)
-                                                <option  value="{{ $org ->code }}"> {{ $org ->name }}</option>
+                                          
+                                                <option value="{{ $org->code }}" @if($org->code == $premise->organization_code) selected @endif>{{ $org->name }}</option>
                                             @endforeach  
                                           </select>
                                         </fieldset>

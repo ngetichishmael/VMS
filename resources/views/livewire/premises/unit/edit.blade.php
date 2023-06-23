@@ -45,7 +45,7 @@
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="last-name-column">Unit Name</label>
-                    <input type="name" class="form-control"  name="name" value="{{ $unit ->name}}"   />
+                    <input type="name" class="form-control"  name="name" value="{{ $unit ->name}}"   required/>
               </div>
             </div>
 
@@ -53,9 +53,9 @@
                                         <fieldset class="form-group">
                                           <label  for="user-role">Block Name</label>
                                           <select  name="block_id" class="form-control">
-                                          <option  value="{{ $unit ->block_id }}" > Select ...</option>
                                             @foreach ($block as $bro)
-                                                <option  value="{{ $bro ->id }}"> {{ $bro ->name }}</option>
+                                                <option value="{{ $bro ->id }}" @if($bro ->id == $unit->block_id) selected @endif>{{ $bro->name }}</option>
+
                                             @endforeach  
                                           </select>
                                         </fieldset>

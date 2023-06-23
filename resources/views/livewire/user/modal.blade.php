@@ -74,66 +74,6 @@
     </div>
     <!-- Modal to add new user Ends-->
 
-     <!-- Modal to Edit user starts-->
-     <div wire:ignore.self class="modal modal-slide-in new-user-modal fade" id="modals-edit-slide-in">
-      <div class="modal-dialog">
-        <form class="add-new-user modal-content pt-0" >
-
-        {{ csrf_field() }}
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-          <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
-          </div>
-          <div class="modal-body flex-grow-1">
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
-              <input  type="text" wire:model="name"  class="form-control" required />
-
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-email">Email</label>
-              <input  type="email" wire:model="email"  class="form-control" required />
-
-              <small class="form-text text-muted"> You can use letters, numbers & periods </small>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="basic-icon-default-fullname">Phone Number</label>
-              <input  type="tel" wire:model="phone_number"  class="form-control" required />
-
-            </div>
-
-
-            <fieldset class="form-group">
-              <label class="form-label" for="user-role">Organization</label>
-              <select id="organization_code" wire:model="organization_code" class="form-control">
-               <option  value="#"> Select</option>
-                @foreach ($organizations as $organ)
-                    <option  value="{{ $organ ->id }}"> {{ $organ ->name }}</option>
-                @endforeach
-              </select>
-            </fieldset>
-
-            <fieldset class="form-group">
-              <label class="form-label" for="user-role">Role</label>
-              <select id="role_id" wire:model="role_id" class="form-control" required>
-              <option  value="#"> Select</option>
-                @foreach ($roles as $roll)
-                    <option  value="{{ $roll ->id }}"> {{ $roll ->name }}</option>
-                @endforeach
-              </select>
-            </fieldset>
-
-
-            <button wire:click="editUserData" type="submit" class="btn btn-primary mr-1 data-submit">     {{ __('Update') }} </button>
-            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- Modal to Edit user Ends-->
-
-      <!-- Dashboard Ecommerce ends -->
       @push('scripts')
     <script>
 

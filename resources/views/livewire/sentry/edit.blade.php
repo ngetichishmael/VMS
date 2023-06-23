@@ -111,21 +111,10 @@
                                           </select>
                                         </fieldset>
                                         </div>
-                  <!-- <div class="col-12 col-sm-6">
-                    <div class="form-group">
-                      <label for="account-e-mail">E-mail</label>
-                      <input type="text" class="form-control"  name="email" >
-                    </div>
-                  </div> -->
-                  <!-- <div class="col-12 col-sm-6">
-                    <div class="form-group">
-                      <label for="account-company">Company</label>
-                      <input type="text" class="form-control" value="DeveInt Limited" />
-                    </div>
-                  </div> -->
+           
                   <div class="col-12 mt-75">
                     <div class="alert alert-warning mb-50" role="alert">
-                      <h4 class="alert-heading">Your email is not vailable.</h4>
+                      <h4 class="alert-heading">Your email is not available.</h4>
 
                     </div>
                   </div>

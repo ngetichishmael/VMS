@@ -55,6 +55,8 @@ class OrganizationController extends Controller
 
             'location' => 'required',
 
+            'description' => 'max:200',
+
         ]);
 
         if ($validator->fails()) {

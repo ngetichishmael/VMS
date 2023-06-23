@@ -46,7 +46,7 @@
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="last-name-column">Block Name</label>
-                    <input type="name" class="form-control"  name="name" value="{{ $block ->name}}"   />
+                    <input type="name" class="form-control"  name="name" value="{{ $block ->name}}"   required/>
               </div>
             </div>
 
@@ -54,9 +54,10 @@
                                         <fieldset class="form-group">
                                           <label  for="user-role">Premise Name</label>
                                           <select  name="premise_id" class="form-control">
-                                          <option  value="{{ $block ->premise_id }}" > Select ...</option>
                                             @foreach ($premise as $pre)
                                                 <option  value="{{ $pre ->id }}"> {{ $pre ->name }}</option>
+                                                <option value="{{ $pre ->id }}" @if($pre ->id == $block->premise_id) selected @endif>{{ $pre->name }}</option>
+
                                             @endforeach  
                                           </select>
                                         </fieldset>

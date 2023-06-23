@@ -45,21 +45,21 @@
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="last-name-column">Resident Name</label>
-                    <input type="name" class="form-control"  name="name" value="{{ $resident ->name}}"   />
+                    <input type="name" class="form-control"  name="name" value="{{ $resident ->name}}"   required/>
               </div>
             </div>
 
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="city-column">Email Address</label>
-                <input type="email" class="form-control" name="email" value="{{ $resident ->email}}" /> 
+                <input type="email" class="form-control" name="email" value="{{ $resident ->email}}" required/> 
              </div>
             </div>
 
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="last-name-column">Phone Number</label>
-                    <input type="tel" class="form-control"  name="phone_number"  value="{{ $resident ->phone_number }}" />
+                    <input type="tel" class="form-control"  name="phone_number"  value="{{ $resident ->phone_number }}" required/>
               </div>
             </div>
 
@@ -67,9 +67,9 @@
                                         <fieldset class="form-group">
                                           <label  for="user-role">Unit Name</label>
                                           <select  name="unit_id" class="form-control">
-                                          <option  value="{{ $resident ->unit_id }}" > Select ...</option>
                                             @foreach ($unit as $uni)
-                                                <option  value="{{ $uni ->id }}"> {{ $uni ->name }}</option>
+                                                <option value="{{ $uni ->id }}" @if($uni ->id == $resident->unit_id) selected @endif>{{ $uni->name }}</option>
+
                                             @endforeach  
                                           </select>
                                         </fieldset>
