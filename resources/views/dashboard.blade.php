@@ -365,7 +365,7 @@
                                             }
                                         }]
                                     },
-                                    barThickness: 10
+                                    barThickness: 15
                                 }
                             });
                         });
