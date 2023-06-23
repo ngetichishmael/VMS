@@ -431,15 +431,15 @@
             </div>
 
             <div class="row">
-                <div class="col-xl-6 col-6">
+                <div class="col-xl-6 col-12">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-sm-center align-items-start flex-sm-row flex-column">
                             <div class="header-left">
-                                <p class="card-subtitle text-muted mb-25">Yearly Visitors for {!! now()->year !!}</p>
+                            <h5 class="card-header"> Yearly Visitors for {!! now()->year !!}</h5>
                             </div>
                         </div>
                         <div class="card-body">
-                            <canvas id="yearly-visitors" class="chartjs" data-height="600"></canvas>
+                            <canvas id="yearly-visitors" class="chartjs" data-height="400"></canvas>
                         </div>
                     </div>
                 </div>
@@ -447,6 +447,10 @@
                 <script>
                     $(document).ready(function() {
                         var yearlyData = {!! $yearlyData !!};
+                        
+                        // Update labels with month short names
+                        yearlyData.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                        
                         var ctx = document.getElementById('yearly-visitors').getContext('2d');
                         var myChart = new Chart(ctx, {
                             type: 'line',
@@ -470,39 +474,61 @@
                                     }]
                                 }
                             }
-                        }); });
+                        });
+                    });
                 </script>
+
+
                 <div class="col-xl-6 col-12">
                     <div class="card">
-                        <div class="card-header">
-                            Visitors Chart
+                    <div class="card-header d-flex justify-content-between align-items-sm-center align-items-start flex-sm-row flex-column">
+                            <div class="header-left">
+                            <h5 class="card-header"> Daily  Visitors Chart</h5>
+                            </div>
+
+                            <div class="header-right">
+                            <h5 class="card-header"> TOTAL VISITORS : {{ $totalVisitors}}</h5>
+                            </div>
                         </div>
+                          
                         <div class="card-body">
-                            <canvas id="visitorChart" data-height="500"></canvas>
+                            <canvas id="visitorChart" data-height="400"></canvas>
 
                         </div>
                     </div>
-                    <p class="card-text mb-0 pl-4 pb-5">TOTAL VISITORS : {{ $totalVisitors}}</p>
+                
                     <script>
-                        $(document).ready(function() {
-                            var chartData = <?php echo json_encode($chartDataL); ?>;
+    $(document).ready(function() {
+        var chartData = <?php echo json_encode($chartDataL); ?>;
 
-                            var ctx = document.getElementById('visitorChart').getContext('2d');
-                            var chart = new Chart(ctx, {
-                                type: 'line',
-                                data: chartData,
-                                options: {
-                                    scales: {
-                                        yAxes: [{
-                                            ticks: {
-                                                beginAtZero: true
-                                            }
-                                        }]
-                                    }
-                                }
-                            });
-                        });
-                    </script>
+        // Update labels with formatted dates
+        var labels = chartData.labels.map(function(date) {
+            var formattedDate = new Date(date).toLocaleDateString('en-US', {
+                day: 'numeric',
+                month: 'short'
+            });
+            return formattedDate;
+        });
+
+        chartData.labels = labels;
+
+        var ctx = document.getElementById('visitorChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: chartData,
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    });
+</script>
+
                 </div>
             </div>
         </section>
