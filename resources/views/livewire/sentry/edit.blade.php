@@ -78,14 +78,14 @@
                   <div class="col-12 col-sm-6">
                     <div class="form-group">
                       <label for="account-username">Full Nmaes</label>
-                      <input type="text" class="form-control"  name="name" value="{{ $sentry ->name }}"  />
+                      <input type="text" class="form-control"  name="name" value="{{ $sentry ->name }}" required/>
 
                     </div>
                   </div>
                   <div class="col-12 col-sm-6">
                     <div class="form-group">
                       <label for="account-name">Phone Number</label>
-                      <input type="text" class="form-control"  name="phone_number" value="{{ $sentry ->phone_number }}"  />
+                      <input type="text" class="form-control"  name="phone_number" value="{{ $sentry ->phone_number }}"  required/>
 
                     </div>
                   </div>
@@ -93,9 +93,8 @@
                                         <fieldset class="form-group">
                                           <label  for="user-role">Premise Name</label>
                                           <select  name="premise_id" class="form-control">
-                                          <option  value="{{ $sentry ->premise_id }}" > Select ...</option>
                                             @foreach ($premises as $prem)
-                                                <option  value="{{ $prem ->id }}"> {{ $prem ->name }}</option>
+                                                <option value="{{ $prem->id }}" @if($prem->id == $sentry->premise_id) selected @endif>{{ $prem->name }}</option>
                                             @endforeach
                                           </select>
                                         </fieldset>
@@ -105,9 +104,9 @@
                                         <fieldset class="form-group">
                                           <label  for="user-role">Work Shift</label>
                                           <select  name="shift_id" class="form-control">
-                                          <option  value="{{ $sentry ->shift_id }}" > Select ...</option>
                                             @foreach ($shifts as $shift)
-                                                <option  value="{{ $shift ->id }}"> {{ $shift ->name }}</option>
+                                             
+                                                <option value="{{ $shift->id }}" @if($shift->id == $shift->shift_id) selected @endif>{{ $shift->name }}</option>
                                             @endforeach
                                           </select>
                                         </fieldset>
@@ -238,6 +237,7 @@
             <div class="w-100 text-center">
                 <h2 class="mb-1">You are not authorized! 🔐</h2>
                 <p class="mb-2">Sorry, but you do not have the necessary permissions to access this page.</p>
+                <img class="img-fluid" src="{{asset('images/pages/not-authorized.svg')}}" alt="Not authorized page" />
             </div>
         </div>
 @endif

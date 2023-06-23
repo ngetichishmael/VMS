@@ -45,13 +45,9 @@
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="last-name-column">Shift Name</label>
-                    <input type="name" class="form-control"  name="name" value="{{ $shift ->name}}"   />
+                    <input type="name" class="form-control"  name="name" value="{{ $shift ->name}}"   required/>
               </div>
             </div>
-
-    
-                                        
-
             <div class="col-12">
               <button type="submit" class="btn btn-primary mr-1">Update</button>
 

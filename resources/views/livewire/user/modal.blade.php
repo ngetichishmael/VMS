@@ -28,21 +28,21 @@
             </div>
               <div class="form-group">
                   <label class="form-label" for="basic-icon-default-fullname">Physical Address</label>
-                  <input  type="text" name="physical_address" id="physical_address"  class="form-control" />
+                  <input  type="text" name="physical_address" id="physical_address"  class="form-control" required/>
               </div>
               <div class="form-group">
                   <label class="form-label" for="basic-icon-default-fullname">Gender</label>
                   <select id="gender" name="gender" class="select2 form-control form-control-lg" required>
-                      <option  value="#"> Select</option>
-                      <option  value="male"> Male</option>
-                      <option  value="female"> Female</option>
-                      <option  value="other"> Other</option>
+                      <option value="male"> Male</option>
+                      <option value="female"> Female</option>
+                      <option value="other"> Other</option>
                   </select>
               </div>
 
+
             <fieldset class="form-group">
               <label class="form-label" for="user-role">Organization</label>
-              <select id="organization_code" name="organization_code" class="select2 form-control form-control-lg">
+              <select id="organization_code" name="organization_code" class="select2 form-control form-control-lg" required>
 
                 @foreach ($organizations as $organizat)
                     <option  value="{{ $organizat ->code }}"> {{ $organizat ->name }}</option>
@@ -55,7 +55,6 @@
             <fieldset class="form-group">
               <label class="form-label" for="user-role">Role</label>
               <select id="role_id" name="role_id" class="select2 form-control form-control-lg" required>
-              <option  value="#"> Select</option>
                 @foreach ($roles as $ros)
                     <option  value="{{ $ros ->id }}"> {{ $ros ->name }}</option>
                 @endforeach

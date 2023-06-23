@@ -134,7 +134,7 @@
                                                 <label for="account-username">Full Names</label>
                                                 <input type="text" class="form-control"
                                                     name="name"
-                                                    value="{{ $user ->name }}"  />
+                                                    value="{{ $user ->name }}"  required/>
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6">
@@ -142,7 +142,7 @@
                                                 <label for="account-name">Email</label>
                                                 <input type="email" class="form-control"
                                                  name="email"
-                                                  value="{{ $user ->email}}"   />
+                                                  value="{{ $user ->email}}"   required/>
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6">
@@ -151,7 +151,7 @@
                                                 <input type="tel" class="form-control"
                                                     name="phone_number"
                                                     value="{{ $user ->phone_number }}"
-                                                />
+                                                required/>
                                             </div>
                                         </div>
 
@@ -159,7 +159,7 @@
                                         <div class="col-12 col-sm-6">
                                         <fieldset class="form-group">
                                           <label  for="user-role">Organization</label>
-                                          <select  name="organization_code" class="form-control">
+                                          <select  name="organization_code" class="form-control" required>
                                             @foreach ($organizations as $organizat)
                                             
                                                 <option value="{{ $organizat ->code }}" @if($organizat ->code == $user->organization_code) selected @endif>{{ $organizat->name }}</option>
@@ -202,10 +202,11 @@
         </div>
     </section>
     @else
-         <div class="misc-inner p-2 p-sm-3">
+    <div class="misc-inner p-2 p-sm-3">
             <div class="w-100 text-center">
                 <h2 class="mb-1">You are not authorized! 🔐</h2>
                 <p class="mb-2">Sorry, but you do not have the necessary permissions to access this page.</p>
+                <img class="img-fluid" src="{{asset('images/pages/not-authorized.svg')}}" alt="Not authorized page" />
             </div>
         </div>
     @endif

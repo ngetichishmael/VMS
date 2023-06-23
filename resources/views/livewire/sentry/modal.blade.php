@@ -95,7 +95,6 @@
                     <div class="form-group">
                             <label class="form-label" for="user-role">Gender</label>
                                 <select id="gender" name="gender" class="form-control" required>
-                                    <option value="male"> Select</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>
@@ -107,8 +106,7 @@
 
                       <fieldset class="form-group">
                         <label class="form-label" for="user-role">Premise</label>
-                        <select id="premise_id" name="premise_id" class="select2 form-control form-control-lg" required>
-                            <option value="1"> Select</option>
+                        <select id="premise_id" name="premise_id" class="select2 form-control form-control-lg" required >
                             @foreach ($premises as $pre)
                                 <option value="{{ $pre->id }}"> {{ $pre->name }}</option>
                             @endforeach
@@ -117,7 +115,6 @@
                     <fieldset class="form-group">
                         <label class="form-label" for="user-role">Shift</label>
                         <select id="shift_id" name="shift_id" class="select2 form-control form-control-lg">
-                            <option value="1"> Select</option>
                             @foreach ($shifts as $shift)
                                 <option value="{{ $shift->id }}"> {{ $shift->name }}</option>
                             @endforeach
