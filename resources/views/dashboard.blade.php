@@ -305,6 +305,7 @@
                             <div class="card-header font-small-3">
                                 <h5> Highly visited Units this month</h5>
                             </div>
+                            </div>
                             <hr />
                             <div class="row avg-sessions pt-50">
                                 @foreach($units as $index => $unit)
@@ -327,7 +328,9 @@
                                         </div>
                                     </div>
                                 @endforeach
-                            </div>
+
+                                
+                            
                         </div>
                     </div>
                 </div>
