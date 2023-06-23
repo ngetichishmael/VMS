@@ -15,11 +15,10 @@
         @livewire('premises.resident.dashboard')
         <!-- Dashboard Ecommerce ends -->
     @else
-        <div class="card">
-            <div class="pt-0 card-datatable table-responsive">
-                <div class="card-datatable table-responsive">
-                    <p style="font-size: large; color: orangered; padding-left: 40%" >"Unauthorized to access this page !!!!...."</p>
-                </div>
+    <div class="misc-inner p-2 p-sm-3">
+            <div class="w-100 text-center">
+                <h2 class="mb-1">You are not authorized! 🔐</h2>
+                <p class="mb-2">Sorry, but you do not have the necessary permissions to access this page.</p>
             </div>
         </div>
     @endif
