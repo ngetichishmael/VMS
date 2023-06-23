@@ -161,30 +161,32 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $id)
     {
         $user = User::find($id);
-
+    
+        if (!$user) {
+            return redirect()->back()->with('warning', 'User not found.');
+        }
+    
         $user->name = $request->input('name');
-
         $user->email = $request->input('email');
-
-        $user->phone_number  = $request->input('phone_number');
-
-        $user->organization_code  = $request->input('organization_code');
-
-        $user->role_id  = $request->input('role_id');
-
+        $user->phone_number = $request->input('phone_number');
+        $user->organization_code = $request->input('organization_code');
+        $user->role_id = $request->input('role_id');
         $user->save();
+    
         Activity::create([
             'name' => $request->user()->name,
             'target' => "User created by " . $request->user()->name,
             'organization' => "User " . $user->name,
             'activity' => "Updated a new user with " . $user
         ]);
-
-        return redirect()->to('/organization/users')->with('success', 'User Updated successfully.');
+    
+        return redirect()->to('/organization/users')->with('success', 'User updated successfully.');
     }
+    
 
     /**
      * Remove the specified resource from storage.

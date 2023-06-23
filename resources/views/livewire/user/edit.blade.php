@@ -160,9 +160,9 @@
                                         <fieldset class="form-group">
                                           <label  for="user-role">Organization</label>
                                           <select  name="organization_code" class="form-control">
-                                          <option  value="{{ $user ->organization_code }}" > Select ...</option>
                                             @foreach ($organizations as $organizat)
-                                                <option  value="{{ $organizat ->code }}"> {{ $organizat ->name }}</option>
+                                            
+                                                <option value="{{ $organizat ->code }}" @if($organizat ->code == $user->organization_code) selected @endif>{{ $organizat->name }}</option>
                                             @endforeach
                                           </select>
                                         </fieldset>
@@ -173,9 +173,9 @@
                                         <fieldset class="form-group">
                                           <label  for="user-role">Role</label>
                                           <select  name="role_id" class="form-control" required>
-                                          <option  value="{{ $user ->role_id }}" > Select ...</option>
                                             @foreach ($roles as $ros)
-                                                <option  value="{{ $ros ->id }}"> {{ $ros ->name }}</option>
+                                               
+                                                <option value="{{ $ros->id }}" @if($ros->id == $user->role_id) selected @endif>{{ $ros->name }}</option>
                                             @endforeach
                                           </select>
                                         </fieldset>
