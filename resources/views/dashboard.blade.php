@@ -282,7 +282,7 @@
         <section>
             <div class="row">
 
-                <div class="col-xl-6 col-12"  >
+                <!-- <div class="col-xl-6 col-12"  >
                     <div class="card">
                         <div class="card-header font-small-3">
                             <h5>Units with highest number of visitors this month</h5>
@@ -296,7 +296,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 
                 <div class="col-lg-6 col-12">
                 <div class="card">
@@ -320,7 +320,7 @@
                                         $colorClass = $colors[$colorIndex];
                                     @endphp
                                     <div class="col-6 mb-2">
-                                        <p class="mb-50">{{ $unit->name }} ({{ $unit->visitors_count }} visitors)</p>
+                                        <p class="mb-50"> <b> {{ $unit->name }} </b> ({{ $unit->visitors_count }} visitors)</p>
                                         <div class="progress {{ $colorClass }}" style="height: 6px">
                                             <div class="progress-bar" role="progressbar" aria-valuenow="{{ $unit->visitors_count }}"
                                                 aria-valuemin="0" aria-valuemax="{{ $units->max('visitors_count') }}"
