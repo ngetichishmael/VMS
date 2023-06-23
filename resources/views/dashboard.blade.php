@@ -325,21 +325,20 @@
 
           <hr />
           <div class="row avg-sessions pt-50">
-          @foreach($units as $unit)
+          @foreach($units as $index => $unit)
             <div class="col-6 mb-2">
-              <p class="mb-50"> {{ $unit->name }} ({{ $unit->visitors_count }} visitors)</p>
-              <div class="progress progress-bar-primary" style="height: 6px">
-                <div
-                  class="progress-bar"
-                  role="progressbar"
-                  aria-valuenow="{{ $unit->visitors_count }}"
-                  aria-valuemin="0"
-                  aria-valuemax="{{ $units->max('visitors_count') }}"
-                  style="width: {{ $unit->visitors_count }}%"
+                <p class="mb-50">{{ $unit->name }} ({{ $unit->visitors_count }} visitors)</p>
+                <div class="progress" style="height: 6px">
+                <div class="progress-bar" role="progressbar"
+                    aria-valuenow="{{ $unit->visitors_count }}"
+                    aria-valuemin="0"
+                    aria-valuemax="{{ $units->max('visitors_count') }}"
+                    style="width: {{ $unit->visitors_count }}%; background-color: {{ $colors[$index % count($colors)] }}"
                 ></div>
-              </div>
+                </div>
             </div>
             @endforeach
+
 
 
           </div>
