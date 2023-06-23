@@ -345,31 +345,36 @@
                     </div>
                 </div>
                 <script>
-                        $(document).ready(function() {
-                            var BarChart = {!! $BarChart !!};
-                            
-                            // Update labels with month short forms
-                            BarChart.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                            
-                            var ctx = document.getElementById('monthly-visits').getContext('2d');
-                            var myChart = new Chart(ctx, {
-                                type: 'bar',
-                                data: BarChart,
-                                options: {
-                                    responsive: true,
-                                    title: 'MONTHLY VISITS',
-                                    scales: {
-                                        yAxes: [{
-                                            ticks: {
-                                                beginAtZero: true
-                                            }
-                                        }]
-                                    },
-                                    barThickness: 15
-                                }
-                            });
-                        });
-                    </script>
+    $(document).ready(function() {
+        var BarChart = {!! $BarChart !!};
+
+        // Update labels with month short forms
+        BarChart.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        var maxVisit = Math.max(...BarChart.datasets[0].data);
+        var yScaleMax = Math.ceil(maxVisit * 1.1); // Increase by 10% for proper scaling
+
+        var ctx = document.getElementById('monthly-visits').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: BarChart,
+            options: {
+                responsive: true,
+                title: 'MONTHLY VISITS',
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            max: yScaleMax
+                        }
+                    }]
+                },
+                barThickness: 15
+            }
+        });
+    });
+</script>
+
 
                 <!-- Horizontal Bar Chart End -->
 
