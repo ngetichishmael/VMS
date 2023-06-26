@@ -51,40 +51,76 @@ class DashboardController extends Controller
             $weekStartDate = Carbon::now()->startOfWeek();
             $weekEndDate = Carbon::now()->endOfWeek();
 
-            $driveinThisWeek = DB::table('visitors')->where('type', '=', 'DriveIn')
-                ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
-                ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
-                ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
-                ->count();
-            $driveinLastWeek = DB::table('visitors')
-                ->where('type', '=', 'DriveIn')
-                ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
-                ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
-                ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
-                ->count();
+            $driveinThisWeek = DB::table('visitors')
+            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->where('visitors.type', 'DriveIn')
+            ->where(function ($query) use ($weekStartDate, $weekEndDate) {
+                $query->whereBetween('time_logs.entry_time', [$weekStartDate, $weekEndDate])
+                    ->orWhereBetween('time_logs.exit_time', [$weekStartDate, $weekEndDate]);
+            })
+            ->count();
+        
+        $driveinLastWeek = DB::table('visitors')
+            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->where('visitors.type', 'DriveIn')
+            ->where(function ($query) {
+                $query->whereBetween('time_logs.entry_time', [
+                    Carbon::now()->startOfWeek()->subWeek(),
+                    Carbon::now()->endOfWeek()->subWeek()
+                ])->orWhereBetween('time_logs.exit_time', [
+                    Carbon::now()->startOfWeek()->subWeek(),
+                    Carbon::now()->endOfWeek()->subWeek()
+                ]);
+            })
+            ->count();
+        
 
-            $smsThisWeek = DB::table('visitors')->where('type', '=', 'SMS')
-                ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
-                ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
-                ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
-                ->count();
+            $smsThisWeek = DB::table('visitors')
+            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->where('visitors.type', 'SMS')
+            ->where(function ($query) use ($weekStartDate, $weekEndDate) {
+                $query->whereBetween('time_logs.entry_time', [$weekStartDate, $weekEndDate])
+                    ->orWhereBetween('time_logs.exit_time', [$weekStartDate, $weekEndDate]);
+            })
+            ->count();
+        
             $smsLastWeek = DB::table('visitors')
-                ->where('type', '=', 'SMS')
+            ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
+            ->where('visitors.type', 'SMS')
+            ->where(function ($query) {
+                $query->whereBetween('time_logs.entry_time', [
+                    Carbon::now()->startOfWeek()->subWeek(),
+                    Carbon::now()->endOfWeek()->subWeek()
+                ])->orWhereBetween('time_logs.exit_time', [
+                    Carbon::now()->startOfWeek()->subWeek(),
+                    Carbon::now()->endOfWeek()->subWeek()
+                ]);
+            })
+            ->count();
+        
+            $walkinThisWeek = DB::table('visitors')
                 ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
-                ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
-                ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
+                ->where('visitors.type', 'WalkIn')
+                ->where(function ($query) use ($weekStartDate, $weekEndDate) {
+                    $query->whereBetween('time_logs.entry_time', [$weekStartDate, $weekEndDate])
+                        ->orWhereBetween('time_logs.exit_time', [$weekStartDate, $weekEndDate]);
+                })
                 ->count();
-            $walkinThisWeek = DB::table('visitors')->where('type', '=', 'WalkIn')
-                ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
-                ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
-                ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
-                ->count();
+            
             $walkinLastWeek = DB::table('visitors')
-                ->where('type', '=', 'WalkIn')
                 ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
-                ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
-                ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
+                ->where('visitors.type', 'WalkIn')
+                ->where(function ($query) {
+                    $query->whereBetween('time_logs.entry_time', [
+                        Carbon::now()->startOfWeek()->subWeek(),
+                        Carbon::now()->endOfWeek()->subWeek()
+                    ])->orWhereBetween('time_logs.exit_time', [
+                        Carbon::now()->startOfWeek()->subWeek(),
+                        Carbon::now()->endOfWeek()->subWeek()
+                    ]);
+                })
                 ->count();
+            
             $ipassThisWeek = DB::table('visitors')->where('type', '=', 'iPass')
                 ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
                 ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
@@ -97,17 +133,30 @@ class DashboardController extends Controller
                 ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
                 ->count();
 
-            $idThisWeek = DB::table('visitors')->where('type', '=', 'ID')
+            $idThisWeek = DB::table('visitors')
                 ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
-                ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
-                ->orWhereBetween('exit_time', [$weekStartDate, $weekEndDate])
+                ->where('visitors.type', 'ID')
+                ->where(function ($query) use ($weekStartDate, $weekEndDate) {
+                    $query->whereBetween('time_logs.entry_time', [$weekStartDate, $weekEndDate])
+                        ->orWhereBetween('time_logs.exit_time', [$weekStartDate, $weekEndDate]);
+                })
                 ->count();
+
             $idLastWeek = DB::table('visitors')
-                ->where('type', '=', 'ID')
                 ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
-                ->whereBetween('entry_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
-                ->orWhereBetween('exit_time', [Carbon::now()->startOfWeek()->subWeek(), Carbon::now()->endOfWeek()->subWeek()])
+                ->where('visitors.type', 'ID')
+                ->where(function ($query) {
+                    $query->whereBetween('time_logs.entry_time', [
+                        Carbon::now()->startOfWeek()->subWeek(),
+                        Carbon::now()->endOfWeek()->subWeek()
+                    ])->orWhereBetween('time_logs.exit_time', [
+                        Carbon::now()->startOfWeek()->subWeek(),
+                        Carbon::now()->endOfWeek()->subWeek()
+                    ]);
+                })
                 ->count();
+
+                
             $today = Carbon::today();
             $maleCount = DB::table('visitors')
                 ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
@@ -288,7 +337,7 @@ class DashboardController extends Controller
                 ->whereMonth('time_logs.entry_time', Carbon::now()->month)
                 ->groupBy('organizations.name')
                 ->orderByDesc('visitor_count')
-                ->limit(5)
+                ->limit(6)
                 ->get();
 
 //        $organizations = DB::table('organizations')
@@ -387,6 +436,7 @@ class DashboardController extends Controller
             ->whereHas('visitor.sentry.premise.organization', function ($query) use ($organization_code) {
             $query->where('code', $organization_code);
         })->count();
+        
         $OyesterdayVisits = TimeLog::whereBetween('entry_time', [Carbon::yesterday()->startOfDay(), Carbon::yesterday()->endOfDay()])
             ->whereHas('visitor.sentry.premise.organization', function ($query) use ($organization_code) {
                 $query->where('code', $organization_code);

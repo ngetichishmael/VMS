@@ -308,26 +308,27 @@
                             </div>
                             <hr />
                             <div class="row avg-sessions pt-50">
-                                @foreach($units as $index => $unit)
-                                    @php
-                                        // Define an array of colors
-                                        $colors = ['progress-bar-primary', 'progress-bar-success', 'progress-bar-info', 'progress-bar-warning', 'progress-bar-danger'];
-                                        
-                                        // Get the color index based on the item index
-                                        $colorIndex = $index % count($colors);
-                                        
-                                        // Get the color class for the progress bar
-                                        $colorClass = $colors[$colorIndex];
-                                    @endphp
-                                    <div class="col-6 mb-2">
-                                        <p class="mb-50"> <b> {{ $unit->name }} </b> ({{ $unit->visitors_count }} visitors)</p>
-                                        <div class="progress {{ $colorClass }}" style="height: 6px">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="{{ $unit->visitors_count }}"
-                                                aria-valuemin="0" aria-valuemax="{{ $units->max('visitors_count') }}"
-                                                style="width: {{ $unit->visitors_count }}%"></div>
-                                        </div>
+                            @php
+                                $maxVisitorCount = $units->sum('visitors_count');
+                            @endphp
+
+                            @foreach($units as $index => $unit)
+                                @php
+                                    $colors = ['progress-bar-primary', 'progress-bar-success', 'progress-bar-info', 'progress-bar-warning', 'progress-bar-danger'];
+                                    $colorIndex = $index % count($colors);
+                                    $colorClass = $colors[$colorIndex];
+                                    $progressWidth = ($unit->visitors_count / $maxVisitorCount) * 100;
+                                @endphp
+
+                                <div class="col-6 mb-2">
+                                    <p class="mb-50"><b>{{ $unit->name }}</b> ({{ $unit->visitors_count }} visitors)</p>
+                                    <div class="progress {{ $colorClass }}" style="height: 6px">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ $unit->visitors_count }}"
+                                            aria-valuemin="0" aria-valuemax="{{ $maxVisitorCount }}"
+                                            style="width: {{ $progressWidth }}%"></div>
                                     </div>
-                                @endforeach
+                                </div>
+                            @endforeach
 
                                 
                             
@@ -337,37 +338,43 @@
             </div>
 
             <div class="col-lg-6 col-12">
-  <div class="card">
-      <div class="card-body">
-          <div class="row pb-50">
-              <div class="card-header font-small-3">
-                  <h5> Highly visited Organizations this month</h5>
-              </div>
-              </div>
-              <hr />
-              <div class="row avg-sessions pt-50">
-          
-              <div class="card-text font-small-3 col-12" >
-                  @foreach($organizations as $organization)
-                      <div class="card-text font-small-3">
-                          <i class="fa fa-building"><span>{!! $organization->name !!}</span><span> Visits: {!! $organization->visitor_count !!}</span></i>
-                      </div>
-                  @endforeach
-              </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row pb-50">
+                <div class="card-header font-small-3">
+                    <h5>Highly visited Organizations this month</h5>
+                </div>
+            </div>
+            <hr />
+            <div class="row avg-sessions pt-50">
+                @php
+                    $maxVisitorCount = $organizations->sum('visitor_count');
+                @endphp
 
-              
+                @foreach($organizations as $index => $organization)
+                    @php
+                        $colors = ['progress-bar-success', 'progress-bar-info', 'progress-bar-primary', 'progress-bar-warning', 'progress-bar-danger'];
+                        $colorIndex = $index % count($colors);
+                        $colorClass = $colors[$colorIndex];
+                        $progressWidth = ($organization->visitor_count / $maxVisitorCount) * 100;
+                    @endphp
 
-                  
-              
-          </div>
-      </div>
-  </div>
+                    <div class="col-6 mb-2">
+                        <p class="mb-50"><b>{{ $organization->name }}</b> ({{ $organization->visitor_count }} visitors)</p>
+                        <div class="progress {{ $colorClass }}" style="height: 6px">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="{{ $organization->visitor_count }}"
+                                aria-valuemin="0" aria-valuemax="{{ $maxVisitorCount }}"
+                                style="width: {{ $progressWidth }}%"></div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
 </div>
 
-  
 
-<!-- 
-                <div class="col-xl-6 col-12">
+                <!-- <div class="col-xl-6 col-12">
                     <div class="card">
                         <div class="card-header font-small-3">
                             <h6>{!! ucwords("Organizations with the Highest Monthly Visits") !!}</h6>
@@ -427,6 +434,7 @@
 
         var maxVisit = Math.max(...BarChart.datasets[0].data);
         var yScaleMax = Math.ceil(maxVisit * 1.1); // Increase by 10% for proper scaling
+        var yScalePadding = 5; // Padding value to adjust the y-axis scale
 
         var ctx = document.getElementById('monthly-visits').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -434,12 +442,15 @@
             data: BarChart,
             options: {
                 responsive: true,
-                title: 'MONTHLY VISITS',
+                title: {
+                    display: true,
+                    text: 'MONTHLY VISITS'
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
                             beginAtZero: true,
-                            max: yScaleMax
+                            max: yScaleMax + yScalePadding
                         }
                     }]
                 },
