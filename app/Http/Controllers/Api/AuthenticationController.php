@@ -124,7 +124,7 @@ class AuthenticationController extends Controller
         $fingerprint = $fields->fingerprint ?? null;
 
         Activity::create([
-            'name' => $detail->name,
+            'name' => $sentryid->name,
             'target' => " Mobile App",
             'organization' =>$premise->organization->code ?? ' ',
             'activity' => "User Logged in"
