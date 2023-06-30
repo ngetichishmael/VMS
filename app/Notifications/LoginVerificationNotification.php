@@ -11,7 +11,7 @@ use Otp;
 use App\Models\User;
 use App\Models\UserCode;
 
-class LoginVerificationNotification extends Notification
+class LoginVerificationNotification extends Notification implements ShouldQueue
 {
     use Queueable;
     public $message;
