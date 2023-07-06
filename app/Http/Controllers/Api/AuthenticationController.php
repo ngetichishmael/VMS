@@ -124,7 +124,7 @@ class AuthenticationController extends Controller
         $fingerprint = $fields->fingerprint ?? null;
 
         Activity::create([
-            'name' => $detail->name,
+            'name' => $sentryid->name ?? $detail->name ?? $user->name,
             'target' => " Mobile App",
             'organization' =>$premise->organization->code ?? ' ',
             'activity' => "User Logged in"
@@ -180,6 +180,7 @@ class AuthenticationController extends Controller
         $settings = Setting::where('organization_code', $premise->organization->code ?? 'not found')->first();
         return response()->json(['settings' => $settings ?? 'No Subscription settings found or user not logged in'], 200);
     }
+    
     public function fields()
     {
         $user = auth()->user();
