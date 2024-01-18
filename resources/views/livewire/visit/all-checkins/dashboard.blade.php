@@ -117,7 +117,7 @@
 
                     <tbody>
                         @forelse($visitors as $key => $visitor)
-                            <td>{!! $visitor->name ?? 'NA' !!} </td>
+                            <td>@if($visitor->type!=null && $visitor->type == 'SMS') {!! $visitor->user_details->phone_number ?? 'NA' !!}@else{!! $visitor->name ?? 'NA' !!} @endif</td>
                             <td>{{ $visitor->sentry->premise->name ?? '' }}</td>
                             <td>{{ $visitor->sentry->premise->organization->name ?? '' }}</td>
                             <td>{!! $visitor->type !!} </td>

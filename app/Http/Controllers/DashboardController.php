@@ -59,7 +59,7 @@ class DashboardController extends Controller
                     ->orWhereBetween('time_logs.exit_time', [$weekStartDate, $weekEndDate]);
             })
             ->count();
-        
+
         $driveinLastWeek = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->where('visitors.type', 'DriveIn')
@@ -73,7 +73,7 @@ class DashboardController extends Controller
                 ]);
             })
             ->count();
-        
+
 
             $smsThisWeek = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
@@ -83,7 +83,7 @@ class DashboardController extends Controller
                     ->orWhereBetween('time_logs.exit_time', [$weekStartDate, $weekEndDate]);
             })
             ->count();
-        
+
             $smsLastWeek = DB::table('visitors')
             ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
             ->where('visitors.type', 'SMS')
@@ -97,7 +97,7 @@ class DashboardController extends Controller
                 ]);
             })
             ->count();
-        
+
             $walkinThisWeek = DB::table('visitors')
                 ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
                 ->where('visitors.type', 'WalkIn')
@@ -106,7 +106,7 @@ class DashboardController extends Controller
                         ->orWhereBetween('time_logs.exit_time', [$weekStartDate, $weekEndDate]);
                 })
                 ->count();
-            
+
             $walkinLastWeek = DB::table('visitors')
                 ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
                 ->where('visitors.type', 'WalkIn')
@@ -120,7 +120,7 @@ class DashboardController extends Controller
                     ]);
                 })
                 ->count();
-            
+
             $ipassThisWeek = DB::table('visitors')->where('type', '=', 'iPass')
                 ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
                 ->whereBetween('entry_time', [$weekStartDate, $weekEndDate])
@@ -156,7 +156,7 @@ class DashboardController extends Controller
                 })
                 ->count();
 
-                
+
             $today = Carbon::today();
             $maleCount = DB::table('visitors')
                 ->join('time_logs', 'visitors.time_log_id', '=', 'time_logs.id')
@@ -310,6 +310,7 @@ class DashboardController extends Controller
                 ->toArray();
 
             $labels = [];
+            $labelschart=[];
             $datachart = [];
             foreach ($chart as $item) {
                 $labelschart[] = $item->age . ' - ' . ($item->age + 9);
@@ -436,7 +437,7 @@ class DashboardController extends Controller
             ->whereHas('visitor.sentry.premise.organization', function ($query) use ($organization_code) {
             $query->where('code', $organization_code);
         })->count();
-        
+
         $OyesterdayVisits = TimeLog::whereBetween('entry_time', [Carbon::yesterday()->startOfDay(), Carbon::yesterday()->endOfDay()])
             ->whereHas('visitor.sentry.premise.organization', function ($query) use ($organization_code) {
                 $query->where('code', $organization_code);
