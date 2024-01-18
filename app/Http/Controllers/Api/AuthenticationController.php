@@ -180,6 +180,7 @@ class AuthenticationController extends Controller
         $settings = Setting::where('organization_code', $premise->organization->code ?? 'not found')->first();
         return response()->json(['settings' => $settings ?? 'No Subscription settings found or user not logged in'], 200);
     }
+    
     public function fields()
     {
         $user = auth()->user();
