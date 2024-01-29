@@ -17,7 +17,7 @@
             <!-- Brand logo-->
             <a class="brand-logo" style="padding-left:30px;" href="javascript:void(0);">
 
-<img src="{{ asset('images/logo/Mojaplus-logo_Primary-Logo.png') }}" alt="MojaPass" style="width: 200px; height: 60px;">
+<img src="{{ asset('images/logo/infoseclogo.png') }}" alt="INFOSEC" style="width: 180px; height: 60px;">
 
 
 
@@ -38,20 +38,20 @@
             <!-- Login-->
             <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
-                   
+
                     <h2 class="card-title font-weight-bold mb-1">Forgot your Password? 🔒</h2>
                     <p class="card-text mb-2"> Simply enter the email address associated with your account and we’ll send you an email with instructions on how to reset your password.</p>
-              
+
                     @if(session('message'))
-                        
+
                             <span class="help-block @if(session('status')) text-success @else text-danger @endif">
                                 <strong>{{ session('message') }}</strong>
                             </span>
-                    
+
                     @endif
 
 
-          
+
                     <form class="auth-login-form mt-2" action="{{ route('Forgot.store') }}" method="POST">
                         @csrf
                         <div class="form-group">
@@ -60,12 +60,12 @@
                                 placeholder="vms@deveint.com" aria-describedby="login-email" autofocus=""
                                 tabindex="1" />
                         </div>
-                 
+
                         <button type="submit" class="btn btn-primary btn-block" tabindex="4">Submit</button>
 
-                     
+
                     </form>
-            
+
                     <p class="text-right mt-2">
                         <a href="{{ route('logout') }}">
                             <i data-feather="chevron-left"></i> Back to login
