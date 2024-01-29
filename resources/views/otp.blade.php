@@ -18,7 +18,7 @@
             <!-- Brand logo-->
             <a class="brand-logo" style="padding-left:30px;" href="javascript:void(0);">
 
-<img src="{{ asset('images/logo/infoseclogo.png') }}" alt="INFOSEC" style="width: 180px; height: 60px;">
+<img src="{{ asset('images/logo/infoseclogo.png') }}" alt="INFOSEC" style="width: 180px; height: 80px;">
 
 
 
