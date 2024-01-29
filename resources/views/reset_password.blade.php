@@ -45,10 +45,7 @@
         <div class="auth-inner row m-0">
             <!-- Brand logo-->
             <a class="brand-logo" style="padding-left:30px;" href="javascript:void(0);">
-
-<img src="{{ asset('images/logo/infoseclogo.png') }}" alt="InfoSec" style="width: 200px; height: 60px;">
-
-
+            <img src="{{ asset('images/logo/infoseclogo.png') }}" alt="InfoSec" style="width: 200px; height: 60px;">
 
             </a>
             <!-- /Brand logo-->

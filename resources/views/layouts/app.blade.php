@@ -10,7 +10,7 @@
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-    <link rel="icon" type="image/png" href="{!! asset('app-assets/images/logo/infoseclogo.png') !!}">
+    <link rel="icon" type="image/png" href="{!! asset('images/logo/infoseclogo.png') !!}">
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
