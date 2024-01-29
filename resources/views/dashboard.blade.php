@@ -1,7 +1,7 @@
 @php use Illuminate\Support\Facades\Auth; @endphp
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'MOJA PASS')
+@section('title', 'INFOSEC GUARD')
 
 @section('vendor-style')
     {{-- vendorcssfiles --}}
@@ -297,7 +297,7 @@
                         </div>
                     </div>
                 </div> -->
-                
+
                 <div class="col-lg-6 col-12">
                 <div class="card">
                     <div class="card-body">
@@ -330,8 +330,8 @@
                                 </div>
                             @endforeach
 
-                                
-                            
+
+
                         </div>
                     </div>
                 </div>
@@ -389,7 +389,7 @@
                     </div>
                 </div> -->
 
-  
+
 
 
             </div>
@@ -408,7 +408,7 @@
                             <div class="header-left">
                                 <h5 class="card-header"> Monthly Visits by Gender </h5>
                             </div>
-                            
+
                         </div>
                         <div class="card-body">
                             <canvas id="monthly-visits" class="chartjs" data-height="400"></canvas>
@@ -472,7 +472,7 @@
                             <div class="header-left">
                                 <h5 class="card-header"> Monthly Visits by Age </h5>
                             </div>
-                            
+
                         </div>
                         <div class="card-body">
                             <canvas id="monthly-visitors-by-age1" class="chartjs"  data-height="400"></canvas>
@@ -532,10 +532,10 @@
                 <script>
                     $(document).ready(function() {
                         var yearlyData = {!! $yearlyData !!};
-                        
+
                         // Update labels with month short names
                         yearlyData.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                        
+
                         var ctx = document.getElementById('yearly-visitors').getContext('2d');
                         var myChart = new Chart(ctx, {
                             type: 'line',
@@ -575,13 +575,13 @@
                             <h5 class="card-header"> TOTAL VISITORS : {{ $totalVisitors}}</h5>
                             </div>
                         </div>
-                          
+
                         <div class="card-body">
                             <canvas id="visitorChart" data-height="400"></canvas>
 
                         </div>
                     </div>
-                
+
                     <script>
     $(document).ready(function() {
         var chartData = <?php echo json_encode($chartDataL); ?>;

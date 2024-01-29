@@ -19,7 +19,7 @@
             <!-- Brand logo-->
             <a class="brand-logo" style="padding-left:30px;" href="javascript:void(0);">
 
-<img src="{{ asset('images/logo/Mojaplus-logo_Primary-Logo.png') }}" alt="MojaPass" style="width: 200px; height: 60px;">
+<img src="{{ asset('images/logo/Mojaplus-logo_Primary-Logo.png') }}" alt="Infosec Guard" style="width: 200px; height: 60px;">
 
 
 
@@ -39,7 +39,7 @@
             <!-- Login-->
             <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
-                    <h2 class="card-title font-weight-bold mb-1">Welcome to Moja<b>Pass</b>! 👋</h2>
+                    <h2 class="card-title font-weight-bold mb-1">Welcome to Infosec<b>Guard</b>! 👋</h2>
                     <p class="card-text mb-2">Please sign-in to your account</p>
                     @if ($errors->has('email'))
                         <span class="help-block">

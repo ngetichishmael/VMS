@@ -49,7 +49,7 @@
                         </g>
                     </g>
                 </svg>
-                <h2 class="brand-text text-primary ml-1">VMS</h2>
+                <h2 class="brand-text text-primary ml-1"></h2>
             </a>
             <!-- /Brand logo-->
 

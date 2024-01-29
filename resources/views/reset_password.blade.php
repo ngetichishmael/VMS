@@ -46,7 +46,7 @@
             <!-- Brand logo-->
             <a class="brand-logo" style="padding-left:30px;" href="javascript:void(0);">
 
-<img src="{{ asset('images/logo/Mojaplus-logo_Primary-Logo.png') }}" alt="MojaPass" style="width: 200px; height: 60px;">
+<img src="{{ asset('images/logo/Mojaplus-logo_Primary-Logo.png') }}" alt="InfoSec" style="width: 200px; height: 60px;">
 
 
 
@@ -120,7 +120,7 @@
                                 </div>
                             </div>
                         </div>
-                    
+
                         <button type="submit" class="btn btn-primary btn-block" tabindex="4">Reset Password</button>
                     </form>
 
