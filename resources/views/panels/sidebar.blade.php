@@ -17,7 +17,7 @@ if ($user) {
 
                     </span>
 
-  <img src="{{ asset('images/logo/infoseclogo.png') }}" alt="infosec" style="width: 140px; height: 40px;">
+  <img src="{{ asset('images/logo/infoseclogo.png') }}" alt="infosec" style="width: 130px; height: 40px;">
 
                 </a>
             </li>
