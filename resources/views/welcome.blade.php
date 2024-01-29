@@ -19,7 +19,7 @@
             <!-- Brand logo-->
             <a class="brand-logo" style="padding-left:30px;" href="javascript:void(0);">
 
-        <img src="{{ asset('images/logo/infoseclogo.png') }}" alt="Infosec Guard" style="width: 200px; height: 60px;">
+        <img src="{{ asset('images/logo/infoseclogo.png') }}" alt="Infosec Guard" style="width: 160px; height: 80px;">
             </a>
             <!-- Left Text-->
             <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
