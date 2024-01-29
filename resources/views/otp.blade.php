@@ -37,7 +37,7 @@
         <!-- Login-->
         <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
             <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
-                <h2 class="card-title font-weight-bold mb-1">Welcome to INFOSEC<b>GUARD</b>!</h2>
+                <h3 class="card-title font-weight-bold mb-1">Welcome to INFOSEC <b> GUARD</b>!</h3>
                 <p class="card-text mb-2">Enter the OTP Sent to your Email and Phone number</p>
                 @if ($errors->has('otp'))
                 <span class="help-block">
