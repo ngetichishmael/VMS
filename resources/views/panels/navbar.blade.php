@@ -42,7 +42,7 @@
                                     </g>
                                 </g>
                             </svg></span>
-                        <h2 class="brand-text mb-0">MOJA PASS</h2>
+                        <h2 class="brand-text mb-0">INFOSEC GUARD</h2>
                     </a>
                 </li>
             </ul>
@@ -56,7 +56,7 @@
           <ul class="nav navbar-nav d-xl-none">
             <li class="nav-item"><a class="nav-link menu-toggle" href="javascript:void(0);"><i class="ficon" data-feather="menu"></i></a></li>
           </ul>
-  
+
           <ul class="nav navbar-nav">
             <li class="nav-item d-none d-lg-block">
               <a class="nav-link bookmark-star">
@@ -79,8 +79,7 @@
                     <span class="user-status">Admin</span>
                 </div>
                 <span class="avatar">
-                    <img class="round" src="{{ asset('images/logo/Mojaplus-logo_2a.png') }}" alt="avatar"
-
+                    <img class="round" src="{{ asset('images/logo/img.png') }}" alt="avatar"
                         height="40" width="40">
                     <span class="avatar-status-online"></span>
                 </span>

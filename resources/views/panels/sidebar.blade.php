@@ -17,7 +17,7 @@ if ($user) {
 
                     </span>
 
-  <img src="{{ asset('images/logo/Mojaplus-logo_Primary-Logo.png') }}" alt="MojaPass" style="width: 170px; height: 40px;">
+  <img src="{{ asset('images/logo/infoseclogo.png') }}" alt="infosec" style="width: 170px; height: 40px;">
 
                 </a>
             </li>
