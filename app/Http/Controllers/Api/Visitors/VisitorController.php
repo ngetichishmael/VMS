@@ -105,7 +105,7 @@ class VisitorController extends Controller
         }
         $visitor = Visitor::where('user_detail_id',  $user->id)->orderBy('id', 'desc')->first();
         $time_log = TimeLog::where('id', $visitor->time_log_id)
-            ->whereNull('exit_time')
+            ->whereNull('exit_time')->orderBy('id', 'desc')
             ->first();
         if (!$time_log) {
             return response()->json(['message' => 'User has already checked out'], 400);
@@ -123,7 +123,7 @@ class VisitorController extends Controller
         }
         $visitor = Visitor::where('user_detail_id',  $user->id)->orderBy('id', 'desc')->first();
         $time_log = TimeLog::where('id', $visitor->time_log_id)
-            ->whereNull('exit_time')
+            ->whereNull('exit_time')->orderBy('id', 'desc')
             ->first();
         if (!$time_log) {
             return response()->json(['message' => 'User has already exited'], 400);
